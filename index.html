@@ -169,10 +169,11 @@
       grid-template-columns: minmax(0, 420px) 1fr;
       gap: 16px;
       margin-bottom: 16px;
-      align-items: start;
+      align-items: stretch;
     }
     @media (max-width: 860px) { .hero { grid-template-columns: 1fr; } }
     .hero-left { display: flex; flex-direction: column; }
+    .hero-left .gauge-card { flex: 1; }
     .hero-right { display: flex; flex-direction: column; }
     .hero-right .grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
     .play-card--inset { margin-top: 16px; }
