@@ -172,9 +172,10 @@
       align-items: start;
     }
     @media (max-width: 860px) { .hero { grid-template-columns: 1fr; } }
-    .hero-left { display: flex; flex-direction: column; gap: 16px; }
+    .hero-left { display: flex; flex-direction: column; }
     .hero-right { display: flex; flex-direction: column; }
     .hero-right .grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+    .play-card--inset { margin-top: 16px; }
     .sec-label--inset { margin: 4px 4px 11px; }
     .sec-label--inset::after { content: ""; flex: 1; height: 1px; background: var(--line); }
 
@@ -657,7 +658,7 @@
   </div>
 
   <div class="hero">
-    <!-- LEFT: gauge + play stacked -->
+    <!-- LEFT: gauge only -->
     <div class="hero-left">
       <div class="card gauge-card">
         <div class="gauge-title">Fear &amp; Greed Index</div>
@@ -675,8 +676,13 @@
           <span><i class="pip" style="background:var(--greed)"></i>Ext. Greed</span>
         </div>
       </div>
+    </div>
 
-      <div class="card play-card">
+    <!-- RIGHT: core vitals + today's play stacked -->
+    <div class="hero-right">
+      <div class="sec-label sec-label--inset">Core Vitals</div>
+      <div class="grid" id="indGrid"></div>
+      <div class="card play-card play-card--inset">
         <div class="play-head">
           <h2>TODAY'S PLAY</h2>
           <div class="tabs" id="tabs">
@@ -687,12 +693,6 @@
         </div>
         <div class="play-body" id="playBody"></div>
       </div>
-    </div>
-
-    <!-- RIGHT: core vitals -->
-    <div class="hero-right">
-      <div class="sec-label sec-label--inset">Core Vitals</div>
-      <div class="grid" id="indGrid"></div>
     </div>
   </div>
 
