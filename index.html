@@ -618,6 +618,46 @@
     .bar-tag.up { color: var(--greed); }
     .bar-tag b { color: var(--txt); }
 
+    /* ── CARD POPOVER ── */
+    #indPopover {
+      position: fixed;
+      z-index: 300;
+      width: 280px;
+      background: linear-gradient(160deg, var(--panel2), #0a1018);
+      border: 1px solid var(--line2);
+      border-radius: 14px;
+      padding: 14px 16px 16px;
+      box-shadow: 0 16px 48px rgba(0,0,0,.75), 0 0 0 1px rgba(255,255,255,.05);
+      opacity: 0;
+      transform: translateY(6px) scale(.97);
+      pointer-events: none;
+      transition: opacity .18s ease, transform .18s ease;
+    }
+    #indPopover.open {
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+    }
+    .pop-name {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .pop-note {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #cdd6e2;
+      margin: 0;
+    }
+    /* glowing border on the active card */
+    .ind.active .ind-face {
+      border-color: rgba(255,255,255,.22);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.08);
+    }
+
     /* ── FOOTER ── */
     footer {
       margin-top: 24px;
@@ -717,6 +757,8 @@
     </div>
     <div id="bars"></div>
   </div>
+
+  <div id="indPopover"></div>
 
   <footer>
     <b>NOT FINANCIAL ADVICE.</b> Core Vitals &amp; Momentum show the 17:01 UTC update (2026-06-04); replay animates from the 15:01 snapshot. Concentration &amp; Leadership figures pulled live ~2026-06-03/04. Signals conflict and past performance means nothing. Do your own research and size responsibly.
@@ -960,13 +1002,51 @@ function renderCards(data, targetId, animated) {
       </div>
       <div class="ind-face ind-back"><div class="bk-title">${d.name}</div><p>${d.note}</p></div>
     </div>`;
-    el.addEventListener("click", () => el.classList.toggle("flip"));
+    el.addEventListener("click", e => { e.stopPropagation(); handleCardTap(el, d); });
     grid.appendChild(el);
     if (animated) {
       cardAnims.push({ d, el, valEl: el.querySelector(".ind-val"), dot: el.querySelector(".status"), tagEl: el.querySelector(".ind-tag"), chip: el.querySelector(".delta") });
     }
   });
 }
+/* ── CARD POPOVER ── */
+const popover = document.getElementById("indPopover");
+let activeCard = null;
+
+function showPopover(cardEl, d) {
+  const rect = cardEl.getBoundingClientRect();
+  const pw = Math.min(280, window.innerWidth - 32);
+  let left = rect.left + rect.width / 2 - pw / 2;
+  left = Math.max(16, Math.min(left, window.innerWidth - pw - 16));
+  const gap = 8;
+  const estH = 150;
+  let top = rect.top - estH - gap;
+  if (top < 16) top = rect.bottom + gap;
+  popover.style.width = pw + "px";
+  popover.style.left = left + "px";
+  popover.style.top = top + "px";
+  popover.innerHTML = `<div class="pop-name">${d.name}</div><p class="pop-note">${d.note}</p>`;
+  popover.classList.add("open");
+}
+
+function closePopover() {
+  popover.classList.remove("open");
+  if (activeCard) { activeCard.classList.remove("flip", "active"); activeCard = null; }
+}
+
+function handleCardTap(el, d) {
+  if (activeCard === el) { closePopover(); return; }
+  if (activeCard) { activeCard.classList.remove("flip", "active"); }
+  el.classList.add("flip", "active");
+  activeCard = el;
+  showPopover(el, d);
+}
+
+document.addEventListener("click", e => {
+  if (activeCard && !activeCard.contains(e.target) && !popover.contains(e.target)) closePopover();
+});
+window.addEventListener("scroll", () => { if (activeCard) closePopover(); }, { passive: true });
+
 renderCards(indicators, "indGrid", true);
 renderCards(concentration, "concGrid", false);
 
