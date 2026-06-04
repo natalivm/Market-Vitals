@@ -1031,13 +1031,13 @@ function showPopover(cardEl, d) {
 
 function closePopover() {
   popover.classList.remove("open");
-  if (activeCard) { activeCard.classList.remove("flip", "active"); activeCard = null; }
+  if (activeCard) { activeCard.classList.remove("active"); activeCard = null; }
 }
 
 function handleCardTap(el, d) {
   if (activeCard === el) { closePopover(); return; }
-  if (activeCard) { activeCard.classList.remove("flip", "active"); }
-  el.classList.add("flip", "active");
+  if (activeCard) { activeCard.classList.remove("active"); }
+  el.classList.add("active");
   activeCard = el;
   showPopover(el, d);
 }
