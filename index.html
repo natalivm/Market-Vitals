@@ -725,8 +725,9 @@
 
 <script>
 /* ── DATA ── */
-const PREV_COMPOSITE = 56;
-const COMPOSITE = 61;
+const PREV_COMPOSITE = 33;   // 13:01 start of day — FEAR
+const GHOST_AT       = 56;   // 15:01 intermediate — CONSTRUCTIVE +3
+const COMPOSITE      = 61;   // 17:01 current — CONSTRUCTIVE +4
 
 const indicators = [
   { name:"VIX", prevNum:15.81, curNum:15.46, fmt:{dec:2}, prevTag:"COMPLACENT", tag:"CALM", prevS:"amber", s:"green", flip:true,
@@ -867,12 +868,12 @@ function ghostTick(v) {
   const [x1,y1] = pt(v, R+RW/2+2), [x2,y2] = pt(v, R-RW/2-2);
   return { x1, y1, x2, y2 };
 }
-const gt = ghostTick(PREV_COMPOSITE);
+const gt = ghostTick(GHOST_AT);
 const ghostLine = mk("line", { x1:gt.x1, y1:gt.y1, x2:gt.x2, y2:gt.y2, stroke:"#ff7a45", "stroke-width":2.5, "stroke-dasharray":"3 2", opacity:0 });
 g.appendChild(ghostLine);
-const [glx,gly] = pt(PREV_COMPOSITE, R+40);
+const [glx,gly] = pt(GHOST_AT, R+40);
 const ghostLbl = mk("text", { x:glx, y:gly, fill:"#ff7a45", "font-size":9.5, "font-family":"'IBM Plex Mono',monospace", "text-anchor":"middle", opacity:0 });
-ghostLbl.textContent = "2h ago";
+ghostLbl.textContent = "15:01";
 g.appendChild(ghostLbl);
 
 const needle = mk("path", { fill:"#e6edf3", stroke:"none" });
