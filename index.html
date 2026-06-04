@@ -437,7 +437,7 @@
       right: 10px;
       font-family: 'IBM Plex Mono', monospace;
       font-size: 8px;
-      color: #3a4757;
+      color: var(--muted);
       letter-spacing: .1em;
     }
 
@@ -992,7 +992,7 @@ function renderCards(data, targetId, animated) {
     }
     el.innerHTML = `<div class="ind-inner">
       <div class="ind-face">
-        <span class="flip-hint">TAP ↻</span>
+        <span class="flip-hint">TAP</span>
         <div class="ind-top"><span class="status s-${animated ? d.prevS : d.s}" data-cur="s-${d.s}"></span><span class="ind-name">${d.name}</span></div>
         <div>
           <div class="ind-val">${startVal}</div>
