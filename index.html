@@ -665,18 +665,18 @@
       <h1>MARKET <span class="accent">VITALS</span></h1>
     </div>
     <div class="stamp">
-      <div><b>2026-06-04</b> · 17:01 UTC</div>
+      <div><b>2026-06-04</b> · 19:01 UTC · <span style="color:var(--muted)">close</span></div>
       <div>Verdict: <b style="color:var(--greed)">CONSTRUCTIVE (+4)</b> · conc-adj.</div>
     </div>
   </header>
 
   <div class="ribbon" id="ribbon">
-    <span class="r-bolt">⚡</span>
-    <div class="r-main"><b>UPDATE</b> · 15:01 → 17:01 UTC · 2h</div>
+    <span class="r-bolt">✓</span>
+    <div class="r-main"><b>CLOSE SNAPSHOT</b> · 19:01 UTC · Market Tide went <b style="color:var(--greed)">positive</b></div>
     <div class="r-flip">
-      <span class="old">CONSTRUCTIVE +3</span>
+      <span class="old">−$72M</span>
       <span class="r-arrow">→</span>
-      <span class="r-new">CONSTRUCTIVE +4</span>
+      <span class="r-new">+$43M</span>
     </div>
     <button class="replay" id="replay">↻ Replay</button>
   </div>
@@ -744,7 +744,7 @@
   <div id="indPopover"></div>
 
   <footer>
-    <b>NOT FINANCIAL ADVICE.</b> Core Vitals &amp; Momentum show the 17:01 UTC update (2026-06-04); replay animates from the 15:01 snapshot. Concentration &amp; Leadership figures pulled live ~2026-06-03/04. Signals conflict and past performance means nothing. Do your own research and size responsibly.
+    <b>NOT FINANCIAL ADVICE.</b> Core Vitals &amp; Momentum show the 19:01 UTC close snapshot (2026-06-04); replay animates from the 17:01 reading. Concentration &amp; Leadership figures pulled live ~2026-06-03/04. Signals conflict and past performance means nothing. Do your own research and size responsibly.
   </footer>
 </div>
 
@@ -752,25 +752,25 @@
 /* ── DATA ── */
 const PREV_COMPOSITE = 33;   // 13:01 start of day — FEAR
 const GHOST_AT       = 56;   // 15:01 intermediate — CONSTRUCTIVE +3
-const COMPOSITE      = 61;   // 17:01 current — CONSTRUCTIVE +4
+const COMPOSITE      = 63;   // 19:01 close — CONSTRUCTIVE +4 (Market Tide positive)
 
 const indicators = [
-  { name:"VIX", prevNum:15.81, curNum:15.46, fmt:{dec:2}, prevTag:"COMPLACENT", tag:"CALM", prevS:"amber", s:"green", flip:true,
-    note:"Dropped 15.81 → 15.46 and upgraded to fully CALM — no longer flagged as complacency. Vol is genuinely low, not just mega-cap-suppressed. Still says nothing about concentration underneath, but a clean green now." },
-  { name:"MOVE", prevNum:73.58, curNum:73.58, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"amber", s:"green", flip:true,
-    note:"Bond-market volatility unchanged at 73.58 but upgraded to green CALM. Rates are quiet across the board — no fixed-income panic and no hidden stress in the Treasury market." },
-  { name:"McClellan", prevNum:13.22, curNum:9.93, fmt:{dec:2}, prevTag:"RISING", tag:"RISING", prevS:"green", s:"green",
-    note:"Eased slightly 13.22 → 9.93 but remains positive and rising. Breadth is still healthy — more stocks advancing than declining. The regime flip from earlier is holding." },
+  { name:"VIX", prevNum:15.46, curNum:15.37, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
+    note:"Drifted lower again into close, 15.46 → 15.37. Equity vol calm all day — no sign of late-session hedging. Remains a complacency watch but clean green at the bell." },
+  { name:"MOVE", prevNum:73.58, curNum:73.58, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
+    note:"Bond-market volatility unchanged at 73.58 all day. Rates are fully quiet — no fixed-income stress from open to close." },
+  { name:"McClellan", prevNum:9.93, curNum:7.63, fmt:{dec:2}, prevTag:"RISING", tag:"RISING", prevS:"green", s:"green",
+    note:"Easing into close, 9.93 → 7.63, but still positive. Normal end-of-day breadth softening — still more advancing than declining stocks. The day's regime change is holding." },
   { name:"Hindenburg", text:true, prevVal:"CLEAR", val:"CLEAR", prevTag:"CLEARED", tag:"CLEARED", prevS:"green", s:"green",
-    note:"Omen remains clear. No new triggers in the 30-day window. The all-clear on the divergence tail-risk signal is confirmed." },
-  { name:"% > 200 DMA", prevNum:55.5, curNum:56.1, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
-    note:"Ticked up again 55.5% → 56.1%. Long-term trend breadth is quietly improving. Over half the market is above its 200-day, providing a genuine floor under the rally." },
-  { name:"Put/Call", prevNum:0.92, curNum:0.85, fmt:{dec:2}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"green", s:"green",
-    note:"Continued to ease, 0.92 → 0.85. Options traders are more balanced, no residual fear premium. Stays comfortably in the neutral zone — not yet greedy enough to flag as complacency." },
-  { name:"SMFI", prevNum:52001, curNum:51185, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
-    note:"Smart-Money Flow Index slipped 52,001 → 51,185. Institutions remain directionally neutral, drifting slightly — not confirming the rally with strong inflows, but not distributing either." },
-  { name:"Market Tide", prevNum:-191, curNum:-72, fmt:{dec:0, pre:"$", suf:"M"}, prevTag:"BEARISH FLOW", tag:"BALANCED", prevS:"red", s:"amber", flip:true,
-    note:"The last holdout finally joined the party. Net options flow surged from −$191M → −$72M, now classified as BALANCED. Premium flow is no longer a bearish asterisk on the rally. The bull thesis is now internally consistent." },
+    note:"Omen clear all session. No new triggers in the 30-day window. Closed the day with a clean all-clear on the divergence tail-risk signal." },
+  { name:"% > 200 DMA", prevNum:56.1, curNum:55.9, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
+    note:"Barely changed into close, 56.1% → 55.9%. Long-term trend breadth is rock-solid — over half the market above its 200-day and essentially flat on the day." },
+  { name:"Put/Call", prevNum:0.85, curNum:0.88, fmt:{dec:2}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"green", s:"green",
+    note:"Ticked up slightly into close, 0.85 → 0.88. Still neutral — a tiny bit more protective buying at the bell, which is healthy. Not signalling fear or complacency." },
+  { name:"SMFI", prevNum:51185, curNum:50820, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
+    note:"Continued drifting lower, 51,185 → 50,820. Institutions still not committing directionally. Neutral is fine — just means the smart money isn't chasing the move yet." },
+  { name:"Market Tide", prevNum:-72, curNum:43, fmt:{dec:0, pre:"$", suf:"M"}, prevTag:"BALANCED", tag:"BALANCED", prevS:"amber", s:"amber", flip:true,
+    note:"The day's biggest close-of-day development: net premium flow crossed positive, −$72M → +$43M. First net positive reading all day. The last remaining bear holdout has fully cleared. Bull thesis now confirmed across all eight indicators." },
 ];
 
 const concentration = [
@@ -789,26 +789,26 @@ const concentration = [
 ];
 
 const bars = [
-  { label:"% > 12 SMA", prev:58.1, cur:57.6, tag:"BULLISH" },
-  { label:"% > 20 SMA", prev:60.9, cur:59.6, tag:"BULLISH" },
-  { label:"% > 50 SMA", prev:54.8, cur:54.2, tag:"BULLISH" },
+  { label:"% > 12 SMA", prev:57.6, cur:56.8, tag:"BULLISH" },
+  { label:"% > 20 SMA", prev:59.6, cur:58.5, tag:"BULLISH" },
+  { label:"% > 50 SMA", prev:54.2, cur:53.5, tag:"BULLISH" },
 ];
 
 const plays = {
   zen: {
-    e:"😇", label:"Market Tide confirmed",
-    text:"Market Tide was the last holdout — it just flipped to <b>BALANCED (−$72M)</b>. VIX and MOVE are both <b>fully green CALM</b> now. Everything that was a yellow flag two hours ago has cleared. +4 CONSTRUCTIVE with all eight indicators either green or neutral. The structural caution: <b>still an 18% chip market</b>.",
-    moves:[["≈","The internal picture is now clean — ride it while breadth and flow stay aligned."],["⏳","Watch Put/Call: 0.85 is healthy, but if it dips below 0.75 complacency creeps back in."],["🛡","Concentration risk hasn't gone away — the rally is still chip-led. Size accordingly."]]
+    e:"😇", label:"Clean close",
+    text:"Market Tide crossed positive (+$43M) into the bell — the last holdout is gone. All eight vitals closed either green or neutral. Breadth eased slightly but held. The day's story: opened at FEAR 33, closed at CONSTRUCTIVE 63. <b>Still an 18% chip market</b> — structure hasn't changed, but the session was a clean bull confirmation.",
+    moves:[["≈","Day closed with everything aligned — let the overnight play out before adding risk."],["⏳","Watch tomorrow's open: if McClellan holds above zero, breadth is genuinely healthy."],["🛡","Concentration is the structural overhang — keep it in the back of your head on any gap-up."]]
   },
   bull: {
-    e:"🐂", label:"Full confirmation",
-    text:"<b>This is as clean as it gets.</b> Breadth (McClellan) positive, omen clear, Put/Call neutral, VIX calm, MOVE calm, Market Tide now BALANCED — all eight core vitals aligned. <b>57–60% of stocks above their 12/20-day</b>, 56.1% above the 200-day. Participation is broad and the last bear holdout capitulated.",
-    moves:[["▲","Add on strength — the internal confirmation is there."],["▲","Dips are buyable while breadth and flow stay aligned."],["▲","Trail stops up aggressively — the trend is fully re-engaged."]]
+    e:"🐂", label:"Full sweep at the bell",
+    text:"<b>As clean a close as you could ask for.</b> Market Tide went positive (+$43M), Hindenburg clear, McClellan positive, VIX 15.37, Put/Call 0.88, breadth solid across every SMA. <b>56–58% of stocks above their 12/20-day</b>, 55.9% above the 200-day. Opened in fear, closed in confirmation — the regime flip held all session.",
+    moves:[["▲","Carry longs overnight — internal structure confirmed at close."],["▲","Morning dip is a gift if breadth stays green."],["▲","Trail stops above today's range — you have a cushion now."]]
   },
   bear: {
-    e:"🐻", label:"Structure still concentated",
-    text:"<b>The short-term signals are clean, but the structure hasn't changed.</b> Semis are still <b>18% of the index</b>, Nvidia is still ~$5.2T, and the whole tape rests on a handful of names. Market Tide improved to BALANCED, not Bullish — premium buyers aren't yet piling in. Concentration unwinds can come fast and hit the index hard.",
-    moves:[["▼","Respect the signal but hedge the concentration — these can diverge violently."],["▼","Market Tide at −$72M isn't negative, but it's not a green light either."],["▼","One bad print on a mega-cap semi and this whole picture flips back."]]
+    e:"🐻", label:"Confirmed rally, concentrated risk",
+    text:"<b>Signals cleaned up, structure didn't.</b> Semis are <b>18% of the index</b>, Nvidia ~$5.2T, the whole tape on a handful of names. McClellan is fading (7.63 and falling). Market Tide positive is notable, but one session of +$43M doesn't flip a structural concentration risk. Breadth bars all softening into close.",
+    moves:[["▼","Don't mistake a clean close for a structural fix — concentration is still extreme."],["▼","McClellan easing: if it goes negative tomorrow, breadth breaks down fast."],["▼","Hedge the semi exposure — Nvidia/TSMC wobble = index wobble."]]
   },
 };
 
