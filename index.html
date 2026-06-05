@@ -1467,7 +1467,6 @@ window.addEventListener("scroll", () => { if (activeCard) closePopover(); }, { p
 
 renderCards(indicators, "indGrid", true);
 renderCards(concentration, "concGrid", false);
-buildDoomClock();
 
 // Power Hour — final-hour tape read. Same card design + TAP popover as the
 // core indicators, but rendered inside the gauge card (under the scale legend)
@@ -1518,6 +1517,7 @@ function animateDoom() {
   tweenNumber(byId("doomRisk"), 0, dc.risk,          { dec: 0, suf: "%" }, 1400, 250);
   setTimeout(() => { byId("doomFill").style.width = dc.risk + "%"; }, 250);
 }
+buildDoomClock();   // build static chrome now that doomRiskColor is initialized
 
 function resetCards() {
   cardAnims.forEach(a => {
