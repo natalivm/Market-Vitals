@@ -32,6 +32,14 @@ divergences that precede a crash or recovery).
 | `pct_above_12sma`   | % of stocks above 12-day SMA                         | `56.1`           |
 | `pct_above_20sma`   | % of stocks above 20-day SMA                         | `60.2`           |
 | `pct_above_50sma`   | % of stocks above 50-day SMA                         | `54.6`           |
+| `power_hour`        | Final-hour tape read (`distribution`/`accumulation`/blank if not in feed) | `distribution` |
+
+> `power_hour` was added when the feed introduced it (2026-06-05 20:11 UTC).
+> Earlier rows leave it blank — never back-fill a guess.
+
+Sector rotation has its own store: **`rotation_history.json`** (see its
+`_schema`/`_rules` keys). Same discipline — confirmed feed numbers only,
+append-only.
 
 Notes:
 - `market_tide_musd` is in **millions** (`-1524` means −$1,524M). Negative = bearish flow.

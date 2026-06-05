@@ -71,6 +71,21 @@ board. The cron schedule in `update_vitals.yml` is commented out.
 **Until the script is rewired to target `SCAN`, update the dashboard manually**
 from the Market Vitals Bot feed (and append to `data/vitals_history.csv`).
 
+## Board indicators (9 as of 2026-06-05)
+
+VIX, MOVE, McClellan, Hindenburg, % > 200 DMA, Put/Call, SMFI, **Power Hour**
+(final-hour tape read — added when the feed introduced it), Market Tide. The
+green-count and gauge verdict derive automatically from the indicators array.
+Power Hour is displayed but **not yet in the composite-weights table below**
+(weight TBD) — the gauge composite is a manual feed-tracked value.
+
+## Rotation Radar
+
+Separate in-page view (🧭 Rotation button, hash `#rotation`). Renders from
+**`data/rotation_history.json`** (fetched at runtime, so it needs the live
+site / a server — not `file://`). Each weekly update appends one snapshot
+object; the timeline heatmap grows itself. Same accuracy rules as vitals.
+
 ## Schedules (Kyiv timezone = EEST = UTC+3)
 
 | Kyiv time  | UTC   | Label            |
