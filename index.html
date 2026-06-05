@@ -814,6 +814,67 @@
       box-shadow: 0 0 0 1px rgba(255,255,255,.08);
     }
 
+    /* ── CYCLE PEAK DOOM CLOCK (weekly gauge, countdown-style) ── */
+    .doom-card {
+      margin: 0 0 4px;
+      background:
+        radial-gradient(120% 140% at 82% -30%, rgba(255,77,77,.10), transparent 58%),
+        var(--bg2);
+      border: 1px solid var(--line2);
+    }
+    .doom-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .doom-eyebrow {
+      font-family: 'Chakra Petch', sans-serif; font-size: 12px; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .doom-phase {
+      margin-left: auto; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px;
+      letter-spacing: .12em; padding: 3px 10px; border-radius: 999px;
+      border: 1px solid currentColor; font-weight: 600;
+    }
+    .doom-main { display: flex; align-items: flex-end; gap: 20px; flex-wrap: wrap; }
+    .doom-time {
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700;
+      font-size: clamp(42px, 12vw, 66px); line-height: .95; color: #e6edf3;
+      letter-spacing: .02em; font-variant-numeric: tabular-nums;
+    }
+    .dcolon { animation: dblink 1.1s steps(1, end) infinite; }
+    @keyframes dblink { 50% { opacity: .18; } }
+    .doom-mid { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--muted); margin-top: 7px; }
+    .doom-mid b { color: #cdd6e2; font-size: 15px; }
+    .doom-risk { margin-left: auto; text-align: right; }
+    .doom-risk-num {
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700;
+      font-size: clamp(34px, 9vw, 48px); line-height: 1; font-variant-numeric: tabular-nums;
+    }
+    .doom-risk-lbl { font-size: 11.5px; color: var(--muted); margin-top: 5px; letter-spacing: .03em; }
+    .doom-track {
+      height: 8px; border-radius: 999px; background: var(--bg);
+      border: 1px solid var(--line); margin: 16px 0 14px; overflow: hidden;
+    }
+    .doom-fill {
+      height: 100%; width: 0; border-radius: 999px; background: var(--amber);
+      transition: width 1.4s cubic-bezier(.22,1,.36,1);
+    }
+    .doom-cats { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 12px; }
+    .doom-cat {
+      font-family: 'IBM Plex Mono', monospace; font-size: 11px; padding: 4px 9px;
+      border-radius: 7px; border: 1px solid var(--line2); color: var(--muted);
+      display: inline-flex; gap: 6px; align-items: center;
+    }
+    .dc-green { border-color: rgba(47,214,115,.40); color: var(--greed2); }
+    .dc-green b { color: var(--greed); }
+    .dc-amber { border-color: rgba(255,200,61,.40); color: var(--amber); }
+    .dc-amber b { color: var(--amber); }
+    .dc-red { border-color: rgba(255,77,77,.45); color: var(--fear2); background: rgba(255,77,77,.06); }
+    .dc-red b { color: var(--fear); }
+    .doom-note { font-size: 11.5px; line-height: 1.6; color: var(--muted); }
+    .doom-note b { color: #cdd6e2; }
+    @media (max-width: 560px) {
+      .doom-risk { margin-left: 0; text-align: left; }
+      .doom-main { gap: 12px; }
+    }
+
     /* ── FOOTER ── */
     footer {
       margin-top: 24px;
@@ -902,6 +963,28 @@
         <div class="play-body" id="playBody"></div>
       </div>
     </div>
+  </div>
+
+  <!-- CYCLE PEAK DOOM CLOCK — weekly cycle-top gauge (countdown style).
+       Renders from SCAN.doomClock; set show:false to hide the whole card. -->
+  <div class="card doom-card" id="doomCard" hidden>
+    <div class="doom-head">
+      <span class="doom-eyebrow">🕛 Cycle Peak Doom Clock</span>
+      <span class="doom-phase" id="doomPhase">—</span>
+    </div>
+    <div class="doom-main">
+      <div class="doom-clock">
+        <div class="doom-time" id="doomTime">--:--</div>
+        <div class="doom-mid"><b id="doomMin">0</b> min to midnight</div>
+      </div>
+      <div class="doom-risk">
+        <div class="doom-risk-num" id="doomRisk">0%</div>
+        <div class="doom-risk-lbl">cycle peak risk · <span id="doomTrend"></span></div>
+      </div>
+    </div>
+    <div class="doom-track"><div class="doom-fill" id="doomFill"></div></div>
+    <div class="doom-cats" id="doomCats"></div>
+    <div class="doom-note">How late we are in the cycle — the conditions that cluster near major tops. A slow <b>weekly</b> gauge, <b>not</b> a trade signal, and it does <b>not</b> move the needle above. <span id="doomAsof" style="white-space:nowrap"></span></div>
   </div>
 
   <!-- CONCENTRATION -->
@@ -1012,6 +1095,29 @@ const SCAN = {
     tag:    "DISTRIBUTION",     // headline state
     state:  "red",             // green | amber | red
     detail: "SPY −0.24% in the last hour on 1.95× average volume (28% of the day's range) — the close was sold.",
+  },
+  // ── CYCLE PEAK DOOM CLOCK ── weekly cycle-top gauge from the separate
+  // "Cycle Peak Doom Clock" feed (logged to data/cycle_peak_history.csv).
+  // Contextual only — has ZERO effect on the Fear & Greed needle above.
+  // Set show:false on weeks the feed doesn't post it and the card disappears.
+  doomClock: {
+    show:          true,
+    clock:         "9:17",        // analog dial position; midnight = cycle peak
+    minToMidnight: 163,
+    risk:          32,            // Cycle Peak Risk %
+    riskChangeWk:  -3,            // ▼ negative = risk eased this week
+    phase:         "MATURING",
+    weeksLogged:   "3/4",
+    asof:          "2026-06-05 22:30 UTC",
+    cats: [
+      { name: "Rotation",       score: "2/6", s: "amber" },
+      { name: "Breadth",        score: "0/4", s: "green" },
+      { name: "Volatility",     score: "2/4", s: "amber" },
+      { name: "Rates & Credit", score: "0/4", s: "green" },
+      { name: "Macro",          score: "2/8", s: "green" },
+      { name: "Sentiment",      score: "1/6", s: "green" },
+      { name: "Valuation",      score: "4/4", s: "red"   },
+    ],
   },
 };
 
@@ -1361,6 +1467,7 @@ window.addEventListener("scroll", () => { if (activeCard) closePopover(); }, { p
 
 renderCards(indicators, "indGrid", true);
 renderCards(concentration, "concGrid", false);
+buildDoomClock();
 
 // Power Hour — final-hour tape read. Same card design + TAP popover as the
 // core indicators, but rendered inside the gauge card (under the scale legend)
@@ -1369,6 +1476,47 @@ if (SCAN.powerHour && SCAN.powerHour.show) {
   const ph = SCAN.powerHour;
   renderCards([{ name: "Power Hour", text: true, val: ph.tag, tag: ph.tag, s: ph.state, note: ph.detail }], "powerHourSlot", false);
   document.getElementById("powerHourSlot").hidden = false;
+}
+
+/* ── CYCLE PEAK DOOM CLOCK (weekly countdown-style gauge) ── */
+const doomRiskColor = v =>
+  v < 25 ? "var(--greed)" : v < 45 ? "var(--amber)" : v < 65 ? "var(--fear2)" : "var(--fear)";
+
+function buildDoomClock() {
+  const dc = SCAN.doomClock, card = byId("doomCard");
+  if (!card) return;
+  if (!dc || !dc.show) { card.hidden = true; return; }
+  card.hidden = false;
+  const col = doomRiskColor(dc.risk);
+  byId("doomTime").innerHTML = String(dc.clock).replace(":", '<span class="dcolon">:</span>');
+  const ph = byId("doomPhase");
+  ph.textContent = dc.phase; ph.style.color = col;
+  byId("doomRisk").style.color = col;
+  byId("doomFill").style.background = col;
+  const ch = dc.riskChangeWk || 0;
+  const arrow = ch < 0 ? "▼" : ch > 0 ? "▲" : "▬";
+  const tcol = ch < 0 ? "var(--greed)" : ch > 0 ? "var(--fear)" : "var(--muted)";
+  const mag = Math.abs(ch);
+  byId("doomTrend").innerHTML =
+    `<span style="color:${tcol}">${arrow} ${mag} pt${mag === 1 ? "" : "s"}/wk</span>` +
+    (dc.weeksLogged ? ` · ${dc.weeksLogged} wks logged` : "");
+  byId("doomCats").innerHTML = dc.cats.map(c =>
+    `<span class="doom-cat dc-${c.s}">${c.name} <b>${c.score}</b></span>`).join("");
+  byId("doomAsof").textContent = dc.asof ? "· " + dc.asof : "";
+}
+function resetDoomClock() {
+  const dc = SCAN.doomClock;
+  if (!dc || !dc.show) return;
+  byId("doomMin").textContent = "0";
+  byId("doomRisk").textContent = "0%";
+  byId("doomFill").style.width = "0%";
+}
+function animateDoom() {
+  const dc = SCAN.doomClock;
+  if (!dc || !dc.show) return;
+  tweenNumber(byId("doomMin"),  0, dc.minToMidnight, { dec: 0 },           1400, 250);
+  tweenNumber(byId("doomRisk"), 0, dc.risk,          { dec: 0, suf: "%" }, 1400, 250);
+  setTimeout(() => { byId("doomFill").style.width = dc.risk + "%"; }, 250);
 }
 
 function resetCards() {
@@ -1668,9 +1816,9 @@ if (location.hash === "#rotation") showView("rotation");
 function runAll() {
   needle.setAttribute("d", needleShape(PREV_COMPOSITE));
   document.getElementById("scoreNum").textContent = PREV_COMPOSITE;
-  resetCards(); resetBars();
+  resetCards(); resetBars(); resetDoomClock();
   setTimeout(() => animateGauge(PREV_COMPOSITE, COMPOSITE, 1600), 200);
-  runCards(); runBars();
+  runCards(); runBars(); animateDoom();
   const rb = document.getElementById("ribbon");
   rb.style.animation = "none"; void rb.offsetWidth; rb.style.animation = "";
 }

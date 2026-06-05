@@ -45,6 +45,56 @@ Notes:
 - `market_tide_musd` is in **millions** (`-1524` means −$1,524M). Negative = bearish flow.
 - Label text uses `STRONG_BULLISH` (underscore) so it stays single-token in CSV.
 
+## Schema — `cycle_peak_history.csv`
+
+The **Cycle Peak Doom Clock** is a *separate, slow weekly feed* — not the
+intraday Market Vitals board. It measures *how late in the cycle we are* from
+conditions that cluster near major tops. **One row per weekly Doom Clock post.**
+It is contextual only and does **not** feed the Fear & Greed needle.
+
+| Column                  | Meaning                                                  | Example   |
+|-------------------------|----------------------------------------------------------|-----------|
+| `timestamp_utc`         | Post time, ISO-8601 UTC                                   | `2026-06-05T22:30:00Z` |
+| `clock`                 | Doom-clock dial position (midnight = cycle peak)         | `9:17`    |
+| `phase`                 | Headline phase text                                      | `MATURING`|
+| `cycle_peak_risk_pct`   | Cycle Peak Risk, %                                       | `32`      |
+| `risk_change_wk`        | Week-over-week change in risk pts (▼ negative = easing)  | `-3`      |
+| `weeks_logged`          | Feed's "N/M wks logged" trend-confidence note            | `3/4`     |
+| `rotation`              | Rotation category — triggers fired / total (verbatim)   | `2/6`     |
+| `breadth`               | Breadth category                                         | `0/4`     |
+| `volatility`            | Volatility category                                      | `2/4`     |
+| `rates_credit`          | Rates & Credit category                                  | `0/4`     |
+| `macro`                 | Macro category                                           | `2/8`     |
+| `sentiment`             | Sentiment category                                       | `1/6`     |
+| `valuation`             | Valuation category                                       | `4/4`     |
+| `shiller_cape`          | Shiller CAPE                                             | `41.6`    |
+| `buffett_ratio_pct`     | Buffett ratio (equities/GDP), %                         | `230`     |
+| `vix`                   | VIX (weekly read)                                       | `21.5`    |
+| `vix3m`                 | VIX3M                                                   | `21.8`    |
+| `vix_ts_ratio`          | VIX / VIX3M term-structure ratio                        | `0.99`    |
+| `vvix`                  | VVIX (vol-of-vol)                                       | `102`     |
+| `yield_curve_10y2y`     | 10Y-2Y spread, pts                                      | `0.38`    |
+| `hy_spread_pct`         | High-yield spread, %                                    | `2.74`    |
+| `pct_above_200dma`      | % of stocks above 200DMA                                | `58`      |
+| `spy_pct_off_high`      | SPY % from its high                                     | `-2.9`    |
+| `iwm_vs_spy_3mo`        | IWM vs SPY, 3mo %                                       | `2.6`     |
+| `naaim`                 | NAAIM exposure index                                    | `87`      |
+| `margin_debt_pct`       | Margin debt as % of market value                       | `1.78`    |
+| `ipo_s1_30d`            | S-1 filings, trailing 30d                              | `255`     |
+| `ipo_etf_vs_spy`        | IPO ETF vs SPY, %                                      | `15.7`    |
+| `unemployment_pct`      | Unemployment rate, %                                    | `4.3`     |
+| `sahm_rule`             | Sahm rule value                                        | `0.10`    |
+| `jobless_claims_4wk`    | Jobless claims, 4-week MA                              | `214750`  |
+| `housing_months_supply` | Housing months-supply                                 | `9.4`     |
+| `xlf_vs_spy_lag`        | Financials (XLF) lag vs SPY, pts                      | `6.3`     |
+| `copper_gold_3mo`       | Copper/Gold ratio, 3mo %                              | `28.8`    |
+
+> The Doom Clock screenshot is often cropped, so some sub-indicators within a
+> category may not be visible even though the category's `n/d` count is shown.
+> Record the category count verbatim and **leave any unseen sub-value blank —
+> never back-fill a guess.** Category colors map to `green`/`amber`/`red` in the
+> dashboard's `SCAN.doomClock.cats`.
+
 ## Adding a new scan
 
 Append one line per Market Vitals Bot post, copying the numbers exactly as shown.
