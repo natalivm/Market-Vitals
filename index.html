@@ -413,6 +413,20 @@
     .rd-points li b { color: var(--txt); }
     .rd-watch { margin-top: 13px; padding-top: 12px; border-top: 1px dashed var(--line); font-size: 11px; color: var(--muted); line-height: 1.5; }
     .rd-watch b { color: var(--amber); }
+    /* "How to read this" — collapsible flow-vs-price explainer */
+    .rot-help { border: 1px solid var(--line); border-radius: 11px; background: var(--panel); margin-bottom: 20px; }
+    .rot-help summary { cursor: pointer; padding: 11px 15px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #cdd6e2; list-style: none; display: flex; align-items: center; gap: 8px; }
+    .rot-help summary::-webkit-details-marker { display: none; }
+    .rot-help summary b { color: #56a8ff; }
+    .rot-help .rh-ico { font-size: 13px; }
+    .rot-help .rh-tap { margin-left: auto; font-size: 10px; color: var(--muted); letter-spacing: .03em; }
+    .rot-help[open] .rh-tap { display: none; }
+    .rot-help .rh-body { padding: 3px 16px 15px; border-top: 1px solid var(--line); }
+    .rot-help .rh-body p { font-size: 12px; line-height: 1.6; color: #cdd6e2; margin-top: 11px; }
+    .rot-help .rh-body p b { color: var(--txt); }
+    .rot-help .rh-caveat { color: var(--muted); font-style: italic; border-top: 1px dashed var(--line); padding-top: 11px; }
+    .rh-dot { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 7px; vertical-align: 1px; }
+    .rh-dot.pos { background: var(--greed); } .rh-dot.neg { background: var(--fear); }
     /* point-of-use callout (e.g. distribution-into-strength under Held Up) */
     .rot-note {
       display: flex; gap: 10px; align-items: flex-start;
@@ -923,6 +937,17 @@
 
     <!-- 1 ─ headline verdict -->
     <div id="rotRegime"></div>
+
+    <!-- 1b ─ how to read this (static explainer, collapsed by default) -->
+    <details class="rot-help">
+      <summary><span class="rh-ico">ℹ️</span> How to read this — <b>flow leads, price lags</b><span class="rh-tap">tap to expand</span></summary>
+      <div class="rh-body">
+        <p><b>Price ≠ flow.</b> Price is set by whoever is most <i>urgent</i> right now; flow is the net dollars institutions <i>positioned</i> over the last 5 sessions. They can point opposite ways — and that gap is the signal.</p>
+        <p><span class="rh-dot pos"></span><b>Money in while price falls = 💰 buying the dip.</b> Institutions absorb panic selling cheaply. Their bids support but don't lift the price yet — the move comes <i>later</i>, once sellers exhaust. Flow leads, price follows.</p>
+        <p><span class="rh-dot neg"></span><b>Money out while price rises = ⚠️ selling into strength.</b> Smart money unloads into momentum buyers. The tape looks fine, but the support has already left — so a sector "holding up" is a <i>warning</i>, not comfort.</p>
+        <p class="rh-caveat">It's a thesis, not a law: if the flow flips (e.g. semis' inflow turns negative), the divergence has resolved — that's the moment to watch for.</p>
+      </div>
+    </details>
 
     <!-- 2 ─ at-a-glance KPI cards (the three numbers that matter) -->
     <div class="rot-kpis" id="rotKpis"></div>
