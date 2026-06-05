@@ -90,6 +90,7 @@
       70%  { box-shadow: 0 0 0 7px rgba(47,214,115,0); }
       100% { box-shadow: 0 0 0 0 rgba(47,214,115,0); }
     }
+    .title-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
     h1 {
       font-family: 'Chakra Petch', sans-serif;
       font-weight: 700;
@@ -98,6 +99,25 @@
       line-height: .95;
     }
     h1 .accent { color: var(--fear2); }
+    .guide-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      letter-spacing: .04em;
+      text-decoration: none;
+      color: var(--txt);
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      padding: 8px 14px;
+      transition: .18s;
+      white-space: nowrap;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .guide-btn:hover, .guide-btn:active { border-color: var(--accent, #56a8ff); color: var(--accent, #56a8ff); }
+    .guide-btn .gb-ico { font-size: 14px; }
     .stamp {
       text-align: right;
       font-family: 'IBM Plex Mono', monospace;
@@ -662,7 +682,12 @@
         <span class="live"><span class="dot-live"></span>LIVE FEED</span>
         · Trading Apologist
       </div>
-      <h1>MARKET <span class="accent">VITALS</span></h1>
+      <div class="title-row">
+        <h1>MARKET <span class="accent">VITALS</span></h1>
+        <a class="guide-btn" href="market-vitals-guide.html" target="_blank" rel="noopener">
+          <span class="gb-ico">📖</span> Read the Guide
+        </a>
+      </div>
     </div>
     <div class="stamp">
       <div><b>2026-06-04</b> · 19:01 UTC · <span style="color:var(--muted)">close</span></div>
