@@ -193,6 +193,38 @@
       border-radius: 9px; padding: 7px 11px; font-family: 'IBM Plex Mono', monospace;
     }
     .rot-tile b { font-size: 12px; color: var(--txt); } .rot-tile span { font-size: 11px; color: var(--greed); margin-left: 6px; }
+    /* ── at-a-glance KPI cards (boss-deck headline numbers) ── */
+    .rot-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+    @media (max-width: 640px) { .rot-kpis { grid-template-columns: 1fr; } }
+    .kpi {
+      border: 1px solid var(--line); border-radius: 12px;
+      background: linear-gradient(180deg, var(--panel), var(--panel2));
+      padding: 14px 16px; position: relative; overflow: hidden;
+    }
+    .kpi::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--line2); }
+    .kpi.kpi-pos::before { background: var(--greed); } .kpi.kpi-neg::before { background: var(--fear); }
+    .kpi .k-lbl { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .06em; color: var(--muted); text-transform: uppercase; }
+    .kpi .k-val { font-family: 'Chakra Petch', sans-serif; font-size: 22px; font-weight: 700; margin-top: 6px; line-height: 1.1; }
+    .kpi .k-val.pos { color: var(--greed); } .kpi .k-val.neg { color: var(--fear); }
+    .kpi .k-sub { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); margin-top: 5px; }
+    /* ── net-flow diverging bar chart (the hero) ── */
+    .flow-chart { border: 1px solid var(--line); border-radius: 12px; background: var(--panel); padding: 11px 16px 14px; margin-bottom: 24px; }
+    .flow-axis { display: grid; grid-template-columns: 46px 1fr 94px 26px; gap: 10px; align-items: center; padding-bottom: 9px; margin-bottom: 5px; border-bottom: 1px dashed var(--line); }
+    .fa-track { grid-column: 2; display: flex; justify-content: space-between; align-items: center; font-family: 'IBM Plex Mono', monospace; font-size: 10px; }
+    .fa-out { color: var(--fear2); } .fa-in { color: var(--greed2); } .fa-zero { color: var(--line2); font-weight: 700; }
+    .flow-row { display: grid; grid-template-columns: 46px 1fr 94px 26px; align-items: center; gap: 10px; height: 21px; font-family: 'IBM Plex Mono', monospace; }
+    .fb-sym { font-size: 11px; font-weight: 700; color: var(--txt); }
+    .fb-track { position: relative; height: 13px; }
+    .fb-track::before { content: ""; position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px; background: var(--line2); }
+    .fb-bar { position: absolute; top: 0; height: 13px; border-radius: 2px; }
+    .fb-bar.pos { background: linear-gradient(90deg, rgba(47,214,115,.45), var(--greed)); box-shadow: 0 0 8px rgba(47,214,115,.22); }
+    .fb-bar.neg { background: linear-gradient(270deg, rgba(255,77,77,.45), var(--fear)); box-shadow: 0 0 8px rgba(255,77,77,.22); }
+    .fb-val { font-size: 11px; font-weight: 600; text-align: right; }
+    .fb-val.pos { color: var(--greed); } .fb-val.neg { color: var(--fear); }
+    .fb-sig { font-size: 11px; text-align: center; }
+    .fb-sig .fb-new { font-style: normal; font-size: 7.5px; color: #56a8ff; border: 1px solid rgba(86,168,255,.4); border-radius: 3px; padding: 0 2px; margin-left: 3px; vertical-align: 1px; }
+    .flow-foot { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); text-align: center; margin-top: 11px; padding-top: 9px; border-top: 1px dashed var(--line); }
+    .rot-timeline-note { margin-bottom: 24px; }
     .stamp {
       text-align: right;
       font-family: 'IBM Plex Mono', monospace;
@@ -352,6 +384,8 @@
     }
     .scale-prev span { display: flex; align-items: center; gap: 5px; }
     .pip { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
+    /* Power Hour — optional indicator card placed inside the gauge card */
+    .ph-slot { width: 100%; max-width: 340px; margin-top: 14px; }
 
     /* play card */
     .play-card { padding: 20px 18px; display: flex; flex-direction: column; }
@@ -803,6 +837,8 @@
           <span><i class="pip" style="background:var(--greed2)"></i>Greed</span>
           <span><i class="pip" style="background:var(--greed)"></i>Ext. Greed</span>
         </div>
+        <!-- Power Hour — optional indicator card (TAP popover), rendered here only when the feed posts it -->
+        <div id="powerHourSlot" class="ph-slot" hidden></div>
       </div>
     </div>
 
@@ -849,29 +885,42 @@
   <!-- ══ ROTATION RADAR VIEW (same tab) ══ -->
   <div id="view-rotation" hidden>
     <button class="guide-btn back-btn" id="backBtn" type="button"><span class="gb-ico">←</span> Market Vitals</button>
+
+    <!-- 1 ─ headline verdict -->
     <div id="rotRegime"></div>
-    <div class="sec-label">Rotation Timeline · <span style="color:#56a8ff">where the money moved</span></div>
-    <div class="rot-intro">Net institutional flow per sector, one column per close — 🟢 money rotating <b>in</b>, 🔴 rotating <b>out</b>, shade = size of the 5-day flow. The grid grows into a multi-week rotation map as readings are added.</div>
-    <div class="rot-heatwrap"><table class="rot-heat" id="rotHeat"></table></div>
-    <div class="hm-legend">
-      <span><i style="background:#2fd673"></i>Inflow</span>
-      <span><i style="background:#ff4d4d"></i>Outflow</span>
-      <span>💰 buying the dip</span>
-      <span>⚠️ selling into strength</span>
-      <span>·NEW· first appearance</span>
-    </div>
-    <div class="sec-label">Money Flow · <span id="rotFlowDate" style="color:var(--muted);font-weight:400"></span></div>
-    <div class="rot-cols">
-      <div class="rot-col"><div class="rot-col-h rc-buy">🟢 Money In</div><div id="rotIn"></div></div>
-      <div class="rot-col"><div class="rot-col-h rc-sell">🔴 Money Out</div><div id="rotOut"></div></div>
-    </div>
-    <div class="sec-label">14-Day Conviction · <span style="color:var(--muted);font-weight:400">sustained institutional behaviour</span></div>
+
+    <!-- 2 ─ at-a-glance KPI cards (the three numbers that matter) -->
+    <div class="rot-kpis" id="rotKpis"></div>
+
+    <!-- 3 ─ HERO: net-flow diverging bar chart -->
+    <div class="sec-label">Where the Money Moved · <span id="rotFlowDate" style="color:var(--muted);font-weight:400"></span></div>
+    <div class="rot-intro">Net institutional flow by sector, past 5 sessions. Bars grow <b style="color:var(--greed)">right</b> when money rotates <b>in</b>, <b style="color:var(--fear)">left</b> when it rotates <b>out</b> — length is the dollar size of the flow. 💰 buying the dip · ⚠️ selling into strength.</div>
+    <div class="flow-chart" id="rotFlow"></div>
+
+    <!-- 4 ─ conviction -->
+    <div class="sec-label">14-Day Conviction · <span style="color:var(--muted);font-weight:400">is the move sustained?</span></div>
     <div class="rot-cols">
       <div class="rot-col"><div class="rot-col-h rc-buy">🟢 Accumulating · Buying the Dip</div><div id="rotAcc"></div></div>
       <div class="rot-col"><div class="rot-col-h rc-sell">🔴 Distributing · Selling into Strength</div><div id="rotDist"></div></div>
     </div>
+
+    <!-- 5 ─ held up -->
     <div class="sec-label">Held Up During the Sell-off</div>
     <div class="rot-tiles" id="rotHold"></div>
+
+    <!-- 6 ─ weekly timeline (appears once ≥2 readings exist) -->
+    <div id="rotTimelineWrap" hidden>
+      <div class="sec-label">Rotation Timeline · <span style="color:var(--muted);font-weight:400">5-day flow, week by week</span></div>
+      <div class="rot-heatwrap"><table class="rot-heat" id="rotHeat"></table></div>
+      <div class="hm-legend">
+        <span><i style="background:#2fd673"></i>Inflow</span>
+        <span><i style="background:#ff4d4d"></i>Outflow</span>
+        <span>💰 buying the dip</span>
+        <span>⚠️ selling into strength</span>
+        <span>·NEW· first appearance</span>
+      </div>
+    </div>
+    <div id="rotTimelineNote" class="rot-timeline-note"></div>
   </div>
 
   <div id="indPopover"></div>
@@ -901,7 +950,16 @@ const SCAN = {
   // editorial ribbon one-liner — may use {{tokens}}
   ribbonMain: 'McClellan {{mcclellan}} (falling) · Power Hour {{power}} · Market Tide <b style="color:var(--fear)">{{tide}}</b>',
   momentum:   { tag: "STRONG BULLISH", score: "+3", was: "55–60%" },
-  powerDetail: "SPY −0.24% in the last hour on 1.95× average volume (28% of the day's range).",
+  // Power Hour — final-hour tape read. Lives INSIDE the gauge card (not a
+  // core indicator). Shown ONLY when the feed posts it; set show:false on
+  // days it isn't mentioned and the block disappears. {{power}} / {{power_detail}}
+  // tokens still resolve from here for the ribbon and plays.
+  powerHour: {
+    show:   true,
+    tag:    "DISTRIBUTION",     // headline state
+    state:  "red",             // green | amber | red
+    detail: "SPY −0.24% in the last hour on 1.95× average volume (28% of the day's range) — the close was sold.",
+  },
 };
 
 /* derived aliases — downstream gauge code reads these */
@@ -924,8 +982,6 @@ const indicators = [
     note:"Rose to {{putcall}} from {{putcall_prev}} into the close — hedging demand kept building through the final hour. Put/Call has been above 1.0 all session and is now at its session high. Persistent, building options-market fear." },
   { name:"SMFI", prevNum:50820, curNum:50928, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
     note:"{{smfi}} at the close, a touch firmer than {{smfi_prev}} earlier. Smart money flow is flat-to-steady — no capitulation, no rush for the exits. Institutions are holding, even as the options market hedges and Power Hour shows distribution." },
-  { name:"Power Hour", text:true, prevVal:"—", val:"DISTRIBUTION", prevTag:"NEW", tag:"DISTRIBUTION", prevS:"amber", s:"red",
-    note:"New on the board: the final-hour tape read. {{power_detail}} A distribution print means the close was sold — institutions offloading into the last hour on above-average volume. It corroborates the negative Market Tide: the day ended with sellers in control of the tape." },
   { name:"Market Tide", prevNum:-1524, curNum:-1484, fmt:{dec:0, pre:"$", suf:"M", comma:true}, prevTag:"NEGATIVE", tag:"NEGATIVE", prevS:"red", s:"red",
     note:"Closed at {{tide}}, a shade less negative than the {{tide_prev}} mid-session reading but still deeply bearish. Net bearish premium flow held near its session lows into the bell — one of the larger single-day flows of the recent period. The size, not the small intraday improvement, is the signal." },
 ];
@@ -1021,12 +1077,14 @@ function buildTokens() {
     ghostComposite: SCAN.composite.ghost,
     green: indicators.filter(i => i.s === "green").length,
     total: indicators.length,
-    power_detail: SCAN.powerDetail || "",
+    // Power Hour is not a core indicator — its tokens come straight from SCAN.
+    power: (SCAN.powerHour && SCAN.powerHour.show) ? SCAN.powerHour.tag : "—",
+    power_detail: (SCAN.powerHour && SCAN.powerHour.detail) || "",
   };
   const KEY = {
     "VIX":"vix", "MOVE":"move", "McClellan":"mcclellan", "Hindenburg":"hindenburg",
     "% > 200 DMA":"dma200", "Put/Call":"putcall", "SMFI":"smfi",
-    "Power Hour":"power", "Market Tide":"tide",
+    "Market Tide":"tide",
   };
   indicators.forEach(d => {
     const k = KEY[d.name];
@@ -1251,6 +1309,15 @@ window.addEventListener("scroll", () => { if (activeCard) closePopover(); }, { p
 renderCards(indicators, "indGrid", true);
 renderCards(concentration, "concGrid", false);
 
+// Power Hour — final-hour tape read. Same card design + TAP popover as the
+// core indicators, but rendered inside the gauge card (under the scale legend)
+// and ONLY when the feed posts it (SCAN.powerHour.show).
+if (SCAN.powerHour && SCAN.powerHour.show) {
+  const ph = SCAN.powerHour;
+  renderCards([{ name: "Power Hour", text: true, val: ph.tag, tag: ph.tag, s: ph.state, note: ph.detail }], "powerHourSlot", false);
+  document.getElementById("powerHourSlot").hidden = false;
+}
+
 function resetCards() {
   cardAnims.forEach(a => {
     const d = a.d;
@@ -1349,7 +1416,7 @@ function renderRotation(data) {
   if (!snaps.length) return renderRotationEmpty("No rotation readings yet.");
   const latest = snaps[snaps.length - 1];
 
-  // regime banner
+  // ── 1. headline verdict banner ──
   const up = /BULL|INFLOW|RALLY|RISK-ON/i.test(latest.regime);
   const pctSell = Math.round(latest.selling / latest.total * 100);
   const bm = latest.benchmark;
@@ -1360,7 +1427,81 @@ function renderRotation(data) {
        ${bm ? `<span class="rr-bench">${bm.sym} <b>${rpct(bm.d1)}</b> 1D · ${rpct(bm.d5)} 5D · ${rpct(bm.d20)} 20D</span>` : ""}
      </div>`;
 
-  // heatmap — rows = union of syms (ordered by latest), cols = dates
+  // ── flow universe: only sectors with a measured 5-day dollar flow ──
+  const withFlow = latest.flows.filter(f => f.f5 != null && isFinite(f.f5));
+  const inflow   = withFlow.filter(f => f.f5 > 0);
+  const outflow  = withFlow.filter(f => f.f5 < 0);
+  const biggestOut = outflow.slice().sort((a, b) => a.f5 - b.f5)[0];                       // most negative
+  const topDip = withFlow.filter(f => f.signal === "BUYING THE DIP")
+                         .sort((a, b) => (b.f5 || 0) - (a.f5 || 0))[0];
+
+  // ── 2. at-a-glance KPI cards ──
+  const kpi = (lbl, val, tone, sub) =>
+    `<div class="kpi kpi-${tone}"><div class="k-lbl">${lbl}</div>` +
+    `<div class="k-val ${tone}">${val}</div><div class="k-sub">${sub}</div></div>`;
+  let kpis = "";
+  if (biggestOut) kpis += kpi("Largest 5-day outflow", `${biggestOut.sym} ${fmtFlow(biggestOut.f5)}`, "neg",
+                              `${biggestOut.name} · ${biggestOut.signal ? biggestOut.signal.toLowerCase() : "distribution"}`);
+  if (topDip)     kpis += kpi("Smart money buying the dip", `${topDip.sym} ${fmtFlow(topDip.f5)}`, "pos",
+                              `${topDip.name} · price ${rpct(topDip.d1)} on the day`);
+  kpis += kpi("Net 5-day flow", `${inflow.length} in · ${outflow.length} out`,
+              inflow.length >= outflow.length ? "pos" : "neg",
+              `${withFlow.length} sectors with measured flow`);
+  document.getElementById("rotKpis").innerHTML = kpis;
+
+  // ── 3. HERO: net-flow diverging bar chart (largest movers, both sides) ──
+  document.getElementById("rotFlowDate").textContent = shortDate(latest.date) + " close · 5-day net flow";
+  const TOPN = 18;
+  const ranked = withFlow.slice()
+    .sort((a, b) => Math.abs(b.f5) - Math.abs(a.f5))   // pick the biggest movers
+    .slice(0, TOPN)
+    .sort((a, b) => b.f5 - a.f5);                       // then signed order for the diverging look
+  const maxAbs = Math.max(...ranked.map(f => Math.abs(f.f5)), 1);
+  document.getElementById("rotFlow").innerHTML =
+    `<div class="flow-axis"><span></span><div class="fa-track">` +
+    `<span class="fa-out">← rotating out</span><span class="fa-zero">0</span><span class="fa-in">rotating in →</span></div></div>` +
+    ranked.map(f => {
+      const pos = f.f5 >= 0;
+      const w = (Math.abs(f.f5) / maxAbs * 50).toFixed(1);
+      const bar = pos
+        ? `<div class="fb-bar pos" style="left:50%;width:${w}%"></div>`
+        : `<div class="fb-bar neg" style="right:50%;width:${w}%"></div>`;
+      return `<div class="flow-row" title="${f.name} — 5D net flow ${fmtFlow(f.f5)} · price 1D ${rpct(f.d1)}">` +
+             `<span class="fb-sym">${f.sym}</span>` +
+             `<div class="fb-track">${bar}</div>` +
+             `<span class="fb-val ${pos ? "pos" : "neg"}">${fmtFlow(f.f5)}</span>` +
+             `<span class="fb-sig">${sigIcon(f.signal)}${f.new ? '<i class="fb-new">N</i>' : ""}</span></div>`;
+    }).join("") +
+    (withFlow.length > TOPN ? `<div class="flow-foot">Showing the ${TOPN} largest of ${withFlow.length} measured sector flows.</div>` : "");
+
+  // ── 4. 14-day conviction ──
+  const convRow = (c, color) =>
+    `<div class="conv-row"><span class="cv-sym">${c.sym}</span><span class="cv-name">${c.name}</span>` +
+    `<div class="conv-bar" style="width:${(c.days / 14 * 64).toFixed(0)}px;background:${color}"></div>` +
+    `<span class="cv-meta">${c.days}/14 · ${fmtFlow(c.flow)}</span></div>`;
+  const cv = latest.conviction || { accumulation: [], distribution: [] };
+  document.getElementById("rotAcc").innerHTML  = cv.accumulation.map(c => convRow(c, "var(--greed)")).join("");
+  document.getElementById("rotDist").innerHTML = cv.distribution.map(c => convRow(c, "var(--fear)")).join("");
+
+  // ── 5. held up during the sell-off ──
+  document.getElementById("rotHold").innerHTML = (latest.holding_up || [])
+    .map(h => `<div class="rot-tile"><b>${h.sym}</b><span>${rpct(h.chg)}</span></div>`).join("");
+
+  // ── 6. weekly timeline heatmap — only meaningful once ≥2 readings exist ──
+  if (snaps.length >= 2) {
+    document.getElementById("rotTimelineWrap").hidden = false;
+    document.getElementById("rotTimelineNote").innerHTML = "";
+    renderHeatmap(snaps);
+  } else {
+    document.getElementById("rotTimelineWrap").hidden = true;
+    document.getElementById("rotTimelineNote").innerHTML =
+      `<div class="rot-empty">📈 Weekly rotation timeline<br><span>Builds here automatically as more readings are added — one column per week.</span></div>`;
+  }
+}
+
+// Heatmap timeline — rows = union of syms (ordered by latest), cols = dates.
+function renderHeatmap(snaps) {
+  const latest = snaps[snaps.length - 1];
   const dates = snaps.map(s => s.date);
   const order = latest.flows.slice().sort((a, b) => {
     if (a.dir !== b.dir) return a.dir === "in" ? -1 : 1;
@@ -1370,8 +1511,8 @@ function renderRotation(data) {
   const rows = order.map(f => ({ sym: f.sym, name: f.name }));
   snaps.forEach(s => s.flows.forEach(f => { if (!seen.has(f.sym)) { seen.add(f.sym); rows.push({ sym: f.sym, name: f.name }); } }));
 
-  let head = `<thead><tr><th>Sector</th>${dates.map(d => `<th>${shortDate(d)}</th>`).join("")}</tr></thead>`;
-  let body = "<tbody>" + rows.map(r => {
+  const head = `<thead><tr><th>Sector</th>${dates.map(d => `<th>${shortDate(d)}</th>`).join("")}</tr></thead>`;
+  const body = "<tbody>" + rows.map(r => {
     const cells = snaps.map(s => {
       const f = s.flows.find(x => x.sym === r.sym);
       if (!f) return `<td></td>`;
@@ -1383,33 +1524,11 @@ function renderRotation(data) {
     return `<tr><td class="hm-sym"><b>${r.sym}</b><span>${r.name}</span></td>${cells}</tr>`;
   }).join("") + "</tbody>";
   document.getElementById("rotHeat").innerHTML = head + body;
-
-  // money in / out lists (latest)
-  document.getElementById("rotFlowDate").textContent = shortDate(latest.date) + " close";
-  const byMag = (a, b) => Math.abs(b.f5 ?? 0) - Math.abs(a.f5 ?? 0);
-  const flowRow = f =>
-    `<div class="rot-row"><span class="rr-sym">${f.sym}</span><span class="rr-name">${f.name}</span>` +
-    `<span class="rr-flow ${rcls(f.f5 ?? 0)}">${fmtFlow(f.f5)}</span>` +
-    `<span class="rr-pct ${rcls(f.d1)}">${rpct(f.d1)}</span>${flowBadges(f)}</div>`;
-  document.getElementById("rotIn").innerHTML  = latest.flows.filter(f => f.dir === "in").sort(byMag).map(flowRow).join("");
-  document.getElementById("rotOut").innerHTML = latest.flows.filter(f => f.dir === "out").sort(byMag).map(flowRow).join("");
-
-  // 14-day conviction
-  const convRow = (c, color) =>
-    `<div class="conv-row"><span class="cv-sym">${c.sym}</span><span class="cv-name">${c.name}</span>` +
-    `<div class="conv-bar" style="width:${(c.days / 14 * 64).toFixed(0)}px;background:${color}"></div>` +
-    `<span class="cv-meta">${c.days}/14 · ${fmtFlow(c.flow)}</span></div>`;
-  const cv = latest.conviction || { accumulation: [], distribution: [] };
-  document.getElementById("rotAcc").innerHTML  = cv.accumulation.map(c => convRow(c, "var(--greed)")).join("");
-  document.getElementById("rotDist").innerHTML = cv.distribution.map(c => convRow(c, "var(--fear)")).join("");
-
-  // held up
-  document.getElementById("rotHold").innerHTML = (latest.holding_up || [])
-    .map(h => `<div class="rot-tile"><b>${h.sym}</b><span>${rpct(h.chg)}</span></div>`).join("");
 }
+
 function renderRotationEmpty(msg) {
   document.getElementById("rotRegime").innerHTML = `<div class="rot-empty">📡 ${msg}<br><span>Add a reading to data/rotation_history.json and it renders here.</span></div>`;
-  ["rotHeat","rotIn","rotOut","rotAcc","rotDist","rotHold"].forEach(id => { const e = document.getElementById(id); if (e) e.innerHTML = ""; });
+  ["rotKpis","rotFlow","rotAcc","rotDist","rotHold","rotHeat"].forEach(id => { const e = document.getElementById(id); if (e) e.innerHTML = ""; });
 }
 let rotationLoaded = false;
 function loadRotation() {
