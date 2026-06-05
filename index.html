@@ -399,6 +399,28 @@
     .pip { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
     /* Power Hour — optional indicator card placed inside the gauge card */
     .ph-slot { width: 100%; max-width: 340px; margin-top: 14px; }
+    /* Analyst Read — narrative panel on the rotation view */
+    .rot-read {
+      border: 1px solid var(--line); border-left: 3px solid #56a8ff;
+      background: linear-gradient(180deg, rgba(86,168,255,.06), var(--panel2));
+      border-radius: 12px; padding: 15px 18px; margin-bottom: 24px;
+    }
+    .rd-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: #56a8ff; margin-bottom: 8px; }
+    .rd-thesis { font-family: 'Chakra Petch', sans-serif; font-weight: 700; font-size: 16px; line-height: 1.3; margin-bottom: 12px; }
+    .rd-points { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .rd-points li { font-size: 12px; line-height: 1.55; color: #cdd6e2; padding-left: 17px; position: relative; }
+    .rd-points li::before { content: "▸"; position: absolute; left: 0; color: #56a8ff; }
+    .rd-points li b { color: var(--txt); }
+    .rd-watch { margin-top: 13px; padding-top: 12px; border-top: 1px dashed var(--line); font-size: 11px; color: var(--muted); line-height: 1.5; }
+    .rd-watch b { color: var(--amber); }
+    /* point-of-use callout (e.g. distribution-into-strength under Held Up) */
+    .rot-note {
+      display: flex; gap: 10px; align-items: flex-start;
+      border: 1px solid rgba(255,200,61,.28); border-radius: 11px;
+      background: rgba(255,200,61,.05); padding: 12px 15px; margin: 4px 0 24px;
+    }
+    .rot-note .rn-ico { font-size: 15px; line-height: 1.4; flex-shrink: 0; }
+    .rot-note p { font-size: 12px; line-height: 1.6; color: #cdd6e2; }
 
     /* play card */
     .play-card { padding: 20px 18px; display: flex; flex-direction: column; }
@@ -905,6 +927,9 @@
     <!-- 2 ─ at-a-glance KPI cards (the three numbers that matter) -->
     <div class="rot-kpis" id="rotKpis"></div>
 
+    <!-- 2b ─ analyst read (the story behind the numbers) -->
+    <div id="rotRead"></div>
+
     <!-- 3 ─ HERO: net-flow diverging bar chart -->
     <div class="sec-label">Where the Money Moved · <span id="rotFlowDate" style="color:var(--muted);font-weight:400"></span></div>
     <div class="rot-intro">Net institutional flow by sector, past 5 sessions. Bars grow <b style="color:var(--greed)">right</b> when money rotates <b>in</b>, <b style="color:var(--fear)">left</b> when it rotates <b>out</b> — length is the dollar size of the flow. 💰 buying the dip · ⚠️ selling into strength.</div>
@@ -920,6 +945,7 @@
     <!-- 5 ─ held up -->
     <div class="sec-label">Held Up During the Sell-off</div>
     <div class="rot-tiles" id="rotHold"></div>
+    <div id="rotHoldNote"></div>
 
     <!-- 6 ─ weekly timeline (appears once ≥2 readings exist) -->
     <div id="rotTimelineWrap" hidden>
@@ -1462,6 +1488,16 @@ function renderRotation(data) {
               `${withFlow.length} sectors with measured flow`);
   document.getElementById("rotKpis").innerHTML = kpis;
 
+  // ── 2b. analyst read (the story behind the numbers) ──
+  const rd = latest.read;
+  document.getElementById("rotRead").innerHTML = rd ? (
+    `<div class="rot-read"><div class="rd-eyebrow">📋 The Rotation Read</div>` +
+    `<div class="rd-thesis">${rd.headline}</div>` +
+    (rd.points && rd.points.length ? `<ul class="rd-points">${rd.points.map(p => `<li><b>${p.t}.</b> ${p.d}</li>`).join("")}</ul>` : "") +
+    (rd.watch ? `<div class="rd-watch"><b>Watch next:</b> ${rd.watch}</div>` : "") +
+    `</div>`
+  ) : "";
+
   // ── 3. HERO: net-flow diverging bar chart (largest movers, both sides) ──
   document.getElementById("rotFlowDate").textContent = shortDate(latest.date) + " close · 5-day net flow";
   const TOPN = 18;
@@ -1496,9 +1532,11 @@ function renderRotation(data) {
   document.getElementById("rotAcc").innerHTML  = cv.accumulation.map(c => convRow(c, "var(--greed)")).join("");
   document.getElementById("rotDist").innerHTML = cv.distribution.map(c => convRow(c, "var(--fear)")).join("");
 
-  // ── 5. held up during the sell-off ──
+  // ── 5. held up during the sell-off (+ optional "distribution into strength" note) ──
   document.getElementById("rotHold").innerHTML = (latest.holding_up || [])
     .map(h => `<div class="rot-tile" data-tip="${h.name} · held ${rpct(h.chg)} during the sell-off"><b>${h.sym}</b><span>${rpct(h.chg)}</span></div>`).join("");
+  document.getElementById("rotHoldNote").innerHTML = latest.holdNote
+    ? `<div class="rot-note"><span class="rn-ico">⚠️</span><p>${latest.holdNote}</p></div>` : "";
 
   // ── 6. weekly timeline heatmap — only meaningful once ≥2 readings exist ──
   if (snaps.length >= 2) {
@@ -1541,7 +1579,7 @@ function renderHeatmap(snaps) {
 
 function renderRotationEmpty(msg) {
   document.getElementById("rotRegime").innerHTML = `<div class="rot-empty">📡 ${msg}<br><span>Add a reading to data/rotation_history.json and it renders here.</span></div>`;
-  ["rotKpis","rotFlow","rotAcc","rotDist","rotHold","rotHeat"].forEach(id => { const e = document.getElementById(id); if (e) e.innerHTML = ""; });
+  ["rotKpis","rotRead","rotFlow","rotAcc","rotDist","rotHold","rotHoldNote","rotHeat"].forEach(id => { const e = document.getElementById(id); if (e) e.innerHTML = ""; });
 }
 let rotationLoaded = false;
 function loadRotation() {
