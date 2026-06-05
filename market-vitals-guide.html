@@ -22,6 +22,17 @@
 @page{size:A4 landscape;margin:0;}
 body{font-family:'IBM Plex Sans',system-ui,sans-serif;background:#05070b;color:var(--txt);-webkit-font-smoothing:antialiased;}
 
+/* ─────────── SCREEN: center the deck (ignored when printing) ─────────── */
+@media screen{
+  body{ display:flex; flex-direction:column; align-items:center; gap:24px; padding:32px 16px; min-height:100vh; }
+  .slide{ box-shadow:0 18px 50px rgba(0,0,0,.55); border:1px solid #182231; border-radius:6px; }
+  /* shrink to fit narrow viewports while keeping the fixed internal layout */
+  @media (max-width:1140px){
+    .slide{ transform:scale(calc((100vw - 32px) / 297mm)); transform-origin:top center;
+             margin-bottom:calc((210mm) * ((100vw - 32px) / 297mm - 1)); }
+  }
+}
+
 /* ─────────── SLIDE FRAME ─────────── */
 .slide{
   width:297mm; height:210mm; position:relative; overflow:hidden;
