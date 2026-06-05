@@ -965,28 +965,6 @@
     </div>
   </div>
 
-  <!-- CYCLE PEAK DOOM CLOCK — weekly cycle-top gauge (countdown style).
-       Renders from SCAN.doomClock; set show:false to hide the whole card. -->
-  <div class="card doom-card" id="doomCard" hidden>
-    <div class="doom-head">
-      <span class="doom-eyebrow">🕛 Cycle Peak Doom Clock</span>
-      <span class="doom-phase" id="doomPhase">—</span>
-    </div>
-    <div class="doom-main">
-      <div class="doom-clock">
-        <div class="doom-time" id="doomTime">--:--</div>
-        <div class="doom-mid"><b id="doomMin">0</b> min to midnight</div>
-      </div>
-      <div class="doom-risk">
-        <div class="doom-risk-num" id="doomRisk">0%</div>
-        <div class="doom-risk-lbl">cycle peak risk · <span id="doomTrend"></span></div>
-      </div>
-    </div>
-    <div class="doom-track"><div class="doom-fill" id="doomFill"></div></div>
-    <div class="doom-cats" id="doomCats"></div>
-    <div class="doom-note">How late we are in the cycle — the conditions that cluster near major tops. A slow <b>weekly</b> gauge, <b>not</b> a trade signal, and it does <b>not</b> move the needle above. <span id="doomAsof" style="white-space:nowrap"></span></div>
-  </div>
-
   <!-- CONCENTRATION -->
   <div class="sec-label">Concentration &amp; Leadership · <span style="color:var(--fear2)">the actual market</span></div>
   <div class="conc-banner">
@@ -1006,6 +984,28 @@
       <span class="badge-bull" id="momBadge"></span>
     </div>
     <div id="bars"></div>
+  </div>
+
+  <!-- CYCLE PEAK DOOM CLOCK — weekly cycle-top gauge (countdown style), at the
+       bottom of the page. Renders from SCAN.doomClock; set show:false to hide. -->
+  <div class="card doom-card" id="doomCard" hidden>
+    <div class="doom-head">
+      <span class="doom-eyebrow">🕛 Cycle Peak Doom Clock</span>
+      <span class="doom-phase" id="doomPhase">—</span>
+    </div>
+    <div class="doom-main">
+      <div class="doom-clock">
+        <div class="doom-time" id="doomTime">--:--</div>
+        <div class="doom-mid"><b id="doomMin">0</b> min to midnight</div>
+      </div>
+      <div class="doom-risk">
+        <div class="doom-risk-num" id="doomRisk">0%</div>
+        <div class="doom-risk-lbl">cycle peak risk · <span id="doomTrend"></span></div>
+      </div>
+    </div>
+    <div class="doom-track"><div class="doom-fill" id="doomFill"></div></div>
+    <div class="doom-cats" id="doomCats"></div>
+    <div class="doom-note">How late we are in the cycle — the conditions that cluster near major tops. A slow <b>weekly</b> gauge, <b>not</b> a trade signal, and it does <b>not</b> move the Fear &amp; Greed needle. <span id="doomAsof" style="white-space:nowrap"></span></div>
   </div>
   </div><!-- /view-vitals -->
 
@@ -1467,7 +1467,6 @@ window.addEventListener("scroll", () => { if (activeCard) closePopover(); }, { p
 
 renderCards(indicators, "indGrid", true);
 renderCards(concentration, "concGrid", false);
-buildDoomClock();
 
 // Power Hour — final-hour tape read. Same card design + TAP popover as the
 // core indicators, but rendered inside the gauge card (under the scale legend)
@@ -1518,6 +1517,7 @@ function animateDoom() {
   tweenNumber(byId("doomRisk"), 0, dc.risk,          { dec: 0, suf: "%" }, 1400, 250);
   setTimeout(() => { byId("doomFill").style.width = dc.risk + "%"; }, 250);
 }
+buildDoomClock();   // build static chrome now that doomRiskColor is initialized
 
 function resetCards() {
   cardAnims.forEach(a => {
