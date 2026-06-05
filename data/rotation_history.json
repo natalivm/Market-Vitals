@@ -4,7 +4,7 @@
   "history": [
     {
       "date": "2026-06-05",
-      "ts": "2026-06-05T20:00:00Z",
+      "ts": "2026-06-05T21:15:00Z",
       "regime": "BROAD MARKET SELL-OFF",
       "selling": 33,
       "total": 41,
@@ -29,14 +29,14 @@
         ]
       },
       "holding_up": [
-        { "sym": "XLF",  "name": "Financials",       "chg": 0.30 },
-        { "sym": "XLV",  "name": "Healthcare",       "chg": 0.77 },
-        { "sym": "XLP",  "name": "Consumer Staples", "chg": 1.79 },
-        { "sym": "XLRE", "name": "Real Estate",      "chg": 0.83 },
-        { "sym": "XLU",  "name": "Utilities",        "chg": 1.00 },
-        { "sym": "KBE",  "name": "Banking",          "chg": 0.31 },
-        { "sym": "KRE",  "name": "Regional Banking", "chg": 0.32 },
-        { "sym": "MSOS", "name": "Cannabis",         "chg": 7.55 }
+        { "sym": "XLF",  "name": "Financials",       "chg": 0.21 },
+        { "sym": "XLV",  "name": "Healthcare",       "chg": 0.61 },
+        { "sym": "XLP",  "name": "Consumer Staples", "chg": 1.71 },
+        { "sym": "XLRE", "name": "Real Estate",      "chg": 0.68 },
+        { "sym": "XLU",  "name": "Utilities",        "chg": 0.93 },
+        { "sym": "KBE",  "name": "Banking",          "chg": 0.28 },
+        { "sym": "KRE",  "name": "Regional Banking", "chg": 0.27 },
+        { "sym": "MSOS", "name": "Cannabis",         "chg": 7.25 }
       ],
       "flows": [
         { "sym": "XLF",  "name": "Financials",            "tier": "core", "dir": "in",  "d1": 0.30,   "d5": 1.48,   "d20": 1.54,   "f1": -538.2, "f5": -1400,  "signal": "SELLING INTO STRENGTH" },
