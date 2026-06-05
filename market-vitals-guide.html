@@ -2,1259 +2,933 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Market Vitals — Trader's Intelligence Guide</title>
+<title>Market Vitals — How The Market Breathes</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:     #080b11;
-  --panel:  #0f1620;
-  --panel2: #131d2b;
-  --line:   #1d2735;
-  --txt:    #e6edf3;
-  --muted:  #7d8ba0;
-  --fear:   #ff4d4d;
-  --fear2:  #ff7a45;
-  --amber:  #ffc83d;
-  --greed:  #2fd673;
-  --greed2: #a8e05f;
-  --accent: #4d9fff;
+:root{
+  --bg:#080b11; --panel:#0f1620; --panel2:#131d2b; --panel3:#18243450;
+  --line:#1f2a3a; --txt:#e9eff5; --muted:#8492a6; --dim:#5a6678;
+  --fear:#ff4d4d; --fear2:#ff7a45; --amber:#ffc83d; --greed:#2fd673; --greed2:#a8e05f;
+  --accent:#56a8ff; --violet:#a98bff;
 }
-* { margin:0; padding:0; box-sizing:border-box; }
-
-@media print {
-  * { -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
-  .slide { page-break-after:always; break-after:page; }
-  .slide:last-child { page-break-after:avoid; break-after:avoid; }
+*{margin:0;padding:0;box-sizing:border-box;}
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
+  .slide{page-break-after:always;break-after:page;}
+  .slide:last-child{page-break-after:avoid;break-after:avoid;}
 }
-@page { size: A4 landscape; margin: 0; }
+@page{size:A4 landscape;margin:0;}
+body{font-family:'IBM Plex Sans',system-ui,sans-serif;background:#05070b;color:var(--txt);-webkit-font-smoothing:antialiased;}
 
-body { font-family:'IBM Plex Sans','Helvetica Neue',Arial,sans-serif; background:var(--bg); color:var(--txt); }
-
-/* ── Slide shell ── */
-.slide {
-  width:297mm; height:210mm;
-  display:flex; overflow:hidden; position:relative;
-  background:var(--bg);
+/* ─────────── SCREEN: center the deck (ignored when printing) ─────────── */
+@media screen{
+  body{ display:flex; flex-direction:column; align-items:center; gap:24px; padding:32px 16px; min-height:100vh; }
+  .slide{ box-shadow:0 18px 50px rgba(0,0,0,.55); border:1px solid #182231; border-radius:6px; }
+  /* shrink to fit narrow viewports while keeping the fixed internal layout */
+  @media (max-width:1140px){
+    .slide{ transform:scale(calc((100vw - 32px) / 297mm)); transform-origin:top center;
+             margin-bottom:calc((210mm) * ((100vw - 32px) / 297mm - 1)); }
+  }
 }
 
-/* ── Cover ── */
-.slide-cover {
-  flex-direction:column; align-items:center; justify-content:center;
-  background:radial-gradient(ellipse at 50% 60%, #0d1f35 0%, #080b11 70%);
+/* ─────────── SLIDE FRAME ─────────── */
+.slide{
+  width:297mm; height:210mm; position:relative; overflow:hidden;
+  background:radial-gradient(ellipse 120% 90% at 50% -10%, #0e1929 0%, #080b11 55%, #06080d 100%);
+  display:grid; grid-template-rows:auto 1fr auto;
 }
-.cover-eyebrow {
-  font-family:'IBM Plex Mono',monospace; font-size:8pt; letter-spacing:.18em;
-  color:var(--accent); text-transform:uppercase; margin-bottom:10px;
-}
-.cover-title {
-  font-family:'Chakra Petch','Courier New',monospace;
-  font-size:38pt; font-weight:700; letter-spacing:.06em;
-  color:var(--txt); text-align:center; line-height:1;
-}
-.cover-title span { color:var(--accent); }
-.cover-sub {
-  font-size:11pt; color:var(--muted); margin-top:8px; letter-spacing:.04em;
-}
-.cover-gauge { margin:18px 0 10px; }
-.cover-verdict {
-  display:flex; gap:16px; align-items:center; margin-top:6px;
-}
-.v-chip {
-  font-family:'IBM Plex Mono',monospace; font-size:8pt;
-  padding:4px 10px; border-radius:4px; letter-spacing:.08em;
-}
-.v-fear   { background:#1a0a0a; color:var(--fear2); border:1px solid var(--fear2); }
-.v-greed  { background:#0a1a10; color:var(--greed); border:1px solid var(--greed); }
-.v-arrow  { color:var(--muted); font-size:14pt; }
-.cover-footnote {
-  position:absolute; bottom:14px;
-  font-family:'IBM Plex Mono',monospace; font-size:7pt; color:var(--muted);
-  letter-spacing:.08em;
+.slide::before{ /* subtle grid texture */
+  content:""; position:absolute; inset:0;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:34px 34px; opacity:.04; pointer-events:none;
 }
 
-/* ── Content slides ── */
-.left-panel {
-  width:110mm; min-width:110mm;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  padding:14px 10px;
-  border-right:1px solid var(--line);
-  background:linear-gradient(180deg,#0a0f18 0%,#080b11 100%);
-  position:relative;
+/* ─────────── HEADER BAND ─────────── */
+.hd{ padding:12mm 16mm 5mm; position:relative; z-index:2; }
+.hd-eyebrow{
+  display:inline-flex; align-items:center; gap:9px;
+  font-family:'IBM Plex Mono',monospace; font-size:9.5pt; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--accent); margin-bottom:7px;
 }
-.right-panel {
-  flex:1; padding:20px 24px; display:flex; flex-direction:column;
-  justify-content:flex-start; gap:0;
+.hd-eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);}
+.hd-eyebrow .num{ color:var(--dim); margin-left:4px; }
+.hd-title{
+  font-family:'Chakra Petch',sans-serif; font-weight:700; font-size:30pt;
+  line-height:1; letter-spacing:.01em; color:var(--txt);
 }
+.hd-def{ font-size:13pt; color:var(--muted); margin-top:8px; max-width:235mm; line-height:1.45; font-weight:300;}
+.hd-def b{color:var(--txt); font-weight:500;}
+.hd-rule{ height:2px; width:100%; margin-top:9px;
+  background:linear-gradient(90deg, var(--accent) 0%, var(--accent) 55px, var(--line) 55px, var(--line) 100%);}
 
-/* Left panel elements */
-.gauge-label {
-  font-family:'IBM Plex Mono',monospace; font-size:7pt; letter-spacing:.14em;
-  color:var(--muted); text-transform:uppercase; margin-bottom:8px;
-}
-.gauge-value {
-  font-family:'Chakra Petch','Courier New',monospace;
-  font-size:22pt; font-weight:700; color:var(--txt); line-height:1;
-  margin-top:6px;
-}
-.gauge-value.fear   { color:var(--fear); }
-.gauge-value.fear2  { color:var(--fear2); }
-.gauge-value.amber  { color:var(--amber); }
-.gauge-value.greed  { color:var(--greed2); }
-.gauge-value.eg     { color:var(--greed); }
-.status-tag {
-  display:inline-block; margin-top:6px;
-  font-family:'IBM Plex Mono',monospace; font-size:7.5pt; letter-spacing:.12em;
-  padding:3px 9px; border-radius:3px; text-transform:uppercase;
-}
-.tag-green  { background:#0d2118; color:var(--greed);  border:1px solid #1a4a2e; }
-.tag-amber  { background:#1e1600; color:var(--amber);  border:1px solid #4a3500; }
-.tag-red    { background:#1e0808; color:var(--fear);   border:1px solid #4a1010; }
-.tag-blue   { background:#0a1428; color:var(--accent); border:1px solid #1a3060; }
+/* ─────────── MAIN STAGE ─────────── */
+.stage{ position:relative; z-index:2; padding:2mm 16mm; display:flex; align-items:center; justify-content:center; gap:14mm; }
+.stage.col{flex-direction:column; gap:6mm;}
 
-/* Right panel typography */
-.slide-eyebrow {
-  font-family:'IBM Plex Mono',monospace; font-size:7pt; letter-spacing:.16em;
-  color:var(--accent); text-transform:uppercase; margin-bottom:5px;
-}
-.slide-title {
-  font-family:'Chakra Petch','Courier New',monospace;
-  font-size:18pt; font-weight:700; color:var(--txt); line-height:1.1;
-  margin-bottom:3px;
-}
-.slide-sub {
-  font-size:8.5pt; color:var(--muted); font-style:italic; margin-bottom:10px;
-  border-bottom:1px solid var(--line); padding-bottom:8px;
-}
-.section-heading {
-  font-family:'IBM Plex Mono',monospace; font-size:7pt; letter-spacing:.14em;
-  color:var(--accent); text-transform:uppercase; margin:9px 0 4px;
-}
-.levels-table { width:100%; border-collapse:collapse; margin-bottom:6px; }
-.levels-table td {
-  padding:2.5px 6px; font-size:8pt; border-bottom:1px solid #111a25;
-}
-.levels-table td:first-child {
-  font-family:'IBM Plex Mono',monospace; font-size:7.5pt; white-space:nowrap;
-  width:34%;
-}
-.levels-table td:last-child { color:var(--muted); font-size:7.5pt; }
-.l-green { color:var(--greed); }
-.l-lime  { color:var(--greed2); }
-.l-amber { color:var(--amber); }
-.l-red   { color:var(--fear2); }
-.l-danger{ color:var(--fear); }
+/* big hero metaphor box */
+.hero{ flex:0 0 auto; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.hero-cap{ font-family:'IBM Plex Mono',monospace; font-size:9.5pt; letter-spacing:.16em; text-transform:uppercase; color:var(--dim); margin-top:10px;}
 
-.body-text {
-  font-size:8pt; line-height:1.55; color:#c8d4e0; margin-bottom:6px;
-}
-.watch-list { list-style:none; padding:0; margin:0; }
-.watch-list li {
-  font-size:7.5pt; line-height:1.5; color:var(--muted); padding-left:12px;
-  position:relative; margin-bottom:2px;
-}
-.watch-list li::before { content:"›"; position:absolute; left:0; color:var(--accent); }
+/* explanation column */
+.explain{ flex:1; max-width:120mm; }
+.mech{ margin-bottom:6mm; }
+.mech-h{ font-family:'IBM Plex Mono',monospace; font-size:10pt; letter-spacing:.12em; text-transform:uppercase; color:var(--violet); margin-bottom:6px; display:flex; align-items:center; gap:7px;}
+.mech-h::before{content:"";width:14px;height:2px;background:var(--violet);}
+.mech-p{ font-size:11.5pt; line-height:1.6; color:#c5d0dc; font-weight:300;}
+.mech-p b,.mech-p em{ color:var(--txt); font-weight:500; font-style:normal;}
 
-.current-box {
-  margin-top:auto; padding:7px 10px; border-radius:5px;
-  background:var(--panel2); border:1px solid var(--line);
-  font-size:7.5pt;
-}
-.current-box strong {
-  font-family:'IBM Plex Mono',monospace; font-size:8pt; color:var(--txt);
-}
+/* watch list */
+.watch{ list-style:none; }
+.watch li{ font-size:11pt; line-height:1.5; color:var(--muted); padding-left:19px; position:relative; margin-bottom:5px; font-weight:300;}
+.watch li::before{ content:"▸"; position:absolute; left:2px; color:var(--accent); }
+.watch li b{color:var(--txt);font-weight:600;}
 
-/* ── Slide number ── */
-.slide-num {
-  position:absolute; bottom:8px; right:10px;
-  font-family:'IBM Plex Mono',monospace; font-size:6.5pt; color:#3a4a5a;
-  letter-spacing:.1em;
-}
+/* ─────────── FOOTER BAND ─────────── */
+.ft{ padding:5mm 16mm 11mm; position:relative; z-index:2; display:flex; align-items:center; gap:14px; }
+.ft-label{ font-family:'IBM Plex Mono',monospace; font-size:9pt; letter-spacing:.14em; text-transform:uppercase; color:var(--dim); white-space:nowrap;}
+.ft-read{ flex:1; font-size:11pt; color:var(--muted); line-height:1.45; font-weight:300; padding-left:14px; border-left:2px solid var(--line);}
+.ft-read b{color:var(--txt);font-weight:500;}
+.pagenum{ position:absolute; bottom:5mm; right:16mm; font-family:'IBM Plex Mono',monospace; font-size:10pt; color:var(--dim); letter-spacing:.12em; z-index:3;}
 
-/* ── Special layouts ── */
-.horiz-bar-wrap { width:100%; padding:0 8px; }
-.hbar-track {
-  height:16px; border-radius:8px; background:#1a2535;
-  position:relative; margin:4px 0 2px; overflow:visible;
-}
-.hbar-fill {
-  height:100%; border-radius:8px;
-  position:absolute; left:0; top:0;
-}
-.hbar-needle {
-  width:3px; height:24px; border-radius:2px; background:white;
-  position:absolute; top:-4px; transform:translateX(-50%);
-}
-.hbar-labels {
-  display:flex; justify-content:space-between;
-  font-family:'IBM Plex Mono',monospace; font-size:6.5pt; color:var(--muted);
-  margin-top:1px;
-}
-.hbar-row { margin-bottom:10px; }
-.hbar-title {
-  font-family:'IBM Plex Mono',monospace; font-size:7.5pt; color:var(--txt);
-  letter-spacing:.06em; margin-bottom:2px;
-}
-.hbar-sub { font-size:7pt; color:var(--muted); }
+/* status chips */
+.chip{ display:inline-flex; align-items:center; gap:6px; font-family:'IBM Plex Mono',monospace; font-size:9.5pt; letter-spacing:.08em; padding:5px 13px; border-radius:20px; text-transform:uppercase; font-weight:500;}
+.chip .pip{width:7px;height:7px;border-radius:50%;}
+.c-green{background:#0c2418;color:var(--greed);border:1px solid #1d5236;} .c-green .pip{background:var(--greed);box-shadow:0 0 6px var(--greed);}
+.c-amber{background:#231a00;color:var(--amber);border:1px solid #574000;} .c-amber .pip{background:var(--amber);box-shadow:0 0 6px var(--amber);}
+.c-red{background:#260a0a;color:var(--fear);border:1px solid #5a1818;} .c-red .pip{background:var(--fear);box-shadow:0 0 6px var(--fear);}
+.c-blue{background:#0a1830;color:var(--accent);border:1px solid #1c3a66;} .c-blue .pip{background:var(--accent);box-shadow:0 0 6px var(--accent);}
 
-/* ── Status badge (Hindenburg) ── */
-.status-badge {
-  width:90px; height:90px; border-radius:50%;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  font-family:'Chakra Petch',monospace; font-weight:700;
-}
-.badge-clear { background:#051208; border:3px solid var(--greed); color:var(--greed); }
-.badge-icon { font-size:28pt; line-height:1; }
-.badge-label { font-size:7.5pt; letter-spacing:.1em; margin-top:4px; }
+/* ════════ COVER ════════ */
+.cover{ grid-template-rows:1fr; place-items:center; text-align:center;
+  background:radial-gradient(ellipse 80% 70% at 50% 42%, #11233d 0%, #080b11 60%, #05070b 100%);}
+.cover-wrap{ z-index:2; display:flex; flex-direction:column; align-items:center; }
+.cv-eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:9pt; letter-spacing:.32em; text-transform:uppercase; color:var(--accent); margin-bottom:18px;}
+.cv-title{ font-family:'Chakra Petch',sans-serif; font-weight:700; font-size:62pt; line-height:.92; letter-spacing:.02em;}
+.cv-title .v{ background:linear-gradient(120deg,var(--greed2),var(--greed),var(--accent)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;}
+.cv-sub{ font-size:14pt; color:var(--muted); margin-top:14px; font-weight:300; letter-spacing:.02em;}
+.cv-pills{ display:flex; gap:10px; margin-top:30px; flex-wrap:wrap; justify-content:center; max-width:230mm;}
+.cv-pill{ font-family:'IBM Plex Mono',monospace; font-size:10pt; letter-spacing:.06em; padding:7px 14px; border-radius:8px; background:var(--panel); border:1px solid var(--line); color:var(--muted);}
+.cv-pill b{color:var(--txt);}
+.cv-foot{ position:absolute; bottom:11mm; font-family:'IBM Plex Mono',monospace; font-size:9.5pt; color:var(--dim); letter-spacing:.16em; z-index:2;}
 
-/* ── Flow indicator (Market Tide) ── */
-.flow-wrap { width:100%; padding:0 6px; }
-.flow-bar {
-  height:20px; border-radius:6px;
-  position:relative; background:#1a2535; margin:8px 0 4px;
-  overflow:hidden;
-}
-.flow-neg { position:absolute; right:50%; top:0; height:100%; background:var(--fear2); border-radius:6px 0 0 6px; }
-.flow-pos { position:absolute; left:50%; top:0; height:100%; background:var(--greed); border-radius:0 6px 6px 0; }
-.flow-center { position:absolute; left:50%; top:0; width:2px; height:100%; background:#fff; transform:translateX(-50%); }
-.flow-labels { display:flex; justify-content:space-between; font-family:'IBM Plex Mono',monospace; font-size:7pt; color:var(--muted); }
+/* ════════ step-flow (used by several mechanics) ════════ */
+.flow{ display:flex; align-items:stretch; gap:0; width:100%;}
+.flow-step{ flex:1; background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:11px 12px; position:relative;}
+.flow-step .fs-n{ font-family:'IBM Plex Mono',monospace; font-size:10pt; color:var(--accent); letter-spacing:.1em;}
+.flow-step .fs-t{ font-size:11.5pt; color:var(--txt); font-weight:500; margin-top:4px; line-height:1.3;}
+.flow-step .fs-d{ font-size:9.5pt; color:var(--muted); margin-top:4px; line-height:1.35; font-weight:300;}
+.flow-arrow{ display:flex; align-items:center; justify-content:center; width:32px; color:var(--accent); font-size:18pt; flex:0 0 32px;}
 
-/* ── Concentration bars ── */
-.conc-item { margin-bottom:9px; }
-.conc-top { display:flex; justify-content:space-between; margin-bottom:2px; }
-.conc-name { font-size:8pt; color:var(--txt); }
-.conc-val  { font-family:'IBM Plex Mono',monospace; font-size:8pt; }
-.conc-track { height:10px; border-radius:5px; background:#1a2535; position:relative; overflow:hidden; }
-.conc-fill  { height:100%; border-radius:5px; position:absolute; left:0; top:0; }
+/* scale label */
+.scale-rail{ position:relative; height:9px; border-radius:5px; width:100%; margin:6px 0 4px;}
+.scale-ticks{ display:flex; justify-content:space-between; font-family:'IBM Plex Mono',monospace; font-size:7pt; color:var(--dim);}
 
-/* ── Summary grid ── */
-.sum-grid { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:8px; }
-.sum-card {
-  padding:7px 10px; border-radius:5px; background:var(--panel2);
-  border:1px solid var(--line);
-}
-.sum-card-name { font-family:'IBM Plex Mono',monospace; font-size:6.5pt; color:var(--muted); letter-spacing:.1em; }
-.sum-card-val  { font-size:9pt; font-weight:600; color:var(--txt); margin-top:1px; }
-.sum-card-tag  { font-family:'IBM Plex Mono',monospace; font-size:6pt; margin-top:2px; }
+/* dot field */
+.field{ display:grid; grid-template-columns:repeat(20,1fr); gap:5px; width:340px;}
+.field .d{ width:11px; height:11px; border-radius:50%; }
+.d-on{ background:var(--greed2); box-shadow:0 0 4px #a8e05f55;}
+.d-off{ background:#212c3c; }
 
-/* ── Framework cards ── */
-.fw-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; width:100%; }
-.fw-card {
-  padding:10px; border-radius:6px; border:1px solid var(--line); background:var(--panel2);
-  display:flex; flex-direction:column; align-items:center;
-}
-.fw-emoji { font-size:20pt; margin-bottom:4px; }
-.fw-label { font-family:'Chakra Petch',monospace; font-size:9pt; font-weight:700; margin-bottom:6px; }
-.fw-move {
-  font-size:7pt; color:var(--muted); line-height:1.6;
-  width:100%; padding-left:0;
-}
-.fw-move li { list-style:none; padding-left:12px; position:relative; margin-bottom:1px; }
-.fw-move li::before { content:"▸"; position:absolute; left:0; }
-.zen  { border-color:#2a3a5a; } .zen  .fw-label { color:var(--accent); }
-.bull { border-color:#1a4a2e; } .bull .fw-label { color:var(--greed); }
-.bear { border-color:#4a1a1a; } .bear .fw-label { color:var(--fear2); }
+/* legend */
+.legend{ display:flex; gap:18px; margin-top:14px; font-size:10pt; color:var(--muted);}
+.legend span{display:inline-flex;align-items:center;gap:6px;}
+.legend i{width:12px;height:12px;border-radius:50%;display:inline-block;}
+
+/* mini metric card */
+.mcard{ background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:11px 14px;}
+.mcard .mc-l{ font-family:'IBM Plex Mono',monospace; font-size:10pt; letter-spacing:.1em; color:var(--dim); text-transform:uppercase;}
+.mcard .mc-v{ font-family:'Chakra Petch',sans-serif; font-size:18pt; font-weight:700; margin-top:3px;}
+.mcard .mc-d{ font-size:9pt; color:var(--muted); margin-top:2px; font-weight:300;}
 </style>
 </head>
 <body>
 
-<!-- ═══════════════════════════════ SLIDE 1 — COVER ═══════════════════════════════ -->
-<div class="slide slide-cover">
-  <div class="cover-eyebrow">Market Intelligence · June 2026</div>
-  <div class="cover-title">MARKET <span>VITALS</span></div>
-  <div class="cover-sub">8 Indicators · One Score · Complete Market Clarity</div>
+<!-- ══════════════════ 1 · COVER ══════════════════ -->
+<section class="slide cover">
+  <div class="cover-wrap">
+    <div class="cv-eyebrow">A Trader's Field Guide · June 2026</div>
+    <div class="cv-title">MARKET <span class="v">VITALS</span></div>
+    <div class="cv-sub">How the market breathes — 8 signals, one heartbeat, read like a pro</div>
+    <div class="cv-pills">
+      <span class="cv-pill">🌪 <b>VIX</b> · equity fear</span>
+      <span class="cv-pill">📉 <b>MOVE</b> · bond stress</span>
+      <span class="cv-pill">⚖️ <b>McClellan</b> · breadth tug</span>
+      <span class="cv-pill">📊 <b>200-Day</b> · structure</span>
+      <span class="cv-pill">🎚 <b>Put/Call</b> · hedging</span>
+      <span class="cv-pill">⚠️ <b>Hindenburg</b> · divergence</span>
+      <span class="cv-pill">🏦 <b>SMFI</b> · smart money</span>
+      <span class="cv-pill">🌊 <b>Market Tide</b> · live flow</span>
+    </div>
+  </div>
+  <div class="cv-foot">EDUCATIONAL — NOT INVESTMENT ADVICE · MARKET-VITALS</div>
+</section>
 
-  <div class="cover-gauge">
-    <svg viewBox="0 0 260 150" width="320" xmlns="http://www.w3.org/2000/svg">
-      <!-- Track -->
-      <path d="M 40,115 A 90,90 0 0,1 220,115" fill="none" stroke="#1a2535" stroke-width="14" stroke-linecap="butt"/>
-      <!-- Zone arcs -->
-      <path d="M 40,115   A 90,90 0 0,1 66.4,51.4"  fill="none" stroke="#ff4d4d" stroke-width="14"/>
-      <path d="M 66.4,51.4 A 90,90 0 0,1 115.9,26.1" fill="none" stroke="#ff7a45" stroke-width="14"/>
-      <path d="M 115.9,26.1 A 90,90 0 0,1 144.1,26.1" fill="none" stroke="#ffc83d" stroke-width="14"/>
-      <path d="M 144.1,26.1 A 90,90 0 0,1 193.6,51.4" fill="none" stroke="#a8e05f" stroke-width="14"/>
-      <path d="M 193.6,51.4 A 90,90 0 0,1 220,115"   fill="none" stroke="#2fd673" stroke-width="14"/>
-      <!-- Ghost needle (33) -->
-      <line x1="130" y1="115" x2="84.2" y2="37.5" stroke="#4a6080" stroke-width="1.5" stroke-dasharray="5,3" opacity="0.5"/>
-      <!-- Main needle (63) -->
-      <line x1="130" y1="115" x2="165.7" y2="32.4" stroke="white" stroke-width="3" stroke-linecap="round"/>
-      <circle cx="165.7" cy="32.4" r="3.5" fill="white"/>
-      <!-- Hub -->
-      <circle cx="130" cy="115" r="8" fill="#1d2735"/>
-      <circle cx="130" cy="115" r="4.5" fill="#e6edf3"/>
-      <!-- Zone labels -->
-      <text x="36"  y="134" fill="#ff4d4d" font-size="7" font-family="monospace" text-anchor="middle">EX FEAR</text>
-      <text x="72"  y="42"  fill="#ff7a45" font-size="7" font-family="monospace" text-anchor="middle">FEAR</text>
-      <text x="130" y="18"  fill="#ffc83d" font-size="7" font-family="monospace" text-anchor="middle">NEUTRAL</text>
-      <text x="188" y="42"  fill="#a8e05f" font-size="7" font-family="monospace" text-anchor="middle">GREED</text>
-      <text x="224" y="134" fill="#2fd673" font-size="7" font-family="monospace" text-anchor="middle">EX GREED</text>
-      <!-- Score -->
-      <text x="130" y="100" fill="#e6edf3" font-size="22" font-weight="bold" font-family="'Chakra Petch',monospace" text-anchor="middle">63</text>
-      <text x="130" y="112" fill="#a8e05f" font-size="7.5" font-family="monospace" text-anchor="middle" letter-spacing="2">CONSTRUCTIVE</text>
+<!-- ══════════════════ 2 · HOW THE COMPOSITE WORKS ══════════════════ -->
+<section class="slide">
+  <div class="hd">
+    <div class="hd-eyebrow"><span class="dot"></span> The Big Idea <span class="num">· 00</span></div>
+    <div class="hd-title">Eight Signals → One Heartbeat</div>
+    <div class="hd-def">Each vital answers a different question about the market. Blend them and you get a single <b>0–100 score</b> — no single number can be gamed, because they measure unrelated things.</div>
+    <div class="hd-rule"></div>
+  </div>
+  <div class="stage col" style="gap:9mm;">
+    <!-- funnel diagram -->
+    <svg viewBox="0 0 900 230" width="880" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;">
+      <defs>
+        <linearGradient id="zoneArc" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#ff4d4d"/><stop offset=".25" stop-color="#ff7a45"/>
+          <stop offset=".5" stop-color="#ffc83d"/><stop offset=".75" stop-color="#a8e05f"/>
+          <stop offset="1" stop-color="#2fd673"/>
+        </linearGradient>
+      </defs>
+      <!-- 8 source nodes on the left -->
+      <g font-family="'IBM Plex Mono',monospace" font-size="11" fill="#c5d0dc">
+        <g><rect x="10" y="6"   width="150" height="22" rx="6" fill="#0f1620" stroke="#1f2a3a"/><text x="20" y="21">VIX · vol</text></g>
+        <g><rect x="10" y="32"  width="150" height="22" rx="6" fill="#0f1620" stroke="#1f2a3a"/><text x="20" y="47">MOVE · bonds</text></g>
+        <g><rect x="10" y="58"  width="150" height="22" rx="6" fill="#0f1620" stroke="#1f2a3a"/><text x="20" y="73">McClellan</text></g>
+        <g><rect x="10" y="84"  width="150" height="22" rx="6" fill="#0f1620" stroke="#1f2a3a"/><text x="20" y="99">% &gt; 200-day</text></g>
+        <g><rect x="10" y="110" width="150" height="22" rx="6" fill="#0f1620" stroke="#1f2a3a"/><text x="20" y="125">Put/Call</text></g>
+        <g><rect x="10" y="136" width="150" height="22" rx="6" fill="#0f1620" stroke="#1f2a3a"/><text x="20" y="151">Hindenburg</text></g>
+        <g><rect x="10" y="162" width="150" height="22" rx="6" fill="#0f1620" stroke="#1f2a3a"/><text x="20" y="177">SMFI</text></g>
+        <g><rect x="10" y="188" width="150" height="22" rx="6" fill="#0f1620" stroke="#1f2a3a"/><text x="20" y="203">Market Tide</text></g>
+      </g>
+      <!-- connector lines converging -->
+      <g stroke="#2a3a52" stroke-width="1.4" fill="none">
+        <path d="M160 17 C 300 17, 360 108, 470 113"/>
+        <path d="M160 43 C 300 43, 360 110, 470 114"/>
+        <path d="M160 69 C 300 69, 360 111, 470 115"/>
+        <path d="M160 95 C 320 95, 380 113, 470 116"/>
+        <path d="M160 121 C 320 121, 380 115, 470 117"/>
+        <path d="M160 147 C 300 147, 360 116, 470 118"/>
+        <path d="M160 173 C 300 173, 360 118, 470 119"/>
+        <path d="M160 199 C 300 199, 360 120, 470 120"/>
+      </g>
+      <!-- synthesis hub -->
+      <circle cx="500" cy="115" r="34" fill="#0f1620" stroke="#56a8ff" stroke-width="1.5"/>
+      <text x="500" y="111" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#56a8ff">BLEND</text>
+      <text x="500" y="124" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#56a8ff">+ WEIGHT</text>
+      <path d="M534 115 H 590" stroke="#56a8ff" stroke-width="1.5" marker-end="url(#ah)"/>
+      <defs><marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#56a8ff"/></marker></defs>
+      <!-- gauge result -->
+      <g transform="translate(620,18)">
+        <path d="M20 175 A 110 110 0 0 1 240 175" fill="none" stroke="url(#zoneArc)" stroke-width="16" stroke-linecap="round"/>
+        <!-- needle to 63 -->
+        <line x1="130" y1="175" x2="173.6" y2="79.4" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/>
+        <circle cx="130" cy="175" r="9" fill="#1f2a3a"/><circle cx="130" cy="175" r="4.5" fill="#fff"/>
+        <text x="130" y="150" text-anchor="middle" font-family="'Chakra Petch',sans-serif" font-size="40" font-weight="700" fill="#fff">63</text>
+        <text x="130" y="168" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="10" letter-spacing="2" fill="#a8e05f">CONSTRUCTIVE</text>
+        <g font-family="'IBM Plex Mono',monospace" font-size="9" fill="#8492a6">
+          <text x="8" y="192" fill="#ff4d4d">0</text>
+          <text x="118" y="14">50</text>
+          <text x="236" y="192" fill="#2fd673">100</text>
+        </g>
+      </g>
     </svg>
-  </div>
-
-  <div class="cover-verdict">
-    <span class="v-chip v-fear">OPEN: FEAR 33</span>
-    <span class="v-arrow">→</span>
-    <span class="v-chip v-greed">CLOSE: CONSTRUCTIVE 63</span>
-  </div>
-
-  <div class="cover-footnote">A TRADER'S GUIDE TO MARKET VITALS · FOR EDUCATIONAL PURPOSES</div>
-</div>
-
-<!-- ═══════════════════════════════ SLIDE 2 — COMPOSITE SCORE ═══════════════════════════════ -->
-<div class="slide">
-  <div class="left-panel">
-    <div class="gauge-label">Composite Score</div>
-    <svg viewBox="0 0 260 148" width="230" xmlns="http://www.w3.org/2000/svg">
-      <path d="M 40,115 A 90,90 0 0,1 220,115" fill="none" stroke="#1a2535" stroke-width="13"/>
-      <path d="M 40,115    A 90,90 0 0,1 66.4,51.4"  fill="none" stroke="#ff4d4d" stroke-width="13"/>
-      <path d="M 66.4,51.4  A 90,90 0 0,1 115.9,26.1" fill="none" stroke="#ff7a45" stroke-width="13"/>
-      <path d="M 115.9,26.1 A 90,90 0 0,1 144.1,26.1" fill="none" stroke="#ffc83d" stroke-width="13"/>
-      <path d="M 144.1,26.1 A 90,90 0 0,1 193.6,51.4" fill="none" stroke="#a8e05f" stroke-width="13"/>
-      <path d="M 193.6,51.4 A 90,90 0 0,1 220,115"    fill="none" stroke="#2fd673" stroke-width="13"/>
-      <!-- ghost needles -->
-      <line x1="130" y1="115" x2="84.2"  y2="37.5" stroke="#ff7a45" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.4"/>
-      <line x1="130" y1="115" x2="146.9" y2="26.6" stroke="#ffc83d" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.4"/>
-      <!-- main needle -->
-      <line x1="130" y1="115" x2="165.7" y2="32.4" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-      <circle cx="165.7" cy="32.4" r="3" fill="white"/>
-      <circle cx="130" cy="115" r="7" fill="#1d2735"/>
-      <circle cx="130" cy="115" r="4" fill="#e6edf3"/>
-      <!-- zone labels -->
-      <text x="30"  y="130" fill="#ff4d4d" font-size="6.5" font-family="monospace" text-anchor="middle">0</text>
-      <text x="64"  y="46"  fill="#ff4d4d" font-size="6.5" font-family="monospace" text-anchor="middle">25</text>
-      <text x="113" y="20"  fill="#ffc83d" font-size="6.5" font-family="monospace" text-anchor="middle">45</text>
-      <text x="130" y="13"  fill="#ffc83d" font-size="6.5" font-family="monospace" text-anchor="middle">55</text>
-      <text x="194" y="46"  fill="#a8e05f" font-size="6.5" font-family="monospace" text-anchor="middle">75</text>
-      <text x="230" y="130" fill="#2fd673" font-size="6.5" font-family="monospace" text-anchor="middle">100</text>
-      <!-- center score -->
-      <text x="130" y="100" fill="#e6edf3" font-size="20" font-weight="bold" font-family="'Chakra Petch',monospace" text-anchor="middle">63</text>
-    </svg>
-    <div class="gauge-value greed">63</div>
-    <span class="status-tag tag-green">CONSTRUCTIVE</span>
-    <div style="margin-top:10px;font-size:7pt;color:var(--muted);font-family:monospace;text-align:center;">
-      <span style="color:var(--fear2);">33</span> open
-      &nbsp;→&nbsp;
-      <span style="color:var(--amber);">56</span> mid
-      &nbsp;→&nbsp;
-      <span style="color:var(--greed2);">63</span> close
+    <!-- the 5 zones strip -->
+    <div style="display:flex; width:880px; max-width:100%; gap:6px; align-items:stretch;">
+      <div style="flex:25; background:linear-gradient(#ff4d4d22,#ff4d4d08); border:1px solid #5a1818; border-radius:8px; padding:8px 10px;"><div style="font-family:'IBM Plex Mono',monospace;font-size:9pt;color:#ff4d4d;">0–25</div><div style="font-size:9pt;color:#e9eff5;font-weight:500;">Extreme Fear</div><div style="font-size:9pt;color:#8492a6;">Panic · contrarian buy</div></div>
+      <div style="flex:20; background:linear-gradient(#ff7a4522,#ff7a4508); border:1px solid #6b3010; border-radius:8px; padding:8px 10px;"><div style="font-family:'IBM Plex Mono',monospace;font-size:9pt;color:#ff7a45;">25–45</div><div style="font-size:9pt;color:#e9eff5;font-weight:500;">Fear</div><div style="font-size:9pt;color:#8492a6;">De-risking</div></div>
+      <div style="flex:10; background:linear-gradient(#ffc83d22,#ffc83d08); border:1px solid #574000; border-radius:8px; padding:8px 10px;"><div style="font-family:'IBM Plex Mono',monospace;font-size:9pt;color:#ffc83d;">45–55</div><div style="font-size:9pt;color:#e9eff5;font-weight:500;">Neutral</div><div style="font-size:9pt;color:#8492a6;">Balanced</div></div>
+      <div style="flex:20; background:linear-gradient(#a8e05f22,#a8e05f08); border:1px solid #4a6b1e; border-radius:8px; padding:8px 10px;"><div style="font-family:'IBM Plex Mono',monospace;font-size:9pt;color:#a8e05f;">55–75</div><div style="font-size:9pt;color:#e9eff5;font-weight:500;">Greed ◀ here</div><div style="font-size:9pt;color:#8492a6;">Most sustainable</div></div>
+      <div style="flex:25; background:linear-gradient(#2fd67322,#2fd67308); border:1px solid #1d5236; border-radius:8px; padding:8px 10px;"><div style="font-family:'IBM Plex Mono',monospace;font-size:9pt;color:#2fd673;">75–100</div><div style="font-size:9pt;color:#e9eff5;font-weight:500;">Extreme Greed</div><div style="font-size:9pt;color:#8492a6;">Overheated · risk</div></div>
     </div>
   </div>
-  <div class="right-panel">
-    <div class="slide-eyebrow">Overview · How It Works</div>
-    <div class="slide-title">The Composite Score</div>
-    <div class="slide-sub">A single 0–100 number built from 8 uncorrelated market signals</div>
+  <div class="ft">
+    <span class="ft-label">Read it like this</span>
+    <span class="ft-read"><b>Where you open vs. where you close tells the day's story.</b> On June 4 the market began at <b style="color:var(--fear2);">Fear 33</b>, passed through <b style="color:var(--amber);">Neutral 56</b>, and closed at <b style="color:var(--greed2);">Constructive 63</b> — a 30-point swing driven by a single signal flipping (Market Tide, slide 10).</span>
+  </div>
+  <div class="pagenum">02 / 14</div>
+</section>
 
-    <div class="section-heading">The Five Zones</div>
-    <table class="levels-table">
-      <tr><td class="l-danger">0 – 25</td><td>Extreme Fear</td><td>Panic selling; historically marks major bottoms. Contrarian buy signal.</td></tr>
-      <tr><td class="l-red">25 – 45</td><td>Fear</td><td>Defensive posturing; elevated hedging; markets de-risking.</td></tr>
-      <tr><td class="l-amber">45 – 55</td><td>Neutral</td><td>Balanced supply/demand; no strong directional commitment.</td></tr>
-      <tr><td class="l-lime">55 – 75</td><td>Greed / Constructive</td><td>Bullish momentum with broad participation. Most sustainable zone.</td></tr>
-      <tr><td class="l-green">75 – 100</td><td>Extreme Greed</td><td>Overheated; FOMO-driven; elevated risk of sharp pullback.</td></tr>
-    </table>
-
-    <div class="section-heading">Why A Composite?</div>
-    <p class="body-text">Any single indicator can be gamed or misleading in isolation. VIX can be calm while breadth collapses. Put/Call can read neutral while smart money is quietly exiting. By combining 8 uncorrelated signals — volatility, breadth, sentiment, and flow — the composite provides a fuller picture of true market health than any single metric can offer.</p>
-
-    <div class="section-heading">What Traders Watch</div>
-    <ul class="watch-list">
-      <li>Where you <em>open</em> vs. where you <em>close</em> tells the regime story for the day.</li>
-      <li>A move of ≥ 15 points intraday signals a regime transition — adjust position sizing.</li>
-      <li>Sustained readings above 55 with rising breadth = high-conviction bull setups.</li>
-      <li>Score below 45 at open with SMFI neutral = wait before adding risk.</li>
-    </ul>
-
-    <div class="current-box" style="margin-top:auto;">
-      <strong>June 4 · Intraday Journey:</strong>&nbsp;
-      <span style="color:var(--fear2);">FEAR 33</span> at open →
-      <span style="color:var(--amber);">NEUTRAL 56</span> at 15:01 →
-      <span style="color:var(--greed2);">CONSTRUCTIVE 63</span> at close.
-      A 30-point swing driven by the Market Tide flip.
+<!-- ══════════════════ 3 · VIX (insurance premium) ══════════════════ -->
+<section class="slide">
+  <div class="hd">
+    <div class="hd-eyebrow"><span class="dot"></span> Volatility · The Fear Gauge <span class="num">· 01 / 08</span></div>
+    <div class="hd-title">VIX — The Market's Insurance Premium</div>
+    <div class="hd-def">VIX is what traders <b>pay for crash protection</b> on the S&P 500. When everyone wants insurance at once, the premium spikes — so a high VIX literally means fear is expensive.</div>
+    <div class="hd-rule"></div>
+  </div>
+  <div class="stage col">
+    <!-- mechanic as a 4-step causal flow -->
+    <div class="flow" style="max-width:235mm;">
+      <div class="flow-step"><div class="fs-n">STEP 1</div><div class="fs-t">😟 Traders fear a drop</div><div class="fs-d">News, data, or a wobble spooks the market.</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="fs-n">STEP 2</div><div class="fs-t">🛡 They buy put options</div><div class="fs-d">Puts = the right to sell, i.e. portfolio insurance.</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="fs-n">STEP 3</div><div class="fs-t">💰 Premiums get expensive</div><div class="fs-d">Demand for protection bids option prices up.</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step" style="border-color:#3a5a82;"><div class="fs-n" style="color:#56a8ff;">RESULT</div><div class="fs-t">📈 VIX rises</div><div class="fs-d">VIX reads those prices as 30-day expected swing.</div></div>
     </div>
-  </div>
-  <div class="slide-num">2 / 14</div>
-</div>
-
-<!-- ═══════════════════════════════ SLIDE 3 — VIX ═══════════════════════════════ -->
-<div class="slide">
-  <div class="left-panel">
-    <div class="gauge-label">VIX — Equity Vol Index</div>
-    <svg viewBox="0 0 260 148" width="230" xmlns="http://www.w3.org/2000/svg">
-      <!-- track -->
-      <path d="M 40,115 A 90,90 0 0,1 220,115" fill="none" stroke="#1a2535" stroke-width="13"/>
-      <!-- CALM 0-40% green -->
-      <path d="M 40,115    A 90,90 0 0,1 102.2,29.4" fill="none" stroke="#2fd673" stroke-width="13"/>
-      <!-- ELEVATED 40-62.5% amber -->
-      <path d="M 102.2,29.4 A 90,90 0 0,1 164.4,31.9" fill="none" stroke="#ffc83d" stroke-width="13"/>
-      <!-- HIGH 62.5-100% red -->
-      <path d="M 164.4,31.9 A 90,90 0 0,1 220,115"   fill="none" stroke="#ff4d4d" stroke-width="13"/>
-      <!-- needle (15.37 → 38.4%) -->
-      <line x1="130" y1="115" x2="98" y2="30.9" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-      <circle cx="98" cy="30.9" r="3" fill="white"/>
-      <circle cx="130" cy="115" r="7" fill="#1d2735"/>
-      <circle cx="130" cy="115" r="4" fill="#e6edf3"/>
-      <!-- labels -->
-      <text x="40"  y="130" fill="#2fd673" font-size="6.5" font-family="monospace">0</text>
-      <text x="94"  y="24"  fill="#2fd673" font-size="6.5" font-family="monospace" text-anchor="middle">16</text>
-      <text x="160" y="26"  fill="#ffc83d" font-size="6.5" font-family="monospace" text-anchor="middle">25</text>
-      <text x="220" y="130" fill="#ff4d4d" font-size="6.5" font-family="monospace">40+</text>
-      <text x="130" y="98" fill="#e6edf3" font-size="18" font-weight="bold" font-family="'Chakra Petch',monospace" text-anchor="middle">15.37</text>
-    </svg>
-    <div class="gauge-value eg">15.37</div>
-    <span class="status-tag tag-green">CALM</span>
-  </div>
-  <div class="right-panel">
-    <div class="slide-eyebrow">Volatility · Signal 1 of 8</div>
-    <div class="slide-title">VIX — Equity Volatility Index</div>
-    <div class="slide-sub">The "fear gauge" — measures what options traders pay for downside protection on S&P 500</div>
-
-    <div class="section-heading">Key Levels</div>
-    <table class="levels-table">
-      <tr><td class="l-green">&lt; 16</td><td>CALM</td><td>Low hedging demand; market is complacent. Current: 15.37 ✓</td></tr>
-      <tr><td class="l-lime">16 – 20</td><td>Slightly Elevated</td><td>Increasing caution; monitor breadth indicators for confirmation.</td></tr>
-      <tr><td class="l-amber">20 – 25</td><td>Elevated</td><td>Active uncertainty; reduce position sizes, tighten stops.</td></tr>
-      <tr><td class="l-red">25 – 35</td><td>HIGH</td><td>Fear is present; institutional hedging in force.</td></tr>
-      <tr><td class="l-danger">&gt; 35</td><td>PANIC</td><td>Crash-level vol; historically marks capitulation lows (buy signal).</td></tr>
-    </table>
-
-    <div class="section-heading">How It Works</div>
-    <p class="body-text">VIX is calculated from the implied volatility embedded in 30-day S&P 500 options across a wide range of strike prices. When traders aggressively buy put options to hedge their portfolios, those puts become expensive, and VIX rises. Think of it as the market's "insurance premium" — when people fear crashes, insurance costs more.</p>
-
-    <div class="section-heading">What Traders Watch</div>
-    <ul class="watch-list">
-      <li>VIX spikes above 20 often create intermediate-term buying opportunities in equities.</li>
-      <li>VIX below 12 has historically preceded sharp, unexpected selloffs (complacency risk).</li>
-      <li>VIX declining while breadth weakens = danger — VIX can be gamed by concentrated mega-cap calm.</li>
-      <li>Watch for VIX term structure inversion (short-dated VIX &gt; long-dated): rare but signals acute stress.</li>
-      <li>Always cross-check with MOVE Index — if one is calm while the other spikes, stress is migrating.</li>
-    </ul>
-
-    <div class="current-box" style="margin-top:auto;">
-      <strong>June 4 Reading:</strong> 15.46 open → 15.37 close. Drifted lower all day — zero hedging demand even as the market started the session in FEAR territory. The equity vol market "knew" the fear was temporary.
-    </div>
-  </div>
-  <div class="slide-num">3 / 14</div>
-</div>
-
-<!-- ═══════════════════════════════ SLIDE 4 — MOVE ═══════════════════════════════ -->
-<div class="slide">
-  <div class="left-panel">
-    <div class="gauge-label">MOVE — Bond Vol Index</div>
-    <svg viewBox="0 0 260 148" width="230" xmlns="http://www.w3.org/2000/svg">
-      <path d="M 40,115 A 90,90 0 0,1 220,115" fill="none" stroke="#1a2535" stroke-width="13"/>
-      <!-- CALM 0-31.8% green -->
-      <path d="M 40,115    A 90,90 0 0,1 81.3,39.3"  fill="none" stroke="#2fd673" stroke-width="13"/>
-      <!-- ELEVATED 31.8-54.5% amber -->
-      <path d="M 81.3,39.3  A 90,90 0 0,1 142.8,25.9" fill="none" stroke="#ffc83d" stroke-width="13"/>
-      <!-- HIGH 54.5-100% red -->
-      <path d="M 142.8,25.9 A 90,90 0 0,1 220,115"    fill="none" stroke="#ff4d4d" stroke-width="13"/>
-      <!-- needle (73.58 → 30.5%) -->
-      <line x1="130" y1="115" x2="78.3" y2="41.3" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-      <circle cx="78.3" cy="41.3" r="3" fill="white"/>
-      <circle cx="130" cy="115" r="7" fill="#1d2735"/>
-      <circle cx="130" cy="115" r="4" fill="#e6edf3"/>
-      <!-- labels -->
-      <text x="35"  y="130" fill="#2fd673" font-size="6.5" font-family="monospace">40</text>
-      <text x="77"  y="34"  fill="#2fd673" font-size="6.5" font-family="monospace" text-anchor="middle">75</text>
-      <text x="142" y="20"  fill="#ffc83d" font-size="6.5" font-family="monospace" text-anchor="middle">100</text>
-      <text x="225" y="130" fill="#ff4d4d" font-size="6.5" font-family="monospace">150+</text>
-      <text x="130" y="98" fill="#e6edf3" font-size="18" font-weight="bold" font-family="'Chakra Petch',monospace" text-anchor="middle">73.58</text>
-    </svg>
-    <div class="gauge-value eg">73.58</div>
-    <span class="status-tag tag-green">CALM</span>
-  </div>
-  <div class="right-panel">
-    <div class="slide-eyebrow">Volatility · Signal 2 of 8</div>
-    <div class="slide-title">MOVE — Bond Volatility Index</div>
-    <div class="slide-sub">The bond market's VIX — implied volatility on U.S. Treasury options across all maturities</div>
-
-    <div class="section-heading">Key Levels</div>
-    <table class="levels-table">
-      <tr><td class="l-green">&lt; 75</td><td>CALM</td><td>Rates market fully stable. Current: 73.58 ✓ Unchanged all day.</td></tr>
-      <tr><td class="l-lime">75 – 90</td><td>Slightly Elevated</td><td>Rate uncertainty building; watch for yield curve moves.</td></tr>
-      <tr><td class="l-amber">90 – 110</td><td>Elevated</td><td>Bond stress rising; impacts equity discount rates.</td></tr>
-      <tr><td class="l-red">110 – 130</td><td>HIGH</td><td>Significant rate volatility; potential credit contagion.</td></tr>
-      <tr><td class="l-danger">&gt; 130</td><td>CRISIS</td><td>2020/2022-level stress. All risk assets typically reprice lower.</td></tr>
-    </table>
-
-    <div class="section-heading">How It Works</div>
-    <p class="body-text">MOVE tracks the 1-month implied volatility of 2-, 5-, 10-, and 30-year Treasury options, weighted by trading volume. When bond traders expect large rate moves — due to Fed surprises, inflation data, or fiscal shocks — they buy options on Treasuries, driving MOVE higher. Since interest rates are the denominator in every asset valuation model, rate volatility eventually becomes equity volatility.</p>
-
-    <div class="section-heading">What Traders Watch</div>
-    <ul class="watch-list">
-      <li><strong>MOVE–VIX divergence:</strong> When one spikes while the other stays calm, stress is rotating between asset classes — a leading warning.</li>
-      <li>MOVE above 100 alongside rising VIX = both markets stressed simultaneously = reduce all risk.</li>
-      <li>MOVE calm while VIX elevated = equity-specific fear, not systemic; often a faster recovery.</li>
-      <li>MOVE unchanged (like today's 73.58 → 73.58) = "double green" confirmation that rate stability is supporting the equity rally.</li>
-    </ul>
-
-    <div class="current-box" style="margin-top:auto;">
-      <strong>June 4 Reading:</strong> 73.58 all day — completely flat. Rates market was "on hold," sending zero stress signals. This gave equity bulls the all-clear on the rate front throughout the entire session.
-    </div>
-  </div>
-  <div class="slide-num">4 / 14</div>
-</div>
-
-<!-- ═══════════════════════════════ SLIDE 5 — McCLELLAN ═══════════════════════════════ -->
-<div class="slide">
-  <div class="left-panel">
-    <div class="gauge-label">McClellan Oscillator</div>
-    <div style="width:100%;padding:0 12px;margin-top:10px;">
-      <!-- horizontal oscillator -150 to +150 -->
-      <div style="font-family:monospace;font-size:7pt;color:var(--muted);text-align:center;margin-bottom:6px;">Breadth Momentum Scale</div>
-      <div style="position:relative;height:24px;border-radius:10px;background:#1a2535;overflow:visible;margin:0 6px;">
-        <!-- negative zone (left half) gradient -->
-        <div style="position:absolute;left:0;top:0;width:50%;height:100%;border-radius:10px 0 0 10px;background:linear-gradient(to right,#ff4d4d22,#ff7a4511);"></div>
-        <!-- positive zone (right half) gradient -->
-        <div style="position:absolute;right:0;top:0;width:50%;height:100%;border-radius:0 10px 10px 0;background:linear-gradient(to right,#2fd67311,#2fd67333);"></div>
-        <!-- center line -->
-        <div style="position:absolute;left:50%;top:0;width:2px;height:100%;background:#2a3a50;transform:translateX(-50%);"></div>
-        <!-- needle at +7.63 = 52.5% -->
-        <div style="position:absolute;left:52.5%;top:-4px;width:3px;height:32px;background:white;border-radius:2px;transform:translateX(-50%);"></div>
+    <!-- the premium thermometer -->
+    <div style="width:235mm; max-width:100%; margin-top:3mm;">
+      <div style="position:relative; height:26px; border-radius:13px; overflow:hidden; background:#0f1620; border:1px solid #1f2a3a;">
+        <div style="position:absolute; inset:0; background:linear-gradient(90deg,#2fd673 0%,#a8e05f 30%,#ffc83d 52%,#ff7a45 72%,#ff4d4d 100%); opacity:.85;"></div>
+        <!-- current marker at VIX 15.37 on 0-40 scale = 38.4% -->
+        <div style="position:absolute; left:38.4%; top:-5px; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center;">
+          <div style="background:#fff; color:#080b11; font-family:'Chakra Petch',sans-serif; font-weight:700; font-size:9pt; padding:2px 8px; border-radius:5px; white-space:nowrap;">15.37 ▾</div>
+        </div>
       </div>
-      <div style="display:flex;justify-content:space-between;padding:3px 6px 0;font-family:monospace;font-size:6.5pt;color:var(--muted);">
-        <span style="color:var(--fear);">−150</span>
-        <span>−50</span>
-        <span style="color:var(--muted);">0</span>
-        <span>+50</span>
-        <span style="color:var(--greed);">+150</span>
-      </div>
-
-      <!-- Zones reference -->
-      <div style="margin-top:18px;display:flex;flex-direction:column;gap:5px;padding:0 4px;">
-        <div style="display:flex;align-items:center;gap:8px;">
-          <div style="width:10px;height:10px;border-radius:2px;background:var(--fear);flex-shrink:0;"></div>
-          <span style="font-size:7pt;color:var(--muted);">Below −100: Capitulation / Extreme Oversold</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;">
-          <div style="width:10px;height:10px;border-radius:2px;background:var(--fear2);flex-shrink:0;"></div>
-          <span style="font-size:7pt;color:var(--muted);">−100 to −20: Negative momentum</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;">
-          <div style="width:10px;height:10px;border-radius:2px;background:var(--amber);flex-shrink:0;"></div>
-          <span style="font-size:7pt;color:var(--muted);">−20 to +20: Neutral (mixed breadth)</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;">
-          <div style="width:10px;height:10px;border-radius:2px;background:var(--greed2);flex-shrink:0;"></div>
-          <span style="font-size:7pt;color:var(--muted);">+20 to +100: Positive momentum</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;">
-          <div style="width:10px;height:10px;border-radius:2px;background:var(--greed);flex-shrink:0;"></div>
-          <span style="font-size:7pt;color:var(--muted);">Above +100: Overbought (strong rally)</span>
-        </div>
+      <div style="display:flex; justify-content:space-between; margin-top:7px; font-family:'IBM Plex Mono',monospace; font-size:9.5pt;">
+        <span style="color:#2fd673;">&lt;16 CALM</span>
+        <span style="color:#a8e05f;">16–20 watch</span>
+        <span style="color:#ffc83d;">20–25 elevated</span>
+        <span style="color:#ff7a45;">25–35 high</span>
+        <span style="color:#ff4d4d;">35+ PANIC</span>
       </div>
     </div>
-    <div class="gauge-value greed" style="margin-top:16px;">+7.63</div>
-    <span class="status-tag tag-green">RISING</span>
-  </div>
-  <div class="right-panel">
-    <div class="slide-eyebrow">Breadth · Signal 3 of 8</div>
-    <div class="slide-title">McClellan Oscillator</div>
-    <div class="slide-sub">Measures the rate of change in advancing vs. declining stocks — the momentum of market breadth</div>
-
-    <div class="section-heading">How It Works</div>
-    <p class="body-text">The McClellan Oscillator is calculated as the difference between a 19-day and 39-day exponential moving average of daily advancing minus declining issues on the NYSE. It answers: "Is the breadth of the market accelerating or decelerating?" A positive reading means more stocks are advancing relative to their recent trend; negative means deterioration is spreading.</p>
-    <p class="body-text">It's important to understand this is a <em>rate-of-change</em> indicator, not a level indicator. A reading of +30 doesn't tell you the market is healthy — it tells you breadth is improving faster than its recent average.</p>
-
-    <div class="section-heading">Key Signals Traders Watch</div>
-    <ul class="watch-list">
-      <li><strong>Bullish divergence:</strong> Price makes new lows while McClellan makes a higher low — breadth is improving; rally incoming.</li>
-      <li><strong>Bearish divergence:</strong> Index makes new highs while McClellan declines — fewer stocks are driving the move; fragile rally.</li>
-      <li><strong>Zero-line cross:</strong> McClellan crossing from negative to positive is a broad confirmation of regime shift.</li>
-      <li><strong>Overbought (+100) readings:</strong> Can sustain for weeks in strong bull markets; don't fade them without other confirmation.</li>
-      <li>End-of-day softening (9.93 → 7.63) in a rising market is normal profit-taking, not deterioration — confirm by checking the 200-day breadth.</li>
-    </ul>
-
-    <div class="current-box" style="margin-top:auto;">
-      <strong>June 4 Reading:</strong> Opened at +9.93 (positive), closed at +7.63 (still positive). The slight easing into the close is consistent with normal end-of-session profit-taking. Positive breadth momentum confirmed throughout the day.
+    <div class="explain" style="max-width:235mm; width:100%; margin-top:2mm;">
+      <ul class="watch" style="columns:2; column-gap:14mm;">
+        <li><b>Spikes &gt;20</b> often mark intermediate buying opportunities — peak fear ≈ a bottom.</li>
+        <li><b>Below 12</b> signals dangerous complacency; sharp selloffs often follow.</li>
+        <li><b>Falling VIX + weakening breadth = trap</b> — calm mega-caps can mask a rotting market.</li>
+        <li>Always cross-check with <b>MOVE</b> (next slide). If one is calm and one spikes, stress is migrating.</li>
+      </ul>
     </div>
   </div>
-  <div class="slide-num">5 / 14</div>
-</div>
-
-<!-- ═══════════════════════════════ SLIDE 6 — % ABOVE 200-DAY ═══════════════════════════════ -->
-<div class="slide">
-  <div class="left-panel">
-    <div class="gauge-label">% Stocks Above 200-Day MA</div>
-    <!-- Circular progress -->
-    <svg viewBox="0 0 200 200" width="170" xmlns="http://www.w3.org/2000/svg">
-      <!-- BG circle -->
-      <circle cx="100" cy="100" r="78" fill="none" stroke="#1a2535" stroke-width="16"/>
-      <!-- Progress: 55.9% of full circle -->
-      <!-- circumference = 2π×78 ≈ 490. 55.9% = 273.9 -->
-      <circle cx="100" cy="100" r="78" fill="none" stroke="#a8e05f" stroke-width="16"
-              stroke-dasharray="273.9 216.1" stroke-dashoffset="122.5"
-              stroke-linecap="round" transform="rotate(-90 100 100)"/>
-      <!-- danger zone marker at 50% = 245 -->
-      <circle cx="100" cy="22" r="5" fill="#ffc83d" opacity="0.8"/>
-      <!-- text -->
-      <text x="100" y="92"  fill="#e6edf3" font-size="28" font-weight="bold" font-family="'Chakra Petch',monospace" text-anchor="middle">55.9</text>
-      <text x="100" y="108" fill="#a8e05f" font-size="11" font-family="monospace" text-anchor="middle">%</text>
-      <text x="100" y="122" fill="#7d8ba0" font-size="8" font-family="monospace" text-anchor="middle">ABOVE 200D</text>
-    </svg>
-    <div style="font-size:7pt;color:var(--muted);font-family:monospace;text-align:center;margin-top:4px;">
-      <span style="color:var(--amber);">▲ 50%</span> = critical threshold
-    </div>
-    <div class="gauge-value greed" style="margin-top:8px;">55.9%</div>
-    <span class="status-tag tag-green">HEALTHY</span>
+  <div class="ft">
+    <span class="chip c-green"><span class="pip"></span> Calm 15.37</span>
+    <span class="ft-read"><b>June 4:</b> 15.46 → 15.37, drifting lower all day. Zero hedging demand even though the session <em>opened</em> in Fear — the options market "knew" the fear was temporary.</span>
   </div>
-  <div class="right-panel">
-    <div class="slide-eyebrow">Breadth · Signal 4 of 8</div>
-    <div class="slide-title">% Stocks Above 200-Day MA</div>
-    <div class="slide-sub">The single best measure of long-term structural market health — how many stocks are in a defined uptrend</div>
+  <div class="pagenum">03 / 14</div>
+</section>
 
-    <div class="section-heading">Key Levels</div>
-    <table class="levels-table">
-      <tr><td class="l-green">&gt; 70%</td><td>BULL MARKET</td><td>Broad participation. Durable uptrend. Most reliable bull environment.</td></tr>
-      <tr><td class="l-lime">50 – 70%</td><td>HEALTHY</td><td>Over half the market in uptrend. Current: 55.9% ✓ Solid structure.</td></tr>
-      <tr><td class="l-amber">30 – 50%</td><td>MIXED</td><td>Below-surface deterioration. Index may look fine; stocks are struggling.</td></tr>
-      <tr><td class="l-red">20 – 30%</td><td>BEAR</td><td>Structural breakdown. Only defensive or momentum names surviving.</td></tr>
-      <tr><td class="l-danger">&lt; 20%</td><td>CAPITULATION</td><td>Extreme washout. Historically a major long-term bottom signal.</td></tr>
-    </table>
-
-    <div class="section-heading">Why the 200-Day Moving Average?</div>
-    <p class="body-text">The 200-day MA is the most widely watched long-term trend indicator by institutional traders and systematic funds. A stock above its 200-day is in a long-term uptrend; below it, a downtrend. When the <em>majority</em> of NYSE stocks clear this threshold, it signals that the bull market has genuine breadth rather than being driven by a handful of names.</p>
-
-    <div class="section-heading">The Key Divergence to Watch</div>
-    <ul class="watch-list">
-      <li><strong>Bearish:</strong> S&P 500 makes new highs, but this reading drops below 50% → index is being lifted by a shrinking group of mega-caps. A structural warning.</li>
-      <li><strong>Bullish:</strong> This reading rises above 60% while index consolidates → under-the-hood accumulation; breakout likely.</li>
-      <li>Trend matters more than absolute level: a rising reading (even from 40%) is constructive.</li>
-      <li>Today: 56.1% → 55.9%, stable. Over half the market in uptrend, rock-solid structure confirmed.</li>
-    </ul>
-
-    <div class="current-box" style="margin-top:auto;">
-      <strong>June 4 Reading:</strong> 56.1% at open, 55.9% at close. Near-unchanged throughout the session. Over half the market remains above long-term support — a crucial floor of structural health even as the composite started the day in Fear territory.
-    </div>
+<!-- ══════════════════ 4 · MOVE (twin thermometers) ══════════════════ -->
+<section class="slide">
+  <div class="hd">
+    <div class="hd-eyebrow"><span class="dot"></span> Volatility · The Bond Market's VIX <span class="num">· 02 / 08</span></div>
+    <div class="hd-title">MOVE — Stress in the Plumbing</div>
+    <div class="hd-def">MOVE is VIX's sibling for <b>U.S. Treasuries</b>. Interest rates are the denominator under every asset price, so rate turmoil eventually becomes stock turmoil. Watching both together is the real skill.</div>
+    <div class="hd-rule"></div>
   </div>
-  <div class="slide-num">6 / 14</div>
-</div>
-
-<!-- ═══════════════════════════════ SLIDE 7 — PUT/CALL ═══════════════════════════════ -->
-<div class="slide">
-  <div class="left-panel">
-    <div class="gauge-label">Put/Call Ratio</div>
-    <svg viewBox="0 0 260 148" width="230" xmlns="http://www.w3.org/2000/svg">
-      <path d="M 40,115 A 90,90 0 0,1 220,115" fill="none" stroke="#1a2535" stroke-width="13"/>
-      <!-- extreme greed 0-20% -->
-      <path d="M 40,115    A 90,90 0 0,1 57.2,62.1"  fill="none" stroke="#ff4d4d" stroke-width="13"/>
-      <!-- greed 20-35% -->
-      <path d="M 57.2,62.1  A 90,90 0 0,1 89.1,34.8"  fill="none" stroke="#ff7a45" stroke-width="13"/>
-      <!-- neutral sweet spot 35-40% -->
-      <path d="M 89.1,34.8  A 90,90 0 0,1 102.2,29.4" fill="none" stroke="#2fd673" stroke-width="13"/>
-      <!-- mild fear 40-60% -->
-      <path d="M 102.2,29.4 A 90,90 0 0,1 157.8,29.4" fill="none" stroke="#ffc83d" stroke-width="13"/>
-      <!-- fear 60-100% -->
-      <path d="M 157.8,29.4 A 90,90 0 0,1 220,115"    fill="none" stroke="#ff7a45" stroke-width="13"/>
-      <!-- sweet spot highlight -->
-      <path d="M 89.1,34.8  A 90,90 0 0,1 102.2,29.4" fill="none" stroke="#2fd673" stroke-width="13" opacity="1"/>
-      <!-- needle at 38% (0.88) -->
-      <line x1="130" y1="115" x2="96.9" y2="31.3" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-      <circle cx="96.9" cy="31.3" r="3" fill="white"/>
-      <circle cx="130" cy="115" r="7" fill="#1d2735"/>
-      <circle cx="130" cy="115" r="4" fill="#e6edf3"/>
-      <!-- labels -->
-      <text x="35"  y="130" fill="#ff4d4d" font-size="6.5" font-family="monospace">0.5</text>
-      <text x="56"  y="56"  fill="#ff7a45" font-size="6.5" font-family="monospace" text-anchor="middle">0.7</text>
-      <text x="95"  y="28"  fill="#2fd673" font-size="6.5" font-family="monospace" text-anchor="middle">0.85</text>
-      <text x="160" y="24"  fill="#ffc83d" font-size="6.5" font-family="monospace" text-anchor="middle">1.1</text>
-      <text x="220" y="130" fill="#ff7a45" font-size="6.5" font-family="monospace">1.5</text>
-      <text x="130" y="98" fill="#e6edf3" font-size="18" font-weight="bold" font-family="'Chakra Petch',monospace" text-anchor="middle">0.88</text>
-    </svg>
-    <div class="gauge-value greed">0.88</div>
-    <span class="status-tag tag-green">NEUTRAL</span>
-    <div style="margin-top:8px;font-size:7pt;color:var(--muted);font-family:monospace;text-align:center;">Sweet spot: 0.85 – 0.90</div>
-  </div>
-  <div class="right-panel">
-    <div class="slide-eyebrow">Sentiment · Signal 5 of 8</div>
-    <div class="slide-title">Put / Call Ratio</div>
-    <div class="slide-sub">The ratio of put options to call options traded — a direct read on hedging demand and options market sentiment</div>
-
-    <div class="section-heading">Key Levels</div>
-    <table class="levels-table">
-      <tr><td class="l-danger">&lt; 0.70</td><td>Extreme Greed</td><td>Too many calls; rampant speculation. Contrarian bearish signal.</td></tr>
-      <tr><td class="l-red">0.70 – 0.85</td><td>Greed</td><td>Optimistic positioning; acceptable but worth monitoring.</td></tr>
-      <tr><td class="l-green">0.85 – 0.90</td><td>NEUTRAL / HEALTHY ✓</td><td>Balanced hedging. "Healthy skepticism." Ideal environment for bulls.</td></tr>
-      <tr><td class="l-amber">0.90 – 1.10</td><td>Mild Fear</td><td>Increased protective buying; cautious market tone.</td></tr>
-      <tr><td class="l-red">&gt; 1.10</td><td>Fear</td><td>Significant put-buying; potential capitulation / reversal signal.</td></tr>
-    </table>
-
-    <div class="section-heading">How It Works</div>
-    <p class="body-text">Put options grant the right to <em>sell</em> — they're purchased as portfolio hedges or directional bearish bets. Call options grant the right to <em>buy</em> — they express bullish conviction or replace long stock exposure. A ratio above 1.0 means more puts than calls traded. As a contrarian indicator, extremes in either direction matter more than absolute levels.</p>
-
-    <div class="section-heading">What Traders Watch</div>
-    <ul class="watch-list">
-      <li><strong>Sweet spot (0.85–0.90):</strong> The market has "enough fear to climb the wall of worry" — not complacent, not panicking. Best bull environment.</li>
-      <li>P/C below 0.70 for 3+ consecutive sessions: Dangerous complacency. Reduce new longs.</li>
-      <li>P/C spiking above 1.10: Often marks short-term bottoms as fear peaks. Potential contrarian buy.</li>
-      <li>Day-end uptick in P/C (like today's 0.85 → 0.88): Healthy protective buying into the close, not panic.</li>
-    </ul>
-
-    <div class="current-box" style="margin-top:auto;">
-      <strong>June 4 Reading:</strong> 0.85 open → 0.88 close. The slight uptick at day's end represents normal, healthy protective buying after a strong rally — exactly the behavior you want to see. Not fear; prudent risk management.
+  <div class="stage" style="gap:18mm;">
+    <!-- twin thermometers -->
+    <div class="hero">
+      <svg viewBox="0 0 300 290" width="280" xmlns="http://www.w3.org/2000/svg">
+        <!-- VIX thermometer -->
+        <g transform="translate(40,10)">
+          <rect x="14" y="0" width="22" height="220" rx="11" fill="#0f1620" stroke="#1f2a3a"/>
+          <!-- fill 38% from bottom -->
+          <rect x="14" y="136" width="22" height="84" rx="11" fill="#2fd673"/>
+          <circle cx="25" cy="240" r="22" fill="#2fd673"/>
+          <text x="25" y="246" text-anchor="middle" font-family="'Chakra Petch',sans-serif" font-size="11" font-weight="700" fill="#06140c">15</text>
+          <text x="25" y="278" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#c5d0dc">VIX</text>
+          <text x="25" y="290" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="7.5" fill="#8492a6">equities</text>
+        </g>
+        <!-- MOVE thermometer -->
+        <g transform="translate(190,10)">
+          <rect x="14" y="0" width="22" height="220" rx="11" fill="#0f1620" stroke="#1f2a3a"/>
+          <rect x="14" y="153" width="22" height="67" rx="11" fill="#2fd673"/>
+          <circle cx="25" cy="240" r="22" fill="#2fd673"/>
+          <text x="25" y="245" text-anchor="middle" font-family="'Chakra Petch',sans-serif" font-size="10" font-weight="700" fill="#06140c">74</text>
+          <text x="25" y="278" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#c5d0dc">MOVE</text>
+          <text x="25" y="290" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="7.5" fill="#8492a6">bonds</text>
+        </g>
+        <!-- both calm bracket -->
+        <text x="150" y="40" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#2fd673">BOTH CALM</text>
+        <text x="150" y="54" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="8" fill="#8492a6">= all-clear</text>
+      </svg>
+      <div class="hero-cap">two gauges, one verdict</div>
     </div>
-  </div>
-  <div class="slide-num">7 / 14</div>
-</div>
-
-<!-- ═══════════════════════════════ SLIDE 8 — HINDENBURG OMEN ═══════════════════════════════ -->
-<div class="slide">
-  <div class="left-panel">
-    <div class="gauge-label">Hindenburg Omen</div>
-    <!-- Status badge -->
-    <div style="margin:16px 0 12px;display:flex;flex-direction:column;align-items:center;">
-      <div style="width:110px;height:110px;border-radius:50%;background:#040e08;border:3px solid var(--greed);display:flex;flex-direction:column;align-items:center;justify-content:center;">
-        <div style="font-size:32pt;line-height:1;">✓</div>
-        <div style="font-family:'Chakra Petch',monospace;font-size:8pt;letter-spacing:.1em;color:var(--greed);margin-top:4px;">CLEAR</div>
+    <div class="explain">
+      <div class="mech">
+        <div class="mech-h">How it works</div>
+        <p class="mech-p">MOVE tracks the implied volatility of options on 2-, 5-, 10- and 30-year Treasuries. When bond traders brace for big rate moves — a Fed surprise, hot inflation, a fiscal shock — they buy Treasury options and MOVE climbs.</p>
       </div>
-    </div>
-    <div style="margin-top:8px;font-size:7.5pt;color:var(--muted);font-family:monospace;text-align:center;">No triggers in 30-day window</div>
-
-    <!-- 4 trigger conditions -->
-    <div style="margin-top:16px;width:100%;padding:0 8px;">
-      <div style="font-size:7pt;color:var(--muted);margin-bottom:6px;text-align:center;letter-spacing:.1em;font-family:monospace;">TRIGGER CONDITIONS</div>
-      <div style="display:flex;flex-direction:column;gap:4px;">
-        <div style="display:flex;align-items:center;gap:6px;font-size:7pt;">
-          <span style="color:var(--greed);font-size:9pt;">✓</span>
-          <span style="color:var(--muted);">52-wk highs &gt;2.2% of issues</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:6px;font-size:7pt;">
-          <span style="color:var(--greed);font-size:9pt;">✓</span>
-          <span style="color:var(--muted);">52-wk lows &gt;2.2% of issues</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:6px;font-size:7pt;">
-          <span style="color:var(--greed);font-size:9pt;">✓</span>
-          <span style="color:var(--muted);">NYSE Composite &gt; 50-day MA</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:6px;font-size:7pt;">
-          <span style="color:var(--greed);font-size:9pt;">✓</span>
-          <span style="color:var(--muted);">McClellan Oscillator negative</span>
-        </div>
-      </div>
-      <div style="margin-top:6px;font-size:6.5pt;color:#3a5a3a;font-family:monospace;text-align:center;">(All four required to trigger)</div>
-    </div>
-  </div>
-  <div class="right-panel">
-    <div class="slide-eyebrow">Sentiment · Signal 6 of 8</div>
-    <div class="slide-title">Hindenburg Omen</div>
-    <div class="slide-sub">An early-warning signal for potential significant market selloffs — fires when the market "tears itself apart" internally</div>
-
-    <div class="section-heading">What It Detects</div>
-    <p class="body-text">The Hindenburg Omen fires when the NYSE simultaneously shows an abnormally large number of both new 52-week <em>highs</em> AND new 52-week <em>lows</em>. This is paradoxical — normally you see one or the other, not both. When this divergence occurs, it means the market is bifurcating: growth leaders are soaring while everything else is collapsing. This internal rupture often precedes broad selloffs.</p>
-    <p class="body-text">All four conditions must trigger <em>simultaneously</em> within a 30-day cluster for the signal to be confirmed. A single occurrence is less reliable; clusters of 3+ signals in 30 days have the highest historical accuracy.</p>
-
-    <div class="section-heading">Historical Context</div>
-    <ul class="watch-list">
-      <li>Preceded 7 of the last 10 major market corrections of 10%+ when occurring in clusters.</li>
-      <li>Not all Hindenburgs lead to crashes — roughly 25% of signals produce significant declines. The rest are "noise."</li>
-      <li>Context matters: a Hindenburg in a falling market is more dangerous than in a rising one.</li>
-      <li>When Hindenburg fires AND SMFI is negative AND Put/Call &gt; 1.0: highest-risk combination.</li>
-    </ul>
-
-    <div class="section-heading">What Traders Watch</div>
-    <ul class="watch-list">
-      <li>First trigger: Alert mode. Tighten stops. Don't add new longs.</li>
-      <li>Second trigger within 30 days: Defensive mode. Reduce position sizes by 25–50%.</li>
-      <li>Three triggers in 30 days: High-conviction crash signal. Add hedges. Move to cash.</li>
-      <li>CLEAR status (like today): Market is internally cohesive — no structural divergence. Bullish confirmation for existing longs.</li>
-    </ul>
-
-    <div class="current-box" style="margin-top:auto;">
-      <strong>June 4 Reading:</strong> CLEAR → CLEAR. No new triggers in the 30-day window. The market's internals are cohesive — divergence tail-risk is fully absent. This CLEAR reading combines with positive McClellan and 55.9% breadth to confirm structural health.
-    </div>
-  </div>
-  <div class="slide-num">8 / 14</div>
-</div>
-
-<!-- ═══════════════════════════════ SLIDE 9 — SMFI ═══════════════════════════════ -->
-<div class="slide">
-  <div class="left-panel">
-    <div class="gauge-label">Smart Money Flow Index</div>
-    <svg viewBox="0 0 260 148" width="230" xmlns="http://www.w3.org/2000/svg">
-      <path d="M 40,115 A 90,90 0 0,1 220,115" fill="none" stroke="#1a2535" stroke-width="13"/>
-      <!-- bearish 0-40% -->
-      <path d="M 40,115    A 90,90 0 0,1 102.2,29.4" fill="none" stroke="#ff7a45" stroke-width="13" opacity="0.7"/>
-      <!-- neutral 40-60% -->
-      <path d="M 102.2,29.4 A 90,90 0 0,1 157.8,29.4" fill="none" stroke="#ffc83d" stroke-width="13"/>
-      <!-- bullish 60-100% -->
-      <path d="M 157.8,29.4 A 90,90 0 0,1 220,115"    fill="none" stroke="#2fd673" stroke-width="13" opacity="0.7"/>
-      <!-- needle at 58.2% (50820) -->
-      <line x1="130" y1="115" x2="152.9" y2="28" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-      <circle cx="152.9" cy="28" r="3" fill="white"/>
-      <!-- prev needle at 51185 = 61.9% -->
-      <line x1="130" y1="115" x2="160.6" y2="30.6" stroke="#4a6080" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.5"/>
-      <circle cx="130" cy="115" r="7" fill="#1d2735"/>
-      <circle cx="130" cy="115" r="4" fill="#e6edf3"/>
-      <!-- labels -->
-      <text x="32"  y="130" fill="#ff7a45" font-size="6.5" font-family="monospace">45k</text>
-      <text x="100" y="24"  fill="#ffc83d" font-size="6.5" font-family="monospace" text-anchor="middle">49k</text>
-      <text x="130" y="16"  fill="#ffc83d" font-size="6.5" font-family="monospace" text-anchor="middle">50k</text>
-      <text x="160" y="24"  fill="#2fd673" font-size="6.5" font-family="monospace" text-anchor="middle">51k</text>
-      <text x="228" y="130" fill="#2fd673" font-size="6.5" font-family="monospace">55k</text>
-      <text x="130" y="96" fill="#e6edf3" font-size="13" font-weight="bold" font-family="'Chakra Petch',monospace" text-anchor="middle">50,820</text>
-    </svg>
-    <div class="gauge-value amber">50,820</div>
-    <span class="status-tag tag-amber">NEUTRAL</span>
-    <div style="margin-top:8px;font-size:7pt;color:var(--muted);font-family:monospace;text-align:center;">
-      From 51,185 — drifting lower
-    </div>
-  </div>
-  <div class="right-panel">
-    <div class="slide-eyebrow">Institutional Flow · Signal 7 of 8</div>
-    <div class="slide-title">Smart Money Flow Index</div>
-    <div class="slide-sub">Tracks where large institutional traders are positioned — "smart money" tends to move at the end of the session</div>
-
-    <div class="section-heading">The Core Insight</div>
-    <p class="body-text">SMFI is built on a simple observation: early-session price moves (first 30–60 minutes) are driven by emotional, retail, and algorithmic order flow reacting to overnight news. Late-session moves (final hour) reflect informed institutional decisions. The SMFI accumulates these late-session flows over time, filtering out the noise and revealing where large-money players are truly committed.</p>
-
-    <div class="section-heading">Reading the Signal</div>
-    <table class="levels-table">
-      <tr><td class="l-green">Rising SMFI + Rising Market</td><td colspan="2">Institutions are buying the rally. Strongest confirmation.</td></tr>
-      <tr><td class="l-amber">Falling SMFI + Rising Market</td><td colspan="2">Institutions not chasing. Caution — today's reading. ⚠</td></tr>
-      <tr><td class="l-lime">Rising SMFI + Falling Market</td><td colspan="2">Institutional accumulation. Potential reversal setup.</td></tr>
-      <tr><td class="l-red">Falling SMFI + Falling Market</td><td colspan="2">Institutional distribution. Avoid. Stay in cash.</td></tr>
-    </table>
-
-    <div class="section-heading">What Traders Watch</div>
-    <ul class="watch-list">
-      <li>SMFI turning up in the last 30 minutes while price holds highs: Best institutional confirmation signal.</li>
-      <li>SMFI making new multi-week highs = rare but powerful bull signal; institutional conviction peak.</li>
-      <li>SMFI diverging from price for 3+ sessions = regime change coming. Prepare for reversal.</li>
-      <li>Today's drift (51,185 → 50,820): "Cautious but not alarming" — institutions are watching, not chasing. Common in extended rallies where profit-taking is rational.</li>
-    </ul>
-
-    <div class="current-box" style="margin-top:auto;">
-      <strong>June 4 Reading:</strong> 51,185 → 50,820. Drifting lower — institutions are not yet committing capital to chase the price rally. This is the one amber signal in an otherwise green dashboard. Not alarming on its own, but worth monitoring for 2–3 more sessions to see if institutional conviction recovers.
-    </div>
-  </div>
-  <div class="slide-num">9 / 14</div>
-</div>
-
-<!-- ═══════════════════════════════ SLIDE 10 — MARKET TIDE ═══════════════════════════════ -->
-<div class="slide">
-  <div class="left-panel">
-    <div class="gauge-label">Market Tide — Net Premium Flow</div>
-    <div style="width:100%;padding:0 10px;margin-top:8px;">
-      <!-- Flow arrow visual -->
-      <div style="text-align:center;margin-bottom:12px;">
-        <div style="font-size:7pt;color:var(--muted);font-family:monospace;margin-bottom:8px;">PREVIOUS (BEARISH)</div>
-        <div style="background:#1a0808;border:1px solid #4a1010;border-radius:6px;padding:8px 12px;display:inline-block;">
-          <span style="font-family:'Chakra Petch',monospace;font-size:16pt;color:var(--fear);font-weight:700;">−$72M</span>
-        </div>
-        <div style="margin:10px 0;font-size:18pt;color:var(--accent);">↓</div>
-        <div style="font-size:7pt;color:var(--muted);font-family:monospace;margin-bottom:8px;">CURRENT (BULLISH FLIP) ★</div>
-        <div style="background:#040e08;border:1px solid #1a4a2e;border-radius:6px;padding:8px 12px;display:inline-block;">
-          <span style="font-family:'Chakra Petch',monospace;font-size:16pt;color:var(--greed);font-weight:700;">+$43M</span>
-        </div>
-      </div>
-      <!-- Zero-cross bar -->
-      <div style="margin:10px 0;font-size:7pt;color:var(--muted);font-family:monospace;text-align:center;">NET PREMIUM FLOW</div>
-      <div style="height:14px;border-radius:6px;background:#1a2535;position:relative;overflow:hidden;margin:4px 0;">
-        <div style="position:absolute;left:0;top:0;width:50%;height:100%;background:var(--fear2);border-radius:6px 0 0 6px;opacity:0.3;"></div>
-        <div style="position:absolute;right:0;top:0;width:50%;height:100%;background:var(--greed);border-radius:0 6px 6px 0;opacity:0.35;"></div>
-        <div style="position:absolute;left:50%;top:0;width:2px;height:100%;background:#aaa;transform:translateX(-50%);"></div>
-        <!-- current dot at +$43M: 100M range = 50% is zero, $43M = ~43% right = center+21.5% -->
-        <div style="position:absolute;left:71.5%;top:50%;width:10px;height:10px;background:var(--greed);border-radius:50%;transform:translate(-50%,-50%);border:2px solid white;"></div>
-      </div>
-      <div style="display:flex;justify-content:space-between;font-size:6.5pt;color:var(--muted);font-family:monospace;">
-        <span style="color:var(--fear);">−$100M</span><span>0</span><span style="color:var(--greed);">+$100M</span>
-      </div>
-      <div style="margin-top:14px;background:#0a1428;border:1px solid #1a3060;border-radius:5px;padding:7px 10px;">
-        <div style="font-size:7pt;color:var(--accent);font-family:monospace;letter-spacing:.1em;margin-bottom:3px;">★ FLIP SIGNAL</div>
-        <div style="font-size:7.5pt;color:var(--muted);">First net positive reading all day. Last bear holdout cleared.</div>
-      </div>
-    </div>
-    <span class="status-tag tag-green" style="margin-top:12px;">POSITIVE</span>
-  </div>
-  <div class="right-panel">
-    <div class="slide-eyebrow">Institutional Flow · Signal 8 of 8 · Most Important</div>
-    <div class="slide-title">Market Tide — Net Premium Flow</div>
-    <div class="slide-sub">The direct dollar flow of options premium into calls vs. puts — the clearest real-time signal of institutional directional conviction</div>
-
-    <div class="section-heading">Why This Is the Most Important Indicator</div>
-    <p class="body-text">Unlike sentiment surveys or volatility indexes, Market Tide tracks <em>actual dollars committed</em> to directional options bets. When institutions are bullish, they buy calls (or sell puts), creating positive net premium flow. When bearish, they buy puts, creating negative flow. The dollar magnitude tells you the conviction level; the direction tells you the regime. No other indicator captures this in real-time.</p>
-
-    <div class="section-heading">Key Thresholds</div>
-    <table class="levels-table">
-      <tr><td class="l-green">&gt; +$100M</td><td>Strongly Bullish</td><td>Institutional conviction buying. High-confidence long setups.</td></tr>
-      <tr><td class="l-lime">+$20M to +$100M</td><td>Bullish Flow ✓</td><td>Confirmed institutional buyers. Current: +$43M.</td></tr>
-      <tr><td class="l-amber">−$20M to +$20M</td><td>Neutral / Contested</td><td>No clear institutional direction. Wait for resolution.</td></tr>
-      <tr><td class="l-red">−$100M to −$20M</td><td>Bearish Flow</td><td>Sellers in control. Reduce longs, add hedges.</td></tr>
-      <tr><td class="l-danger">&lt; −$100M</td><td>Strongly Bearish</td><td>Institutional distribution. High probability of continued decline.</td></tr>
-    </table>
-
-    <div class="section-heading">The FLIP Signal</div>
-    <ul class="watch-list">
-      <li>When Market Tide crosses from negative to positive during a session = <strong>highest-conviction entry signal</strong> in the entire dashboard.</li>
-      <li>Today's flip (−$72M → +$43M): A $115M swing in a single session, crossing zero for the first time all day.</li>
-      <li>Most powerful when the flip coincides with: McClellan positive, % above 200-day healthy, Hindenburg clear.</li>
-      <li>False flips exist — look for the cross to hold for at least 30–60 minutes before acting.</li>
-    </ul>
-
-    <div class="current-box" style="margin-top:auto;">
-      <strong>June 4 Reading:</strong> Spent the entire session negative (opened at −$72M), then flipped to +$43M into the close. Dashboard noted this as a "FLIP" event with special visual emphasis. This single reading drove much of the composite's jump from 56 to 63.
-    </div>
-  </div>
-  <div class="slide-num">10 / 14</div>
-</div>
-
-<!-- ═══════════════════════════════ SLIDE 11 — MOMENTUM PULSE ═══════════════════════════════ -->
-<div class="slide">
-  <div class="left-panel">
-    <div class="gauge-label">Momentum Pulse — Short-term Breadth</div>
-    <div style="width:100%;padding:0 10px;margin-top:14px;">
-      <!-- Bar 1: % Above 12-SMA (56.8%) -->
-      <div class="hbar-row">
-        <div class="hbar-title">% Above 12-Day SMA</div>
-        <div style="position:relative;height:18px;border-radius:8px;background:#1a2535;overflow:visible;margin:3px 0;">
-          <div style="position:absolute;left:0;top:0;width:56.8%;height:100%;border-radius:8px;background:linear-gradient(to right,#2fd67388,#a8e05f);"></div>
-          <div style="position:absolute;left:50%;top:-3px;width:2px;height:24px;background:#2a3a50;transform:translateX(-50%);"></div>
-          <div style="position:absolute;left:56.8%;top:-5px;width:3px;height:28px;background:white;border-radius:2px;transform:translateX(-50%);"></div>
-        </div>
-        <div style="display:flex;justify-content:space-between;font-family:monospace;font-size:6.5pt;color:var(--muted);">
-          <span>0%</span><span style="color:var(--amber);">50%</span><span>100%</span>
-        </div>
-        <div style="font-family:monospace;font-size:9pt;color:var(--greed2);font-weight:600;margin-top:2px;">56.8% <span style="font-size:7pt;color:var(--muted);">← from 57.6%</span></div>
-      </div>
-
-      <!-- Bar 2: % Above 20-SMA (58.5%) -->
-      <div class="hbar-row" style="margin-top:14px;">
-        <div class="hbar-title">% Above 20-Day SMA</div>
-        <div style="position:relative;height:18px;border-radius:8px;background:#1a2535;overflow:visible;margin:3px 0;">
-          <div style="position:absolute;left:0;top:0;width:58.5%;height:100%;border-radius:8px;background:linear-gradient(to right,#2fd67388,#a8e05f);"></div>
-          <div style="position:absolute;left:50%;top:-3px;width:2px;height:24px;background:#2a3a50;transform:translateX(-50%);"></div>
-          <div style="position:absolute;left:58.5%;top:-5px;width:3px;height:28px;background:white;border-radius:2px;transform:translateX(-50%);"></div>
-        </div>
-        <div style="display:flex;justify-content:space-between;font-family:monospace;font-size:6.5pt;color:var(--muted);">
-          <span>0%</span><span style="color:var(--amber);">50%</span><span>100%</span>
-        </div>
-        <div style="font-family:monospace;font-size:9pt;color:var(--greed2);font-weight:600;margin-top:2px;">58.5% <span style="font-size:7pt;color:var(--muted);">← from 59.6%</span></div>
-      </div>
-
-      <!-- Bar 3: % Above 50-SMA (53.5%) -->
-      <div class="hbar-row" style="margin-top:14px;">
-        <div class="hbar-title">% Above 50-Day SMA</div>
-        <div style="position:relative;height:18px;border-radius:8px;background:#1a2535;overflow:visible;margin:3px 0;">
-          <div style="position:absolute;left:0;top:0;width:53.5%;height:100%;border-radius:8px;background:linear-gradient(to right,#2fd67388,#a8e05f);"></div>
-          <div style="position:absolute;left:50%;top:-3px;width:2px;height:24px;background:#2a3a50;transform:translateX(-50%);"></div>
-          <div style="position:absolute;left:53.5%;top:-5px;width:3px;height:28px;background:white;border-radius:2px;transform:translateX(-50%);"></div>
-        </div>
-        <div style="display:flex;justify-content:space-between;font-family:monospace;font-size:6.5pt;color:var(--muted);">
-          <span>0%</span><span style="color:var(--amber);">50%</span><span>100%</span>
-        </div>
-        <div style="font-family:monospace;font-size:9pt;color:var(--greed2);font-weight:600;margin-top:2px;">53.5% <span style="font-size:7pt;color:var(--muted);">← from 54.2%</span></div>
-      </div>
-    </div>
-    <span class="status-tag tag-green" style="margin-top:16px;">ALL BULLISH</span>
-  </div>
-  <div class="right-panel">
-    <div class="slide-eyebrow">Breadth · Short-term Momentum</div>
-    <div class="slide-title">Momentum Pulse</div>
-    <div class="slide-sub">Percentage of stocks above their short-term moving averages — a real-time pulse of near-term momentum breadth</div>
-
-    <div class="section-heading">The Three Timeframes</div>
-    <table class="levels-table">
-      <tr><td>% &gt; 12-Day SMA</td><td>~2.5 week trend</td><td>Most sensitive. First to turn in a directional shift. Current: 56.8% ✓</td></tr>
-      <tr><td>% &gt; 20-Day SMA</td><td>~1 month trend</td><td>Core momentum gauge. Tracks the recent trend. Current: 58.5% ✓</td></tr>
-      <tr><td>% &gt; 50-Day SMA</td><td>~2.5 month trend</td><td>Longer trend health. Slower to change. Current: 53.5% ✓</td></tr>
-    </table>
-
-    <div class="section-heading">How to Read the Structure</div>
-    <p class="body-text">When all three readings are above 50%, the rally has genuine participation across all timeframes — it's not just a short-term bounce in a downtrend. Ideally, the shorter timeframe (12-day) is higher than the longer (50-day), confirming that momentum is accelerating in the near term.</p>
-    <p class="body-text">The slight across-the-board decline from open to close (all down ~0.7%) is consistent with normal end-of-session profit-taking, not a trend deterioration. The critical question for the next session: do all three hold above 50%?</p>
-
-    <div class="section-heading">Warning Signals</div>
-    <ul class="watch-list">
-      <li>Any reading dropping below 50% while the index is making new highs → breadth divergence. Reduce longs.</li>
-      <li>12-day drops below 50-day reading → short-term momentum fading faster than medium-term → possible consolidation ahead.</li>
-      <li>All three below 40% simultaneously → momentum collapse, seek defensive positioning.</li>
-      <li>12-day leading higher while 50-day lags → early-stage breakout developing. Add on pullbacks.</li>
-    </ul>
-
-    <div class="current-box" style="margin-top:auto;">
-      <strong>June 4 Reading:</strong> 56.8% / 58.5% / 53.5% at close — all three bullish, all slightly off their open readings. The structure is healthy: the 20-day reading (58.5%) leads the pack, suggesting recent momentum is the strongest across timeframes. No warnings, no divergences.
-    </div>
-  </div>
-  <div class="slide-num">11 / 14</div>
-</div>
-
-<!-- ═══════════════════════════════ SLIDE 12 — CONCENTRATION RISK ═══════════════════════════════ -->
-<div class="slide">
-  <div class="left-panel">
-    <div class="gauge-label">Concentration Risk</div>
-    <div style="width:100%;padding:0 8px;margin-top:10px;">
-      <!-- Semi concentration bar -->
-      <div class="conc-item">
-        <div class="conc-top">
-          <span class="conc-name">Semis Weight in S&P 500</span>
-          <span class="conc-val l-danger">18%</span>
-        </div>
-        <div class="conc-track">
-          <div class="conc-fill" style="width:18%;background:var(--fear);"></div>
-          <!-- dot-com reference -->
-          <div style="position:absolute;left:8%;top:0;width:2px;height:100%;background:#ffc83d;opacity:0.7;"></div>
-        </div>
-        <div style="font-size:6pt;color:var(--muted);font-family:monospace;margin-top:1px;">vs dot-com peak 8% &nbsp; <span style="color:var(--amber);">│</span></div>
-      </div>
-
-      <div class="conc-item">
-        <div class="conc-top">
-          <span class="conc-name">SOX Index Level</span>
-          <span class="conc-val l-red">13,726</span>
-        </div>
-        <div class="conc-track">
-          <div class="conc-fill" style="width:87%;background:var(--fear2);"></div>
-        </div>
-        <div style="font-size:6pt;color:var(--muted);font-family:monospace;margin-top:1px;">Near all-time records</div>
-      </div>
-
-      <div class="conc-item">
-        <div class="conc-top">
-          <span class="conc-name">Micron (MU) YTD Return</span>
-          <span class="conc-val" style="color:var(--amber);">+214%</span>
-        </div>
-        <div class="conc-track">
-          <div class="conc-fill" style="width:75%;background:var(--amber);"></div>
-        </div>
-      </div>
-
-      <div class="conc-item">
-        <div class="conc-top">
-          <span class="conc-name">SanDisk YTD Return</span>
-          <span class="conc-val l-danger">+3,006%</span>
-        </div>
-        <div class="conc-track">
-          <div class="conc-fill" style="width:100%;background:linear-gradient(to right,var(--fear2),var(--fear));"></div>
-        </div>
-      </div>
-
-      <div class="conc-item">
-        <div class="conc-top">
-          <span class="conc-name">Cap-weight vs Equal-weight Gap</span>
-          <span class="conc-val l-danger">Peak</span>
-        </div>
-        <div class="conc-track">
-          <div class="conc-fill" style="width:92%;background:var(--fear);"></div>
-        </div>
-        <div style="font-size:6pt;color:var(--muted);font-family:monospace;margin-top:1px;">Exceeds dot-com divergence</div>
-      </div>
-
-      <div style="margin-top:10px;padding:7px;background:#1a0808;border:1px solid #4a1010;border-radius:5px;">
-        <div style="font-size:7pt;color:var(--fear);font-family:monospace;letter-spacing:.08em;margin-bottom:3px;">⚠ STRUCTURAL WARNING</div>
-        <div style="font-size:7pt;color:var(--muted);">Tracked separately — 8 vitals can look clean while this builds.</div>
-      </div>
-    </div>
-  </div>
-  <div class="right-panel">
-    <div class="slide-eyebrow">Structural Risk · Tracked Separately</div>
-    <div class="slide-title">Concentration Risk</div>
-    <div class="slide-sub">The danger that index-level metrics (VIX, composite score) look healthy because one sector is holding the entire market together</div>
-
-    <div class="section-heading">The Core Problem</div>
-    <p class="body-text">When 18% of the S&P 500 is concentrated in a single cyclical sector (semiconductors), <em>the index effectively IS that sector.</em> The VIX looks calm because Nvidia, TSMC, and AMD are calm. The breadth looks OK because those names drag the equal-weighted average up. But strip them out, and hundreds of stocks are quietly deteriorating.</p>
-    <p class="body-text">The cap-weighted vs. equal-weighted performance gap has now exceeded what was seen at the peak of the dot-com bubble — meaning the market is more top-heavy today than at any point in modern market history.</p>
-
-    <div class="section-heading">The Specific Risks</div>
-    <ul class="watch-list">
-      <li><strong>Single bad earnings:</strong> One bad NVDA/AMD report can trigger a 3–5% index drop overnight, regardless of what all other stocks are doing.</li>
-      <li><strong>Semi-specific negative catalyst:</strong> Export controls, supply disruptions, Taiwan risk — any of these hits 18% of the index simultaneously.</li>
-      <li><strong>Memory supercycle peak:</strong> HBM memory is sold out through 2026. When that demand peaks, the cycle turns violently — as all semiconductor cycles do.</li>
-      <li><strong>Regulatory / antitrust risk:</strong> At $5.2T, Nvidia alone invites regulatory scrutiny that could reprice valuations.</li>
-    </ul>
-
-    <div class="section-heading">What to Watch</div>
-    <ul class="watch-list">
-      <li>SOX Index breaking its 50-day MA while SPX holds: First warning of concentration unwind.</li>
-      <li>NVDA, AMD, MU all red on the same day while VIX stays low: Distribution in progress.</li>
-      <li>Cap-weight S&P falling while equal-weight rises: The "de-concentration" rotation — be long equal-weight, short tech ETFs.</li>
-      <li>Hindenburg Omen triggering alongside SOX near highs: Highest-risk combination.</li>
-    </ul>
-
-    <div class="current-box" style="margin-top:auto;">
-      <strong>Key Rule:</strong> Don't let a clean dashboard reading make you complacent. When concentration is at 2-decade highs, the dashboard is measuring the health of a handful of mega-caps — not the health of the broader market. Size positions accordingly.
-    </div>
-  </div>
-  <div class="slide-num">12 / 14</div>
-</div>
-
-<!-- ═══════════════════════════════ SLIDE 13 — TRADING FRAMEWORK ═══════════════════════════════ -->
-<div class="slide">
-  <div class="left-panel" style="justify-content:flex-start;padding-top:20px;">
-    <div class="gauge-label" style="margin-bottom:14px;">Today's Play — Three Perspectives</div>
-    <div style="display:flex;flex-direction:column;gap:10px;width:100%;padding:0 6px;">
-      <!-- ZEN -->
-      <div style="padding:10px;border-radius:6px;background:#0a0f1e;border:1px solid #2a3a5a;">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
-          <span style="font-size:16pt;">😇</span>
-          <div>
-            <div style="font-family:'Chakra Petch',monospace;font-size:9pt;color:var(--accent);font-weight:700;">ZEN · The Read</div>
-            <div style="font-size:6.5pt;color:var(--muted);">Balanced confirmation view</div>
-          </div>
-        </div>
-        <ul style="list-style:none;padding:0;font-size:7pt;color:var(--muted);line-height:1.7;">
-          <li style="padding-left:10px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);">≈</span> Wait for open confirmation</li>
-          <li style="padding-left:10px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);">▲</span> Hold overnight longs with trail</li>
-          <li style="padding-left:10px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);">≈</span> Don't force new positions today</li>
-        </ul>
-      </div>
-      <!-- BULL -->
-      <div style="padding:10px;border-radius:6px;background:#041008;border:1px solid #1a4a2e;">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
-          <span style="font-size:16pt;">🐂</span>
-          <div>
-            <div style="font-family:'Chakra Petch',monospace;font-size:9pt;color:var(--greed);font-weight:700;">BULL · Full Sweep</div>
-            <div style="font-size:6.5pt;color:var(--muted);">Aggressive conviction read</div>
-          </div>
-        </div>
-        <ul style="list-style:none;padding:0;font-size:7pt;color:var(--muted);line-height:1.7;">
-          <li style="padding-left:10px;position:relative;"><span style="position:absolute;left:0;color:var(--greed);">▲</span> Carry longs through overnight</li>
-          <li style="padding-left:10px;position:relative;"><span style="position:absolute;left:0;color:var(--greed);">▲</span> Morning dips are buy opportunities</li>
-          <li style="padding-left:10px;position:relative;"><span style="position:absolute;left:0;color:var(--greed);">▲</span> Trail stops above VWAP</li>
-        </ul>
-      </div>
-      <!-- BEAR -->
-      <div style="padding:10px;border-radius:6px;background:#100808;border:1px solid #4a1a1a;">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
-          <span style="font-size:16pt;">🐻</span>
-          <div>
-            <div style="font-family:'Chakra Petch',monospace;font-size:9pt;color:var(--fear2);font-weight:700;">BEAR · Risk-Aware</div>
-            <div style="font-size:6.5pt;color:var(--muted);">Concentrated risk view</div>
-          </div>
-        </div>
-        <ul style="list-style:none;padding:0;font-size:7pt;color:var(--muted);line-height:1.7;">
-          <li style="padding-left:10px;position:relative;"><span style="position:absolute;left:0;color:var(--fear2);">▼</span> Don't mistake close for structure</li>
-          <li style="padding-left:10px;position:relative;"><span style="position:absolute;left:0;color:var(--fear2);">▼</span> Hedge semiconductor exposure</li>
-          <li style="padding-left:10px;position:relative;"><span style="position:absolute;left:0;color:var(--fear2);">▼</span> Watch McClellan for break below 0</li>
+      <div class="mech">
+        <div class="mech-h">The divergence is the signal</div>
+        <ul class="watch">
+          <li><b>Both calm</b> → "double green," the cleanest backdrop for a rally. (Today.)</li>
+          <li><b>VIX calm, MOVE spiking</b> → stress is brewing in rates first; stocks usually catch down.</li>
+          <li><b>VIX spiking, MOVE calm</b> → equity-specific scare, not systemic; tends to recover faster.</li>
+          <li><b>Both above the line</b> → systemic stress; de-risk everything.</li>
         </ul>
       </div>
     </div>
   </div>
-  <div class="right-panel">
-    <div class="slide-eyebrow">Trading Framework</div>
-    <div class="slide-title">Three Perspectives · One Dataset</div>
-    <div class="slide-sub">The same market data, interpreted through three distinct risk lenses — because which perspective you operate from changes everything</div>
-
-    <div class="section-heading">How to Use the Framework</div>
-    <p class="body-text">Every Market Vitals snapshot is simultaneously analyzed through three trading lenses. This isn't about picking a "side" — it's about stress-testing your thesis against the full range of plausible interpretations before you commit capital. Professional traders use all three views every session.</p>
-
-    <div class="section-heading">The Decision Matrix</div>
-    <table class="levels-table">
-      <tr><td class="l-green">6+ vitals green</td><td>Bull lens primary</td><td>High conviction. Full position sizes. Trail stops generously.</td></tr>
-      <tr><td class="l-lime">4–5 vitals green</td><td>Zen lens primary</td><td>Lean long. Smaller sizes. Wait for additional confirmation.</td></tr>
-      <tr><td class="l-amber">2–3 vitals green</td><td>Zen / Bear mixed</td><td>Defensive. Existing positions only. No new longs.</td></tr>
-      <tr><td class="l-red">0–1 vitals green</td><td>Bear lens primary</td><td>Cash or hedged. Tight stops. Risk-off protocol activated.</td></tr>
-    </table>
-
-    <div class="section-heading">Today's Framework Guidance (June 4)</div>
-    <p class="body-text">With 7 of 8 vitals green (SMFI amber), the framework calls for the <strong>Bull lens as primary</strong>, with the Bear lens kept on the desk as a risk-management reference — specifically for semiconductor concentration risk. This is not a "full bull" environment because the one amber signal (institutional caution in SMFI) and the concentration risk justify keeping position sizes slightly below maximum.</p>
-
-    <div class="section-heading">Practical Rules</div>
-    <ul class="watch-list">
-      <li>Check the composite score at 9:40 AM and 3:30 PM every session — those are the two key regime readings.</li>
-      <li>If Market Tide flips negative during the session, immediately re-evaluate all open longs.</li>
-      <li>If McClellan crosses below zero AND Hindenburg triggers the same day: move to Bear lens regardless of composite score.</li>
-      <li>Never hold a full-size position overnight when SMFI is negative and Market Tide is negative simultaneously.</li>
-    </ul>
+  <div class="ft">
+    <span class="chip c-green"><span class="pip"></span> Calm 73.58</span>
+    <span class="ft-read"><b>June 4:</b> 73.58 → 73.58 — perfectly flat. The rates market sent zero stress signals, giving equity bulls the all-clear on the rate front for the entire session.</span>
   </div>
-  <div class="slide-num">13 / 14</div>
-</div>
+  <div class="pagenum">04 / 14</div>
+</section>
 
-<!-- ═══════════════════════════════ SLIDE 14 — SUMMARY ═══════════════════════════════ -->
-<div class="slide">
-  <div class="left-panel" style="justify-content:flex-start;padding-top:16px;border-right:none;">
-    <div class="gauge-label" style="margin-bottom:10px;">June 4, 2026 · 19:01 UTC Snapshot</div>
-    <!-- Mini summary gauge -->
-    <svg viewBox="0 0 260 130" width="200" xmlns="http://www.w3.org/2000/svg">
-      <path d="M 40,115 A 90,90 0 0,1 220,115" fill="none" stroke="#1a2535" stroke-width="12"/>
-      <path d="M 40,115    A 90,90 0 0,1 66.4,51.4"  fill="none" stroke="#ff4d4d" stroke-width="12"/>
-      <path d="M 66.4,51.4  A 90,90 0 0,1 115.9,26.1" fill="none" stroke="#ff7a45" stroke-width="12"/>
-      <path d="M 115.9,26.1 A 90,90 0 0,1 144.1,26.1" fill="none" stroke="#ffc83d" stroke-width="12"/>
-      <path d="M 144.1,26.1 A 90,90 0 0,1 193.6,51.4" fill="none" stroke="#a8e05f" stroke-width="12"/>
-      <path d="M 193.6,51.4 A 90,90 0 0,1 220,115"    fill="none" stroke="#2fd673" stroke-width="12"/>
-      <line x1="130" y1="115" x2="165.7" y2="32.4" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-      <circle cx="165.7" cy="32.4" r="3" fill="white"/>
-      <circle cx="130" cy="115" r="6" fill="#1d2735"/>
-      <circle cx="130" cy="115" r="3.5" fill="#e6edf3"/>
-      <text x="130" y="100" fill="#e6edf3" font-size="20" font-weight="bold" font-family="'Chakra Petch',monospace" text-anchor="middle">63</text>
-      <text x="130" y="113" fill="#a8e05f" font-size="7" font-family="monospace" text-anchor="middle" letter-spacing="2">CONSTRUCTIVE</text>
+<!-- ══════════════════ 5 · McCLELLAN (tug of war) ══════════════════ -->
+<section class="slide">
+  <div class="hd">
+    <div class="hd-eyebrow"><span class="dot"></span> Breadth · Advancers vs Decliners <span class="num">· 03 / 08</span></div>
+    <div class="hd-title">McClellan — The Breadth Tug-of-War</div>
+    <div class="hd-def">A market index can rise on just a few giants. The McClellan Oscillator ignores price and asks: <b>are more stocks rising than falling — and is that gap accelerating?</b></div>
+    <div class="hd-rule"></div>
+  </div>
+  <div class="stage col" style="gap:7mm;">
+    <!-- tug of war -->
+    <svg viewBox="0 0 820 180" width="800" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;">
+      <!-- teams -->
+      <text x="80" y="34" text-anchor="middle" font-family="'Chakra Petch',sans-serif" font-size="15" font-weight="700" fill="#ff7a45">DECLINERS</text>
+      <text x="80" y="52" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#8492a6">pull left ◀</text>
+      <text x="740" y="34" text-anchor="middle" font-family="'Chakra Petch',sans-serif" font-size="15" font-weight="700" fill="#2fd673">ADVANCERS</text>
+      <text x="740" y="52" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#8492a6">▶ pull right</text>
+      <!-- the rope -->
+      <line x1="120" y1="95" x2="700" y2="95" stroke="#3a4a60" stroke-width="5" stroke-linecap="round"/>
+      <!-- tick scale under rope -->
+      <g font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6678" text-anchor="middle">
+        <line x1="120" y1="118" x2="120" y2="128" stroke="#3a4a60"/><text x="120" y="143" fill="#ff4d4d">−150</text>
+        <line x1="265" y1="118" x2="265" y2="128" stroke="#3a4a60"/><text x="265" y="143">−50</text>
+        <line x1="410" y1="118" x2="410" y2="132" stroke="#5a6678" stroke-width="1.5"/><text x="410" y="147">0</text>
+        <line x1="555" y1="118" x2="555" y2="128" stroke="#3a4a60"/><text x="555" y="143">+50</text>
+        <line x1="700" y1="118" x2="700" y2="128" stroke="#3a4a60"/><text x="700" y="143" fill="#2fd673">+150</text>
+      </g>
+      <!-- knot at +7.63 ≈ 52.5% → x = 120 + .525*580 = 425 -->
+      <g transform="translate(425,95)">
+        <circle r="15" fill="#0f1620" stroke="#2fd673" stroke-width="2.5"/>
+        <circle r="6" fill="#2fd673"/>
+        <line x1="0" y1="-15" x2="0" y2="-44" stroke="#fff" stroke-width="1.5"/>
+        <rect x="-30" y="-64" width="60" height="20" rx="5" fill="#fff"/>
+        <text x="0" y="-50" text-anchor="middle" font-family="'Chakra Petch',sans-serif" font-size="11" font-weight="700" fill="#08160c">+7.63</text>
+      </g>
+      <!-- center reference -->
+      <line x1="410" y1="70" x2="410" y2="118" stroke="#5a6678" stroke-width="1" stroke-dasharray="3 3"/>
     </svg>
-
-    <!-- 8 vitals mini grid -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;width:100%;padding:0 4px;margin-top:6px;">
-      <div style="padding:5px 7px;border-radius:4px;background:#0d2118;border:1px solid #1a4a2e;">
-        <div style="font-size:6pt;color:var(--muted);font-family:monospace;">VIX</div>
-        <div style="font-size:8pt;color:var(--greed);font-weight:600;">15.37 · CALM ✓</div>
-      </div>
-      <div style="padding:5px 7px;border-radius:4px;background:#0d2118;border:1px solid #1a4a2e;">
-        <div style="font-size:6pt;color:var(--muted);font-family:monospace;">MOVE</div>
-        <div style="font-size:8pt;color:var(--greed);font-weight:600;">73.58 · CALM ✓</div>
-      </div>
-      <div style="padding:5px 7px;border-radius:4px;background:#0d2118;border:1px solid #1a4a2e;">
-        <div style="font-size:6pt;color:var(--muted);font-family:monospace;">McCLELLAN</div>
-        <div style="font-size:8pt;color:var(--greed);font-weight:600;">+7.63 · RISING ✓</div>
-      </div>
-      <div style="padding:5px 7px;border-radius:4px;background:#0d2118;border:1px solid #1a4a2e;">
-        <div style="font-size:6pt;color:var(--muted);font-family:monospace;">% &gt; 200-DAY</div>
-        <div style="font-size:8pt;color:var(--greed);font-weight:600;">55.9% · HEALTHY ✓</div>
-      </div>
-      <div style="padding:5px 7px;border-radius:4px;background:#0d2118;border:1px solid #1a4a2e;">
-        <div style="font-size:6pt;color:var(--muted);font-family:monospace;">PUT/CALL</div>
-        <div style="font-size:8pt;color:var(--greed);font-weight:600;">0.88 · NEUTRAL ✓</div>
-      </div>
-      <div style="padding:5px 7px;border-radius:4px;background:#0d2118;border:1px solid #1a4a2e;">
-        <div style="font-size:6pt;color:var(--muted);font-family:monospace;">HINDENBURG</div>
-        <div style="font-size:8pt;color:var(--greed);font-weight:600;">CLEAR ✓</div>
-      </div>
-      <div style="padding:5px 7px;border-radius:4px;background:#1e1600;border:1px solid #4a3500;">
-        <div style="font-size:6pt;color:var(--muted);font-family:monospace;">SMFI</div>
-        <div style="font-size:8pt;color:var(--amber);font-weight:600;">50,820 · NEUTRAL ⚠</div>
-      </div>
-      <div style="padding:5px 7px;border-radius:4px;background:#0d2118;border:1px solid #1a4a2e;">
-        <div style="font-size:6pt;color:var(--muted);font-family:monospace;">MARKET TIDE</div>
-        <div style="font-size:8pt;color:var(--greed);font-weight:600;">+$43M · FLIP ✓</div>
+    <div class="explain" style="max-width:235mm; width:100%;">
+      <div style="display:flex; gap:14mm;">
+        <div style="flex:1;">
+          <div class="mech-h">The mechanic</div>
+          <p class="mech-p">It's the gap between a <b>19-day</b> and <b>39-day</b> average of (advancing − declining stocks). Because it compares fast vs slow averages, it measures the <em>rate of change</em> of breadth — momentum, not level. Positive = the gap is widening in favour of advancers.</p>
+        </div>
+        <div style="flex:1;">
+          <div class="mech-h">What traders watch</div>
+          <ul class="watch">
+            <li><b>Divergence:</b> index hits new highs but McClellan rolls over → rally is thinning. Warning.</li>
+            <li><b>Zero-line cross</b> (− to +) confirms a broad regime shift.</li>
+            <li><b>&gt;+100</b> can stay overbought for weeks in strong bulls — don't blindly fade.</li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
+  <div class="ft">
+    <span class="chip c-green"><span class="pip"></span> Rising +7.63</span>
+    <span class="ft-read"><b>June 4:</b> +9.93 → +7.63. The knot sits just right of center — advancers in control. Slight easing into the close is routine end-of-day profit-taking, not deterioration.</span>
+  </div>
+  <div class="pagenum">05 / 14</div>
+</section>
 
-  <div class="right-panel" style="border-left:1px solid var(--line);">
-    <div class="slide-eyebrow">Summary · Putting It All Together</div>
-    <div class="slide-title">Reading the Full Dashboard</div>
-    <div class="slide-sub">How to synthesize 8 signals into a single actionable market view</div>
-
-    <div class="section-heading">The Hierarchy of Signals</div>
-    <table class="levels-table">
-      <tr><td style="color:var(--txt);font-weight:600;">1. Market Tide</td><td colspan="2">Most important. Actual dollar flow tells you where big money is going RIGHT NOW.</td></tr>
-      <tr><td style="color:var(--txt);">2. % &gt; 200-Day MA</td><td colspan="2">Structural foundation. Can the rally sustain or is it built on sand?</td></tr>
-      <tr><td style="color:var(--txt);">3. VIX + MOVE</td><td colspan="2">Volatility floor. Both must be calm for a confident bull setup.</td></tr>
-      <tr><td style="color:var(--txt);">4. McClellan + Pulse</td><td colspan="2">Breadth health. Is the rally broad, or just a few names?</td></tr>
-      <tr><td style="color:var(--txt);">5. SMFI</td><td colspan="2">Institutional conviction. Are the big players committing or watching?</td></tr>
-      <tr><td style="color:var(--txt);">6. Put/Call</td><td colspan="2">Market mood. Fear vs. greed balance in options markets.</td></tr>
-      <tr><td style="color:var(--txt);">7. Hindenburg</td><td colspan="2">Structural risk. Is the market cohesive or bifurcating?</td></tr>
-    </table>
-
-    <div class="section-heading">Quick-Reference: Dashboard Score → Action</div>
-    <ul class="watch-list">
-      <li><strong style="color:var(--greed);">7–8 green:</strong> High-conviction bull. Full positions, generous stops, hold overnight.</li>
-      <li><strong style="color:var(--greed2);">5–6 green:</strong> Lean bull. Standard positions. Check Market Tide at 3:30 PM before overnight holds.</li>
-      <li><strong style="color:var(--amber);">3–4 green:</strong> Neutral. Reduce to half-size. No new entries. Manage existing exits.</li>
-      <li><strong style="color:var(--fear2);">0–2 green:</strong> Risk-off. Exit longs. Cash or hedged. Wait for 3+ green before re-entering.</li>
-    </ul>
-
-    <div class="section-heading">The One Rule That Matters Most</div>
-    <p class="body-text">When Market Tide flips positive AND breadth is &gt;50% AND Hindenburg is clear: that is the highest-probability setup this dashboard can identify. Everything else is context. Everything else is noise management.</p>
-
-    <div class="current-box" style="margin-top:auto;background:#040e08;border-color:#1a4a2e;">
-      <strong style="color:var(--greed);">June 4 Verdict: CONSTRUCTIVE 63 · 7 of 8 vitals green.</strong>
-      Market Tide flip confirmed the regime shift. Breadth healthy. Volatility calm. One amber (SMFI) warrants slightly reduced position sizing, but the bull case is intact.
-      <span style="color:var(--fear2);"> Caveat: 18% semi concentration remains the key structural risk to monitor.</span>
+<!-- ══════════════════ 6 · % ABOVE 200-DAY (dot field) ══════════════════ -->
+<section class="slide">
+  <div class="hd">
+    <div class="hd-eyebrow"><span class="dot"></span> Breadth · Structural Health <span class="num">· 04 / 08</span></div>
+    <div class="hd-title">% Above the 200-Day — Counting the Healthy</div>
+    <div class="hd-def">The single best gauge of long-term structure. A stock above its 200-day average is in an uptrend. <b>How many of them are?</b> Above 50% means the bull has real breadth, not just a few heroes.</div>
+    <div class="hd-rule"></div>
+  </div>
+  <div class="stage" style="gap:16mm;">
+    <!-- dot field: 100 dots, 56 on -->
+    <div class="hero">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:9.5pt; color:#8492a6; margin-bottom:8px; letter-spacing:.1em;">EACH DOT = 1% OF THE MARKET</div>
+      <div class="field" style="grid-template-columns:repeat(20,1fr); width:360px;">
+        <!-- 56 on, 44 off generated below -->
+        <!-- row gen: we mark first 56 as on -->
+        <!-- 100 dots -->
+        <!-- ON dots -->
+        <!-- (filled programmatically as 56 green then 44 gray) -->
+        <!-- 1-20 -->
+        <span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span>
+        <!-- 21-40 -->
+        <span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span>
+        <!-- 41-56 -->
+        <span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span><span class="d d-on"></span>
+        <!-- 57-60 off -->
+        <span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span>
+        <!-- 61-80 off -->
+        <span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span>
+        <!-- 81-100 off -->
+        <span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span><span class="d d-off"></span>
+      </div>
+      <div class="legend">
+        <span><i style="background:#a8e05f;"></i> 55.9 above 200-day · uptrend</span>
+        <span><i style="background:#212c3c;"></i> 44.1 below · downtrend</span>
+      </div>
+    </div>
+    <div class="explain">
+      <div class="mech">
+        <div class="mech-h">Why 50% is the line in the sand</div>
+        <p class="mech-p">Above 50%, most stocks participate — the rally is broad and durable. Below 50% while the index makes new highs is the classic <b>bearish divergence</b>: a shrinking group of mega-caps is carrying a hollow market.</p>
+      </div>
+      <div class="mech" style="margin-bottom:4mm;">
+        <div class="mech-h">The ladder</div>
+        <ul class="watch">
+          <li><b>&gt;70%</b> — bull market, broad participation.</li>
+          <li><b>50–70%</b> — healthy. <em>(Today: 55.9%)</em></li>
+          <li><b>30–50%</b> — mixed; deterioration under the surface.</li>
+          <li><b>&lt;20%</b> — capitulation; historically a major bottom.</li>
+        </ul>
+      </div>
+      <p class="mech-p" style="font-size:9pt;"><b>Trend beats level:</b> a reading <em>rising</em> from 40% is more bullish than one <em>falling</em> from 70%.</p>
     </div>
   </div>
-  <div class="slide-num">14 / 14</div>
-</div>
+  <div class="ft">
+    <span class="chip c-green"><span class="pip"></span> Healthy 55.9%</span>
+    <span class="ft-read"><b>June 4:</b> 56.1% → 55.9%, essentially flat. Over half the market sits above long-term support — a rock-solid floor even though the composite opened in Fear.</span>
+  </div>
+  <div class="pagenum">06 / 14</div>
+</section>
+
+<!-- ══════════════════ 7 · PUT/CALL (balance scale) ══════════════════ -->
+<section class="slide">
+  <div class="hd">
+    <div class="hd-eyebrow"><span class="dot"></span> Sentiment · Hedging Demand <span class="num">· 05 / 08</span></div>
+    <div class="hd-title">Put/Call — Weighing Fear Against Greed</div>
+    <div class="hd-def">Puts are bets on (or insurance against) a fall; calls are bets on a rise. Their ratio is a <b>balance scale of sentiment</b> — and as a contrarian tool, the extremes matter most.</div>
+    <div class="hd-rule"></div>
+  </div>
+  <div class="stage" style="gap:14mm;">
+    <!-- balance scale -->
+    <div class="hero">
+      <svg viewBox="0 0 320 240" width="300" xmlns="http://www.w3.org/2000/svg">
+        <!-- fulcrum -->
+        <polygon points="160,150 145,210 175,210" fill="#1f2a3a" stroke="#3a4a60"/>
+        <rect x="120" y="208" width="80" height="8" rx="4" fill="#1f2a3a"/>
+        <!-- beam tilted slightly toward calls (right heavier → 0.88 <1 means more calls) -->
+        <!-- tilt: calls down on right side a touch -->
+        <g transform="rotate(4 160 150)">
+          <rect x="40" y="146" width="240" height="7" rx="3.5" fill="#3a4a60"/>
+          <circle cx="160" cy="150" r="7" fill="#56a8ff"/>
+          <!-- left pan: PUTS -->
+          <line x1="70" y1="150" x2="70" y2="184" stroke="#3a4a60" stroke-width="1.5"/>
+          <path d="M40 184 H100 L92 206 H48 Z" fill="#ff7a4522" stroke="#ff7a45" stroke-width="1.5"/>
+          <text x="70" y="199" text-anchor="middle" font-family="'Chakra Petch',sans-serif" font-size="11" font-weight="700" fill="#ff7a45">PUTS</text>
+          <!-- right pan: CALLS -->
+          <line x1="250" y1="150" x2="250" y2="184" stroke="#3a4a60" stroke-width="1.5"/>
+          <path d="M220 184 H280 L272 206 H228 Z" fill="#2fd67322" stroke="#2fd673" stroke-width="1.5"/>
+          <text x="250" y="199" text-anchor="middle" font-family="'Chakra Petch',sans-serif" font-size="11" font-weight="700" fill="#2fd673">CALLS</text>
+        </g>
+        <!-- reading -->
+        <text x="160" y="34" text-anchor="middle" font-family="'Chakra Petch',sans-serif" font-size="30" font-weight="700" fill="#fff">0.88</text>
+        <text x="160" y="52" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#a8e05f" letter-spacing="2">NEUTRAL · HEALTHY</text>
+        <text x="160" y="232" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="8" fill="#8492a6">ratio &lt; 1 → calls outweigh puts</text>
+      </svg>
+      <div class="hero-cap">88 puts traded for every 100 calls</div>
+    </div>
+    <div class="explain">
+      <div class="mech">
+        <div class="mech-h">The sweet spot</div>
+        <p class="mech-p">A reading of <b>0.85–0.90</b> is the "healthy skepticism" zone — enough hedging to climb the wall of worry, not so much that panic has set in. It's the most fertile ground for a sustained rally.</p>
+      </div>
+      <div class="mech">
+        <div class="mech-h">The contrarian extremes</div>
+        <ul class="watch">
+          <li><b>&lt;0.70</b> — too many calls, rampant greed. Complacency → contrarian <em>bearish</em>.</li>
+          <li><b>0.85–0.90</b> — balanced & healthy. <em>(Today: 0.88)</em></li>
+          <li><b>&gt;1.10</b> — heavy put-buying, peak fear. Often a contrarian <em>buy</em>.</li>
+        </ul>
+      </div>
+      <p class="mech-p" style="font-size:9pt;">A small uptick into the close (0.85 → 0.88) is <b>prudent protection after a rally</b>, not fear.</p>
+    </div>
+  </div>
+  <div class="ft">
+    <span class="chip c-green"><span class="pip"></span> Neutral 0.88</span>
+    <span class="ft-read"><b>June 4:</b> 0.85 → 0.88. Sitting squarely in the healthy zone with a small protective uptick at the bell — exactly the behaviour you want to see late in a strong session.</span>
+  </div>
+  <div class="pagenum">07 / 14</div>
+</section>
+
+<!-- ══════════════════ 8 · HINDENBURG (the split) ══════════════════ -->
+<section class="slide">
+  <div class="hd">
+    <div class="hd-eyebrow"><span class="dot"></span> Risk · Early-Warning Signal <span class="num">· 06 / 08</span></div>
+    <div class="hd-title">Hindenburg Omen — When the Market Splits</div>
+    <div class="hd-def">A rare warning that fires when an unusual number of stocks hit new <b>52-week highs AND new 52-week lows at the same time</b> — the market pulling itself apart in opposite directions.</div>
+    <div class="hd-rule"></div>
+  </div>
+  <div class="stage" style="gap:14mm;">
+    <!-- the split diagram -->
+    <div class="hero">
+      <svg viewBox="0 0 300 220" width="280" xmlns="http://www.w3.org/2000/svg">
+        <!-- center fracture -->
+        <line x1="150" y1="10" x2="150" y2="200" stroke="#2a3a52" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <!-- up arrows (new highs) -->
+        <g stroke="#2fd673" stroke-width="3" fill="none" stroke-linecap="round">
+          <path d="M55 150 L55 60"/><path d="M40 80 L55 58 L70 80"/>
+          <path d="M95 160 L95 90"/><path d="M83 105 L95 88 L107 105"/>
+        </g>
+        <text x="75" y="190" text-anchor="middle" font-family="'Chakra Petch',sans-serif" font-size="12" font-weight="700" fill="#2fd673">NEW HIGHS</text>
+        <text x="75" y="206" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="8" fill="#8492a6">winners soar</text>
+        <!-- down arrows (new lows) -->
+        <g stroke="#ff4d4d" stroke-width="3" fill="none" stroke-linecap="round">
+          <path d="M205 60 L205 150"/><path d="M190 130 L205 152 L220 130"/>
+          <path d="M245 70 L245 140"/><path d="M233 120 L245 142 L257 120"/>
+        </g>
+        <text x="225" y="190" text-anchor="middle" font-family="'Chakra Petch',sans-serif" font-size="12" font-weight="700" fill="#ff4d4d">NEW LOWS</text>
+        <text x="225" y="206" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="8" fill="#8492a6">losers collapse</text>
+        <!-- both at once = danger -->
+        <text x="150" y="28" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#ffc83d">⚡ BOTH AT ONCE = OMEN</text>
+      </svg>
+      <div class="hero-cap">a market with no consensus</div>
+    </div>
+    <div class="explain">
+      <div class="mech">
+        <div class="mech-h">Why it matters</div>
+        <p class="mech-p">Normally you see <em>either</em> lots of highs <em>or</em> lots of lows. Both together means the market has fractured into haves and have-nots — an internal rupture that has preceded many sharp selloffs. <b>All four conditions must trigger together</b>, and clusters of 3+ in 30 days are the most reliable.</p>
+      </div>
+      <div class="mech">
+        <div class="mech-h">The 4 trigger conditions</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
+          <div style="background:#0c2418; border:1px solid #1d5236; border-radius:7px; padding:6px 9px; font-size:10pt; color:#c5d0dc;"><span style="color:#2fd673;">✓</span> Highs &amp; lows each &gt;2.2%</div>
+          <div style="background:#0c2418; border:1px solid #1d5236; border-radius:7px; padding:6px 9px; font-size:10pt; color:#c5d0dc;"><span style="color:#2fd673;">✓</span> Index above its 50-day MA</div>
+          <div style="background:#0c2418; border:1px solid #1d5236; border-radius:7px; padding:6px 9px; font-size:10pt; color:#c5d0dc;"><span style="color:#2fd673;">✓</span> McClellan negative</div>
+          <div style="background:#0c2418; border:1px solid #1d5236; border-radius:7px; padding:6px 9px; font-size:10pt; color:#c5d0dc;"><span style="color:#2fd673;">✓</span> Cluster within 30 days</div>
+        </div>
+        <p class="mech-p" style="font-size:9pt; margin-top:6px;">Only ~25% of single signals lead to real declines — context (a <em>falling</em> market) makes it far more dangerous.</p>
+      </div>
+    </div>
+  </div>
+  <div class="ft">
+    <span class="chip c-green"><span class="pip"></span> Clear · No triggers</span>
+    <span class="ft-read"><b>June 4:</b> Clear → Clear, no triggers in the 30-day window. The market's internals are cohesive — divergence tail-risk is absent, reinforcing the healthy McClellan and 55.9% breadth.</span>
+  </div>
+  <div class="pagenum">08 / 14</div>
+</section>
+
+<!-- ══════════════════ 9 · SMFI (two-clock day) ══════════════════ -->
+<section class="slide">
+  <div class="hd">
+    <div class="hd-eyebrow"><span class="dot"></span> Flow · Following Institutions <span class="num">· 07 / 08</span></div>
+    <div class="hd-title">Smart Money Flow — Who Trades When</div>
+    <div class="hd-def">A simple, powerful idea: the <b>open is emotional</b> (retail and algos reacting to overnight news) while the <b>close is informed</b> (institutions positioning). SMFI accumulates the difference.</div>
+    <div class="hd-rule"></div>
+  </div>
+  <div class="stage col" style="gap:7mm;">
+    <!-- trading day timeline -->
+    <svg viewBox="0 0 820 150" width="800" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;">
+      <!-- day bar -->
+      <rect x="40" y="55" width="740" height="34" rx="8" fill="#0f1620" stroke="#1f2a3a"/>
+      <!-- first hour: emotional -->
+      <rect x="40" y="55" width="95" height="34" rx="8" fill="#ff7a4533"/>
+      <rect x="118" y="55" width="17" height="34" fill="#ff7a4533"/>
+      <!-- last hour: smart money -->
+      <rect x="685" y="55" width="95" height="34" rx="8" fill="#2fd67340"/>
+      <rect x="685" y="55" width="17" height="34" fill="#2fd67340"/>
+      <!-- midday -->
+      <text x="410" y="77" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6678">midday drift · low signal</text>
+      <!-- labels -->
+      <text x="88" y="45" text-anchor="middle" font-family="'Chakra Petch',sans-serif" font-size="11" font-weight="700" fill="#ff7a45">FIRST HOUR</text>
+      <text x="88" y="112" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="8.5" fill="#8492a6">emotional money</text>
+      <text x="88" y="124" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="8.5" fill="#8492a6">retail · news · algos</text>
+      <text x="732" y="45" text-anchor="middle" font-family="'Chakra Petch',sans-serif" font-size="11" font-weight="700" fill="#2fd673">LAST HOUR</text>
+      <text x="732" y="112" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="8.5" fill="#8492a6">smart money</text>
+      <text x="732" y="124" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="8.5" fill="#8492a6">institutions position</text>
+      <!-- clock ticks -->
+      <text x="40" y="32" font-family="'IBM Plex Mono',monospace" font-size="8" fill="#5a6678">9:30 open</text>
+      <text x="780" y="32" text-anchor="end" font-family="'IBM Plex Mono',monospace" font-size="8" fill="#5a6678">4:00 close</text>
+      <!-- SMFI accumulates the last-hour flows arrow -->
+      <path d="M732 95 q 0 25 -40 28 H 150" stroke="#56a8ff" stroke-width="1.5" fill="none" stroke-dasharray="4 3" marker-end="url(#ah2)"/>
+      <defs><marker id="ah2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#56a8ff"/></marker></defs>
+      <text x="430" y="142" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="8.5" fill="#56a8ff">SMFI = a running tally of late-session (smart) flows over time</text>
+    </svg>
+    <div class="explain" style="max-width:235mm; width:100%;">
+      <div style="display:flex; gap:14mm;">
+        <div style="flex:1;">
+          <div class="mech-h">Reading the combination</div>
+          <ul class="watch">
+            <li><b style="color:#2fd673;">SMFI ↑ + market ↑</b> → institutions buying the rally. Strongest confirmation.</li>
+            <li><b style="color:#ffc83d;">SMFI ↓ + market ↑</b> → they're not chasing. Caution. <em>(Today)</em></li>
+            <li><b style="color:#a8e05f;">SMFI ↑ + market ↓</b> → quiet accumulation; reversal setup.</li>
+            <li><b style="color:#ff4d4d;">SMFI ↓ + market ↓</b> → distribution. Stay out.</li>
+          </ul>
+        </div>
+        <div style="flex:1;">
+          <div class="mech-h">Why it's only "amber" today</div>
+          <p class="mech-p">SMFI drifting from <b>51,185 → 50,820</b> means institutions are <em>watching, not chasing</em>. In an extended rally that's rational profit-taking — cautious, not alarming. Worth a 2–3 session watch to see if conviction returns.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ft">
+    <span class="chip c-amber"><span class="pip"></span> Neutral 50,820</span>
+    <span class="ft-read"><b>June 4:</b> 51,185 → 50,820. The lone amber on an otherwise green board — institutions haven't committed capital to chase price yet. Not a red flag on its own, but the one to monitor.</span>
+  </div>
+  <div class="pagenum">09 / 14</div>
+</section>
+
+<!-- ══════════════════ 10 · MARKET TIDE (the flip) ══════════════════ -->
+<section class="slide">
+  <div class="hd">
+    <div class="hd-eyebrow"><span class="dot"></span> Flow · The Most Important Signal <span class="num">· 08 / 08</span></div>
+    <div class="hd-title">Market Tide — Real Dollars, Real Time</div>
+    <div class="hd-def">Forget surveys. Market Tide tracks the <b>actual dollars of options premium</b> flowing into bullish bets vs bearish bets. Direction = the regime; size = the conviction. A mid-session <b>flip</b> is the highest-conviction signal on the board.</div>
+    <div class="hd-rule"></div>
+  </div>
+  <div class="stage" style="gap:14mm;">
+    <!-- flip visual -->
+    <div class="hero">
+      <svg viewBox="0 0 300 250" width="290" xmlns="http://www.w3.org/2000/svg">
+        <!-- zero line -->
+        <line x1="40" y1="125" x2="270" y2="125" stroke="#3a4a60" stroke-width="1.5"/>
+        <text x="278" y="129" font-family="'IBM Plex Mono',monospace" font-size="8" fill="#5a6678">$0</text>
+        <!-- bearish bar (was) -->
+        <rect x="70" y="125" width="50" height="72" rx="4" fill="#ff4d4d33" stroke="#ff4d4d"/>
+        <text x="95" y="216" text-anchor="middle" font-family="'Chakra Petch',sans-serif" font-size="13" font-weight="700" fill="#ff4d4d">−$72M</text>
+        <text x="95" y="232" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="8" fill="#8492a6">all day</text>
+        <!-- arrow flip -->
+        <path d="M135 110 q 30 -40 60 0" stroke="#56a8ff" stroke-width="2" fill="none" marker-end="url(#ah3)"/>
+        <defs><marker id="ah3" markerWidth="10" markerHeight="10" refX="7" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#56a8ff"/></marker></defs>
+        <text x="165" y="58" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#56a8ff">FLIP ⚡</text>
+        <!-- bullish bar (now) -->
+        <rect x="180" y="82" width="50" height="43" rx="4" fill="#2fd67340" stroke="#2fd673"/>
+        <text x="205" y="74" text-anchor="middle" font-family="'Chakra Petch',sans-serif" font-size="13" font-weight="700" fill="#2fd673">+$43M</text>
+        <text x="205" y="232" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="8" fill="#8492a6">at close</text>
+      </svg>
+      <div class="hero-cap">a $115M swing across zero</div>
+    </div>
+    <div class="explain">
+      <div class="mech">
+        <div class="mech-h">Why it leads everything else</div>
+        <p class="mech-p">No other indicator captures <b>live committed capital</b>. When institutions turn bullish they pay up for calls (or sell puts), pushing net premium flow positive. The moment it crosses from negative to positive intraday is the cleanest entry signal the dashboard produces.</p>
+      </div>
+      <div class="mech">
+        <div class="mech-h">The thresholds</div>
+        <ul class="watch">
+          <li><b style="color:#2fd673;">&gt;+$100M</b> strong bullish conviction.</li>
+          <li><b style="color:#a8e05f;">+$20M→+$100M</b> confirmed buyers. <em>(Today: +$43M)</em></li>
+          <li><b style="color:#ffc83d;">±$20M</b> contested, no edge — wait.</li>
+          <li><b style="color:#ff4d4d;">&lt;−$100M</b> distribution; hedge.</li>
+        </ul>
+      </div>
+      <p class="mech-p" style="font-size:9pt;"><b>Confirm the flip holds 30–60 min</b> before acting — false crosses happen.</p>
+    </div>
+  </div>
+  <div class="ft">
+    <span class="chip c-green"><span class="pip"></span> Positive · Flip</span>
+    <span class="ft-read"><b>June 4:</b> negative all session (−$72M) then flipped to <b>+$43M</b> into the close — the day's pivotal event, and the single biggest driver of the composite's jump from 56 to 63.</span>
+  </div>
+  <div class="pagenum">10 / 14</div>
+</section>
+
+<!-- ══════════════════ 11 · MOMENTUM PULSE (waterlines) ══════════════════ -->
+<section class="slide">
+  <div class="hd">
+    <div class="hd-eyebrow"><span class="dot"></span> Breadth · Short-Term Momentum <span class="num">· bonus</span></div>
+    <div class="hd-title">Momentum Pulse — Three Tide Lines</div>
+    <div class="hd-def">The same "% of stocks above their average" idea, run across <b>three shorter horizons</b>. Together they show whether near-term momentum is broad — and whether it's accelerating or fading.</div>
+    <div class="hd-rule"></div>
+  </div>
+  <div class="stage col" style="gap:8mm;">
+    <div style="width:230mm; max-width:100%;">
+      <!-- 50% waterline note -->
+      <div style="text-align:right; font-family:'IBM Plex Mono',monospace; font-size:9.5pt; color:#ffc83d; margin-bottom:4px;">▲ 50% waterline — stay above to stay bullish</div>
+      <!-- bar 1: 12-day 56.8 -->
+      <div style="margin-bottom:13px;">
+        <div style="display:flex; justify-content:space-between; font-size:9.5pt; margin-bottom:4px;"><span style="color:#c5d0dc;"><b style="color:#fff;">% above 12-day</b> · ~2.5-week trend · most sensitive</span><span style="font-family:'Chakra Petch',sans-serif; font-weight:700; color:#a8e05f;">56.8%</span></div>
+        <div style="position:relative; height:22px; border-radius:6px; background:#0f1620; border:1px solid #1f2a3a; overflow:hidden;">
+          <div style="position:absolute; left:0; top:0; height:100%; width:56.8%; background:linear-gradient(90deg,#2fd67388,#a8e05f); border-radius:6px;"></div>
+          <div style="position:absolute; left:50%; top:0; height:100%; width:2px; background:#ffc83d;"></div>
+        </div>
+      </div>
+      <!-- bar 2: 20-day 58.5 -->
+      <div style="margin-bottom:13px;">
+        <div style="display:flex; justify-content:space-between; font-size:9.5pt; margin-bottom:4px;"><span style="color:#c5d0dc;"><b style="color:#fff;">% above 20-day</b> · ~1-month trend · core gauge</span><span style="font-family:'Chakra Petch',sans-serif; font-weight:700; color:#a8e05f;">58.5%</span></div>
+        <div style="position:relative; height:22px; border-radius:6px; background:#0f1620; border:1px solid #1f2a3a; overflow:hidden;">
+          <div style="position:absolute; left:0; top:0; height:100%; width:58.5%; background:linear-gradient(90deg,#2fd67388,#a8e05f); border-radius:6px;"></div>
+          <div style="position:absolute; left:50%; top:0; height:100%; width:2px; background:#ffc83d;"></div>
+        </div>
+      </div>
+      <!-- bar 3: 50-day 53.5 -->
+      <div style="margin-bottom:4px;">
+        <div style="display:flex; justify-content:space-between; font-size:9.5pt; margin-bottom:4px;"><span style="color:#c5d0dc;"><b style="color:#fff;">% above 50-day</b> · ~2.5-month trend · slower</span><span style="font-family:'Chakra Petch',sans-serif; font-weight:700; color:#a8e05f;">53.5%</span></div>
+        <div style="position:relative; height:22px; border-radius:6px; background:#0f1620; border:1px solid #1f2a3a; overflow:hidden;">
+          <div style="position:absolute; left:0; top:0; height:100%; width:53.5%; background:linear-gradient(90deg,#2fd67388,#a8e05f); border-radius:6px;"></div>
+          <div style="position:absolute; left:50%; top:0; height:100%; width:2px; background:#ffc83d;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="explain" style="max-width:230mm; width:100%;">
+      <div style="display:flex; gap:14mm;">
+        <div style="flex:1;">
+          <div class="mech-h">How to read the stack</div>
+          <p class="mech-p">All three above 50% = the rally has participation across every horizon, not just a short bounce. When the <b>short line (12-day) sits above the long line (50-day)</b>, momentum is accelerating in the near term — the bullish ordering.</p>
+        </div>
+        <div style="flex:1;">
+          <div class="mech-h">Warning signs</div>
+          <ul class="watch">
+            <li>Any line slipping <b>below 50%</b> while the index makes new highs → divergence.</li>
+            <li>12-day dropping <b>under</b> the 50-day → near-term momentum fading first.</li>
+            <li>All three under 40% → momentum collapse; go defensive.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ft">
+    <span class="chip c-green"><span class="pip"></span> All bullish</span>
+    <span class="ft-read"><b>June 4:</b> 56.8 / 58.5 / 53.5 — all three above the 50% waterline, the 20-day leading. Healthy structure, no divergences; the small intraday dip is routine profit-taking.</span>
+  </div>
+  <div class="pagenum">11 / 14</div>
+</section>
+
+<!-- ══════════════════ 12 · CONCENTRATION RISK ══════════════════ -->
+<section class="slide">
+  <div class="hd">
+    <div class="hd-eyebrow" style="color:#ff7a45;"><span class="dot" style="background:#ff7a45;box-shadow:0 0 8px #ff7a45;"></span> Structural Risk · Watch Separately <span class="num">· caveat</span></div>
+    <div class="hd-title">Concentration — When the Index <em>Is</em> One Sector</div>
+    <div class="hd-def">Every gauge can glow green while danger builds underneath. With <b>18% of the S&P 500 in semiconductors</b>, "the market" is really a handful of chip giants — and the dashboard can't see that on its own.</div>
+    <div class="hd-rule"></div>
+  </div>
+  <div class="stage" style="gap:14mm;">
+    <!-- top-heavy composition -->
+    <div class="hero">
+      <svg viewBox="0 0 260 230" width="250" xmlns="http://www.w3.org/2000/svg">
+        <!-- S&P bar split -->
+        <text x="130" y="16" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#8492a6">S&amp;P 500 COMPOSITION</text>
+        <!-- semis chunk -->
+        <rect x="90" y="28" width="80" height="58" rx="4" fill="#ff4d4d33" stroke="#ff4d4d" stroke-width="1.5"/>
+        <text x="130" y="54" text-anchor="middle" font-family="'Chakra Petch',sans-serif" font-size="17" font-weight="700" fill="#ff4d4d">18%</text>
+        <text x="130" y="72" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="8" fill="#ff7a45">SEMICONDUCTORS</text>
+        <!-- everything else -->
+        <rect x="40" y="92" width="180" height="92" rx="4" fill="#18243450" stroke="#2a3a52"/>
+        <text x="130" y="135" text-anchor="middle" font-family="'Chakra Petch',sans-serif" font-size="15" font-weight="700" fill="#8492a6">82%</text>
+        <text x="130" y="153" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="8" fill="#5a6678">everything else</text>
+        <!-- dot-com reference -->
+        <text x="130" y="208" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="8" fill="#ffc83d">vs ~8% at the dot-com peak</text>
+        <text x="130" y="222" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="8" fill="#ff4d4d">→ more top-heavy than ever</text>
+      </svg>
+      <div class="hero-cap">a tower balanced on one leg</div>
+    </div>
+    <div class="explain">
+      <div class="mech">
+        <div class="mech-h">The trap</div>
+        <p class="mech-p">VIX is calm because Nvidia, TSMC and AMD are calm. Breadth holds because those names drag the averages up. But one bad chip earnings report can drop the whole index 3–5% overnight — regardless of what the other 480 stocks do.</p>
+      </div>
+      <div class="mech" style="margin-bottom:3mm;">
+        <div class="mech-h">The specific fault lines</div>
+        <ul class="watch">
+          <li><b>Single earnings shock</b> — NVDA/AMD miss hits 18% of the index at once.</li>
+          <li><b>Memory supercycle</b> — HBM sold out through 2026; cycles turn violently at the peak (SanDisk +3,006% YTD).</li>
+          <li><b>Cap- vs equal-weight gap</b> now exceeds the dot-com peak — record top-heaviness.</li>
+        </ul>
+      </div>
+      <div class="mech-h" style="color:#ff7a45;">What to watch</div>
+      <ul class="watch">
+        <li><b>SOX breaking its 50-day</b> while the S&P holds → first crack.</li>
+        <li><b>NVDA·AMD·MU all red, VIX still low</b> → quiet distribution underway.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="ft">
+    <span class="chip c-red"><span class="pip"></span> Structural watch</span>
+    <span class="ft-read"><b>The rule:</b> don't let a clean dashboard breed complacency. At 2-decade-high concentration, the vitals measure the health of a few mega-caps — not the market. <b>Size positions accordingly.</b></span>
+  </div>
+  <div class="pagenum">12 / 14</div>
+</section>
+
+<!-- ══════════════════ 13 · THE THREE LENSES ══════════════════ -->
+<section class="slide">
+  <div class="hd">
+    <div class="hd-eyebrow"><span class="dot"></span> Framework · Today's Play <span class="num">· how to act</span></div>
+    <div class="hd-title">Three Lenses on One Dataset</div>
+    <div class="hd-def">Pros don't pick a side — they stress-test the same data through three views before risking capital. The mix of green vitals tells you <b>which lens leads</b> today.</div>
+    <div class="hd-rule"></div>
+  </div>
+  <div class="stage col" style="gap:7mm;">
+    <!-- three lens cards -->
+    <div style="display:flex; gap:10px; width:240mm; max-width:100%;">
+      <div style="flex:1; border:1px solid #2a3a5a; border-radius:12px; padding:14px; background:linear-gradient(#0a1830,#0a142800);">
+        <div style="font-size:22pt;">😇</div>
+        <div style="font-family:'Chakra Petch',sans-serif; font-weight:700; font-size:13pt; color:#56a8ff; margin:4px 0 8px;">ZEN · The Read</div>
+        <ul class="watch" style="font-size:9pt;">
+          <li>Wait for the open to confirm</li>
+          <li>Hold overnight longs on a trail</li>
+          <li>Don't force fresh positions</li>
+        </ul>
+      </div>
+      <div style="flex:1; border:1px solid #1d5236; border-radius:12px; padding:14px; background:linear-gradient(#08200f,#04100800);">
+        <div style="font-size:22pt;">🐂</div>
+        <div style="font-family:'Chakra Petch',sans-serif; font-weight:700; font-size:13pt; color:#2fd673; margin:4px 0 8px;">BULL · Full Sweep</div>
+        <ul class="watch" style="font-size:9pt;">
+          <li>Carry longs through the close</li>
+          <li>Morning dips are gifts</li>
+          <li>Trail stops above VWAP</li>
+        </ul>
+      </div>
+      <div style="flex:1; border:1px solid #5a1818; border-radius:12px; padding:14px; background:linear-gradient(#22090a,#10080800);">
+        <div style="font-size:22pt;">🐻</div>
+        <div style="font-family:'Chakra Petch',sans-serif; font-weight:700; font-size:13pt; color:#ff7a45; margin:4px 0 8px;">BEAR · Risk-Aware</div>
+        <ul class="watch" style="font-size:9pt;">
+          <li>A clean close ≠ a fixed structure</li>
+          <li>Hedge semiconductor exposure</li>
+          <li>Watch McClellan for a break &lt;0</li>
+        </ul>
+      </div>
+    </div>
+    <!-- decision matrix -->
+    <div style="width:240mm; max-width:100%;">
+      <div class="mech-h">Which lens leads — count your green vitals</div>
+      <div style="display:flex; gap:8px;">
+        <div style="flex:1; background:#0c2418; border:1px solid #1d5236; border-radius:8px; padding:9px 11px;"><div style="font-family:'IBM Plex Mono',monospace; font-size:9.5pt; color:#2fd673;">7–8 GREEN</div><div style="font-size:9pt; color:#e9eff5; font-weight:500; margin-top:2px;">Bull leads</div><div style="font-size:9.5pt; color:#8492a6;">Full size · trail · hold overnight</div></div>
+        <div style="flex:1; background:#16240e; border:1px solid #4a6b1e; border-radius:8px; padding:9px 11px;"><div style="font-family:'IBM Plex Mono',monospace; font-size:9.5pt; color:#a8e05f;">5–6 GREEN</div><div style="font-size:9pt; color:#e9eff5; font-weight:500; margin-top:2px;">Zen leads</div><div style="font-size:9.5pt; color:#8492a6;">Standard size · confirm first</div></div>
+        <div style="flex:1; background:#231a00; border:1px solid #574000; border-radius:8px; padding:9px 11px;"><div style="font-family:'IBM Plex Mono',monospace; font-size:9.5pt; color:#ffc83d;">3–4 GREEN</div><div style="font-size:9pt; color:#e9eff5; font-weight:500; margin-top:2px;">Neutral / defensive</div><div style="font-size:9.5pt; color:#8492a6;">Half size · no new longs</div></div>
+        <div style="flex:1; background:#260a0a; border:1px solid #5a1818; border-radius:8px; padding:9px 11px;"><div style="font-family:'IBM Plex Mono',monospace; font-size:9.5pt; color:#ff4d4d;">0–2 GREEN</div><div style="font-size:9pt; color:#e9eff5; font-weight:500; margin-top:2px;">Bear leads</div><div style="font-size:9.5pt; color:#8492a6;">Cash or hedged · risk-off</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="ft">
+    <span class="chip c-green"><span class="pip"></span> 7 of 8 green</span>
+    <span class="ft-read"><b>June 4 calls for the Bull lens</b> — with Bear kept on the desk for semi risk. The lone amber (SMFI) plus concentration justify sizing just below maximum.</span>
+  </div>
+  <div class="pagenum">13 / 14</div>
+</section>
+
+<!-- ══════════════════ 14 · SUMMARY COCKPIT ══════════════════ -->
+<section class="slide">
+  <div class="hd">
+    <div class="hd-eyebrow"><span class="dot"></span> Summary · The Whole Board <span class="num">· June 4 close</span></div>
+    <div class="hd-title">Reading All Eight At Once</div>
+    <div class="hd-def">Synthesis is the skill. The signals form a <b>hierarchy</b> — flow and structure first, mood and risk-flags as context. Here is the full snapshot that produced today's score of 63.</div>
+    <div class="hd-rule"></div>
+  </div>
+  <div class="stage" style="gap:14mm; align-items:flex-start;">
+    <!-- left: 8-tile board -->
+    <div style="flex:0 0 auto;">
+      <div style="display:grid; grid-template-columns:repeat(2,128px); gap:8px;">
+        <div class="mcard" style="border-color:#1d5236;"><div class="mc-l">VIX</div><div class="mc-v" style="color:#2fd673;">15.37</div><div class="mc-d">Calm ✓</div></div>
+        <div class="mcard" style="border-color:#1d5236;"><div class="mc-l">MOVE</div><div class="mc-v" style="color:#2fd673;">73.58</div><div class="mc-d">Calm ✓</div></div>
+        <div class="mcard" style="border-color:#1d5236;"><div class="mc-l">McClellan</div><div class="mc-v" style="color:#2fd673;">+7.63</div><div class="mc-d">Rising ✓</div></div>
+        <div class="mcard" style="border-color:#1d5236;"><div class="mc-l">% &gt; 200-day</div><div class="mc-v" style="color:#2fd673;">55.9%</div><div class="mc-d">Healthy ✓</div></div>
+        <div class="mcard" style="border-color:#1d5236;"><div class="mc-l">Put/Call</div><div class="mc-v" style="color:#2fd673;">0.88</div><div class="mc-d">Neutral ✓</div></div>
+        <div class="mcard" style="border-color:#1d5236;"><div class="mc-l">Hindenburg</div><div class="mc-v" style="color:#2fd673; font-size:13pt;">CLEAR</div><div class="mc-d">No triggers ✓</div></div>
+        <div class="mcard" style="border-color:#574000;"><div class="mc-l">SMFI</div><div class="mc-v" style="color:#ffc83d; font-size:13pt;">50,820</div><div class="mc-d">Neutral ⚠</div></div>
+        <div class="mcard" style="border-color:#1d5236;"><div class="mc-l">Market Tide</div><div class="mc-v" style="color:#2fd673;">+$43M</div><div class="mc-d">Flip ✓</div></div>
+      </div>
+      <div style="text-align:center; margin-top:10px; font-family:'Chakra Petch',sans-serif; font-weight:700; font-size:13pt; color:#a8e05f;">SCORE 63 · CONSTRUCTIVE</div>
+      <div style="text-align:center; font-family:'IBM Plex Mono',monospace; font-size:9.5pt; color:#8492a6;">7 green · 1 amber · 0 red</div>
+    </div>
+    <!-- right: hierarchy + golden rule -->
+    <div class="explain">
+      <div class="mech" style="margin-bottom:4mm;">
+        <div class="mech-h">The hierarchy of signals</div>
+        <ol class="watch" style="counter-reset:h; list-style:none;">
+          <li><b>1 · Market Tide</b> — live committed dollars. Where big money is going now.</li>
+          <li><b>2 · % &gt; 200-day</b> — can the rally stand, or is it built on sand?</li>
+          <li><b>3 · VIX + MOVE</b> — the volatility floor; both must be calm.</li>
+          <li><b>4 · McClellan + Pulse</b> — is the move broad or just a few names?</li>
+          <li><b>5 · SMFI</b> — are institutions committing or just watching?</li>
+          <li><b>6 · Put/Call</b> — the fear/greed mood of options.</li>
+          <li><b>7 · Hindenburg</b> — is the market cohesive or fracturing?</li>
+        </ol>
+      </div>
+      <div style="background:linear-gradient(#08200f,#04100800); border:1px solid #1d5236; border-radius:10px; padding:11px 14px;">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:9.5pt; letter-spacing:.12em; color:#2fd673; margin-bottom:4px;">★ THE ONE RULE THAT MATTERS MOST</div>
+        <p class="mech-p" style="font-size:9.5pt;">When <b>Market Tide flips positive</b> + <b>breadth &gt;50%</b> + <b>Hindenburg clear</b>, that is the highest-probability setup this board can find. Everything else is context and noise management.</p>
+      </div>
+    </div>
+  </div>
+  <div class="ft">
+    <span class="chip c-green"><span class="pip"></span> Verdict 63</span>
+    <span class="ft-read"><b>June 4:</b> the Tide flip confirmed the regime shift; breadth healthy, vol calm. One amber (SMFI) trims size slightly. <b style="color:#ff7a45;">Caveat: 18% semi concentration remains the key structural risk.</b></span>
+  </div>
+  <div class="pagenum">14 / 14</div>
+</section>
 
 </body>
 </html>
