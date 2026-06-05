@@ -71,20 +71,31 @@ board. The cron schedule in `update_vitals.yml` is commented out.
 **Until the script is rewired to target `SCAN`, update the dashboard manually**
 from the Market Vitals Bot feed (and append to `data/vitals_history.csv`).
 
-## Board indicators (9 as of 2026-06-05)
+## Board indicators (8 core + Power Hour)
 
-VIX, MOVE, McClellan, Hindenburg, % > 200 DMA, Put/Call, SMFI, **Power Hour**
-(final-hour tape read — added when the feed introduced it), Market Tide. The
-green-count and gauge verdict derive automatically from the indicators array.
-Power Hour is displayed but **not yet in the composite-weights table below**
-(weight TBD) — the gauge composite is a manual feed-tracked value.
+The 8 **core indicators** (the `indicators` array): VIX, MOVE, McClellan,
+Hindenburg, % > 200 DMA, Put/Call, SMFI, Market Tide. The green-count and
+gauge verdict derive automatically from this array (e.g. "5 of 8 green").
+
+**Power Hour** (final-hour tape read) is NOT a core indicator card — it lives
+**inside the gauge card**, under the composite text, via the `SCAN.powerHour`
+object: `{ show, tag, state, detail }`. Set `show:false` (or omit) on days the
+feed doesn't post it and the block disappears. The `{{power}}` and
+`{{power_detail}}` tokens resolve from `SCAN.powerHour` for the ribbon/plays.
+Power Hour is not in the composite-weights table (the gauge composite is a
+manual feed-tracked value).
 
 ## Rotation Radar
 
 Separate in-page view (🧭 Rotation button, hash `#rotation`). Renders from
 **`data/rotation_history.json`** (fetched at runtime, so it needs the live
 site / a server — not `file://`). Each weekly update appends one snapshot
-object; the timeline heatmap grows itself. Same accuracy rules as vitals.
+object. The view is a **boss-deck layout**: headline regime banner → 3 KPI
+cards (largest outflow, biggest dip-buy, net-flow breadth) → the hero
+**net-flow diverging bar chart** (`renderRotation` → `#rotFlow`, top 18 by
+|f5|, sorted, green-right/red-left) → 14-day conviction → held-up tiles →
+weekly timeline heatmap (`renderHeatmap`, **hidden until ≥2 readings exist**).
+Same accuracy rules as vitals.
 
 ## Schedules (Kyiv timezone = EEST = UTC+3)
 
