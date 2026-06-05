@@ -17,6 +17,21 @@
    from a confirmed, timestamped source (e.g. the Market Vitals Bot feed).
    Cite the source and timestamp in the commit message.
 
+## TOKEN-EFFICIENT UPDATES — READ ONLY THE DATA SECTION
+
+`index.html` is ~1,200 lines. The CSS (~5k tokens) and render infrastructure
+(~5k tokens) never change for a data update. **Only read the data section:**
+
+```
+Read index.html  offset=783  limit=80
+```
+
+This covers the `SCAN` config + `indicators` + `bars` + `plays` blocks
+(lines 784–860, ending at the `DATA END` marker). That's ~80 lines /
+~400 tokens instead of the full ~12,000-token file.
+
+After editing, append to `data/vitals_history.csv` (always in the same commit).
+
 ## HISTORICAL LOG — REQUIRED ON EVERY DASHBOARD UPDATE
 
 Whenever the dashboard (`index.html`) is updated with new Market Vitals Bot
