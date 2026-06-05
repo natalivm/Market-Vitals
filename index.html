@@ -690,18 +690,18 @@
       </div>
     </div>
     <div class="stamp">
-      <div><b>2026-06-05</b> · 19:01 UTC · <span style="color:var(--muted)">10:01 PM Kyiv</span></div>
-      <div>Verdict: <b style="color:var(--greed2)">GREED</b> · 5 of 8 green</div>
+      <div id="stampWhen"></div>
+      <div id="stampVerdict"></div>
     </div>
   </header>
 
   <div class="ribbon" id="ribbon">
     <span class="r-bolt">✅</span>
-    <div class="r-main"><b>30 MIN TO CLOSE</b> · 19:01 UTC · McClellan +7.72 (falling) · Hindenburg clear · Market Tide <b style="color:var(--fear)">−$1,524M</b></div>
+    <div class="r-main" id="ribMain"></div>
     <div class="r-flip">
-      <span class="old" style="color:var(--muted)">PREV 63</span>
+      <span class="old" style="color:var(--muted)">PREV <span id="ribPrev"></span></span>
       <span class="r-arrow">→</span>
-      <span class="r-new">NOW 60</span>
+      <span class="r-new">NOW <span id="ribNow"></span></span>
     </div>
     <button class="replay" id="replay">↻ Replay</button>
   </div>
@@ -760,42 +760,63 @@
   <div class="sec-label">Momentum Pulse</div>
   <div class="card mom-card">
     <div class="mom-head">
-      <h3>Breadth above moving averages <span class="was-note">was <s>58–62%</s></span></h3>
-      <span class="badge-bull">STRONG BULLISH · +3</span>
+      <h3>Breadth above moving averages <span class="was-note">was <s id="momWas"></s></span></h3>
+      <span class="badge-bull" id="momBadge"></span>
     </div>
     <div id="bars"></div>
   </div>
 
   <div id="indPopover"></div>
 
-  <footer>
-    <b>NOT FINANCIAL ADVICE.</b> Core Vitals &amp; Momentum show the 19:01 UTC pre-close scan (2026-06-05 · 10:01 PM Kyiv); replay animates from previous close (63), ghost marker shows mid-session at 63. Data sourced from Market Vitals Bot feed. Concentration &amp; Leadership figures pulled ~2026-06-04/05. Past performance means nothing. Do your own research and size responsibly.
-  </footer>
+  <footer id="footer"></footer>
 </div>
 
 <script>
-/* ── DATA ── */
-const PREV_COMPOSITE = 63;   // 2026-06-04 close
-const GHOST_AT       = 63;   // 17:01 UTC mid-session scan
-const COMPOSITE      = 60;   // 2026-06-05 · 19:01 UTC / 10:01 PM Kyiv — Market Tide −$1,524M
+/* ════════════════════════════════════════════════════════════════════
+   SCAN CONFIG ─ the ONLY block to edit each update.
+   Header, ribbon, footer, gauge verdict, green-count, ghost label and
+   every number woven into the notes/plays prose all derive from here.
+   Type each value once; {{tokens}} below render it everywhere.
+   Token names (from indicators): vix, move, mcclellan, hindenburg,
+   dma200, putcall, smfi, tide  (+ "_prev" for the previous reading).
+   Plus: composite, compositePrev, ghostComposite, date, utc, kyiv …
+   ════════════════════════════════════════════════════════════════════ */
+const SCAN = {
+  date:       "2026-06-05",
+  utc:        "19:01 UTC",
+  kyiv:       "10:01 PM Kyiv",
+  ribbon:     "30 MIN TO CLOSE",        // ribbon eyebrow label
+  scanName:   "pre-close scan",         // footer phrasing
+  prevLabel:  "mid-session",            // what the PREV / ghost reading is
+  ghostLabel: "17:01",                  // tick label drawn on the gauge
+  composite:  { prev: 63, ghost: 63, cur: 60 },
+  // editorial ribbon one-liner — may use {{tokens}}
+  ribbonMain: 'McClellan {{mcclellan}} (falling) · Hindenburg clear · Market Tide <b style="color:var(--fear)">{{tide}}</b>',
+  momentum:   { tag: "STRONG BULLISH", score: "+3", was: "58–62%" },
+};
+
+/* derived aliases — downstream gauge code reads these */
+const PREV_COMPOSITE = SCAN.composite.prev;
+const GHOST_AT       = SCAN.composite.ghost;
+const COMPOSITE      = SCAN.composite.cur;
 
 const indicators = [
   { name:"VIX", prevNum:18.93, curNum:19.40, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Climbed to 19.40 from 18.93 mid-session — still below the 20 threshold that signals elevated stress, but approaching it. VIX has risen nearly 3 points through the full session. Options market is flagging mild caution without outright fear. Watch the 20 level at the open tomorrow." },
+    note:"Climbed to {{vix}} from {{vix_prev}} mid-session — still below the 20 threshold that signals elevated stress, but approaching it. VIX has risen nearly 3 points through the full session. Options market is flagging mild caution without outright fear. Watch the 20 level at the open tomorrow." },
   { name:"MOVE", prevNum:71.16, curNum:71.16, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Unchanged at 71.16 through the session — bond market volatility held steady all day. Rates were not a driver of today's equity action. Clean green into the close." },
-  { name:"McClellan", prevNum:7.50, curNum:7.72, fmt:{dec:2}, prevTag:"FALLING", tag:"FALLING", prevS:"green", s:"green",
-    note:"Stabilized slightly to +7.72 from +7.50 mid-session but remains on a falling trend from the +15.48 high earlier in the day. Still positive — breadth isn't collapsing — but the deterioration from +15 to +7 through the session is meaningful and confirms the FALLING label." },
+    note:"Unchanged at {{move}} through the session — bond market volatility held steady all day. Rates were not a driver of today's equity action. Clean green into the close." },
+  { name:"McClellan", prevNum:7.50, curNum:7.72, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"FALLING", tag:"FALLING", prevS:"green", s:"green",
+    note:"Stabilized slightly to {{mcclellan}} from {{mcclellan_prev}} mid-session but remains on a falling trend from the +15.48 high earlier in the day. Still positive — breadth isn't collapsing — but the deterioration from +15 to +7 through the session is meaningful and confirms the FALLING label." },
   { name:"Hindenburg", text:true, prevVal:"CLEAR", val:"CLEAR", prevTag:"CLEAR", tag:"CLEAR", prevS:"green", s:"green",
-    note:"No signal. McClellan remains positive at +7.72 — the breadth divergence condition is not met. Hindenburg requires simultaneous spikes in new 52-week highs AND lows with a negative McClellan. None of that is present near the close." },
+    note:"No signal. McClellan remains positive at {{mcclellan}} — the breadth divergence condition is not met. Hindenburg requires simultaneous spikes in new 52-week highs AND lows with a negative McClellan. None of that is present near the close." },
   { name:"% > 200 DMA", prevNum:58.5, curNum:58.3, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
-    note:"Essentially flat at 58.3% versus 58.5% mid-session — structural health held through the close. The broad market absorbed the session's selling pressure with barely a dent in participation above the 200-day MA. Solid." },
+    note:"Essentially flat at {{dma200}} versus {{dma200_prev}} mid-session — structural health held through the close. The broad market absorbed the session's selling pressure with barely a dent in participation above the 200-day MA. Solid." },
   { name:"Put/Call", prevNum:1.10, curNum:1.11, fmt:{dec:2}, prevTag:"BEARISH", tag:"BEARISH", prevS:"amber", s:"amber",
-    note:"Edged up to 1.11 at the close from 1.10 mid-session — elevated hedging demand persisted and nudged slightly higher. Put/Call has been above 1.0 all session, confirming sustained options-market fear. Not spiking, but persistently elevated." },
+    note:"Edged up to {{putcall}} at the close from {{putcall_prev}} mid-session — elevated hedging demand persisted and nudged slightly higher. Put/Call has been above 1.0 all session, confirming sustained options-market fear. Not spiking, but persistently elevated." },
   { name:"SMFI", prevNum:51212, curNum:50820, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
-    note:"50,820 near the close, down from 51,212 mid-session. Smart money flow softened into the close — not panic, but a directional drift lower. Consistent with the overall bearish premium flow story: institutions are not fleeing equities, but net flow is tilting defensive." },
-  { name:"Market Tide", prevNum:-1164, curNum:-1524, fmt:{dec:0, pre:"$", suf:"M"}, prevTag:"NEGATIVE", tag:"NEGATIVE", prevS:"red", s:"red",
-    note:"Deepened to −$1,524M near the close from −$1,164M mid-session. The institutional bearish options flow accelerated through the afternoon — this is now one of the larger single-day bearish premium flows of the recent period. Breadth held, but this scale of flow demands respect heading into tomorrow." },
+    note:"{{smfi}} near the close, down from {{smfi_prev}} mid-session. Smart money flow softened into the close — not panic, but a directional drift lower. Consistent with the overall bearish premium flow story: institutions are not fleeing equities, but net flow is tilting defensive." },
+  { name:"Market Tide", prevNum:-1164, curNum:-1524, fmt:{dec:0, pre:"$", suf:"M", comma:true}, prevTag:"NEGATIVE", tag:"NEGATIVE", prevS:"red", s:"red",
+    note:"Deepened to {{tide}} near the close from {{tide_prev}} mid-session. The institutional bearish options flow accelerated through the afternoon — this is now one of the larger single-day bearish premium flows of the recent period. Breadth held, but this scale of flow demands respect heading into tomorrow." },
 ];
 
 const concentration = [
@@ -822,25 +843,25 @@ const bars = [
 const plays = {
   zen: {
     e:"😇", label:"Breadth held; flow deepened at close",
-    text:"5 of 8 green into the close, but the divergence widened. Breadth stayed resilient — McClellan +7.72, 58.3% above 200-day MA, momentum bars all still above 54%. <b>Market Tide finished at −$1,524M</b>: the institutional bearish flow nearly tripled from the open. Two stories in one session — solid broad market health underneath concentrated options-market pressure.",
+    text:"{{green}} of {{total}} green into the close, but the divergence widened. Breadth stayed resilient — McClellan {{mcclellan}}, {{dma200}} above 200-day MA, momentum bars all still above 54%. <b>Market Tide finished at {{tide}}</b>: the institutional bearish flow nearly tripled from the open. Two stories in one session — solid broad market health underneath concentrated options-market pressure.",
     moves:[["≈","Hold broad market exposure — structural breadth held through the close."],["⚠️","Size down mega-cap concentration — the flow says someone institutional is hedging at scale."],["👀","Watch VIX at the open: a break above 20 combined with deepening Market Tide changes the read."]]
   },
   bull: {
     e:"🐂", label:"Breadth absorbed the pressure",
-    text:"<b>58.3% of stocks closed above their 200-day MA — essentially unchanged from the morning.</b> McClellan finished at +7.72. All three momentum bars remain solidly above 54%. The broad market proved resilient to a session that saw −$1,524M in bearish options premium flow. That's structural health.",
-    moves:[["▲","58.3% above 200-day MA at the close: structural health intact through a tough session."],["▲","McClellan positive: more stocks advancing on a trend basis despite index pressure."],["▲","Momentum bars (12/20/50 SMA) all remain in BULLISH territory at the close."]]
+    text:"<b>{{dma200}} of stocks closed above their 200-day MA — essentially unchanged from the morning.</b> McClellan finished at {{mcclellan}}. All three momentum bars remain solidly above 54%. The broad market proved resilient to a session that saw {{tide}} in bearish options premium flow. That's structural health.",
+    moves:[["▲","{{dma200}} above 200-day MA at the close: structural health intact through a tough session."],["▲","McClellan positive: more stocks advancing on a trend basis despite index pressure."],["▲","Momentum bars (12/20/50 SMA) all remain in BULLISH territory at the close."]]
   },
   bear: {
-    e:"🐻", label:"−$1,524M at close — respect the flow",
-    text:"<b>−$1,524M in net bearish premium flow is institutional-scale positioning that closed at a full session high.</b> VIX ended at 19.40 — one move from the critical 20 level. McClellan fell from +15 to +7 through the session. Composite slipped to 60. The breadth is the silver lining, but the flow is the headline.",
-    moves:[["▼","Market Tide −$1,524M: largest single-day bearish flow of the recent period — don't dismiss it."],["▼","VIX at 19.40: one bad open away from breaking 20, which would change the risk posture."],["▼","McClellan fell from +15 → +7 through the session — breadth is weakening, not strengthening."]]
+    e:"🐻", label:"{{tide}} at close — respect the flow",
+    text:"<b>{{tide}} in net bearish premium flow is institutional-scale positioning that closed at a full session high.</b> VIX ended at {{vix}} — one move from the critical 20 level. McClellan fell from +15 to +7 through the session. Composite slipped to {{composite}}. The breadth is the silver lining, but the flow is the headline.",
+    moves:[["▼","Market Tide {{tide}}: largest single-day bearish flow of the recent period — don't dismiss it."],["▼","VIX at {{vix}}: one bad open away from breaking 20, which would change the risk posture."],["▼","McClellan fell from +15 → +7 through the session — breadth is weakening, not strengthening."]]
   },
 };
 
 /* ── HELPERS ── */
 function fmtNum(n, f) {
   f = f || {};
-  const sign = n < 0 ? "−" : "";
+  const sign = n < 0 ? "−" : (f.plus && n > 0 ? "+" : "");
   const abs = Math.abs(n);
   let body;
   if (f.comma) {
@@ -872,6 +893,63 @@ function tweenNumber(el, from, to, fmt, dur, delay) {
     }
     requestAnimationFrame(step);
   }, delay);
+}
+
+/* ── TEMPLATING ─ one source of truth, interpolated everywhere ── */
+const byId = id => document.getElementById(id);
+
+// Build the {{token}} → display-string table from SCAN + indicators.
+function buildTokens() {
+  const m = {
+    date: SCAN.date, utc: SCAN.utc, kyiv: SCAN.kyiv,
+    ribbonLabel: SCAN.ribbon, scanName: SCAN.scanName, prevLabel: SCAN.prevLabel,
+    composite: SCAN.composite.cur,
+    compositePrev: SCAN.composite.prev,
+    ghostComposite: SCAN.composite.ghost,
+    green: indicators.filter(i => i.s === "green").length,
+    total: indicators.length,
+  };
+  const KEY = {
+    "VIX":"vix", "MOVE":"move", "McClellan":"mcclellan", "Hindenburg":"hindenburg",
+    "% > 200 DMA":"dma200", "Put/Call":"putcall", "SMFI":"smfi", "Market Tide":"tide",
+  };
+  indicators.forEach(d => {
+    const k = KEY[d.name];
+    if (!k) return;
+    if (d.text) { m[k] = d.val; m[k + "_prev"] = d.prevVal; }
+    else {
+      const f = d.tokFmt || d.fmt;
+      m[k]          = fmtNum(d.curNum, f);
+      m[k + "_prev"] = fmtNum(d.prevNum, f);
+    }
+  });
+  return m;
+}
+const TOK = buildTokens();
+
+// Replace {{token}} in any string. Unknown tokens are left visible to flag typos.
+function tpl(s) {
+  return String(s).replace(/\{\{(\w+)\}\}/g, (_, k) => (k in TOK ? TOK[k] : "{{" + k + "}}"));
+}
+
+const FOOTER_TPL =
+  "<b>NOT FINANCIAL ADVICE.</b> Core Vitals &amp; Momentum show the {{utc}} {{scanName}} " +
+  "({{date}} · {{kyiv}}); replay animates from previous close ({{compositePrev}}), ghost marker " +
+  "shows {{prevLabel}} at {{ghostComposite}}. Data sourced from Market Vitals Bot feed. " +
+  "Concentration &amp; Leadership figures pulled ~2026-06-04/05. Past performance means nothing. " +
+  "Do your own research and size responsibly.";
+
+// Fill the static chrome (header / ribbon / footer / momentum) from SCAN.
+function applyChrome() {
+  const [vw, vc] = verdictFor(SCAN.composite.cur);
+  byId("stampWhen").innerHTML    = `<b>${SCAN.date}</b> · ${SCAN.utc} · <span style="color:var(--muted)">${SCAN.kyiv}</span>`;
+  byId("stampVerdict").innerHTML = `Verdict: <b style="color:${vc}">${vw}</b> · ${TOK.green} of ${TOK.total} green`;
+  byId("ribMain").innerHTML      = `<b>${SCAN.ribbon}</b> · ${SCAN.utc} · ${tpl(SCAN.ribbonMain)}`;
+  byId("ribPrev").textContent    = SCAN.composite.prev;
+  byId("ribNow").textContent     = SCAN.composite.cur;
+  byId("momBadge").textContent   = `${SCAN.momentum.tag} · ${SCAN.momentum.score}`;
+  byId("momWas").textContent     = SCAN.momentum.was;
+  byId("footer").innerHTML       = tpl(FOOTER_TPL);
 }
 
 /* ── GAUGE ── */
@@ -923,7 +1001,7 @@ const ghostLine = mk("line", { x1:gt.x1, y1:gt.y1, x2:gt.x2, y2:gt.y2, stroke:"#
 g.appendChild(ghostLine);
 const [glx,gly] = pt(GHOST_AT, R+40);
 const ghostLbl = mk("text", { x:glx, y:gly, fill:"#ff7a45", "font-size":9.5, "font-family":"'IBM Plex Mono',monospace", "text-anchor":"middle", opacity:0 });
-ghostLbl.textContent = "13:01";
+ghostLbl.textContent = SCAN.ghostLabel;
 g.appendChild(ghostLbl);
 
 const needle = mk("path", { fill:"#e6edf3", stroke:"none" });
@@ -969,9 +1047,9 @@ function renderPlay(k) {
   const p = plays[k];
   playBody.innerHTML = `<div class="fade">
     <div class="play-emoji">${p.e}</div>
-    <div class="play-label">${p.label}</div>
-    <div class="play-text">${p.text}</div>
-    <div class="play-moves">${p.moves.map(m => `<div class="move"><span class="arw">${m[0]}</span><span>${m[1]}</span></div>`).join("")}</div>
+    <div class="play-label">${tpl(p.label)}</div>
+    <div class="play-text">${tpl(p.text)}</div>
+    <div class="play-moves">${p.moves.map(m => `<div class="move"><span class="arw">${m[0]}</span><span>${tpl(m[1])}</span></div>`).join("")}</div>
   </div>`;
 }
 document.getElementById("tabs").addEventListener("click", e => {
@@ -1008,7 +1086,7 @@ function renderCards(data, targetId, animated) {
           ${d.extra ? `<div class="ind-extra">${d.extra}</div>` : ""}
         </div>
       </div>
-      <div class="ind-face ind-back"><div class="bk-title">${d.name}</div><p>${d.note}</p></div>
+      <div class="ind-face ind-back"><div class="bk-title">${d.name}</div><p>${tpl(d.note)}</p></div>
     </div>`;
     el.addEventListener("click", e => { e.stopPropagation(); handleCardTap(el, d); });
     grid.appendChild(el);
@@ -1033,7 +1111,7 @@ function showPopover(cardEl, d) {
   popover.style.width = pw + "px";
   popover.style.left = left + "px";
   popover.style.top = top + "px";
-  popover.innerHTML = `<div class="pop-name">${d.name}</div><p class="pop-note">${d.note}</p>`;
+  popover.innerHTML = `<div class="pop-name">${d.name}</div><p class="pop-note">${tpl(d.note)}</p>`;
   popover.classList.add("open");
 }
 
@@ -1138,7 +1216,7 @@ function runAll() {
   rb.style.animation = "none"; void rb.offsetWidth; rb.style.animation = "";
 }
 
-function boot() { setTimeout(runAll, 200); }
+function boot() { applyChrome(); setTimeout(runAll, 200); }
 if (document.readyState === "loading") window.addEventListener("DOMContentLoaded", boot);
 else boot();
 
