@@ -690,18 +690,18 @@
       </div>
     </div>
     <div class="stamp">
-      <div><b>2026-06-05</b> · 13:01 UTC · <span style="color:var(--muted)">4:00 PM Kyiv</span></div>
-      <div>Verdict: <b style="color:var(--greed2)">CONSTRUCTIVE (+3)</b> · 6 of 8 green</div>
+      <div><b>2026-06-05</b> · 15:01 UTC · <span style="color:var(--muted)">6:01 PM Kyiv</span></div>
+      <div>Verdict: <b style="color:var(--greed2)">GREED</b> · 5 of 8 green</div>
     </div>
   </header>
 
   <div class="ribbon" id="ribbon">
     <span class="r-bolt">✅</span>
-    <div class="r-main"><b>4 PM SCAN</b> · 13:01 UTC · McClellan rising · Hindenburg clear · Market Tide <b>+$70M</b></div>
+    <div class="r-main"><b>MID-SESSION SCAN</b> · 15:01 UTC · McClellan +15.48 · Hindenburg clear · Market Tide <b style="color:var(--fear)">−$573M</b></div>
     <div class="r-flip">
       <span class="old" style="color:var(--muted)">PREV 63</span>
       <span class="r-arrow">→</span>
-      <span class="r-new">NOW 67</span>
+      <span class="r-new">NOW 63</span>
     </div>
     <button class="replay" id="replay">↻ Replay</button>
   </div>
@@ -769,33 +769,33 @@
   <div id="indPopover"></div>
 
   <footer>
-    <b>NOT FINANCIAL ADVICE.</b> Core Vitals &amp; Momentum show the 13:01 UTC scan (2026-06-05 · 4:00 PM Kyiv); replay animates from previous close (63). Data sourced from Market Vitals Bot feed. Concentration &amp; Leadership figures pulled ~2026-06-04/05. Past performance means nothing. Do your own research and size responsibly.
+    <b>NOT FINANCIAL ADVICE.</b> Core Vitals &amp; Momentum show the 15:01 UTC mid-session scan (2026-06-05 · 6:01 PM Kyiv); replay animates from previous close (63), ghost marker shows morning scan at 67. Data sourced from Market Vitals Bot feed. Concentration &amp; Leadership figures pulled ~2026-06-04/05. Past performance means nothing. Do your own research and size responsibly.
   </footer>
 </div>
 
 <script>
 /* ── DATA ── */
 const PREV_COMPOSITE = 63;   // 2026-06-04 close
-const GHOST_AT       = 63;   // same as prev — no mid-session marker
-const COMPOSITE      = 67;   // 2026-06-05 · 13:01 UTC / 4 PM Kyiv — CONSTRUCTIVE (+3)
+const GHOST_AT       = 67;   // 13:01 UTC morning scan
+const COMPOSITE      = 63;   // 2026-06-05 · 15:01 UTC / 6:01 PM Kyiv — Market Tide −$573M
 
 const indicators = [
-  { name:"VIX", prevNum:15.37, curNum:15.73, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Ticked up slightly to 15.73 but remains solidly in the calm zone. No volatility spike — the options market is not pricing in stress. Complacency risk exists near historic lows, but no red flags here today." },
-  { name:"MOVE", prevNum:73.58, curNum:73.58, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Unchanged at 73.58 — bond market volatility is completely quiet. Rates are not the issue. Clean green." },
-  { name:"McClellan", prevNum:7.63, curNum:10.46, fmt:{dec:2}, prevTag:"RISING", tag:"RISING", prevS:"green", s:"green",
-    note:"Rising to +10.46 — more advancing stocks than declining on a trend basis. Breadth improvement is constructive. A Hindenburg trigger requires negative McClellan; since it's positive, that condition is not active." },
+  { name:"VIX", prevNum:15.73, curNum:16.40, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
+    note:"Edged up to 16.40 — still in calm territory but drifting higher through the session. Options market is not pricing in acute stress despite the index flush. Bear in mind the flush is concentrated in mega-cap semis; VIX reflects broad index vol." },
+  { name:"MOVE", prevNum:73.58, curNum:71.16, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
+    note:"Ticked down to 71.16 — bond market volatility is actually quieter mid-session than at the open. Rates are not driving today's equity flush. Clean green." },
+  { name:"McClellan", prevNum:10.46, curNum:15.48, fmt:{dec:2}, prevTag:"RISING", tag:"RISING", prevS:"green", s:"green",
+    note:"Strengthened to +15.48 from +10.46 this morning — breadth is genuinely improving despite the cap-weighted flush. More stocks advancing than declining on a trend basis. This is the critical divergence: the index is down but the broad market is getting healthier." },
   { name:"Hindenburg", text:true, prevVal:"CLEAR", val:"CLEAR", prevTag:"CLEAR", tag:"CLEAR", prevS:"green", s:"green",
-    note:"No signal. McClellan is positive, so the breadth divergence condition is not met. Hindenburg requires both new 52-week highs AND lows to spike simultaneously with negative McClellan — none of that is present today." },
-  { name:"% > 200 DMA", prevNum:55.9, curNum:56.4, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
-    note:"Ticked up to 56.4% — long-term trend intact and improving slightly. More stocks are above their 200-day MA than yesterday. Structural floor is solid. Watch 50% as the line in the sand." },
-  { name:"Put/Call", prevNum:0.88, curNum:1.17, fmt:{dec:2}, prevTag:"NEUTRAL", tag:"BEARISH", prevS:"green", s:"amber",
-    note:"Elevated at 1.17 — more puts than calls being traded. Participants are actively hedging or positioning defensively. This is the one yellow flag in an otherwise constructive picture. Contrarian note: high P/C can mark fear extremes and precede rallies." },
-  { name:"SMFI", prevNum:50820, curNum:51081, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"green",
-    note:"Ticked up to 51,081 — smart money flow index is slightly positive, consistent with institutional participation. The direction is constructive." },
-  { name:"Market Tide", prevNum:43, curNum:70, fmt:{dec:0, pre:"$", suf:"M"}, prevTag:"POSITIVE", tag:"BALANCED", prevS:"green", s:"green",
-    note:"+$70M net premium flow — options market shows net bullish positioning. Market Tide confirms the constructive tone from breadth and VIX. Watch for this to stay positive through the close." },
+    note:"No signal. McClellan is at +15.48 and rising — the breadth divergence condition is emphatically not met. Hindenburg requires simultaneous spikes in new 52-week highs AND lows with negative McClellan. None of that is present." },
+  { name:"% > 200 DMA", prevNum:56.4, curNum:58.5, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
+    note:"Rose to 58.5% from 56.4% this morning — more stocks are above their 200-day MA mid-session than at the open. Structural health is strengthening, not weakening. The flush is in the index heavyweights, not in the broad market." },
+  { name:"Put/Call", prevNum:1.17, curNum:1.07, fmt:{dec:2}, prevTag:"BEARISH", tag:"CAUTION", prevS:"amber", s:"amber",
+    note:"Eased to 1.07 from 1.17 — hedging demand came off slightly through the session. Still above the neutral zone but the fear trade is not accelerating. Consistent with the Market Tide story: someone is positioned bearish at the index level, but it's not retail panic-buying puts." },
+  { name:"SMFI", prevNum:51081, curNum:51165, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
+    note:"51,165 — marginally higher than the open. Smart money flow is steady with no panic signal. Consistent with the divergence theme: institutions aren't fleeing, but someone is aggressively hedging at the index level via options (see Market Tide)." },
+  { name:"Market Tide", prevNum:70, curNum:-573, fmt:{dec:0, pre:"$", suf:"M"}, prevTag:"BALANCED", tag:"NEGATIVE", prevS:"green", s:"red",
+    note:"FLIPPED to −$573M from +$70M at the open — this is the story of the session. Massive net bearish premium flow: someone is aggressively buying index puts or selling calls at scale. This is what's driving the cap-weighted flush while breadth holds. Watch for acceleration into the close — if it goes deeper, reduce exposure." },
 ];
 
 const concentration = [
@@ -814,26 +814,26 @@ const concentration = [
 ];
 
 const bars = [
-  { label:"% > 12 SMA", prev:57.6, cur:58.0, tag:"BULLISH" },
-  { label:"% > 20 SMA", prev:59.6, cur:59.9, tag:"BULLISH" },
-  { label:"% > 50 SMA", prev:54.2, cur:54.0, tag:"BULLISH" },
+  { label:"% > 12 SMA", prev:58.0, cur:61.7, tag:"BULLISH" },
+  { label:"% > 20 SMA", prev:59.9, cur:63.9, tag:"BULLISH" },
+  { label:"% > 50 SMA", prev:54.0, cur:57.6, tag:"BULLISH" },
 ];
 
 const plays = {
   zen: {
-    e:"😇", label:"Constructive with one flag",
-    text:"6 of 8 vitals are green. VIX calm, MOVE quiet, McClellan rising, Hindenburg clear, breadth improving, Market Tide at +$70M. <b>The single yellow flag is Put/Call at 1.17</b> — elevated hedging demand. Could be noise, could be smart money positioning for a dip. Don't ignore it, but it doesn't override the green board.",
-    moves:[["≈","Hold longs — the structural picture is intact and improving."],["👀","Watch Put/Call: if it climbs above 1.30, hedging is turning into a real fear signal."],["📊","McClellan at +10.46 and rising — breadth is genuinely healthy, not a head-fake."]]
+    e:"😇", label:"Divergence: breadth strong, flow bearish",
+    text:"5 of 8 green, but the board is telling two stories at once. Breadth is genuinely improving — McClellan at +15.48, 58.5% above 200-day MA, all momentum bars advancing. <b>Market Tide at −$573M is the red flag</b>: concentrated bearish options flow at the index level is driving the cap-weighted flush. This is not a broad market breakdown — it's a mega-cap / semi concentration event.",
+    moves:[["≈","Hold broad market exposure — breadth and trend are healthy."],["⚠️","Reduce or hedge mega-cap semi concentration — Market Tide says someone is."],["👀","Watch Market Tide into the close: if it deepens past −$800M, treat it as a real signal."]]
   },
   bull: {
-    e:"🐂", label:"Breadth confirms the move",
-    text:"Every breadth and flow indicator is confirming the bullish case. McClellan rising, 56.4% above 200-day MA, Market Tide at +$70M, Hindenburg nowhere near triggering. <b>The tape is internally consistent — this isn't a narrow mega-cap rally, breadth is real.</b>",
-    moves:[["▲","56.4% above 200-day MA: structural uptrend healthy and strengthening."],["▲","McClellan +10.46 rising: more stocks advancing than declining."],["▲","Market Tide +$70M: net bullish premium flow confirms the move."]]
+    e:"🐂", label:"Breadth divergence is bullish",
+    text:"<b>The flush is a cap-weighted illusion.</b> McClellan at +15.48 and rising, 58.5% of stocks above their 200-day MA (up from 56.4% this morning), all SMA momentum bars higher. Equal-weight is holding while the index gets hit. This is exactly what healthy rotation looks like — not a top.",
+    moves:[["▲","58.5% above 200-day MA and rising mid-session: structural health intact."],["▲","McClellan +15.48: breadth strengthening into the flush — contrarian green light."],["▲","All momentum bars (12/20/50 SMA) are higher than this morning."]]
   },
   bear: {
-    e:"🐻", label:"Put/Call worth watching",
-    text:"<b>Put/Call at 1.17 stands out</b> — someone is paying for protection while the rest of the board is green. Could be a large institutional hedge or sector-specific positioning. The VIX remains slightly above ultra-calm sub-15 levels. If P/C keeps climbing and Market Tide rolls negative by close, the bear case reopens quickly.",
-    moves:[["▼","Put/Call at 1.17: monitor for continued elevation above 1.30."],["▼","VIX at 15.73: still above ultra-calm sub-15 — some residual unease in the market."],["▼","If Market Tide goes negative by close, reduce long exposure immediately."]]
+    e:"🐻", label:"Market Tide says respect the flush",
+    text:"<b>−$573M in net bearish premium flow is not noise.</b> That is institutional-scale positioning. Whether it's hedging or outright short, that kind of flow moves markets. The composite gave back all morning gains (67→63). VIX is trending higher. If Market Tide stays negative into close and VIX breaks above 18, the bear case becomes the base case.",
+    moves:[["▼","Market Tide −$573M: the size of this flow is the warning — don't dismiss it."],["▼","VIX at 16.40 and trending up: watch for a break above 18."],["▼","Composite back to 63 — all morning's gains erased mid-session."]]
   },
 };
 
@@ -923,7 +923,7 @@ const ghostLine = mk("line", { x1:gt.x1, y1:gt.y1, x2:gt.x2, y2:gt.y2, stroke:"#
 g.appendChild(ghostLine);
 const [glx,gly] = pt(GHOST_AT, R+40);
 const ghostLbl = mk("text", { x:glx, y:gly, fill:"#ff7a45", "font-size":9.5, "font-family":"'IBM Plex Mono',monospace", "text-anchor":"middle", opacity:0 });
-ghostLbl.textContent = "15:01";
+ghostLbl.textContent = "13:01";
 g.appendChild(ghostLbl);
 
 const needle = mk("path", { fill:"#e6edf3", stroke:"none" });
