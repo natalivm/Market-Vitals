@@ -1512,14 +1512,14 @@ function renderRotation(data) {
   }
 }
 
-// Heatmap timeline — rows = union of syms (ordered by latest), cols = dates.
+// Heatmap timeline — rows = union of syms, cols = dates. Cells are coloured by
+// the SIGN of the 5-day net flow (not the bot's daily in/out post bucket, which
+// flips day-to-day) so persistent accumulation/distribution reads consistently.
 function renderHeatmap(snaps) {
   const latest = snaps[snaps.length - 1];
   const dates = snaps.map(s => s.date);
-  const order = latest.flows.slice().sort((a, b) => {
-    if (a.dir !== b.dir) return a.dir === "in" ? -1 : 1;
-    return (b.f5 ?? 0) - (a.f5 ?? 0);
-  });
+  const netFlow = f => f.f5 ?? f.f1 ?? 0;
+  const order = latest.flows.slice().sort((a, b) => netFlow(b) - netFlow(a));
   const seen = new Set(order.map(f => f.sym));
   const rows = order.map(f => ({ sym: f.sym, name: f.name }));
   snaps.forEach(s => s.flows.forEach(f => { if (!seen.has(f.sym)) { seen.add(f.sym); rows.push({ sym: f.sym, name: f.name }); } }));
@@ -1529,10 +1529,10 @@ function renderHeatmap(snaps) {
     const cells = snaps.map(s => {
       const f = s.flows.find(x => x.sym === r.sym);
       if (!f) return `<td></td>`;
-      const c = f.dir === "in" ? "47,214,115" : "255,77,77";
-      const mag = Math.abs(f.f5 ?? f.f1 ?? 0);
-      const a = (0.28 + 0.6 * Math.min(1, mag / 2000)).toFixed(2);
-      return `<td class="hm-cell ${f.dir === "out" ? "out" : ""}" style="background:rgba(${c},${a})" title="${f.name} — ${f.dir === "in" ? "inflow" : "outflow"} · 5D ${fmtFlow(f.f5)} · 1D ${rpct(f.d1)}">${rpct(f.d1)} ${sigIcon(f.signal)}<small>${fmtFlow(f.f5)}</small></td>`;
+      const nf = netFlow(f), pos = nf >= 0;
+      const c = pos ? "47,214,115" : "255,77,77";
+      const a = (0.28 + 0.6 * Math.min(1, Math.abs(nf) / 2000)).toFixed(2);
+      return `<td class="hm-cell ${pos ? "" : "out"}" style="background:rgba(${c},${a})" title="${f.name} — 5D net ${pos ? "inflow" : "outflow"} ${fmtFlow(f.f5)} · price 1D ${rpct(f.d1)}">${rpct(f.d1)} ${sigIcon(f.signal)}<small>${fmtFlow(f.f5)}</small></td>`;
     }).join("");
     return `<tr><td class="hm-sym"><b>${r.sym}</b><span>${r.name}</span></td>${cells}</tr>`;
   }).join("") + "</tbody>";
