@@ -690,18 +690,18 @@
       </div>
     </div>
     <div class="stamp">
-      <div><b>2026-06-04</b> · 19:01 UTC · <span style="color:var(--muted)">close</span></div>
-      <div>Verdict: <b style="color:var(--greed)">CONSTRUCTIVE (+4)</b> · conc-adj.</div>
+      <div><b>2026-06-05</b> · 21:00 UTC · <span style="color:var(--muted)">close</span></div>
+      <div>Verdict: <b style="color:var(--fear2)">FEAR (−3)</b> · warning cluster</div>
     </div>
   </header>
 
   <div class="ribbon" id="ribbon">
-    <span class="r-bolt">✓</span>
-    <div class="r-main"><b>CLOSE SNAPSHOT</b> · 19:01 UTC · Market Tide went <b style="color:var(--greed)">positive</b></div>
+    <span class="r-bolt">⚠</span>
+    <div class="r-main"><b>CLOSE SNAPSHOT</b> · 21:00 UTC · Hindenburg Omen <b style="color:var(--fear2)">second confirmation</b> · McClellan turned negative</div>
     <div class="r-flip">
-      <span class="old">−$72M</span>
+      <span class="old">CLEAR</span>
       <span class="r-arrow">→</span>
-      <span class="r-new">+$43M</span>
+      <span class="r-new" style="color:var(--fear2)">TRIGGERED</span>
     </div>
     <button class="replay" id="replay">↻ Replay</button>
   </div>
@@ -760,8 +760,8 @@
   <div class="sec-label">Momentum Pulse</div>
   <div class="card mom-card">
     <div class="mom-head">
-      <h3>Breadth above moving averages <span class="was-note">was <s>58–61%</s></span></h3>
-      <span class="badge-bull">STRONG BULLISH · +3</span>
+      <h3>Breadth above moving averages <span class="was-note">was <s>56–58%</s></span></h3>
+      <span class="badge-bull">SOFTENING · watch 50%</span>
     </div>
     <div id="bars"></div>
   </div>
@@ -769,33 +769,33 @@
   <div id="indPopover"></div>
 
   <footer>
-    <b>NOT FINANCIAL ADVICE.</b> Core Vitals &amp; Momentum show the 19:01 UTC close snapshot (2026-06-04); replay animates from the 17:01 reading. Concentration &amp; Leadership figures pulled live ~2026-06-03/04. Signals conflict and past performance means nothing. Do your own research and size responsibly.
+    <b>NOT FINANCIAL ADVICE.</b> Core Vitals &amp; Momentum show the 21:00 UTC close snapshot (2026-06-05); replay animates from yesterday's reading (63). SMFI &amp; Market Tide values are stale (last confirmed 2026-06-04). Concentration &amp; Leadership figures pulled ~2026-06-04/05. Signals conflict and past performance means nothing. Do your own research and size responsibly.
   </footer>
 </div>
 
 <script>
 /* ── DATA ── */
-const PREV_COMPOSITE = 33;   // 13:01 start of day — FEAR
-const GHOST_AT       = 56;   // 15:01 intermediate — CONSTRUCTIVE +3
-const COMPOSITE      = 63;   // 19:01 close — CONSTRUCTIVE +4 (Market Tide positive)
+const PREV_COMPOSITE = 63;   // 2026-06-04 close — CONSTRUCTIVE
+const GHOST_AT       = 47;   // mid-session — borderline NEUTRAL
+const COMPOSITE      = 40;   // 2026-06-05 close — FEAR (Hindenburg x2, McClellan negative, P/C 0.49)
 
 const indicators = [
-  { name:"VIX", prevNum:15.46, curNum:15.37, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Drifted lower again into close, 15.46 → 15.37. Equity vol calm all day — no sign of late-session hedging. Remains a complacency watch but clean green at the bell." },
-  { name:"MOVE", prevNum:73.58, curNum:73.58, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Bond-market volatility unchanged at 73.58 all day. Rates are fully quiet — no fixed-income stress from open to close." },
-  { name:"McClellan", prevNum:9.93, curNum:7.63, fmt:{dec:2}, prevTag:"RISING", tag:"RISING", prevS:"green", s:"green",
-    note:"Easing into close, 9.93 → 7.63, but still positive. Normal end-of-day breadth softening — still more advancing than declining stocks. The day's regime change is holding." },
-  { name:"Hindenburg", text:true, prevVal:"CLEAR", val:"CLEAR", prevTag:"CLEARED", tag:"CLEARED", prevS:"green", s:"green",
-    note:"Omen clear all session. No new triggers in the 30-day window. Closed the day with a clean all-clear on the divergence tail-risk signal." },
-  { name:"% > 200 DMA", prevNum:56.1, curNum:55.9, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
-    note:"Barely changed into close, 56.1% → 55.9%. Long-term trend breadth is rock-solid — over half the market above its 200-day and essentially flat on the day." },
-  { name:"Put/Call", prevNum:0.85, curNum:0.88, fmt:{dec:2}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"green", s:"green",
-    note:"Ticked up slightly into close, 0.85 → 0.88. Still neutral — a tiny bit more protective buying at the bell, which is healthy. Not signalling fear or complacency." },
-  { name:"SMFI", prevNum:51185, curNum:50820, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
-    note:"Continued drifting lower, 51,185 → 50,820. Institutions still not committing directionally. Neutral is fine — just means the smart money isn't chasing the move yet." },
-  { name:"Market Tide", prevNum:-72, curNum:43, fmt:{dec:0, pre:"$", suf:"M"}, prevTag:"BALANCED", tag:"BALANCED", prevS:"amber", s:"amber", flip:true,
-    note:"The day's biggest close-of-day development: net premium flow crossed positive, −$72M → +$43M. First net positive reading all day. The last remaining bear holdout has fully cleared. Bull thesis now confirmed across all eight indicators." },
+  { name:"VIX", prevNum:15.37, curNum:16.06, fmt:{dec:2}, prevTag:"CALM", tag:"ELEVATED", prevS:"green", s:"amber",
+    note:"Crossed above 16 to 16.06 — no longer squarely in the calm zone. A modest move on its own, but in context of negative McClellan and a Hindenburg cluster, it adds to the cautionary picture. Watch for acceleration above 18." },
+  { name:"MOVE", prevNum:73.58, curNum:73.33, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
+    note:"Edged slightly lower to 73.33. Rates remain fully quiet — the bond market is not the source of today's stress. This is the one clean green on an otherwise deteriorating board." },
+  { name:"McClellan", prevNum:7.63, curNum:-8.43, fmt:{dec:2}, prevTag:"RISING", tag:"NEGATIVE", prevS:"green", s:"red",
+    note:"Crossed below zero and has been negative since May 11. More stocks are declining than advancing on a trend basis. This is one of the four Hindenburg trigger conditions — it is now active. A zero-line recovery would be the first sign of healing." },
+  { name:"Hindenburg", text:true, prevVal:"CLEAR", val:"TRIGGERED", prevTag:"CLEARED", tag:"TRIGGERED", prevS:"green", s:"red",
+    note:"Second confirmation this week. Narrow participation — tech powering higher while healthcare and other sectors struggle. A cluster of 2+ confirmations in 30 days is historically the more reliable warning. Do not dismiss this." },
+  { name:"% > 200 DMA", prevNum:55.9, curNum:55.8, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
+    note:"Essentially unchanged at 55.8%. The long-term structural floor is still intact — damage is short-term, not structural yet. This is what separates a warning from a breakdown. Watch 50% as the line in the sand." },
+  { name:"Put/Call", prevNum:0.88, curNum:0.49, fmt:{dec:2}, prevTag:"NEUTRAL", tag:"EX. GREED", prevS:"green", s:"red",
+    note:"Equity put/call ratio plunged to 0.49 — deep in the danger zone (below 0.70). Rampant call buying, near-zero hedging demand. When no one wants insurance, the market is most exposed. Historically this level precedes sharp pullbacks. Contrarian bearish signal." },
+  { name:"SMFI", prevNum:50820, curNum:50820, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"STALE", prevS:"amber", s:"amber",
+    note:"No fresh data for today's session — showing last confirmed Jun 4 close reading. Treat as unknown. If institutions begin selling into the Hindenburg warning, expect SMFI to drop sharply. Watch this closely tomorrow." },
+  { name:"Market Tide", prevNum:43, curNum:43, fmt:{dec:0, pre:"$", suf:"M"}, prevTag:"POSITIVE", tag:"STALE", prevS:"green", s:"amber",
+    note:"No fresh premium flow data for today. Showing Jun 4 close (+$43M). Market Tide is the most critical confirmation signal — if it reverts negative tomorrow, the bear case accelerates significantly. Stale data; do not rely on it." },
 ];
 
 const concentration = [
@@ -821,19 +821,19 @@ const bars = [
 
 const plays = {
   zen: {
-    e:"😇", label:"Clean close",
-    text:"Market Tide crossed positive (+$43M) into the bell — the last holdout is gone. All eight vitals closed either green or neutral. Breadth eased slightly but held. The day's story: opened at FEAR 33, closed at CONSTRUCTIVE 63. <b>Still an 18% chip market</b> — structure hasn't changed, but the session was a clean bull confirmation.",
-    moves:[["≈","Day closed with everything aligned — let the overnight play out before adding risk."],["⏳","Watch tomorrow's open: if McClellan holds above zero, breadth is genuinely healthy."],["🛡","Concentration is the structural overhang — keep it in the back of your head on any gap-up."]]
+    e:"😇", label:"Cautious reassessment",
+    text:"Yesterday's clean close is now being stress-tested. VIX crossed 16, McClellan turned negative, and the Hindenburg confirmed a second cluster. <b>Breadth at 55.8% is the one thing holding this together</b> — the structural floor hasn't broken. SMFI and Market Tide are stale; we don't have full confirmation in either direction. Wait before acting.",
+    moves:[["≈","Hold existing longs but do not add. Let the market prove it can hold."],["⏳","McClellan at −8.43: if it deepens past −20, breadth is breaking down — that's your exit cue."],["🛡","P/C at 0.49 means nobody has hedges on. Buy some protection while it's cheap."]]
   },
   bull: {
-    e:"🐂", label:"Full sweep at the bell",
-    text:"<b>As clean a close as you could ask for.</b> Market Tide went positive (+$43M), Hindenburg clear, McClellan positive, VIX 15.37, Put/Call 0.88, breadth solid across every SMA. <b>56–58% of stocks above their 12/20-day</b>, 55.9% above the 200-day. Opened in fear, closed in confirmation — the regime flip held all session.",
-    moves:[["▲","Carry longs overnight — internal structure confirmed at close."],["▲","Morning dip is a gift if breadth stays green."],["▲","Trail stops above today's range — you have a cushion now."]]
+    e:"🐂", label:"Structure still standing",
+    text:"The 200-day breadth at 55.8% is the bull's last line of defence — and it's holding. MOVE is calm, rates aren't the issue. The Hindenburg can resolve without a crash (roughly 75% of signals do). <b>If Market Tide stays positive tomorrow and McClellan recovers above zero, the warning was a false alarm.</b>",
+    moves:[["▲","200-day breadth above 50%: structural uptrend technically intact."],["▲","If McClellan crosses back above zero: re-engage with conviction."],["▲","MOVE flat — rates not the risk. Non-semi longs are relatively safe."]]
   },
   bear: {
-    e:"🐻", label:"Confirmed rally, concentrated risk",
-    text:"<b>Signals cleaned up, structure didn't.</b> Semis are <b>18% of the index</b>, Nvidia ~$5.2T, the whole tape on a handful of names. McClellan is fading (7.63 and falling). Market Tide positive is notable, but one session of +$43M doesn't flip a structural concentration risk. Breadth bars all softening into close.",
-    moves:[["▼","Don't mistake a clean close for a structural fix — concentration is still extreme."],["▼","McClellan easing: if it goes negative tomorrow, breadth breaks down fast."],["▼","Hedge the semi exposure — Nvidia/TSMC wobble = index wobble."]]
+    e:"🐻", label:"Warning cluster — reduce risk",
+    text:"<b>Hindenburg second confirmation + negative McClellan + P/C at 0.49 = a dangerous combination.</b> The market has almost no hedging in place, breadth is deteriorating under the surface, and the internal divergence signal has now confirmed twice. Concentration means any tech wobble is an index wobble. The bear case is materially stronger today than yesterday.",
+    moves:[["▼","Reduce longs now — don't wait for a third Hindenburg confirmation."],["▼","P/C at 0.49: buy puts while insurance is historically cheap."],["▼","SOX is the canary — if semis crack, there is almost nothing else holding the tape."]]
   },
 };
 
