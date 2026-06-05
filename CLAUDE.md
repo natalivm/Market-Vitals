@@ -77,13 +77,20 @@ The 8 **core indicators** (the `indicators` array): VIX, MOVE, McClellan,
 Hindenburg, % > 200 DMA, Put/Call, SMFI, Market Tide. The green-count and
 gauge verdict derive automatically from this array (e.g. "5 of 8 green").
 
-**Power Hour** (final-hour tape read) is NOT a core indicator card — it lives
-**inside the gauge card**, under the composite text, via the `SCAN.powerHour`
-object: `{ show, tag, state, detail }`. Set `show:false` (or omit) on days the
-feed doesn't post it and the block disappears. The `{{power}}` and
-`{{power_detail}}` tokens resolve from `SCAN.powerHour` for the ribbon/plays.
-Power Hour is not in the composite-weights table (the gauge composite is a
-manual feed-tracked value).
+**Power Hour** (final-hour tape read) is NOT a core indicator card — it renders
+as a single indicator card (same flip/TAP popover) **inside the gauge card,
+under the Fear/Greed scale legend**, via the `SCAN.powerHour` object:
+`{ show, tag, state, detail }`. Set `show:false` (or omit) on days the feed
+doesn't post it and the card disappears. The `{{power}}` and `{{power_detail}}`
+tokens resolve from `SCAN.powerHour` for the ribbon/plays.
+
+**Power Hour is a contextual readout only — it has ZERO effect on the gauge.**
+The needle/score and verdict derive solely from `SCAN.composite.cur` (the Bot's
+own composite number, transcribed verbatim); Power Hour is not in the
+`indicators` array nor the composite-weights table, so it doesn't move the
+needle or the green-count. Do NOT give Power Hour a separate composite weight:
+the Bot's composite already reflects its own model (Power Hour likely included),
+so adding a weight here would double-count it.
 
 ## Rotation Radar
 
