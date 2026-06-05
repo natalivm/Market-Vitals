@@ -121,7 +121,7 @@
     /* ── view switching (Vitals ⇄ Rotation, same tab) ── */
     [hidden] { display: none !important; }
     .back-btn { margin-bottom: 16px; cursor: pointer; }
-    .rot-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); font-weight: 400; letter-spacing: .04em; }
+    .rot-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); font-weight: 400; letter-spacing: .04em; }
     .rot-intro { font-size: 13px; line-height: 1.6; color: #cdd6e2; margin: 0 4px 16px; max-width: 680px; }
     .rot-empty {
       grid-column: 1 / -1;
@@ -141,27 +141,22 @@
       display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px;
       border: 1px solid var(--line); border-left: 3px solid var(--fear);
       background: linear-gradient(180deg, var(--panel), var(--panel2));
-      border-radius: 12px; padding: 14px 18px; margin-bottom: 20px;
+      border-radius: 12px; padding: 14px 18px; margin-bottom: 14px;
     }
     .rot-regime.up { border-left-color: var(--greed); }
     .rr-head { font-family: 'Chakra Petch', sans-serif; font-weight: 700; font-size: 16px; letter-spacing: .02em; }
     .rr-breadth { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--fear2); }
-    .rr-bench { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); margin-left: auto; }
+    .rr-bench { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); margin-left: auto; }
     .rr-bench b { color: var(--txt); font-weight: 600; }
-    /* heatmap timeline */
-    .rot-heatwrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); margin-bottom: 8px; -webkit-overflow-scrolling: touch; }
-    .rot-heat { border-collapse: collapse; width: 100%; font-family: 'IBM Plex Mono', monospace; }
-    .rot-heat th, .rot-heat td { border: 1px solid var(--bg); padding: 0; text-align: center; }
-    .rot-heat thead th { background: var(--panel2); color: var(--muted); font-size: 10px; font-weight: 600; padding: 7px 8px; letter-spacing: .04em; position: sticky; top: 0; }
-    .rot-heat thead th:first-child, .rot-heat td.hm-sym { position: sticky; left: 0; z-index: 2; background: var(--panel2); text-align: left; padding: 6px 10px; min-width: 132px; }
-    .rot-heat thead th:first-child { z-index: 3; }
-    .hm-sym b { font-size: 12px; color: var(--txt); }
-    .hm-sym span { display: block; font-size: 9px; color: var(--muted); font-weight: 400; }
-    .hm-cell { min-width: 60px; height: 42px; cursor: default; color: #06210f; font-weight: 700; font-size: 11px; line-height: 1.25; }
-    .hm-cell small { display: block; font-size: 9px; font-weight: 600; opacity: .8; }
-    .hm-cell.out { color: #2a0a0a; }
-    .hm-legend { display: flex; flex-wrap: wrap; gap: 14px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); margin: 0 2px 22px; }
-    .hm-legend i { display: inline-block; width: 11px; height: 11px; border-radius: 3px; vertical-align: -1px; margin-right: 5px; }
+    /* top-movers trend chart (replaces the old per-sector heatmap) */
+    .trend-chart { border: 1px solid var(--line); border-radius: 12px; background: var(--panel); padding: 12px 14px 6px; margin-bottom: 16px; }
+    .trend-legend { display: flex; flex-wrap: wrap; gap: 8px 16px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; margin-bottom: 10px; }
+    .trend-legend .tl-item { color: var(--muted); display: inline-flex; align-items: center; gap: 5px; cursor: default; }
+    .trend-legend .tl-item i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .trend-svg { width: 100%; height: auto; display: block; }
+    .trend-svg .tg-axis { fill: var(--muted); font-size: 11px; font-family: 'IBM Plex Mono', monospace; }
+    .trend-svg .tg-grid { stroke: var(--line); stroke-width: 1; }
+    .trend-svg .tg-zero { stroke: var(--line2); stroke-width: 1; stroke-dasharray: 3 3; }
     /* money in / out columns */
     .rot-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 8px; }
     @media (max-width: 720px) { .rot-cols { grid-template-columns: 1fr; } }
@@ -172,9 +167,9 @@
     .rot-row { display: flex; align-items: baseline; gap: 8px; padding: 8px 14px; border-bottom: 1px solid var(--bg2); font-family: 'IBM Plex Mono', monospace; }
     .rot-row:last-child { border-bottom: none; }
     .rot-row .rr-sym { font-weight: 700; font-size: 12px; color: var(--txt); min-width: 46px; }
-    .rot-row .rr-name { font-size: 10px; color: var(--muted); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .rot-row .rr-flow { font-size: 11px; font-weight: 600; }
-    .rot-row .rr-pct { font-size: 10px; min-width: 52px; text-align: right; }
+    .rot-row .rr-name { font-size: 11px; color: var(--muted); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .rot-row .rr-flow { font-size: 12px; font-weight: 600; }
+    .rot-row .rr-pct { font-size: 11px; min-width: 52px; text-align: right; }
     .pos { color: var(--greed); } .neg { color: var(--fear); }
     .rr-badge { font-size: 8.5px; font-weight: 700; padding: 1px 5px; border-radius: 5px; letter-spacing: .03em; white-space: nowrap; }
     .b-dip { background: rgba(47,214,115,.16); color: var(--greed); }
@@ -184,10 +179,10 @@
     .conv-row { display: flex; align-items: center; gap: 8px; padding: 7px 14px; border-bottom: 1px solid var(--bg2); font-family: 'IBM Plex Mono', monospace; }
     .conv-row:last-child { border-bottom: none; }
     .conv-row .cv-sym { font-weight: 700; font-size: 12px; min-width: 46px; }
-    .conv-row .cv-name { font-size: 10px; color: var(--muted); flex: 1; }
+    .conv-row .cv-name { font-size: 11px; color: var(--muted); flex: 1; }
     .conv-bar { height: 6px; border-radius: 3px; min-width: 8px; }
-    .conv-row .cv-meta { font-size: 10px; color: var(--muted); white-space: nowrap; }
-    .rot-tiles { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+    .conv-row .cv-meta { font-size: 11px; color: var(--muted); white-space: nowrap; }
+    .rot-tiles { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
     .rot-tile {
       position: relative; cursor: help;
       border: 1px solid rgba(47,214,115,.3); background: rgba(47,214,115,.06);
@@ -207,7 +202,7 @@
     }
     .rot-tile[data-tip]:hover::after { opacity: 1; transform: translateX(-50%) translateY(0); }
     /* ── at-a-glance KPI cards (boss-deck headline numbers) ── */
-    .rot-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+    .rot-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
     @media (max-width: 640px) { .rot-kpis { grid-template-columns: 1fr; } }
     .kpi {
       border: 1px solid var(--line); border-radius: 12px;
@@ -216,28 +211,28 @@
     }
     .kpi::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--line2); }
     .kpi.kpi-pos::before { background: var(--greed); } .kpi.kpi-neg::before { background: var(--fear); }
-    .kpi .k-lbl { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .06em; color: var(--muted); text-transform: uppercase; }
+    .kpi .k-lbl { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .06em; color: var(--muted); text-transform: uppercase; }
     .kpi .k-val { font-family: 'Chakra Petch', sans-serif; font-size: 22px; font-weight: 700; margin-top: 6px; line-height: 1.1; }
     .kpi .k-val.pos { color: var(--greed); } .kpi .k-val.neg { color: var(--fear); }
-    .kpi .k-sub { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); margin-top: 5px; }
+    .kpi .k-sub { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); margin-top: 5px; }
     /* ── net-flow diverging bar chart (the hero) ── */
-    .flow-chart { border: 1px solid var(--line); border-radius: 12px; background: var(--panel); padding: 11px 16px 14px; margin-bottom: 24px; }
+    .flow-chart { border: 1px solid var(--line); border-radius: 12px; background: var(--panel); padding: 11px 16px 14px; margin-bottom: 16px; }
     .flow-axis { display: grid; grid-template-columns: 46px 1fr 94px 26px; gap: 10px; align-items: center; padding-bottom: 9px; margin-bottom: 5px; border-bottom: 1px dashed var(--line); }
-    .fa-track { grid-column: 2; display: flex; justify-content: space-between; align-items: center; font-family: 'IBM Plex Mono', monospace; font-size: 10px; }
+    .fa-track { grid-column: 2; display: flex; justify-content: space-between; align-items: center; font-family: 'IBM Plex Mono', monospace; font-size: 11px; }
     .fa-out { color: var(--fear2); } .fa-in { color: var(--greed2); } .fa-zero { color: var(--line2); font-weight: 700; }
     .flow-row { display: grid; grid-template-columns: 46px 1fr 94px 26px; align-items: center; gap: 10px; height: 21px; font-family: 'IBM Plex Mono', monospace; }
-    .fb-sym { font-size: 11px; font-weight: 700; color: var(--txt); }
+    .fb-sym { font-size: 12px; font-weight: 700; color: var(--txt); }
     .fb-track { position: relative; height: 13px; }
     .fb-track::before { content: ""; position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px; background: var(--line2); }
     .fb-bar { position: absolute; top: 0; height: 13px; border-radius: 2px; }
     .fb-bar.pos { background: linear-gradient(90deg, rgba(47,214,115,.45), var(--greed)); box-shadow: 0 0 8px rgba(47,214,115,.22); }
     .fb-bar.neg { background: linear-gradient(270deg, rgba(255,77,77,.45), var(--fear)); box-shadow: 0 0 8px rgba(255,77,77,.22); }
-    .fb-val { font-size: 11px; font-weight: 600; text-align: right; }
+    .fb-val { font-size: 12px; font-weight: 600; text-align: right; }
     .fb-val.pos { color: var(--greed); } .fb-val.neg { color: var(--fear); }
-    .fb-sig { font-size: 11px; text-align: center; }
+    .fb-sig { font-size: 12px; text-align: center; }
     .fb-sig .fb-new { font-style: normal; font-size: 7.5px; color: #56a8ff; border: 1px solid rgba(86,168,255,.4); border-radius: 3px; padding: 0 2px; margin-left: 3px; vertical-align: 1px; }
-    .flow-foot { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); text-align: center; margin-top: 11px; padding-top: 9px; border-top: 1px dashed var(--line); }
-    .rot-timeline-note { margin-bottom: 24px; }
+    .flow-foot { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); text-align: center; margin-top: 11px; padding-top: 9px; border-top: 1px dashed var(--line); }
+    .rot-timeline-note { margin-bottom: 16px; }
     .stamp {
       text-align: right;
       font-family: 'IBM Plex Mono', monospace;
@@ -955,10 +950,17 @@
     <!-- 2b ─ analyst read (the story behind the numbers) -->
     <div id="rotRead"></div>
 
-    <!-- 3 ─ HERO: net-flow diverging bar chart -->
+    <!-- 3 ─ HERO: where the money moved — this week's net flow + the 4-week trend -->
     <div class="sec-label">Where the Money Moved · <span id="rotFlowDate" style="color:var(--muted);font-weight:400"></span></div>
     <div class="rot-intro">Net institutional flow by sector, past 5 sessions. Bars grow <b style="color:var(--greed)">right</b> when money rotates <b>in</b>, <b style="color:var(--fear)">left</b> when it rotates <b>out</b> — length is the dollar size of the flow. 💰 buying the dip · ⚠️ selling into strength.</div>
     <div class="flow-chart" id="rotFlow"></div>
+
+    <!-- 3b ─ top-movers 4-week trend (replaces the old per-sector heatmap; appears once ≥2 readings exist) -->
+    <div id="rotTrendWrap" hidden>
+      <div class="sec-label sec-label--inset">Top Movers · <span style="color:var(--muted);font-weight:400">how the biggest flows tracked over the last 4 weeks</span></div>
+      <div class="trend-chart" id="rotTrend"></div>
+    </div>
+    <div id="rotTrendNote" class="rot-timeline-note"></div>
 
     <!-- 4 ─ conviction -->
     <div class="sec-label">14-Day Conviction · <span style="color:var(--muted);font-weight:400">is the move sustained?</span></div>
@@ -972,19 +974,6 @@
     <div class="rot-tiles" id="rotHold"></div>
     <div id="rotHoldNote"></div>
 
-    <!-- 6 ─ weekly timeline (appears once ≥2 readings exist) -->
-    <div id="rotTimelineWrap" hidden>
-      <div class="sec-label">Rotation Timeline · <span style="color:var(--muted);font-weight:400">5-day flow, week by week</span></div>
-      <div class="rot-heatwrap"><table class="rot-heat" id="rotHeat"></table></div>
-      <div class="hm-legend">
-        <span><i style="background:#2fd673"></i>Inflow</span>
-        <span><i style="background:#ff4d4d"></i>Outflow</span>
-        <span>💰 buying the dip</span>
-        <span>⚠️ selling into strength</span>
-        <span>·NEW· first appearance</span>
-      </div>
-    </div>
-    <div id="rotTimelineNote" class="rot-timeline-note"></div>
   </div>
 
   <div id="indPopover"></div>
@@ -1563,48 +1552,90 @@ function renderRotation(data) {
   document.getElementById("rotHoldNote").innerHTML = latest.holdNote
     ? `<div class="rot-note"><span class="rn-ico">⚠️</span><p>${latest.holdNote}</p></div>` : "";
 
-  // ── 6. weekly timeline heatmap — only meaningful once ≥2 readings exist ──
+  // ── 3b. top-movers 4-week trend — only meaningful once ≥2 readings exist ──
   if (snaps.length >= 2) {
-    document.getElementById("rotTimelineWrap").hidden = false;
-    document.getElementById("rotTimelineNote").innerHTML = "";
-    renderHeatmap(snaps);
+    document.getElementById("rotTrendWrap").hidden = false;
+    document.getElementById("rotTrendNote").innerHTML = "";
+    renderTrend(snaps);
   } else {
-    document.getElementById("rotTimelineWrap").hidden = true;
-    document.getElementById("rotTimelineNote").innerHTML =
-      `<div class="rot-empty">📈 Weekly rotation timeline<br><span>Builds here automatically as more readings are added — one column per week.</span></div>`;
+    document.getElementById("rotTrendWrap").hidden = true;
+    document.getElementById("rotTrendNote").innerHTML =
+      `<div class="rot-empty">📈 4-week net-flow trend<br><span>Charts here automatically once a second reading is added — one point per week.</span></div>`;
   }
 }
 
-// Heatmap timeline — rows = union of syms, cols = dates. Cells are coloured by
-// the SIGN of the 5-day net flow (not the bot's daily in/out post bucket, which
-// flips day-to-day) so persistent accumulation/distribution reads consistently.
-function renderHeatmap(snaps) {
-  const latest = snaps[snaps.length - 1];
-  const dates = snaps.map(s => s.date);
-  const netFlow = f => f.f5 ?? f.f1 ?? 0;
-  const order = latest.flows.slice().sort((a, b) => netFlow(b) - netFlow(a));
-  const seen = new Set(order.map(f => f.sym));
-  const rows = order.map(f => ({ sym: f.sym, name: f.name }));
-  snaps.forEach(s => s.flows.forEach(f => { if (!seen.has(f.sym)) { seen.add(f.sym); rows.push({ sym: f.sym, name: f.name }); } }));
+// Top-movers trend — a compact multi-line chart of 5-day net flow over the last
+// 4 readings for the biggest CURRENT movers. Replaces the old per-sector heatmap:
+// instead of one row per sector (40+ rows that never fit), it plots only the
+// sectors that matter and shows the DIRECTION of the rotation over time. Lines
+// rise above the zero baseline when money is flowing in, drop below when out.
+function renderTrend(snaps) {
+  const recent = snaps.slice(-4);                              // last 4 weeks
+  const latest = recent[recent.length - 1];
+  const hasF5  = f => f.f5 != null && isFinite(f.f5);
 
-  const head = `<thead><tr><th>Sector</th>${dates.map(d => `<th>${shortDate(d)}</th>`).join("")}</tr></thead>`;
-  const body = "<tbody>" + rows.map(r => {
-    const cells = snaps.map(s => {
-      const f = s.flows.find(x => x.sym === r.sym);
-      if (!f) return `<td></td>`;
-      const nf = netFlow(f), pos = nf >= 0;
-      const c = pos ? "47,214,115" : "255,77,77";
-      const a = (0.28 + 0.6 * Math.min(1, Math.abs(nf) / 2000)).toFixed(2);
-      return `<td class="hm-cell ${pos ? "" : "out"}" style="background:rgba(${c},${a})" title="${f.name} — 5D net ${pos ? "inflow" : "outflow"} ${fmtFlow(f.f5)} · price 1D ${rpct(f.d1)}">${rpct(f.d1)} ${sigIcon(f.signal)}<small>${fmtFlow(f.f5)}</small></td>`;
-    }).join("");
-    return `<tr><td class="hm-sym"><b>${r.sym}</b><span>${r.name}</span></td>${cells}</tr>`;
-  }).join("") + "</tbody>";
-  document.getElementById("rotHeat").innerHTML = head + body;
+  // pick the biggest current movers (both inflow and outflow)
+  const movers = latest.flows.filter(hasF5)
+    .sort((a, b) => Math.abs(b.f5) - Math.abs(a.f5))
+    .slice(0, 7);
+  if (!movers.length) { document.getElementById("rotTrend").innerHTML = ""; return; }
+
+  const PAL = ["#2fd673", "#56a8ff", "#ffc83d", "#ff7a45", "#c77dff", "#37e0c4", "#ff6fa5"];
+  const series = movers.map((m, i) => {
+    const pts  = recent.map(s => { const f = s.flows.find(x => x.sym === m.sym); return f && hasF5(f) ? f.f5 : null; });
+    const last = [...pts].reverse().find(v => v != null);
+    return { sym: m.sym, name: m.name, color: PAL[i % PAL.length], signal: m.signal, pts, last };
+  });
+
+  // symmetric y-range around zero (flows go both ways)
+  const vals   = series.flatMap(s => s.pts).filter(v => v != null);
+  const maxAbs = Math.max(...vals.map(Math.abs), 1);
+
+  // geometry, in viewBox units (the SVG scales to its container width)
+  const W = 620, H = 230, padL = 56, padR = 14, padT = 14, padB = 28;
+  const n = recent.length;
+  const X = i => padL + (n === 1 ? 0 : i / (n - 1) * (W - padL - padR));
+  const Y = v => padT + (1 - (v + maxAbs) / (2 * maxAbs)) * (H - padT - padB);
+  const z = Y(0);
+
+  // gridlines + y-axis labels (+max / 0 / −max)
+  const grid =
+    `<line class="tg-grid" x1="${padL}" y1="${Y(maxAbs)}" x2="${W - padR}" y2="${Y(maxAbs)}"/>` +
+    `<line class="tg-zero" x1="${padL}" y1="${z}" x2="${W - padR}" y2="${z}"/>` +
+    `<line class="tg-grid" x1="${padL}" y1="${Y(-maxAbs)}" x2="${W - padR}" y2="${Y(-maxAbs)}"/>` +
+    `<text class="tg-axis" x="${padL - 8}" y="${Y(maxAbs) + 4}" text-anchor="end">${fmtFlow(maxAbs)}</text>` +
+    `<text class="tg-axis" x="${padL - 8}" y="${z + 4}" text-anchor="end">0</text>` +
+    `<text class="tg-axis" x="${padL - 8}" y="${Y(-maxAbs) + 4}" text-anchor="end">${fmtFlow(-maxAbs)}</text>`;
+
+  // x-axis date labels (one per reading)
+  const xlab = recent.map((s, i) =>
+    `<text class="tg-axis" x="${X(i)}" y="${H - 8}" text-anchor="${i === 0 ? "start" : i === n - 1 ? "end" : "middle"}">${shortDate(s.date)}</text>`
+  ).join("");
+
+  // one polyline + dots per series (gaps connect across any missing week)
+  const lines = series.map(s => {
+    const pres = s.pts.map((v, i) => v == null ? null : [X(i), Y(v)]).filter(Boolean);
+    const path = pres.map(p => `${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(" ");
+    const dots = pres.map(p => `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2.6" fill="${s.color}"/>`).join("");
+    return `<polyline points="${path}" fill="none" stroke="${s.color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>${dots}`;
+  }).join("");
+
+  const svg =
+    `<svg class="trend-svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" role="img" ` +
+    `aria-label="Top-mover 5-day net flow over the last ${n} readings">${grid}${xlab}${lines}</svg>`;
+
+  // legend: colour · symbol · latest flow · signal icon
+  const legend = `<div class="trend-legend">` + series.map(s =>
+    `<span class="tl-item" title="${s.name}"><i style="background:${s.color}"></i>${s.sym} ` +
+    `<b style="color:${s.color}">${fmtFlow(s.last)}</b>${sigIcon(s.signal)}</span>`
+  ).join("") + `</div>`;
+
+  document.getElementById("rotTrend").innerHTML = legend + svg;
 }
 
 function renderRotationEmpty(msg) {
   document.getElementById("rotRegime").innerHTML = `<div class="rot-empty">📡 ${msg}<br><span>Add a reading to data/rotation_history.json and it renders here.</span></div>`;
-  ["rotKpis","rotRead","rotFlow","rotAcc","rotDist","rotHold","rotHoldNote","rotHeat"].forEach(id => { const e = document.getElementById(id); if (e) e.innerHTML = ""; });
+  ["rotKpis","rotRead","rotFlow","rotAcc","rotDist","rotHold","rotHoldNote","rotTrend"].forEach(id => { const e = document.getElementById(id); if (e) e.innerHTML = ""; });
 }
 let rotationLoaded = false;
 function loadRotation() {
