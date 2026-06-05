@@ -17,6 +17,21 @@
    from a confirmed, timestamped source (e.g. the Market Vitals Bot feed).
    Cite the source and timestamp in the commit message.
 
+## HISTORICAL LOG — REQUIRED ON EVERY DASHBOARD UPDATE
+
+Whenever the dashboard (`index.html`) is updated with new Market Vitals Bot
+feed data, **always append a corresponding row to `data/vitals_history.csv`
+in the same commit.** Never let the two drift out of sync.
+
+Rules:
+- One row per Bot post (identified by its UTC timestamp).
+- Copy the numbers exactly as shown in the screenshot — no rounding, no
+  approximation.
+- Append-only: never edit or delete historical rows once committed.
+- If a value wasn't in the feed (e.g. Hindenburg not shown), leave the
+  cell empty rather than guessing.
+- Column order and schema are defined in `data/README.md`.
+
 ## Project structure
 
 ```
