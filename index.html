@@ -118,6 +118,81 @@
     }
     .guide-btn:hover, .guide-btn:active { border-color: var(--accent, #56a8ff); color: var(--accent, #56a8ff); }
     .guide-btn .gb-ico { font-size: 14px; }
+    /* ── view switching (Vitals ⇄ Rotation, same tab) ── */
+    [hidden] { display: none !important; }
+    .back-btn { margin-bottom: 16px; cursor: pointer; }
+    .rot-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); font-weight: 400; letter-spacing: .04em; }
+    .rot-intro { font-size: 13px; line-height: 1.6; color: #cdd6e2; margin: 0 4px 16px; max-width: 680px; }
+    .rot-empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 48px 20px;
+      border: 1px dashed var(--line2);
+      border-radius: 14px;
+      background: var(--panel);
+      color: var(--muted);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 14px;
+      line-height: 1.9;
+    }
+    .rot-empty span { font-size: 12px; color: #6b7888; }
+    /* regime banner */
+    .rot-regime {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px;
+      border: 1px solid var(--line); border-left: 3px solid var(--fear);
+      background: linear-gradient(180deg, var(--panel), var(--panel2));
+      border-radius: 12px; padding: 14px 18px; margin-bottom: 20px;
+    }
+    .rot-regime.up { border-left-color: var(--greed); }
+    .rr-head { font-family: 'Chakra Petch', sans-serif; font-weight: 700; font-size: 16px; letter-spacing: .02em; }
+    .rr-breadth { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--fear2); }
+    .rr-bench { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); margin-left: auto; }
+    .rr-bench b { color: var(--txt); font-weight: 600; }
+    /* heatmap timeline */
+    .rot-heatwrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); margin-bottom: 8px; -webkit-overflow-scrolling: touch; }
+    .rot-heat { border-collapse: collapse; width: 100%; font-family: 'IBM Plex Mono', monospace; }
+    .rot-heat th, .rot-heat td { border: 1px solid var(--bg); padding: 0; text-align: center; }
+    .rot-heat thead th { background: var(--panel2); color: var(--muted); font-size: 10px; font-weight: 600; padding: 7px 8px; letter-spacing: .04em; position: sticky; top: 0; }
+    .rot-heat thead th:first-child, .rot-heat td.hm-sym { position: sticky; left: 0; z-index: 2; background: var(--panel2); text-align: left; padding: 6px 10px; min-width: 132px; }
+    .rot-heat thead th:first-child { z-index: 3; }
+    .hm-sym b { font-size: 12px; color: var(--txt); }
+    .hm-sym span { display: block; font-size: 9px; color: var(--muted); font-weight: 400; }
+    .hm-cell { min-width: 60px; height: 42px; cursor: default; color: #06210f; font-weight: 700; font-size: 11px; line-height: 1.25; }
+    .hm-cell small { display: block; font-size: 9px; font-weight: 600; opacity: .8; }
+    .hm-cell.out { color: #2a0a0a; }
+    .hm-legend { display: flex; flex-wrap: wrap; gap: 14px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); margin: 0 2px 22px; }
+    .hm-legend i { display: inline-block; width: 11px; height: 11px; border-radius: 3px; vertical-align: -1px; margin-right: 5px; }
+    /* money in / out columns */
+    .rot-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 8px; }
+    @media (max-width: 720px) { .rot-cols { grid-template-columns: 1fr; } }
+    .rot-col { border: 1px solid var(--line); border-radius: 12px; background: var(--panel); overflow: hidden; }
+    .rot-col-h { font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; padding: 10px 14px; letter-spacing: .03em; border-bottom: 1px solid var(--line); }
+    .rc-buy { color: var(--greed); background: rgba(47,214,115,.07); }
+    .rc-sell { color: var(--fear); background: rgba(255,77,77,.07); }
+    .rot-row { display: flex; align-items: baseline; gap: 8px; padding: 8px 14px; border-bottom: 1px solid var(--bg2); font-family: 'IBM Plex Mono', monospace; }
+    .rot-row:last-child { border-bottom: none; }
+    .rot-row .rr-sym { font-weight: 700; font-size: 12px; color: var(--txt); min-width: 46px; }
+    .rot-row .rr-name { font-size: 10px; color: var(--muted); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .rot-row .rr-flow { font-size: 11px; font-weight: 600; }
+    .rot-row .rr-pct { font-size: 10px; min-width: 52px; text-align: right; }
+    .pos { color: var(--greed); } .neg { color: var(--fear); }
+    .rr-badge { font-size: 8.5px; font-weight: 700; padding: 1px 5px; border-radius: 5px; letter-spacing: .03em; white-space: nowrap; }
+    .b-dip { background: rgba(47,214,115,.16); color: var(--greed); }
+    .b-sis { background: rgba(255,200,61,.16); color: var(--amber); }
+    .b-new { background: rgba(86,168,255,.16); color: #56a8ff; }
+    /* conviction + tiles */
+    .conv-row { display: flex; align-items: center; gap: 8px; padding: 7px 14px; border-bottom: 1px solid var(--bg2); font-family: 'IBM Plex Mono', monospace; }
+    .conv-row:last-child { border-bottom: none; }
+    .conv-row .cv-sym { font-weight: 700; font-size: 12px; min-width: 46px; }
+    .conv-row .cv-name { font-size: 10px; color: var(--muted); flex: 1; }
+    .conv-bar { height: 6px; border-radius: 3px; min-width: 8px; }
+    .conv-row .cv-meta { font-size: 10px; color: var(--muted); white-space: nowrap; }
+    .rot-tiles { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+    .rot-tile {
+      border: 1px solid rgba(47,214,115,.3); background: rgba(47,214,115,.06);
+      border-radius: 9px; padding: 7px 11px; font-family: 'IBM Plex Mono', monospace;
+    }
+    .rot-tile b { font-size: 12px; color: var(--txt); } .rot-tile span { font-size: 11px; color: var(--greed); margin-left: 6px; }
     .stamp {
       text-align: right;
       font-family: 'IBM Plex Mono', monospace;
@@ -687,6 +762,9 @@
         <a class="guide-btn" href="market-vitals-guide.html" target="_blank" rel="noopener">
           <span class="gb-ico">📖</span> Read the Guide
         </a>
+        <button class="guide-btn" id="rotationBtn" type="button">
+          <span class="gb-ico">🧭</span> Rotation
+        </button>
       </div>
     </div>
     <div class="stamp">
@@ -695,6 +773,7 @@
     </div>
   </header>
 
+  <div id="view-vitals">
   <div class="ribbon" id="ribbon">
     <span class="r-bolt">✅</span>
     <div class="r-main" id="ribMain"></div>
@@ -765,6 +844,35 @@
     </div>
     <div id="bars"></div>
   </div>
+  </div><!-- /view-vitals -->
+
+  <!-- ══ ROTATION RADAR VIEW (same tab) ══ -->
+  <div id="view-rotation" hidden>
+    <button class="guide-btn back-btn" id="backBtn" type="button"><span class="gb-ico">←</span> Market Vitals</button>
+    <div id="rotRegime"></div>
+    <div class="sec-label">Rotation Timeline · <span style="color:#56a8ff">where the money moved</span></div>
+    <div class="rot-intro">Net institutional flow per sector, one column per close — 🟢 money rotating <b>in</b>, 🔴 rotating <b>out</b>, shade = size of the 5-day flow. The grid grows into a multi-week rotation map as readings are added.</div>
+    <div class="rot-heatwrap"><table class="rot-heat" id="rotHeat"></table></div>
+    <div class="hm-legend">
+      <span><i style="background:#2fd673"></i>Inflow</span>
+      <span><i style="background:#ff4d4d"></i>Outflow</span>
+      <span>💰 buying the dip</span>
+      <span>⚠️ selling into strength</span>
+      <span>·NEW· first appearance</span>
+    </div>
+    <div class="sec-label">Money Flow · <span id="rotFlowDate" style="color:var(--muted);font-weight:400"></span></div>
+    <div class="rot-cols">
+      <div class="rot-col"><div class="rot-col-h rc-buy">🟢 Money In</div><div id="rotIn"></div></div>
+      <div class="rot-col"><div class="rot-col-h rc-sell">🔴 Money Out</div><div id="rotOut"></div></div>
+    </div>
+    <div class="sec-label">14-Day Conviction · <span style="color:var(--muted);font-weight:400">sustained institutional behaviour</span></div>
+    <div class="rot-cols">
+      <div class="rot-col"><div class="rot-col-h rc-buy">🟢 Accumulating · Buying the Dip</div><div id="rotAcc"></div></div>
+      <div class="rot-col"><div class="rot-col-h rc-sell">🔴 Distributing · Selling into Strength</div><div id="rotDist"></div></div>
+    </div>
+    <div class="sec-label">Held Up During the Sell-off</div>
+    <div class="rot-tiles" id="rotHold"></div>
+  </div>
 
   <div id="indPopover"></div>
 
@@ -783,16 +891,17 @@
    ════════════════════════════════════════════════════════════════════ */
 const SCAN = {
   date:       "2026-06-05",
-  utc:        "19:01 UTC",
-  kyiv:       "10:01 PM Kyiv",
-  ribbon:     "30 MIN TO CLOSE",        // ribbon eyebrow label
-  scanName:   "pre-close scan",         // footer phrasing
-  prevLabel:  "mid-session",            // what the PREV / ghost reading is
-  ghostLabel: "17:01",                  // tick label drawn on the gauge
-  composite:  { prev: 63, ghost: 63, cur: 60 },
+  utc:        "20:11 UTC",
+  kyiv:       "11:11 PM Kyiv",
+  ribbon:     "CLOSING BELL",           // ribbon eyebrow label
+  scanName:   "closing-bell scan",      // footer phrasing
+  prevLabel:  "prior scan",             // what the PREV / ghost reading is
+  ghostLabel: "19:01",                  // tick label drawn on the gauge
+  composite:  { prev: 63, ghost: 60, cur: 58 },
   // editorial ribbon one-liner — may use {{tokens}}
-  ribbonMain: 'McClellan {{mcclellan}} (falling) · Hindenburg clear · Market Tide <b style="color:var(--fear)">{{tide}}</b>',
-  momentum:   { tag: "STRONG BULLISH", score: "+3", was: "58–62%" },
+  ribbonMain: 'McClellan {{mcclellan}} (falling) · Power Hour {{power}} · Market Tide <b style="color:var(--fear)">{{tide}}</b>',
+  momentum:   { tag: "STRONG BULLISH", score: "+3", was: "55–60%" },
+  powerDetail: "SPY −0.24% in the last hour on 1.95× average volume (28% of the day's range).",
 };
 
 /* derived aliases — downstream gauge code reads these */
@@ -801,22 +910,24 @@ const GHOST_AT       = SCAN.composite.ghost;
 const COMPOSITE      = SCAN.composite.cur;
 
 const indicators = [
-  { name:"VIX", prevNum:18.93, curNum:19.40, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Climbed to {{vix}} from {{vix_prev}} mid-session — still below the 20 threshold that signals elevated stress, but approaching it. VIX has risen nearly 3 points through the full session. Options market is flagging mild caution without outright fear. Watch the 20 level at the open tomorrow." },
+  { name:"VIX", prevNum:19.40, curNum:19.71, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
+    note:"Ticked up to {{vix}} from {{vix_prev}} into the close — now within a hair of the 20 line that marks the shift from calm to elevated. VIX has risen steadily all session. Still technically CALM, but the closing-bell drift higher says the options market is bracing. The 20 level is the one to watch tomorrow." },
   { name:"MOVE", prevNum:71.16, curNum:71.16, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Unchanged at {{move}} through the session — bond market volatility held steady all day. Rates were not a driver of today's equity action. Clean green into the close." },
-  { name:"McClellan", prevNum:7.50, curNum:7.72, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"FALLING", tag:"FALLING", prevS:"green", s:"green",
-    note:"Stabilized slightly to {{mcclellan}} from {{mcclellan_prev}} mid-session but remains on a falling trend from the +15.48 high earlier in the day. Still positive — breadth isn't collapsing — but the deterioration from +15 to +7 through the session is meaningful and confirms the FALLING label." },
+    note:"Unchanged at {{move}} into the close — bond market volatility held flat all day. Rates were not a driver of today's equity action. Clean green." },
+  { name:"McClellan", prevNum:7.72, curNum:7.03, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"FALLING", tag:"FALLING", prevS:"green", s:"green",
+    note:"Slipped to {{mcclellan}} from {{mcclellan_prev}} — the falling trend continued right into the close, down from the +15.48 high earlier today. Still positive, so breadth isn't breaking, but the steady bleed from +15 → +7 across the session is the clearest sign the broad market lost momentum into the bell." },
   { name:"Hindenburg", text:true, prevVal:"CLEAR", val:"CLEAR", prevTag:"CLEAR", tag:"CLEAR", prevS:"green", s:"green",
-    note:"No signal. McClellan remains positive at {{mcclellan}} — the breadth divergence condition is not met. Hindenburg requires simultaneous spikes in new 52-week highs AND lows with a negative McClellan. None of that is present near the close." },
-  { name:"% > 200 DMA", prevNum:58.5, curNum:58.3, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
-    note:"Essentially flat at {{dma200}} versus {{dma200_prev}} mid-session — structural health held through the close. The broad market absorbed the session's selling pressure with barely a dent in participation above the 200-day MA. Solid." },
-  { name:"Put/Call", prevNum:1.10, curNum:1.11, fmt:{dec:2}, prevTag:"BEARISH", tag:"BEARISH", prevS:"amber", s:"amber",
-    note:"Edged up to {{putcall}} at the close from {{putcall_prev}} mid-session — elevated hedging demand persisted and nudged slightly higher. Put/Call has been above 1.0 all session, confirming sustained options-market fear. Not spiking, but persistently elevated." },
-  { name:"SMFI", prevNum:51212, curNum:50820, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
-    note:"{{smfi}} near the close, down from {{smfi_prev}} mid-session. Smart money flow softened into the close — not panic, but a directional drift lower. Consistent with the overall bearish premium flow story: institutions are not fleeing equities, but net flow is tilting defensive." },
-  { name:"Market Tide", prevNum:-1164, curNum:-1524, fmt:{dec:0, pre:"$", suf:"M", comma:true}, prevTag:"NEGATIVE", tag:"NEGATIVE", prevS:"red", s:"red",
-    note:"Deepened to {{tide}} near the close from {{tide_prev}} mid-session. The institutional bearish options flow accelerated through the afternoon — this is now one of the larger single-day bearish premium flows of the recent period. Breadth held, but this scale of flow demands respect heading into tomorrow." },
+    note:"No signal. McClellan is still positive at {{mcclellan}} — the breadth divergence condition is not met. Hindenburg requires simultaneous spikes in new 52-week highs AND lows with a negative McClellan. None of that is present at the close." },
+  { name:"% > 200 DMA", prevNum:58.3, curNum:58.5, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
+    note:"Held at {{dma200}}, even ticking up from {{dma200_prev}} — structural health was the one thing that did not crack today. The broad market closed with the same participation above its 200-day MA it had mid-session. The selling was concentrated, not structural." },
+  { name:"Put/Call", prevNum:1.11, curNum:1.14, fmt:{dec:2}, prevTag:"BEARISH", tag:"BEARISH", prevS:"amber", s:"amber",
+    note:"Rose to {{putcall}} from {{putcall_prev}} into the close — hedging demand kept building through the final hour. Put/Call has been above 1.0 all session and is now at its session high. Persistent, building options-market fear." },
+  { name:"SMFI", prevNum:50820, curNum:50928, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
+    note:"{{smfi}} at the close, a touch firmer than {{smfi_prev}} earlier. Smart money flow is flat-to-steady — no capitulation, no rush for the exits. Institutions are holding, even as the options market hedges and Power Hour shows distribution." },
+  { name:"Power Hour", text:true, prevVal:"—", val:"DISTRIBUTION", prevTag:"NEW", tag:"DISTRIBUTION", prevS:"amber", s:"red",
+    note:"New on the board: the final-hour tape read. {{power_detail}} A distribution print means the close was sold — institutions offloading into the last hour on above-average volume. It corroborates the negative Market Tide: the day ended with sellers in control of the tape." },
+  { name:"Market Tide", prevNum:-1524, curNum:-1484, fmt:{dec:0, pre:"$", suf:"M", comma:true}, prevTag:"NEGATIVE", tag:"NEGATIVE", prevS:"red", s:"red",
+    note:"Closed at {{tide}}, a shade less negative than the {{tide_prev}} mid-session reading but still deeply bearish. Net bearish premium flow held near its session lows into the bell — one of the larger single-day flows of the recent period. The size, not the small intraday improvement, is the signal." },
 ];
 
 const concentration = [
@@ -835,16 +946,16 @@ const concentration = [
 ];
 
 const bars = [
-  { label:"% > 12 SMA", prev:58.7, cur:56.1, tag:"BULLISH" },
-  { label:"% > 20 SMA", prev:61.9, cur:60.2, tag:"BULLISH" },
-  { label:"% > 50 SMA", prev:56.6, cur:54.6, tag:"BULLISH" },
+  { label:"% > 12 SMA", prev:56.1, cur:55.9, tag:"BULLISH" },
+  { label:"% > 20 SMA", prev:60.2, cur:59.6, tag:"BULLISH" },
+  { label:"% > 50 SMA", prev:54.6, cur:54.2, tag:"BULLISH" },
 ];
 
 const plays = {
   zen: {
-    e:"😇", label:"Breadth held; flow deepened at close",
-    text:"{{green}} of {{total}} green into the close, but the divergence widened. Breadth stayed resilient — McClellan {{mcclellan}}, {{dma200}} above 200-day MA, momentum bars all still above 54%. <b>Market Tide finished at {{tide}}</b>: the institutional bearish flow nearly tripled from the open. Two stories in one session — solid broad market health underneath concentrated options-market pressure.",
-    moves:[["≈","Hold broad market exposure — structural breadth held through the close."],["⚠️","Size down mega-cap concentration — the flow says someone institutional is hedging at scale."],["👀","Watch VIX at the open: a break above 20 combined with deepening Market Tide changes the read."]]
+    e:"😇", label:"Breadth held; the close was sold",
+    text:"{{green}} of {{total}} green at the bell, and the score slipped to MIXED. Structure held — {{dma200}} above the 200-day MA, McClellan still positive at {{mcclellan}} — but the tape weakened into the close: <b>Power Hour printed {{power}}</b> and <b>Market Tide finished {{tide}}</b>. The broad market is healthy underneath; the final hour belonged to the sellers.",
+    moves:[["≈","Hold core broad-market exposure — structural breadth (200-DMA) never cracked."],["⚠️","Respect the closing-bell distribution — institutions sold the last hour on heavy volume."],["👀","Watch VIX at the open: a break above 20 with Market Tide still red flips the read."]]
   },
   bull: {
     e:"🐂", label:"Breadth absorbed the pressure",
@@ -852,9 +963,9 @@ const plays = {
     moves:[["▲","{{dma200}} above 200-day MA at the close: structural health intact through a tough session."],["▲","McClellan positive: more stocks advancing on a trend basis despite index pressure."],["▲","Momentum bars (12/20/50 SMA) all remain in BULLISH territory at the close."]]
   },
   bear: {
-    e:"🐻", label:"{{tide}} at close — respect the flow",
-    text:"<b>{{tide}} in net bearish premium flow is institutional-scale positioning that closed at a full session high.</b> VIX ended at {{vix}} — one move from the critical 20 level. McClellan fell from +15 to +7 through the session. Composite slipped to {{composite}}. The breadth is the silver lining, but the flow is the headline.",
-    moves:[["▼","Market Tide {{tide}}: largest single-day bearish flow of the recent period — don't dismiss it."],["▼","VIX at {{vix}}: one bad open away from breaking 20, which would change the risk posture."],["▼","McClellan fell from +15 → +7 through the session — breadth is weakening, not strengthening."]]
+    e:"🐻", label:"The close was distributed",
+    text:"<b>The final hour was sold: Power Hour {{power}}, Market Tide {{tide}}.</b> VIX ended at {{vix}} — a whisker from the critical 20 line. McClellan bled from +15 to {{mcclellan}} across the day, and the composite slipped to {{composite}}. Breadth is the silver lining; institutional distribution into the bell is the headline.",
+    moves:[["▼","Power Hour {{power}}: the close was sold on 1.95× volume — institutions distributing, not buying the dip."],["▼","Market Tide {{tide}}: among the largest single-day bearish flows of the recent period."],["▼","VIX {{vix}}: one bad open from breaking 20 — and McClellan is still falling."]]
   },
 };
 
@@ -910,10 +1021,12 @@ function buildTokens() {
     ghostComposite: SCAN.composite.ghost,
     green: indicators.filter(i => i.s === "green").length,
     total: indicators.length,
+    power_detail: SCAN.powerDetail || "",
   };
   const KEY = {
     "VIX":"vix", "MOVE":"move", "McClellan":"mcclellan", "Hindenburg":"hindenburg",
-    "% > 200 DMA":"dma200", "Put/Call":"putcall", "SMFI":"smfi", "Market Tide":"tide",
+    "% > 200 DMA":"dma200", "Put/Call":"putcall", "SMFI":"smfi",
+    "Power Hour":"power", "Market Tide":"tide",
   };
   indicators.forEach(d => {
     const k = KEY[d.name];
@@ -1206,6 +1319,124 @@ function runBars() {
     requestAnimationFrame(step);
   });
 }
+
+/* ── ROTATION RADAR ── (data: data/rotation_history.json) ── */
+function fmtFlow(m) {
+  if (m === undefined || m === null) return "—";
+  if (m === 0) return "$0";
+  const s = m < 0 ? "−" : "+", a = Math.abs(m);
+  if (a >= 1000) return s + "$" + (a / 1000).toFixed(1) + "B";
+  if (a >= 1)    return s + "$" + (a < 10 ? a.toFixed(1) : Math.round(a)) + "M";
+  return s + "$" + (a * 1000).toFixed(1) + "K";
+}
+function rpct(v) { return v == null ? "" : (v >= 0 ? "+" : "−") + Math.abs(v).toFixed(2) + "%"; }
+function rcls(v) { return v >= 0 ? "pos" : "neg"; }
+function shortDate(d) {
+  const [, m, dd] = d.split("-");
+  return ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][+m - 1] + " " + (+dd);
+}
+function sigIcon(s) { return s === "BUYING THE DIP" ? "💰" : s === "SELLING INTO STRENGTH" ? "⚠️" : ""; }
+function flowBadges(f) {
+  let b = "";
+  if (f.signal === "BUYING THE DIP")        b += '<span class="rr-badge b-dip">💰 DIP</span>';
+  else if (f.signal === "SELLING INTO STRENGTH") b += '<span class="rr-badge b-sis">⚠️ SIS</span>';
+  if (f.new) b += '<span class="rr-badge b-new">NEW</span>';
+  return b;
+}
+
+function renderRotation(data) {
+  const snaps = (data.history || []).slice().sort((a, b) => a.date < b.date ? -1 : 1);
+  if (!snaps.length) return renderRotationEmpty("No rotation readings yet.");
+  const latest = snaps[snaps.length - 1];
+
+  // regime banner
+  const up = /BULL|INFLOW|RALLY|RISK-ON/i.test(latest.regime);
+  const pctSell = Math.round(latest.selling / latest.total * 100);
+  const bm = latest.benchmark;
+  document.getElementById("rotRegime").innerHTML =
+    `<div class="rot-regime ${up ? "up" : ""}">
+       <span class="rr-head">${latest.regime}</span>
+       <span class="rr-breadth">${latest.selling}/${latest.total} sectors selling (${pctSell}%)</span>
+       ${bm ? `<span class="rr-bench">${bm.sym} <b>${rpct(bm.d1)}</b> 1D · ${rpct(bm.d5)} 5D · ${rpct(bm.d20)} 20D</span>` : ""}
+     </div>`;
+
+  // heatmap — rows = union of syms (ordered by latest), cols = dates
+  const dates = snaps.map(s => s.date);
+  const order = latest.flows.slice().sort((a, b) => {
+    if (a.dir !== b.dir) return a.dir === "in" ? -1 : 1;
+    return (b.f5 ?? 0) - (a.f5 ?? 0);
+  });
+  const seen = new Set(order.map(f => f.sym));
+  const rows = order.map(f => ({ sym: f.sym, name: f.name }));
+  snaps.forEach(s => s.flows.forEach(f => { if (!seen.has(f.sym)) { seen.add(f.sym); rows.push({ sym: f.sym, name: f.name }); } }));
+
+  let head = `<thead><tr><th>Sector</th>${dates.map(d => `<th>${shortDate(d)}</th>`).join("")}</tr></thead>`;
+  let body = "<tbody>" + rows.map(r => {
+    const cells = snaps.map(s => {
+      const f = s.flows.find(x => x.sym === r.sym);
+      if (!f) return `<td></td>`;
+      const c = f.dir === "in" ? "47,214,115" : "255,77,77";
+      const mag = Math.abs(f.f5 ?? f.f1 ?? 0);
+      const a = (0.28 + 0.6 * Math.min(1, mag / 2000)).toFixed(2);
+      return `<td class="hm-cell ${f.dir === "out" ? "out" : ""}" style="background:rgba(${c},${a})" title="${f.name} — ${f.dir === "in" ? "inflow" : "outflow"} · 5D ${fmtFlow(f.f5)} · 1D ${rpct(f.d1)}">${rpct(f.d1)} ${sigIcon(f.signal)}<small>${fmtFlow(f.f5)}</small></td>`;
+    }).join("");
+    return `<tr><td class="hm-sym"><b>${r.sym}</b><span>${r.name}</span></td>${cells}</tr>`;
+  }).join("") + "</tbody>";
+  document.getElementById("rotHeat").innerHTML = head + body;
+
+  // money in / out lists (latest)
+  document.getElementById("rotFlowDate").textContent = shortDate(latest.date) + " close";
+  const byMag = (a, b) => Math.abs(b.f5 ?? 0) - Math.abs(a.f5 ?? 0);
+  const flowRow = f =>
+    `<div class="rot-row"><span class="rr-sym">${f.sym}</span><span class="rr-name">${f.name}</span>` +
+    `<span class="rr-flow ${rcls(f.f5 ?? 0)}">${fmtFlow(f.f5)}</span>` +
+    `<span class="rr-pct ${rcls(f.d1)}">${rpct(f.d1)}</span>${flowBadges(f)}</div>`;
+  document.getElementById("rotIn").innerHTML  = latest.flows.filter(f => f.dir === "in").sort(byMag).map(flowRow).join("");
+  document.getElementById("rotOut").innerHTML = latest.flows.filter(f => f.dir === "out").sort(byMag).map(flowRow).join("");
+
+  // 14-day conviction
+  const convRow = (c, color) =>
+    `<div class="conv-row"><span class="cv-sym">${c.sym}</span><span class="cv-name">${c.name}</span>` +
+    `<div class="conv-bar" style="width:${(c.days / 14 * 64).toFixed(0)}px;background:${color}"></div>` +
+    `<span class="cv-meta">${c.days}/14 · ${fmtFlow(c.flow)}</span></div>`;
+  const cv = latest.conviction || { accumulation: [], distribution: [] };
+  document.getElementById("rotAcc").innerHTML  = cv.accumulation.map(c => convRow(c, "var(--greed)")).join("");
+  document.getElementById("rotDist").innerHTML = cv.distribution.map(c => convRow(c, "var(--fear)")).join("");
+
+  // held up
+  document.getElementById("rotHold").innerHTML = (latest.holding_up || [])
+    .map(h => `<div class="rot-tile"><b>${h.sym}</b><span>${rpct(h.chg)}</span></div>`).join("");
+}
+function renderRotationEmpty(msg) {
+  document.getElementById("rotRegime").innerHTML = `<div class="rot-empty">📡 ${msg}<br><span>Add a reading to data/rotation_history.json and it renders here.</span></div>`;
+  ["rotHeat","rotIn","rotOut","rotAcc","rotDist","rotHold"].forEach(id => { const e = document.getElementById(id); if (e) e.innerHTML = ""; });
+}
+let rotationLoaded = false;
+function loadRotation() {
+  if (rotationLoaded) return;
+  rotationLoaded = true;
+  fetch("data/rotation_history.json")
+    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(renderRotation)
+    .catch(() => renderRotationEmpty("Rotation data loads on the live site (needs a server, not file://)."));
+}
+
+/* ── VIEW SWITCH (same tab, hash-routed) ── */
+function showView(name) {
+  const rot = name === "rotation";
+  document.getElementById("view-vitals").hidden = rot;
+  document.getElementById("view-rotation").hidden = !rot;
+  const stamp = document.querySelector(".stamp");
+  if (stamp) stamp.style.display = rot ? "none" : "";
+  document.getElementById("rotationBtn").style.display = rot ? "none" : "";
+  if (rot) loadRotation();
+  if (typeof closePopover === "function") closePopover();
+  window.scrollTo(0, 0);
+}
+document.getElementById("rotationBtn").addEventListener("click", () => { location.hash = "rotation"; });
+document.getElementById("backBtn").addEventListener("click", () => { location.hash = ""; });
+window.addEventListener("hashchange", () => showView(location.hash === "#rotation" ? "rotation" : "vitals"));
+if (location.hash === "#rotation") showView("rotation");
 
 /* ── ORCHESTRATE ── */
 function runAll() {
