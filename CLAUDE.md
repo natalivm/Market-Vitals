@@ -57,8 +57,19 @@ scripts/
   requirements.txt          — Python dependencies
 .github/workflows/
   deploy.yml                — existing deploy workflow (do not modify)
-  update_vitals.yml         — scheduled data-update workflow (Mon-Fri)
+  update_vitals.yml         — auto-update workflow (SCHEDULE DISABLED, see below)
 ```
+
+## Auto-updater is DISABLED — manual updates only
+
+`scripts/update_vitals.py` and its scheduled workflow are **off**. The script
+patched the old HTML layout with regexes; after `index.html` was refactored to
+the single `SCAN` config block (with JS-filled header/ribbon/footer), those
+regexes no longer match and a run would produce a half-updated, inconsistent
+board. The cron schedule in `update_vitals.yml` is commented out.
+
+**Until the script is rewired to target `SCAN`, update the dashboard manually**
+from the Market Vitals Bot feed (and append to `data/vitals_history.csv`).
 
 ## Schedules (Kyiv timezone = EEST = UTC+3)
 

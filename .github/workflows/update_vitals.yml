@@ -1,12 +1,20 @@
 name: Market Vitals Auto-Update
 
 on:
-  schedule:
-    # All times UTC | Kyiv (EEST = UTC+3)
-    - cron: '0 13 * * 1-5'   # 13:00 UTC = 4:00 PM Kyiv  (pre-market scan)
-    - cron: '30 15 * * 1-5'  # 15:30 UTC = 6:30 PM Kyiv  (mid-session)
-    - cron: '30 19 * * 1-5'  # 19:30 UTC = 10:30 PM Kyiv (30 min before US close)
-  workflow_dispatch:          # manual trigger from GitHub UI
+  # ── SCHEDULE DISABLED ──────────────────────────────────────────────────
+  # update_vitals.py patches the OLD HTML structure. After index.html was
+  # refactored to the single SCAN config block + JS-filled chrome, the
+  # script's regexes no longer match (composite, header, ribbon, footer),
+  # so a run would produce a half-updated, inconsistent board. Re-enable
+  # only after the script is rewired to target SCAN. Until then we update
+  # the dashboard manually from the Market Vitals Bot feed.
+  #
+  # schedule:
+  #   # All times UTC | Kyiv (EEST = UTC+3)
+  #   - cron: '0 13 * * 1-5'   # 13:00 UTC = 4:00 PM Kyiv  (pre-market scan)
+  #   - cron: '30 15 * * 1-5'  # 15:30 UTC = 6:30 PM Kyiv  (mid-session)
+  #   - cron: '30 19 * * 1-5'  # 19:30 UTC = 10:30 PM Kyiv (30 min before US close)
+  workflow_dispatch:          # manual trigger only (use with caution — see note above)
 
 permissions:
   contents: write
