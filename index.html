@@ -118,6 +118,81 @@
     }
     .guide-btn:hover, .guide-btn:active { border-color: var(--accent, #56a8ff); color: var(--accent, #56a8ff); }
     .guide-btn .gb-ico { font-size: 14px; }
+    /* ── view switching (Vitals ⇄ Rotation, same tab) ── */
+    [hidden] { display: none !important; }
+    .back-btn { margin-bottom: 16px; cursor: pointer; }
+    .rot-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); font-weight: 400; letter-spacing: .04em; }
+    .rot-intro { font-size: 13px; line-height: 1.6; color: #cdd6e2; margin: 0 4px 16px; max-width: 680px; }
+    .rot-empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 48px 20px;
+      border: 1px dashed var(--line2);
+      border-radius: 14px;
+      background: var(--panel);
+      color: var(--muted);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 14px;
+      line-height: 1.9;
+    }
+    .rot-empty span { font-size: 12px; color: #6b7888; }
+    /* regime banner */
+    .rot-regime {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px;
+      border: 1px solid var(--line); border-left: 3px solid var(--fear);
+      background: linear-gradient(180deg, var(--panel), var(--panel2));
+      border-radius: 12px; padding: 14px 18px; margin-bottom: 20px;
+    }
+    .rot-regime.up { border-left-color: var(--greed); }
+    .rr-head { font-family: 'Chakra Petch', sans-serif; font-weight: 700; font-size: 16px; letter-spacing: .02em; }
+    .rr-breadth { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--fear2); }
+    .rr-bench { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); margin-left: auto; }
+    .rr-bench b { color: var(--txt); font-weight: 600; }
+    /* heatmap timeline */
+    .rot-heatwrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); margin-bottom: 8px; -webkit-overflow-scrolling: touch; }
+    .rot-heat { border-collapse: collapse; width: 100%; font-family: 'IBM Plex Mono', monospace; }
+    .rot-heat th, .rot-heat td { border: 1px solid var(--bg); padding: 0; text-align: center; }
+    .rot-heat thead th { background: var(--panel2); color: var(--muted); font-size: 10px; font-weight: 600; padding: 7px 8px; letter-spacing: .04em; position: sticky; top: 0; }
+    .rot-heat thead th:first-child, .rot-heat td.hm-sym { position: sticky; left: 0; z-index: 2; background: var(--panel2); text-align: left; padding: 6px 10px; min-width: 132px; }
+    .rot-heat thead th:first-child { z-index: 3; }
+    .hm-sym b { font-size: 12px; color: var(--txt); }
+    .hm-sym span { display: block; font-size: 9px; color: var(--muted); font-weight: 400; }
+    .hm-cell { min-width: 60px; height: 42px; cursor: default; color: #06210f; font-weight: 700; font-size: 11px; line-height: 1.25; }
+    .hm-cell small { display: block; font-size: 9px; font-weight: 600; opacity: .8; }
+    .hm-cell.out { color: #2a0a0a; }
+    .hm-legend { display: flex; flex-wrap: wrap; gap: 14px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); margin: 0 2px 22px; }
+    .hm-legend i { display: inline-block; width: 11px; height: 11px; border-radius: 3px; vertical-align: -1px; margin-right: 5px; }
+    /* money in / out columns */
+    .rot-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 8px; }
+    @media (max-width: 720px) { .rot-cols { grid-template-columns: 1fr; } }
+    .rot-col { border: 1px solid var(--line); border-radius: 12px; background: var(--panel); overflow: hidden; }
+    .rot-col-h { font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; padding: 10px 14px; letter-spacing: .03em; border-bottom: 1px solid var(--line); }
+    .rc-buy { color: var(--greed); background: rgba(47,214,115,.07); }
+    .rc-sell { color: var(--fear); background: rgba(255,77,77,.07); }
+    .rot-row { display: flex; align-items: baseline; gap: 8px; padding: 8px 14px; border-bottom: 1px solid var(--bg2); font-family: 'IBM Plex Mono', monospace; }
+    .rot-row:last-child { border-bottom: none; }
+    .rot-row .rr-sym { font-weight: 700; font-size: 12px; color: var(--txt); min-width: 46px; }
+    .rot-row .rr-name { font-size: 10px; color: var(--muted); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .rot-row .rr-flow { font-size: 11px; font-weight: 600; }
+    .rot-row .rr-pct { font-size: 10px; min-width: 52px; text-align: right; }
+    .pos { color: var(--greed); } .neg { color: var(--fear); }
+    .rr-badge { font-size: 8.5px; font-weight: 700; padding: 1px 5px; border-radius: 5px; letter-spacing: .03em; white-space: nowrap; }
+    .b-dip { background: rgba(47,214,115,.16); color: var(--greed); }
+    .b-sis { background: rgba(255,200,61,.16); color: var(--amber); }
+    .b-new { background: rgba(86,168,255,.16); color: #56a8ff; }
+    /* conviction + tiles */
+    .conv-row { display: flex; align-items: center; gap: 8px; padding: 7px 14px; border-bottom: 1px solid var(--bg2); font-family: 'IBM Plex Mono', monospace; }
+    .conv-row:last-child { border-bottom: none; }
+    .conv-row .cv-sym { font-weight: 700; font-size: 12px; min-width: 46px; }
+    .conv-row .cv-name { font-size: 10px; color: var(--muted); flex: 1; }
+    .conv-bar { height: 6px; border-radius: 3px; min-width: 8px; }
+    .conv-row .cv-meta { font-size: 10px; color: var(--muted); white-space: nowrap; }
+    .rot-tiles { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+    .rot-tile {
+      border: 1px solid rgba(47,214,115,.3); background: rgba(47,214,115,.06);
+      border-radius: 9px; padding: 7px 11px; font-family: 'IBM Plex Mono', monospace;
+    }
+    .rot-tile b { font-size: 12px; color: var(--txt); } .rot-tile span { font-size: 11px; color: var(--greed); margin-left: 6px; }
     .stamp {
       text-align: right;
       font-family: 'IBM Plex Mono', monospace;
@@ -687,6 +762,9 @@
         <a class="guide-btn" href="market-vitals-guide.html" target="_blank" rel="noopener">
           <span class="gb-ico">📖</span> Read the Guide
         </a>
+        <button class="guide-btn" id="rotationBtn" type="button">
+          <span class="gb-ico">🧭</span> Rotation
+        </button>
       </div>
     </div>
     <div class="stamp">
@@ -695,6 +773,7 @@
     </div>
   </header>
 
+  <div id="view-vitals">
   <div class="ribbon" id="ribbon">
     <span class="r-bolt">✅</span>
     <div class="r-main" id="ribMain"></div>
@@ -764,6 +843,35 @@
       <span class="badge-bull" id="momBadge"></span>
     </div>
     <div id="bars"></div>
+  </div>
+  </div><!-- /view-vitals -->
+
+  <!-- ══ ROTATION RADAR VIEW (same tab) ══ -->
+  <div id="view-rotation" hidden>
+    <button class="guide-btn back-btn" id="backBtn" type="button"><span class="gb-ico">←</span> Market Vitals</button>
+    <div id="rotRegime"></div>
+    <div class="sec-label">Rotation Timeline · <span style="color:#56a8ff">where the money moved</span></div>
+    <div class="rot-intro">Net institutional flow per sector, one column per close — 🟢 money rotating <b>in</b>, 🔴 rotating <b>out</b>, shade = size of the 5-day flow. The grid grows into a multi-week rotation map as readings are added.</div>
+    <div class="rot-heatwrap"><table class="rot-heat" id="rotHeat"></table></div>
+    <div class="hm-legend">
+      <span><i style="background:#2fd673"></i>Inflow</span>
+      <span><i style="background:#ff4d4d"></i>Outflow</span>
+      <span>💰 buying the dip</span>
+      <span>⚠️ selling into strength</span>
+      <span>·NEW· first appearance</span>
+    </div>
+    <div class="sec-label">Money Flow · <span id="rotFlowDate" style="color:var(--muted);font-weight:400"></span></div>
+    <div class="rot-cols">
+      <div class="rot-col"><div class="rot-col-h rc-buy">🟢 Money In</div><div id="rotIn"></div></div>
+      <div class="rot-col"><div class="rot-col-h rc-sell">🔴 Money Out</div><div id="rotOut"></div></div>
+    </div>
+    <div class="sec-label">14-Day Conviction · <span style="color:var(--muted);font-weight:400">sustained institutional behaviour</span></div>
+    <div class="rot-cols">
+      <div class="rot-col"><div class="rot-col-h rc-buy">🟢 Accumulating · Buying the Dip</div><div id="rotAcc"></div></div>
+      <div class="rot-col"><div class="rot-col-h rc-sell">🔴 Distributing · Selling into Strength</div><div id="rotDist"></div></div>
+    </div>
+    <div class="sec-label">Held Up During the Sell-off</div>
+    <div class="rot-tiles" id="rotHold"></div>
   </div>
 
   <div id="indPopover"></div>
@@ -1206,6 +1314,124 @@ function runBars() {
     requestAnimationFrame(step);
   });
 }
+
+/* ── ROTATION RADAR ── (data: data/rotation_history.json) ── */
+function fmtFlow(m) {
+  if (m === undefined || m === null) return "—";
+  if (m === 0) return "$0";
+  const s = m < 0 ? "−" : "+", a = Math.abs(m);
+  if (a >= 1000) return s + "$" + (a / 1000).toFixed(1) + "B";
+  if (a >= 1)    return s + "$" + (a < 10 ? a.toFixed(1) : Math.round(a)) + "M";
+  return s + "$" + (a * 1000).toFixed(1) + "K";
+}
+function rpct(v) { return v == null ? "" : (v >= 0 ? "+" : "−") + Math.abs(v).toFixed(2) + "%"; }
+function rcls(v) { return v >= 0 ? "pos" : "neg"; }
+function shortDate(d) {
+  const [, m, dd] = d.split("-");
+  return ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][+m - 1] + " " + (+dd);
+}
+function sigIcon(s) { return s === "BUYING THE DIP" ? "💰" : s === "SELLING INTO STRENGTH" ? "⚠️" : ""; }
+function flowBadges(f) {
+  let b = "";
+  if (f.signal === "BUYING THE DIP")        b += '<span class="rr-badge b-dip">💰 DIP</span>';
+  else if (f.signal === "SELLING INTO STRENGTH") b += '<span class="rr-badge b-sis">⚠️ SIS</span>';
+  if (f.new) b += '<span class="rr-badge b-new">NEW</span>';
+  return b;
+}
+
+function renderRotation(data) {
+  const snaps = (data.history || []).slice().sort((a, b) => a.date < b.date ? -1 : 1);
+  if (!snaps.length) return renderRotationEmpty("No rotation readings yet.");
+  const latest = snaps[snaps.length - 1];
+
+  // regime banner
+  const up = /BULL|INFLOW|RALLY|RISK-ON/i.test(latest.regime);
+  const pctSell = Math.round(latest.selling / latest.total * 100);
+  const bm = latest.benchmark;
+  document.getElementById("rotRegime").innerHTML =
+    `<div class="rot-regime ${up ? "up" : ""}">
+       <span class="rr-head">${latest.regime}</span>
+       <span class="rr-breadth">${latest.selling}/${latest.total} sectors selling (${pctSell}%)</span>
+       ${bm ? `<span class="rr-bench">${bm.sym} <b>${rpct(bm.d1)}</b> 1D · ${rpct(bm.d5)} 5D · ${rpct(bm.d20)} 20D</span>` : ""}
+     </div>`;
+
+  // heatmap — rows = union of syms (ordered by latest), cols = dates
+  const dates = snaps.map(s => s.date);
+  const order = latest.flows.slice().sort((a, b) => {
+    if (a.dir !== b.dir) return a.dir === "in" ? -1 : 1;
+    return (b.f5 ?? 0) - (a.f5 ?? 0);
+  });
+  const seen = new Set(order.map(f => f.sym));
+  const rows = order.map(f => ({ sym: f.sym, name: f.name }));
+  snaps.forEach(s => s.flows.forEach(f => { if (!seen.has(f.sym)) { seen.add(f.sym); rows.push({ sym: f.sym, name: f.name }); } }));
+
+  let head = `<thead><tr><th>Sector</th>${dates.map(d => `<th>${shortDate(d)}</th>`).join("")}</tr></thead>`;
+  let body = "<tbody>" + rows.map(r => {
+    const cells = snaps.map(s => {
+      const f = s.flows.find(x => x.sym === r.sym);
+      if (!f) return `<td></td>`;
+      const c = f.dir === "in" ? "47,214,115" : "255,77,77";
+      const mag = Math.abs(f.f5 ?? f.f1 ?? 0);
+      const a = (0.28 + 0.6 * Math.min(1, mag / 2000)).toFixed(2);
+      return `<td class="hm-cell ${f.dir === "out" ? "out" : ""}" style="background:rgba(${c},${a})" title="${f.name} — ${f.dir === "in" ? "inflow" : "outflow"} · 5D ${fmtFlow(f.f5)} · 1D ${rpct(f.d1)}">${rpct(f.d1)} ${sigIcon(f.signal)}<small>${fmtFlow(f.f5)}</small></td>`;
+    }).join("");
+    return `<tr><td class="hm-sym"><b>${r.sym}</b><span>${r.name}</span></td>${cells}</tr>`;
+  }).join("") + "</tbody>";
+  document.getElementById("rotHeat").innerHTML = head + body;
+
+  // money in / out lists (latest)
+  document.getElementById("rotFlowDate").textContent = shortDate(latest.date) + " close";
+  const byMag = (a, b) => Math.abs(b.f5 ?? 0) - Math.abs(a.f5 ?? 0);
+  const flowRow = f =>
+    `<div class="rot-row"><span class="rr-sym">${f.sym}</span><span class="rr-name">${f.name}</span>` +
+    `<span class="rr-flow ${rcls(f.f5 ?? 0)}">${fmtFlow(f.f5)}</span>` +
+    `<span class="rr-pct ${rcls(f.d1)}">${rpct(f.d1)}</span>${flowBadges(f)}</div>`;
+  document.getElementById("rotIn").innerHTML  = latest.flows.filter(f => f.dir === "in").sort(byMag).map(flowRow).join("");
+  document.getElementById("rotOut").innerHTML = latest.flows.filter(f => f.dir === "out").sort(byMag).map(flowRow).join("");
+
+  // 14-day conviction
+  const convRow = (c, color) =>
+    `<div class="conv-row"><span class="cv-sym">${c.sym}</span><span class="cv-name">${c.name}</span>` +
+    `<div class="conv-bar" style="width:${(c.days / 14 * 64).toFixed(0)}px;background:${color}"></div>` +
+    `<span class="cv-meta">${c.days}/14 · ${fmtFlow(c.flow)}</span></div>`;
+  const cv = latest.conviction || { accumulation: [], distribution: [] };
+  document.getElementById("rotAcc").innerHTML  = cv.accumulation.map(c => convRow(c, "var(--greed)")).join("");
+  document.getElementById("rotDist").innerHTML = cv.distribution.map(c => convRow(c, "var(--fear)")).join("");
+
+  // held up
+  document.getElementById("rotHold").innerHTML = (latest.holding_up || [])
+    .map(h => `<div class="rot-tile"><b>${h.sym}</b><span>${rpct(h.chg)}</span></div>`).join("");
+}
+function renderRotationEmpty(msg) {
+  document.getElementById("rotRegime").innerHTML = `<div class="rot-empty">📡 ${msg}<br><span>Add a reading to data/rotation_history.json and it renders here.</span></div>`;
+  ["rotHeat","rotIn","rotOut","rotAcc","rotDist","rotHold"].forEach(id => { const e = document.getElementById(id); if (e) e.innerHTML = ""; });
+}
+let rotationLoaded = false;
+function loadRotation() {
+  if (rotationLoaded) return;
+  rotationLoaded = true;
+  fetch("data/rotation_history.json")
+    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(renderRotation)
+    .catch(() => renderRotationEmpty("Rotation data loads on the live site (needs a server, not file://)."));
+}
+
+/* ── VIEW SWITCH (same tab, hash-routed) ── */
+function showView(name) {
+  const rot = name === "rotation";
+  document.getElementById("view-vitals").hidden = rot;
+  document.getElementById("view-rotation").hidden = !rot;
+  const stamp = document.querySelector(".stamp");
+  if (stamp) stamp.style.display = rot ? "none" : "";
+  document.getElementById("rotationBtn").style.display = rot ? "none" : "";
+  if (rot) loadRotation();
+  if (typeof closePopover === "function") closePopover();
+  window.scrollTo(0, 0);
+}
+document.getElementById("rotationBtn").addEventListener("click", () => { location.hash = "rotation"; });
+document.getElementById("backBtn").addEventListener("click", () => { location.hash = ""; });
+window.addEventListener("hashchange", () => showView(location.hash === "#rotation" ? "rotation" : "vitals"));
+if (location.hash === "#rotation") showView("rotation");
 
 /* ── ORCHESTRATE ── */
 function runAll() {
