@@ -384,14 +384,8 @@
     }
     .scale-prev span { display: flex; align-items: center; gap: 5px; }
     .pip { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
-    /* Power Hour — optional final-hour tape read, lives in the gauge card */
-    .power-hour { width: 100%; max-width: 340px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); font-family: 'IBM Plex Mono', monospace; text-align: left; }
-    .power-hour .ph-head { display: flex; align-items: center; gap: 9px; font-size: 11px; font-weight: 700; letter-spacing: .08em; }
-    .power-hour .ph-tag { font-size: 9.5px; font-weight: 700; padding: 2px 8px; border-radius: 6px; letter-spacing: .04em; margin-left: auto; }
-    .power-hour .ph-detail { font-size: 10.5px; color: var(--muted); line-height: 1.55; margin-top: 7px; }
-    .ph-red { color: var(--fear); }   .ph-red .ph-tag   { background: rgba(255,77,77,.16); color: var(--fear); }
-    .ph-amber { color: var(--amber); } .ph-amber .ph-tag { background: rgba(255,200,61,.16); color: var(--amber); }
-    .ph-green { color: var(--greed); } .ph-green .ph-tag { background: rgba(47,214,115,.16); color: var(--greed); }
+    /* Power Hour — optional indicator card placed inside the gauge card */
+    .ph-slot { width: 100%; max-width: 340px; margin-top: 14px; }
 
     /* play card */
     .play-card { padding: 20px 18px; display: flex; flex-direction: column; }
@@ -836,7 +830,6 @@
           <div class="verdict" id="verdictTxt">—</div>
           <div class="sub">Composite of breadth, flow &amp; sentiment — VIX/MOVE down-weighted as complacency, semiconductor concentration added in.</div>
         </div>
-        <div id="powerHour" class="power-hour" hidden></div>
         <div class="scale-prev">
           <span><i class="pip" style="background:var(--fear)"></i>Ext. Fear</span>
           <span><i class="pip" style="background:var(--fear2)"></i>Fear</span>
@@ -844,6 +837,8 @@
           <span><i class="pip" style="background:var(--greed2)"></i>Greed</span>
           <span><i class="pip" style="background:var(--greed)"></i>Ext. Greed</span>
         </div>
+        <!-- Power Hour — optional indicator card (TAP popover), rendered here only when the feed posts it -->
+        <div id="powerHourSlot" class="ph-slot" hidden></div>
       </div>
     </div>
 
@@ -1128,19 +1123,6 @@ function applyChrome() {
   byId("momBadge").textContent   = `${SCAN.momentum.tag} · ${SCAN.momentum.score}`;
   byId("momWas").textContent     = SCAN.momentum.was;
   byId("footer").innerHTML       = tpl(FOOTER_TPL);
-
-  // Power Hour — optional final-hour tape read inside the gauge card.
-  const ph = SCAN.powerHour, phEl = byId("powerHour");
-  if (ph && ph.show) {
-    phEl.hidden = false;
-    phEl.className = "power-hour ph-" + (ph.state || "amber");
-    phEl.innerHTML =
-      `<div class="ph-head"><span>⚡ POWER HOUR</span><span class="ph-tag">${ph.tag}</span></div>` +
-      (ph.detail ? `<div class="ph-detail">${tpl(ph.detail)}</div>` : "");
-  } else {
-    phEl.hidden = true;
-    phEl.innerHTML = "";
-  }
 }
 
 /* ── GAUGE ── */
@@ -1326,6 +1308,15 @@ window.addEventListener("scroll", () => { if (activeCard) closePopover(); }, { p
 
 renderCards(indicators, "indGrid", true);
 renderCards(concentration, "concGrid", false);
+
+// Power Hour — final-hour tape read. Same card design + TAP popover as the
+// core indicators, but rendered inside the gauge card (under the scale legend)
+// and ONLY when the feed posts it (SCAN.powerHour.show).
+if (SCAN.powerHour && SCAN.powerHour.show) {
+  const ph = SCAN.powerHour;
+  renderCards([{ name: "Power Hour", text: true, val: ph.tag, tag: ph.tag, s: ph.state, note: ph.detail }], "powerHourSlot", false);
+  document.getElementById("powerHourSlot").hidden = false;
+}
 
 function resetCards() {
   cardAnims.forEach(a => {
