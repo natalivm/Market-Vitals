@@ -359,13 +359,19 @@ def build_snapshot(scan):
 
 
 # ── validation ────────────────────────────────────────────────────────────────
-def validate(snap):
+def validate(snap, require_complete=True):
     """Structural validation mirroring schema/rotation_snapshot.schema.json
-    (kept stdlib-only so the script has no dependencies)."""
+    (kept stdlib-only so the script has no dependencies). With
+    require_complete=False, a missing headline (regime/benchmark, e.g. a scan
+    with no broad-market post) is a warning so a draft can still be previewed;
+    `flows` and all enum/format checks are always hard errors."""
     errs, warns = [], []
     for k in ("date", "ts", "regime", "benchmark", "flows"):
         if k not in snap:
-            errs.append(f"missing required field: {k}")
+            if k == "flows" or require_complete:
+                errs.append(f"missing required field: {k}")
+            else:
+                warns.append(f"missing field (fill before storing): {k}")
     if "date" in snap and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(snap["date"])):
         errs.append(f"bad date: {snap['date']!r}")
     if "ts" in snap and not re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z", str(snap["ts"])):
@@ -447,7 +453,7 @@ def main():
     # v2 fixed-format block: one message = one (close) scan, parsed directly.
     if is_fixed_format(text):
         snap = parse_fixed(text)
-        errs, warns = validate(snap)
+        errs, warns = validate(snap, require_complete=bool(args.append))
         print(f"# fixed-format scan {snap.get('ts')}  ({len(snap.get('flows', []))} flows)", file=sys.stderr)
         for w in warns:
             print(f"# warn: {w}", file=sys.stderr)
@@ -478,7 +484,7 @@ def main():
     if scan is None:
         sys.exit(f"No scan matched --scan {args.scan!r}. Available: {', '.join(sorted(scans))}")
     snap, missing = build_snapshot(scan)
-    errs, warns = validate(snap)
+    errs, warns = validate(snap, require_complete=bool(args.append))
 
     print(f"# scan {scan['ts']}  ({len(scan['posts'])} posts, {len(snap['flows'])} flows)", file=sys.stderr)
     if missing:
