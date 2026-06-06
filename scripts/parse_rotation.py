@@ -41,6 +41,28 @@ import re
 import sys
 from datetime import datetime
 
+# ── fixed universe registry (sym -> (name, tier), canonical order) ───────────
+# name + tier are constant per symbol, so the v2 feed only carries the numbers.
+UNIVERSE = [
+    ("XLK", "Technology", "core"), ("XLF", "Financials", "core"), ("XLE", "Energy", "core"),
+    ("XLV", "Healthcare", "core"), ("XLY", "Consumer Discretionary", "core"),
+    ("XLP", "Consumer Staples", "core"), ("XLI", "Industrials", "core"),
+    ("XLU", "Utilities", "core"), ("XLB", "Materials", "core"), ("XLRE", "Real Estate", "core"),
+    ("XLC", "Communications", "core"), ("XBI", "Biotech", "core"), ("XME", "Metals & Mining", "core"),
+    ("XAR", "Aerospace & Defense", "core"), ("XHB", "Homebuilders", "core"),
+    ("XOP", "Oil & Gas Exploration", "core"), ("XRT", "Retail", "core"),
+    ("XTN", "Transportation", "core"), ("XHE", "Healthcare Equipment", "core"),
+    ("SMH", "Semiconductors", "sub"), ("IGV", "Software", "sub"), ("IAI", "Broker-Dealers", "sub"),
+    ("KBE", "Banking", "sub"), ("KRE", "Regional Banking", "sub"), ("OIH", "Oil Services", "sub"),
+    ("COPX", "Copper Miners", "sub"), ("GDX", "Gold Miners", "sub"), ("SLX", "Steel", "sub"),
+    ("REMX", "Rare Earth & Crit. Min.", "sub"), ("URA", "Uranium", "sub"),
+    ("LIT", "Lithium & Battery", "sub"), ("HACK", "Cybersecurity", "sub"),
+    ("WCLD", "Cloud Computing", "sub"), ("BOTZ", "Robotics & AI", "sub"), ("DRAM", "Memory", "sub"),
+    ("PBW", "Clean Energy", "sub"), ("ICLN", "Clean Energy (iShares)", "sub"), ("TAN", "Solar", "sub"),
+    ("JETS", "Airlines", "sub"), ("MSOS", "Cannabis", "sub"), ("BITO", "Bitcoin Futures", "sub"),
+]
+REGISTRY = {sym: (name, tier) for sym, name, tier in UNIVERSE}
+
 # ── text normalization ──────────────────────────────────────────────────────
 def normalize(text: str) -> str:
     """Unicode minus/quotes/spaces -> ASCII so the regexes are simple."""
@@ -208,6 +230,70 @@ def parse_conviction_post(post):
     return {"accumulation": acc, "distribution": dist}
 
 
+# ── v2 fixed-format parser ───────────────────────────────────────────────────
+FIXED_HEADER_RE = re.compile(r"ROTATION RADAR\s*\|\s*schema\s*=", re.I)
+SIG_CODE = {"BTD": "BUYING THE DIP", "SIS": "SELLING INTO STRENGTH", ".": None, "-": None}
+
+
+def _kv(line):
+    return dict(re.findall(r"(\w+)\s*=\s*([^|]+?)\s*(?:\||$)", line))
+
+
+def _num(tok):
+    return None if tok in (".", "null", "-", "") else float(tok)
+
+
+def parse_fixed(text):
+    """Parse the v2 compact block (see docs/rotation_feed_spec.md) into one snapshot."""
+    lines = [l.strip() for l in normalize(text).splitlines() if l.strip()]
+    snap = {"flows": []}
+    mode = "head"
+    conv = {"accumulation": [], "distribution": []}
+    for line in lines:
+        if FIXED_HEADER_RE.search(line):
+            kv = _kv(line)
+            snap["date"] = kv.get("date"); snap["ts"] = kv.get("ts"); snap["_scan"] = kv.get("scan", "close")
+            continue
+        if line.lower().startswith("regime="):
+            kv = _kv(line)
+            snap["regime"] = kv.get("regime", "").strip()
+            if "selling" in kv: snap["selling"] = int(kv["selling"])
+            if "total" in kv: snap["total"] = int(kv["total"])
+            continue
+        if re.match(r"^[A-Z]{2,6}\s*\|\s*d1=", line):  # benchmark row
+            sym = line.split("|", 1)[0].strip(); kv = _kv(line)
+            snap["benchmark"] = {"sym": sym, "d1": float(kv["d1"]), "d5": float(kv["d5"]), "d20": float(kv["d20"])}
+            continue
+        if line.startswith("#"):
+            mode = "conv" if "conviction" in line.lower() else mode
+            continue
+        parts = line.split()
+        if mode != "conv" and len(parts) >= 8 and parts[0] in REGISTRY and parts[1] in ("in", "out"):
+            sym, direction = parts[0], parts[1]
+            name, tier = REGISTRY[sym]
+            o = {"sym": sym, "name": name, "tier": tier, "dir": direction,
+                 "d1": float(parts[2]), "d5": float(parts[3]), "d20": float(parts[4])}
+            f1, f5 = _num(parts[5]), _num(parts[6])
+            if f1 is not None: o["f1"] = f1
+            if f5 is not None: o["f5"] = f5
+            o["signal"] = SIG_CODE.get(parts[7], None)
+            if len(parts) >= 9 and parts[8].upper() == "NEW":
+                o["new"] = True
+            snap["flows"].append(o)
+        elif mode == "conv" and len(parts) >= 4 and parts[0] in REGISTRY and parts[1] in ("acc", "dist"):
+            sym = parts[0]; name, _ = REGISTRY[sym]
+            entry = {"sym": sym, "name": name, "days": int(parts[2]), "flow": abs(float(parts[3].lstrip("+")))}
+            (conv["accumulation"] if parts[1] == "acc" else conv["distribution"]).append(entry)
+    if conv["accumulation"] or conv["distribution"]:
+        snap["conviction"] = conv
+    snap.pop("_scan", None)
+    return snap
+
+
+def is_fixed_format(text):
+    return bool(FIXED_HEADER_RE.search(normalize(text)))
+
+
 # ── scan assembly ─────────────────────────────────────────────────────────────
 def group_scans(posts, gap_min=45):
     """Cluster posts into scans by single-linkage on time: one scan's 5-6
@@ -274,21 +360,62 @@ def build_snapshot(scan):
 
 # ── validation ────────────────────────────────────────────────────────────────
 def validate(snap):
+    """Structural validation mirroring schema/rotation_snapshot.schema.json
+    (kept stdlib-only so the script has no dependencies)."""
     errs, warns = [], []
-    syms = [f["sym"] for f in snap["flows"]]
+    for k in ("date", "ts", "regime", "benchmark", "flows"):
+        if k not in snap:
+            errs.append(f"missing required field: {k}")
+    if "date" in snap and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(snap["date"])):
+        errs.append(f"bad date: {snap['date']!r}")
+    if "ts" in snap and not re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z", str(snap["ts"])):
+        errs.append(f"bad ts: {snap['ts']!r}")
+    b = snap.get("benchmark") or {}
+    if b and any(k not in b for k in ("sym", "d1", "d5", "d20")):
+        errs.append("benchmark missing sym/d1/d5/d20")
+    flows = snap.get("flows") or []
+    if not flows:
+        errs.append("no flows — check the input format")
+    syms = [f.get("sym") for f in flows]
     dups = sorted({s for s in syms if syms.count(s) > 1})
     if dups:
         errs.append(f"duplicate tickers within one scan: {dups} (scan-mixing?)")
-    for f in snap["flows"]:
+    for f in flows:
+        s = f.get("sym", "?")
         if any(k not in f for k in ("d1", "d5", "d20")):
-            warns.append(f"{f['sym']}: missing a 1D/5D/20D value")
-        if f.get("signal") not in (None, "BUYING THE DIP", "SELLING INTO STRENGTH"):
-            errs.append(f"{f['sym']}: bad signal {f.get('signal')!r}")
+            warns.append(f"{s}: missing a 1D/5D/20D value")
+        if f.get("tier") not in ("core", "sub"):
+            errs.append(f"{s}: bad tier {f.get('tier')!r}")
+        if f.get("dir") not in ("in", "out"):
+            errs.append(f"{s}: bad dir {f.get('dir')!r}")
+        if "signal" not in f:
+            errs.append(f"{s}: missing signal (use null)")
+        elif f["signal"] not in (None, "BUYING THE DIP", "SELLING INTO STRENGTH"):
+            errs.append(f"{s}: bad signal {f.get('signal')!r}")
+        if s not in REGISTRY:
+            warns.append(f"{s}: not in the fixed universe registry")
     if "selling" in snap and "total" in snap and snap["selling"] > snap["total"]:
         errs.append(f"selling {snap['selling']} > total {snap['total']}")
-    if not snap["flows"]:
-        errs.append("no flows parsed — check the input format")
     return errs, warns
+
+
+def validate_file(path):
+    """Validate every snapshot in a history file (or a lone snapshot). Returns ok?"""
+    doc = json.load(open(path))
+    snaps = doc.get("history", [doc]) if isinstance(doc, dict) else doc
+    ok = True
+    for snap in snaps:
+        errs, warns = validate(snap)
+        tag = snap.get("date", "?")
+        if errs:
+            ok = False
+            print(f"✗ {tag}: " + "; ".join(errs), file=sys.stderr)
+        else:
+            extra = f" ({len(warns)} warnings)" if warns else ""
+            print(f"✓ {tag}: valid{extra}", file=sys.stderr)
+        for w in warns:
+            print(f"    warn: {w}", file=sys.stderr)
+    return ok
 
 
 def append_to_history(snap, path):
@@ -304,14 +431,37 @@ def append_to_history(snap, path):
 
 
 def main():
-    ap = argparse.ArgumentParser(description="Parse Rotation Radar feed text into a snapshot.")
+    ap = argparse.ArgumentParser(description="Parse/validate Rotation Radar feed into a snapshot.")
     ap.add_argument("input", nargs="?", help="feed text file (default: stdin)")
     ap.add_argument("--scan", default="close", help="which scan: close (default) | midday | premarket | HH:MM")
     ap.add_argument("--list", action="store_true", help="list the scans/sections found, then exit")
     ap.add_argument("--append", metavar="JSON", help="append the snapshot to this history file (deduped by date)")
+    ap.add_argument("--validate", metavar="JSON", help="validate snapshots in a history/snapshot file, then exit")
     args = ap.parse_args()
 
+    if args.validate:
+        sys.exit(0 if validate_file(args.validate) else 1)
+
     text = open(args.input).read() if args.input else sys.stdin.read()
+
+    # v2 fixed-format block: one message = one (close) scan, parsed directly.
+    if is_fixed_format(text):
+        snap = parse_fixed(text)
+        errs, warns = validate(snap)
+        print(f"# fixed-format scan {snap.get('ts')}  ({len(snap.get('flows', []))} flows)", file=sys.stderr)
+        for w in warns:
+            print(f"# warn: {w}", file=sys.stderr)
+        for e in errs:
+            print(f"# ERROR: {e}", file=sys.stderr)
+        if errs:
+            sys.exit("Refusing to emit a broken snapshot — fix the input and retry.")
+        if args.append:
+            append_to_history(snap, args.append)
+            print(f"# appended {snap['date']} to {args.append}", file=sys.stderr)
+        else:
+            print(json.dumps(snap, indent=2, ensure_ascii=False))
+        return
+
     posts = parse_posts(text)
     if not posts:
         sys.exit("No Rotation Radar posts found (need header lines + 'Rotation Radar | <date> <time> UTC' footers).")
