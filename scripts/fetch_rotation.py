@@ -52,16 +52,28 @@ def _get(url, timeout=20):
         return json.loads(r.read().decode())
 
 
-def fetch_closes(sym):
-    """Daily closes oldest→newest (Nones dropped), or None on failure."""
+def _chart(sym):
     if MOCK:
-        return _mock_closes(sym)
+        return _mock_chart(sym)
     try:
-        res = _get(YH_CHART.format(sym=sym))["chart"]["result"][0]
-        closes = [c for c in res["indicators"]["quote"][0]["close"] if c is not None]
-        return closes or None
+        return _get(YH_CHART.format(sym=sym))["chart"]["result"][0]
     except Exception:
         return None
+
+
+def fetch_closes(sym):
+    """(closes oldest→newest, last_trading_date) or (None, None) on failure."""
+    res = _chart(sym)
+    if not res:
+        return None, None
+    q = res["indicators"]["quote"][0]["close"]
+    ts = res.get("timestamp", [])
+    pairs = [(t, c) for t, c in zip(ts, q) if c is not None]
+    if not pairs:
+        return None, None
+    closes = [c for _, c in pairs]
+    last_date = datetime.fromtimestamp(pairs[-1][0], timezone.utc).strftime("%Y-%m-%d")
+    return closes, last_date
 
 
 def fetch_shares(sym):
@@ -165,20 +177,25 @@ def conviction_from_history(history_path, today_flows):
 
 # ── assembly ──────────────────────────────────────────────────────────────────
 def build(history_path):
-    today = datetime.now(timezone.utc)
-    date = today.strftime("%Y-%m-%d")
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     cache = load_cache(SHARES_CACHE)
     prev = prev_snapshot(history_path)
     prev_dir = {f["sym"]: f.get("dir") for f in (prev or {}).get("flows", [])} if prev else {}
 
-    bench_closes = fetch_closes("SPY")
+    bench_closes, data_date = fetch_closes("SPY")
     if not bench_closes:
         sys.exit("ABORT: benchmark (SPY) unavailable — writing nothing.")
+    # Date the snapshot by the latest TRADING day, not the calendar day, so a
+    # weekend/holiday run doesn't mislabel Friday's close as "today".
+    date = data_date
+    if data_date != today:
+        print(f"# NOTE: latest close is {data_date}, not {today} (market closed today?) — "
+              f"snapshot dated {data_date}.", file=sys.stderr)
     bperf, _ = perf(bench_closes)
 
     flows, fetched = [], 0
     for sym, name, tier in UNIVERSE:
-        closes = fetch_closes(sym)
+        closes, _ = fetch_closes(sym)
         if not closes:
             continue
         fetched += 1
@@ -208,7 +225,7 @@ def build(history_path):
               else "TWO-WAY SECTOR ROTATION")
     snap = {
         "date": date,
-        "ts": today.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "ts": f"{date}T20:00:00Z",   # session close stamp, not the run clock
         "regime": regime,
         "selling": selling,
         "total": len(flows),
@@ -231,6 +248,7 @@ def main():
     ap.add_argument("--append", metavar="JSON", help="append snapshot to this history file (deduped by date)")
     ap.add_argument("--dry-run", action="store_true", help="print the snapshot, don't write")
     ap.add_argument("--mock", action="store_true", help="use synthetic data (offline pipeline test)")
+    ap.add_argument("--force", action="store_true", help="allow overwriting an existing date in history")
     args = ap.parse_args()
     MOCK = args.mock
 
@@ -252,6 +270,13 @@ def main():
     if args.dry_run or not args.append:
         print(json.dumps(snap, indent=2, ensure_ascii=False))
         return
+    try:
+        existing = {s["date"] for s in json.load(open(args.append)).get("history", [])}
+    except Exception:
+        existing = set()
+    if snap["date"] in existing and not args.force:
+        sys.exit(f"ABORT: {snap['date']} already in {args.append} — refusing to overwrite "
+                 f"(weekend/holiday or re-run?). Use --force to replace.")
     append_to_history(snap, args.append)
     if not MOCK:
         json.dump(cache, open(SHARES_CACHE, "w"), indent=2)
@@ -267,6 +292,13 @@ def _mock_closes(sym):
     s = _seed(sym)
     base = 50 + s % 200
     return [round(base * (1 + ((s * (i + 3)) % 17 - 8) / 200.0), 2) for i in range(22)]
+
+
+def _mock_chart(sym):
+    closes = _mock_closes(sym)
+    base = int(datetime(2026, 5, 8, 20, 0, tzinfo=timezone.utc).timestamp())
+    ts = [base + i * 86400 for i in range(len(closes))]   # ends 2026-05-29 (a weekday)
+    return {"timestamp": ts, "indicators": {"quote": [{"close": closes}]}}
 
 
 def _mock_shares(sym):
