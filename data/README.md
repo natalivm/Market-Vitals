@@ -41,6 +41,18 @@ Sector rotation has its own store: **`rotation_history.json`** (see its
 `_schema`/`_rules` keys). Same discipline — confirmed feed numbers only,
 append-only.
 
+> **Ingestion helper:** paste a day's Rotation Radar feed text and let
+> `scripts/parse_rotation.py` build the snapshot (stdlib only, no deps). It
+> groups posts into scans by time, selects the ~20:00 UTC **close** by default,
+> **never mixes scans** (reports missing sections instead of back-filling),
+> normalizes `$K/$M/$B` → millions, and validates before writing:
+> ```
+> python3 scripts/parse_rotation.py feed.txt --list            # see the scans found
+> python3 scripts/parse_rotation.py feed.txt --scan close       # preview the snapshot
+> python3 scripts/parse_rotation.py feed.txt --append data/rotation_history.json
+> ```
+> The editorial `read` field is not generated — add it by hand.
+
 Notes:
 - `market_tide_musd` is in **millions** (`-1524` means −$1,524M). Negative = bearish flow.
 - Label text uses `STRONG_BULLISH` (underscore) so it stays single-token in CSV.
