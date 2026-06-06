@@ -53,6 +53,16 @@ append-only.
 > ```
 > The editorial `read` field is not generated — add it by hand.
 
+> **Self-sourced auto-bot:** `scripts/fetch_rotation.py` (stdlib only) pulls ETF
+> prices from Yahoo, derives net flows from day-over-day shares-outstanding
+> deltas, classifies signals/regime, and appends a schema-valid snapshot —
+> scheduled by `.github/workflows/fetch_rotation.yml` (~20:10 UTC). These are
+> **our own computed numbers** (not the Trading Apologist feed); flows bootstrap
+> over a few days as the `rotation_shares.json` cache fills, and the run **aborts
+> without committing** on low coverage or schema failure. See
+> `docs/rotation_feed_spec.md`. Use `parse_rotation.py` instead when capturing
+> the original bot's feed by hand.
+
 Notes:
 - `market_tide_musd` is in **millions** (`-1524` means −$1,524M). Negative = bearish flow.
 - Label text uses `STRONG_BULLISH` (underscore) so it stays single-token in CSV.
