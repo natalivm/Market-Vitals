@@ -151,7 +151,7 @@
     /* top-movers trend chart (replaces the old per-sector heatmap) */
     .trend-chart { border: 1px solid var(--line); border-radius: 12px; background: var(--panel); padding: 12px 14px 6px; margin-bottom: 16px; }
     .trend-legend { display: flex; flex-wrap: wrap; gap: 8px 16px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; margin-bottom: 10px; }
-    .trend-legend .tl-item { color: var(--muted); display: inline-flex; align-items: center; gap: 5px; cursor: default; }
+    .trend-legend .tl-item { color: var(--muted); display: inline-flex; align-items: center; gap: 5px; cursor: help; }
     .trend-legend .tl-item i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
     .trend-svg { width: 100%; height: auto; display: block; }
     .trend-svg .tg-axis { fill: var(--muted); font-size: 11px; font-family: 'IBM Plex Mono', monospace; }
@@ -178,7 +178,8 @@
     /* conviction + tiles */
     .conv-row { display: flex; align-items: center; gap: 8px; padding: 7px 14px; border-bottom: 1px solid var(--bg2); font-family: 'IBM Plex Mono', monospace; }
     .conv-row:last-child { border-bottom: none; }
-    .conv-row .cv-sym { font-weight: 700; font-size: 12px; min-width: 46px; }
+    .conv-row .cv-sym { font-weight: 700; font-size: 12px; min-width: 46px; cursor: help; }
+    .conv-row { cursor: help; }
     .conv-row .cv-name { font-size: 11px; color: var(--muted); flex: 1; }
     .conv-bar { height: 6px; border-radius: 3px; min-width: 8px; }
     .conv-row .cv-meta { font-size: 11px; color: var(--muted); white-space: nowrap; }
@@ -221,7 +222,7 @@
     .fa-track { grid-column: 2; display: flex; justify-content: space-between; align-items: center; font-family: 'IBM Plex Mono', monospace; font-size: 11px; }
     .fa-out { color: var(--fear2); } .fa-in { color: var(--greed2); } .fa-zero { color: var(--line2); font-weight: 700; }
     .flow-row { display: grid; grid-template-columns: 46px 1fr 94px 26px; align-items: center; gap: 10px; height: 21px; font-family: 'IBM Plex Mono', monospace; }
-    .fb-sym { font-size: 12px; font-weight: 700; color: var(--txt); }
+    .fb-sym { font-size: 12px; font-weight: 700; color: var(--txt); cursor: help; text-decoration: underline dotted rgba(125,139,160,.45); text-underline-offset: 3px; }
     .fb-track { position: relative; height: 13px; }
     .fb-track::before { content: ""; position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px; background: var(--line2); }
     .fb-bar { position: absolute; top: 0; height: 13px; border-radius: 2px; }
@@ -1715,7 +1716,7 @@ function renderRotation(data) {
         ? `<div class="fb-bar pos" style="left:50%;width:${w}%"></div>`
         : `<div class="fb-bar neg" style="right:50%;width:${w}%"></div>`;
       return `<div class="flow-row" title="${f.name} — 5D net flow ${fmtFlow(f.f5)} · price 1D ${rpct(f.d1)}">` +
-             `<span class="fb-sym">${f.sym}</span>` +
+             `<span class="fb-sym" title="${f.name}">${f.sym}</span>` +
              `<div class="fb-track">${bar}</div>` +
              `<span class="fb-val ${pos ? "pos" : "neg"}">${fmtFlow(f.f5)}</span>` +
              `<span class="fb-sig">${sigIcon(f.signal)}${f.new ? '<i class="fb-new">N</i>' : ""}</span></div>`;
@@ -1724,7 +1725,7 @@ function renderRotation(data) {
 
   // ── 4. 14-day conviction ──
   const convRow = (c, color) =>
-    `<div class="conv-row"><span class="cv-sym">${c.sym}</span><span class="cv-name">${c.name}</span>` +
+    `<div class="conv-row" title="${c.name}"><span class="cv-sym">${c.sym}</span><span class="cv-name">${c.name}</span>` +
     `<div class="conv-bar" style="width:${(c.days / 14 * 64).toFixed(0)}px;background:${color}"></div>` +
     `<span class="cv-meta">${c.days}/14 · ${fmtFlow(c.flow)}</span></div>`;
   const cv = latest.conviction || { accumulation: [], distribution: [] };
