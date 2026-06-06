@@ -1061,7 +1061,7 @@
 
     <!-- 3b ─ top-movers 4-week trend (replaces the old per-sector heatmap; appears once ≥2 readings exist) -->
     <div id="rotTrendWrap" hidden>
-      <div class="sec-label sec-label--inset">Top Movers · <span style="color:var(--muted);font-weight:400">how the biggest flows tracked over the last 4 weeks</span></div>
+      <div class="sec-label sec-label--inset">Top Movers · <span style="color:var(--muted);font-weight:400">how the biggest flows have tracked, session by session</span></div>
       <div class="trend-chart" id="rotTrend"></div>
     </div>
     <div id="rotTrendNote" class="rot-timeline-note"></div>
@@ -1755,7 +1755,8 @@ function renderRotation(data) {
 // sectors that matter and shows the DIRECTION of the rotation over time. Lines
 // rise above the zero baseline when money is flowing in, drop below when out.
 function renderTrend(snaps) {
-  const recent = snaps.slice(-4);                              // last 4 weeks
+  const TREND_MAX = 10;                                       // show up to the last 10 sessions
+  const recent = snaps.slice(-TREND_MAX);
   const latest = recent[recent.length - 1];
   const hasF5  = f => f.f5 != null && isFinite(f.f5);
 
@@ -1792,10 +1793,12 @@ function renderTrend(snaps) {
     `<text class="tg-axis" x="${padL - 8}" y="${z + 4}" text-anchor="end">0</text>` +
     `<text class="tg-axis" x="${padL - 8}" y="${Y(-maxAbs) + 4}" text-anchor="end">${fmtFlow(-maxAbs)}</text>`;
 
-  // x-axis date labels (one per reading)
-  const xlab = recent.map((s, i) =>
-    `<text class="tg-axis" x="${X(i)}" y="${H - 8}" text-anchor="${i === 0 ? "start" : i === n - 1 ? "end" : "middle"}">${shortDate(s.date)}</text>`
-  ).join("");
+  // x-axis date labels — thin them out once there are many sessions
+  const xstep = n > 8 ? 2 : 1;
+  const xlab = recent.map((s, i) => {
+    if (i !== 0 && i !== n - 1 && i % xstep !== 0) return "";
+    return `<text class="tg-axis" x="${X(i)}" y="${H - 8}" text-anchor="${i === 0 ? "start" : i === n - 1 ? "end" : "middle"}">${shortDate(s.date)}</text>`;
+  }).join("");
 
   // one polyline + dots per series (gaps connect across any missing week)
   const lines = series.map(s => {
