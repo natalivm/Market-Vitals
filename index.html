@@ -1114,6 +1114,25 @@ const SCAN = {
     state:  "amber",
     detail: "SPY −0.22% in the last hour on 0.82× average volume (22% of the day's range) — a quiet, balanced close; the tape was neither bought nor sold with conviction into the bell.",
   },
+  doomClock: {
+    show:          true,
+    clock:         "9:17",        // analog dial position; midnight = cycle peak
+    minToMidnight: 163,
+    risk:          32,            // Cycle Peak Risk %
+    riskChangeWk:  -3,            // ▼ negative = risk eased this week
+    phase:         "MATURING",
+    weeksLogged:   "3/4",
+    asof:          "2026-06-05 22:30 UTC",
+    cats: [
+      { name: "Rotation",       score: "2/6", s: "amber" },
+      { name: "Breadth",        score: "0/4", s: "green" },
+      { name: "Volatility",     score: "2/4", s: "amber" },
+      { name: "Rates & Credit", score: "0/4", s: "green" },
+      { name: "Macro",          score: "2/8", s: "green" },
+      { name: "Sentiment",      score: "1/6", s: "green" },
+      { name: "Valuation",      score: "4/4", s: "red"   },
+    ],
+  },
 };
 
 /* derived aliases — downstream gauge code reads these */
