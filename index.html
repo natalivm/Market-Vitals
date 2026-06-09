@@ -1099,15 +1099,15 @@
    ════════════════════════════════════════════════════════════════════ */
 const SCAN = {
   date:       "2026-06-09",
-  utc:        "15:01 UTC",
-  kyiv:       "6:01 PM Kyiv",
-  ribbon:     "MID-SESSION",
-  scanName:   "mid-session scan",
-  prevLabel:  "pre-market",
-  ghostLabel: "13:02",
-  composite:  { prev: 58, ghost: 58, cur: 68 },
-  ribbonMain: 'McClellan {{mcclellan}} (rising) · Market Tide <b style="color:var(--fear)">{{tide}}</b> bearish · Put/Call {{putcall}} neutral',
-  momentum:   { tag: "STRONG BULLISH", score: "+3", was: "45–53%" },
+  utc:        "17:01 UTC",
+  kyiv:       "8:01 PM Kyiv",
+  ribbon:     "AFTERNOON",
+  scanName:   "afternoon scan",
+  prevLabel:  "mid-session",
+  ghostLabel: "15:01",
+  composite:  { prev: 68, ghost: 68, cur: 50 },
+  ribbonMain: 'VIX <b style="color:var(--amber)">{{vix}} elevated</b> · Put/Call <b style="color:var(--fear)">{{putcall}} EXTREME FEAR</b> · Market Tide <b style="color:var(--fear)">{{tide}}</b>',
+  momentum:   { tag: "STRONG BULLISH", score: "+3", was: "54–61%" },
   powerHour: {
     show:  false,
   },
@@ -1138,22 +1138,22 @@ const GHOST_AT       = SCAN.composite.ghost;
 const COMPOSITE      = SCAN.composite.cur;
 
 const indicators = [
-  { name:"VIX", prevNum:18.06, curNum:18.96, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Ticked up to {{vix}} from {{vix_prev}} at the pre-market read — the session open brought a small rise in index volatility. Still firmly CALM and nowhere near the 20 threshold. Not a concern; consistent with a normal intraday drift." },
+  { name:"VIX", prevNum:18.96, curNum:22.88, fmt:{dec:2}, prevTag:"CALM", tag:"ELEVATED", prevS:"green", s:"amber", flip:true,
+    note:"Jumped to {{vix}} from {{vix_prev}} — VIX broke above the critical 20 line and is now ELEVATED for the first time this week. Index-options demand for protection spiked through the afternoon. This is the read that flipped the board from CONSTRUCTIVE to MIXED: volatility is no longer calm." },
   { name:"MOVE", prevNum:76.98, curNum:76.98, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Unchanged at {{move}} — bond-market volatility is flat through the mid-session. Rates are not amplifying today's equity moves in either direction. Clean green." },
-  { name:"McClellan", prevNum:-8.20, curNum:15.68, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"FALLING", tag:"RISING", prevS:"red", s:"green",
-    note:"Surged to {{mcclellan}} from {{mcclellan_prev}} at the pre-market read — a sharp reversal of the multi-session downtrend. McClellan crossed back into positive territory and is now rising, meaning advancing stocks are outnumbering declining stocks on a broad basis. The breadth deterioration that dominated the morning narrative has reversed." },
+    note:"Unchanged at {{move}} — bond-market volatility is flat while equity vol spikes. The stress is concentrated in stocks, not rates. MOVE staying calm says this isn't a macro/credit event. Clean green." },
+  { name:"McClellan", prevNum:15.68, curNum:5.51, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"RISING", tag:"RISING", prevS:"green", s:"green",
+    note:"Eased to {{mcclellan}} from {{mcclellan_prev}} but the bot still tags it RISING and it remains positive. Breadth is holding above the zero line even as VIX spikes — advancing stocks still outnumber decliners. The one indicator standing between MIXED and a deeper risk-off read." },
   { name:"Hindenburg", text:true, prevVal:"CLEAR", val:"CLEAR", prevTag:"CLEAR", tag:"CLEAR", prevS:"green", s:"green",
-    note:"No signal. Hindenburg requires a negative McClellan — McClellan is now firmly positive at {{mcclellan}}. Omen conditions are not met. Clean green." },
-  { name:"% > 200 DMA", prevNum:54.8, curNum:57.8, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
-    note:"Jumped to {{dma200}} from {{dma200_prev}} pre-market — structural breadth improved during the morning session. More stocks are trading above their long-term trend line, which confirms the McClellan recovery is real and broad-based, not just index-level." },
-  { name:"Put/Call", prevNum:1.31, curNum:0.94, fmt:{dec:2}, prevTag:"EXTREME FEAR", tag:"NEUTRAL", prevS:"red", s:"green", flip:true,
-    note:"Fell sharply to {{putcall}} from {{putcall_prev}} at the pre-market read — the extreme fear that characterized the morning open has dissipated. The contrarian buy signal from the 1.31 EXTREME FEAR reading played out: hedges were unwound as the session opened higher. Now firmly NEUTRAL." },
-  { name:"SMFI", prevNum:50704, curNum:50442, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
-    note:"Eased to {{smfi}} from {{smfi_prev}} — smart-money flow edged lower through the mid-session. Still in NEUTRAL territory; the decline is modest and not a signal of active institutional distribution. Background noise." },
-  { name:"Market Tide", prevNum:349, curNum:-449, fmt:{dec:0, pre:"$", suf:"M", comma:true}, prevTag:"BULLISH", tag:"BEARISH", prevS:"green", s:"red",
-    note:"Flipped to {{tide}} from {{tide_prev}} at the pre-market read — net institutional options flow turned negative as the session opened. The divergence is notable: breadth is improving (McClellan rising, %200DMA up) while smart-money premium flow is bearish. Distribution into strength is possible — the tape is climbing but institutional hedging is building." },
+    note:"No signal. Hindenburg requires a negative McClellan — McClellan is still positive at {{mcclellan}}. Omen conditions are not met. Clean green." },
+  { name:"% > 200 DMA", prevNum:57.8, curNum:58.1, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
+    note:"Ticked up to {{dma200}} from {{dma200_prev}} — structural breadth is the rock in a choppy afternoon. Over 58% of stocks remain above their 200-day MA despite the VIX spike. The long-term trend hasn't cracked; today's stress is short-term positioning, not a structural break." },
+  { name:"Put/Call", prevNum:0.94, curNum:1.23, fmt:{dec:2}, prevTag:"NEUTRAL", tag:"EXTREME FEAR", prevS:"green", s:"red", flip:true,
+    note:"Surged back to {{putcall}} from {{putcall_prev}} — EXTREME FEAR returns for the second time today. The morning's calm proved temporary; hedging demand re-accelerated as VIX broke 20. Above 1.2 is historically a contrarian buy zone, but paired with a spiking VIX it can also signal real, sustained de-risking." },
+  { name:"SMFI", prevNum:50442, curNum:49958, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
+    note:"Slipped to {{smfi}} from {{smfi_prev}}, dropping below the 50,000 line. Smart-money flow is softening through the afternoon — consistent with the VIX spike and deepening Market Tide. Still NEUTRAL, but the trend is now lower, not flat." },
+  { name:"Market Tide", prevNum:-449, curNum:-1048, fmt:{dec:0, pre:"$", suf:"M", comma:true}, prevTag:"BEARISH", tag:"BEARISH", prevS:"red", s:"red",
+    note:"Deepened to {{tide}} from {{tide_prev}} — net bearish institutional premium flow more than doubled through the afternoon. The distribution-into-strength concern from the mid-session read is now confirmed: as VIX spiked, institutions accelerated their hedging. One of the larger single-read bearish flows of the week." },
 ];
 
 const concentration = [
@@ -1172,26 +1172,26 @@ const concentration = [
 ];
 
 const bars = [
-  { label:"% > 12 SMA", prev:45.4, cur:58.5, tag:"BULLISH" },
-  { label:"% > 20 SMA", prev:52.7, cur:61.3, tag:"BULLISH" },
-  { label:"% > 50 SMA", prev:51.4, cur:55.5, tag:"BULLISH" },
+  { label:"% > 12 SMA", prev:58.5, cur:54.2, tag:"BULLISH" },
+  { label:"% > 20 SMA", prev:61.3, cur:60.9, tag:"BULLISH" },
+  { label:"% > 50 SMA", prev:55.5, cur:54.4, tag:"BULLISH" },
 ];
 
 const plays = {
   zen: {
-    e:"😇", label:"Breadth rallied; smart money still cautious",
-    text:"{{green}} of {{total}} green mid-session. McClellan reversed from −8.20 to {{mcclellan}} — the morning breadth fear dissolved fast. P/C is back to neutral at {{putcall}}. But <b>Market Tide is {{tide}} (bearish)</b> — institutional options flow is negative even as the tape rallies. Breadth and momentum say buy; the Tide says institutions are hedging into strength.",
-    moves:[["≈","{{dma200}} above 200-DMA and McClellan rising — hold positions, the structural read improved."],["⚠️","Market Tide {{tide}}: institutional flow is bearish mid-session — watch if it deepens into the close."],["👀","Monitor McClellan through 20:00 UTC — if it holds positive into the bell, breadth is turning."]]
+    e:"😇", label:"Volatility woke up; breadth is the anchor",
+    text:"{{green}} of {{total}} green — the board slipped to MIXED as <b>VIX broke 20 to {{vix}}</b> and <b>Put/Call returned to {{putcall}} EXTREME FEAR</b>. But the foundation held: McClellan is still positive at {{mcclellan}}, {{dma200}} above the 200-day MA, all three momentum bars BULLISH. This reads like a volatility shake-out inside an intact uptrend — fear at the surface, breadth underneath.",
+    moves:[["≈","Breadth held (McClellan positive, {{dma200}} above 200-DMA) — no need to chase the de-risking."],["⚠️","VIX {{vix}} elevated + P/C {{putcall}} extreme fear: position size for chop; this is no longer a calm tape."],["👀","Watch Market Tide into the close — {{tide}} and deepening; if it eases, the spike was just hedging."]]
   },
   bull: {
-    e:"🐂", label:"Breadth reversal confirms the morning low",
-    text:"<b>McClellan ripped from −8.20 to {{mcclellan}} — the sharpest single-session breadth reversal of the week.</b> All three momentum bars are firmly BULLISH (12SMA 58.5%, 20SMA 61.3%, 50SMA 55.5%). The pre-market EXTREME FEAR P/C at 1.31 was a textbook contrarian signal — fear peaked at the open and is now at {{putcall}} NEUTRAL. {{dma200}} above the 200-day MA.",
-    moves:[["▲","McClellan {{mcclellan}}: strong positive reversal from negative — advancing breadth is leading the rally."],["▲","P/C {{putcall}}: extreme fear unwound; hedging demand collapsed as the session opened up."],["▲","% > 12 SMA at 58.5%: short-term momentum jumped from CAUTIOUS to BULLISH — broad participation."]]
+    e:"🐂", label:"A volatility spike, not a breakdown",
+    text:"<b>Breadth never cracked: McClellan still positive at {{mcclellan}}, {{dma200}} above the 200-day MA, all three momentum bars BULLISH.</b> The VIX spike to {{vix}} and P/C at {{putcall}} EXTREME FEAR are sentiment readings, not structural ones — and extreme-fear P/C above 1.2 is historically a contrarian buy zone. MOVE stayed calm at {{move}}, so this isn't a rates/credit event.",
+    moves:[["▲","McClellan {{mcclellan}} positive + {{dma200}} above 200-DMA: the structural uptrend is intact through the vol spike."],["▲","P/C {{putcall}} EXTREME FEAR: second extreme-fear print of the day — a contrarian setup if breadth holds."],["▲","MOVE calm at {{move}}: the stress is in equity positioning, not bonds — no macro contagion."]]
   },
   bear: {
-    e:"🐻", label:"Distribution into the breadth rally",
-    text:"<b>Market Tide {{tide}} — institutions are selling net premium into a session where McClellan is rising.</b> This divergence — breadth improving while smart-money flow turns negative — is a distribution signature. The rally may be retail-driven. SMFI eased to {{smfi}}. A closing Tide near {{tide}} with rising VIX would confirm the pattern.",
-    moves:[["▼","Market Tide {{tide}}: net bearish institutional premium flow into a rallying tape — watch for reversal."],["▼","SMFI {{smfi}}: edging lower mid-session; institutional participation is not endorsing this move."],["▼","Tide/breadth divergence: McClellan and Tide moving in opposite directions is a classic distribution tell."]]
+    e:"🐻", label:"VIX broke 20 and the Tide is accelerating out",
+    text:"<b>VIX spiked to {{vix}} — above the 20 line for the first time this week — while Market Tide deepened to {{tide}}.</b> Net institutional premium flow more than doubled to the downside this afternoon, and SMFI slipped below 50,000 to {{smfi}}. The distribution-into-strength pattern is now confirmed: as volatility rose, smart money accelerated its exit. P/C back to {{putcall}} EXTREME FEAR.",
+    moves:[["▼","VIX {{vix}}: broke above 20 — the regime shifted from calm to elevated in a single read."],["▼","Market Tide {{tide}}: bearish flow more than doubled from −$449M; institutions are selling the strength."],["▼","SMFI {{smfi}}: dropped below 50,000 — smart-money flow is now trending lower, confirming the de-risk."]]
   },
 };
 
