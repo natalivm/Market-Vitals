@@ -1099,25 +1099,25 @@
    ════════════════════════════════════════════════════════════════════ */
 const SCAN = {
   date:       "2026-06-08",
-  utc:        "13:01 UTC",
-  kyiv:       "4:01 PM Kyiv",
-  ribbon:     "PRE-MARKET",             // ribbon eyebrow label
-  scanName:   "pre-market scan",        // footer phrasing
+  utc:        "20:11 UTC",
+  kyiv:       "11:11 PM Kyiv",
+  ribbon:     "CLOSING BELL",           // ribbon eyebrow label
+  scanName:   "closing-bell scan",      // footer phrasing
   prevLabel:  "prior scan",             // what the PREV / ghost reading is
-  ghostLabel: "20:11",                  // tick label drawn on the gauge
-  composite:  { prev: 58, ghost: 58, cur: 60 },
+  ghostLabel: "15:01",                  // tick label drawn on the gauge
+  composite:  { prev: 60, ghost: 72, cur: 62 },
   // editorial ribbon one-liner — may use {{tokens}}
-  ribbonMain: 'McClellan {{mcclellan}} (falling) · Put/Call {{putcall}} · Market Tide <b style="color:var(--fear)">{{tide}}</b>',
-  momentum:   { tag: "STRONG BULLISH", score: "+3", was: "55–60%" },
+  ribbonMain: 'McClellan {{mcclellan}} (falling) · Power Hour {{power}} · Market Tide <b style="color:var(--greed)">{{tide}}</b>',
+  momentum:   { tag: "LEANING BULLISH", score: "+1", was: "49–56%" },
   // Power Hour — final-hour tape read. Lives INSIDE the gauge card (not a
   // core indicator). Shown ONLY when the feed posts it; set show:false on
   // days it isn't mentioned and the block disappears. {{power}} / {{power_detail}}
   // tokens still resolve from here for the ribbon and plays.
   powerHour: {
     show:   true,
-    tag:    "DISTRIBUTION",     // headline state
-    state:  "red",             // green | amber | red
-    detail: "SPY −0.25% last hour, 2.02× average volume, 29% of the day's range — the close was sold.",
+    tag:    "NEUTRAL",         // headline state
+    state:  "amber",           // green | amber | red
+    detail: "SPY −0.22% in the last hour on 0.78× average volume (22% of the day's range) — a quiet, balanced close; the tape was neither bought nor sold with conviction into the bell.",
   },
   // ── CYCLE PEAK DOOM CLOCK ── weekly cycle-top gauge from the separate
   // "Cycle Peak Doom Clock" feed (logged to data/cycle_peak_history.csv).
@@ -1150,22 +1150,22 @@ const GHOST_AT       = SCAN.composite.ghost;
 const COMPOSITE      = SCAN.composite.cur;
 
 const indicators = [
-  { name:"VIX", prevNum:19.71, curNum:18.78, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Pulled back to {{vix}} from {{vix_prev}} — the drift toward 20 that closed Friday has reversed at the open. Volatility is calm and moving lower. VIX under 19 is a constructive read for equities heading into the session." },
-  { name:"MOVE", prevNum:71.16, curNum:75.20, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Ticked up to {{move}} from {{move_prev}} — bond market volatility nudged higher but remains firmly in the CALM zone. Rates are a slight headwind but not a driver. Still green." },
-  { name:"McClellan", prevNum:7.03, curNum:6.78, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"FALLING", tag:"FALLING", prevS:"green", s:"green",
-    note:"Slipped further to {{mcclellan}} from {{mcclellan_prev}} — the downward drift from the +15 highs of Thursday continues into Monday's pre-market. Still positive, so breadth is intact, but the steady decline is worth watching. A move below zero would change the read." },
+  { name:"VIX", prevNum:18.45, curNum:18.75, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
+    note:"Edged up from {{vix_prev}} → {{vix}} into the close — still well under the 20 line and firmly CALM. The options market never priced fear today despite McClellan turning negative. The drift higher is mild and ordinary; volatility stayed compressed through the bell." },
+  { name:"MOVE", prevNum:75.20, curNum:75.20, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
+    note:"Unchanged at {{move}} into the close — bond-market volatility held flat all session. Rate risk was a non-factor in today's equity action. Clean green." },
+  { name:"McClellan", prevNum:-5.08, curNum:-8.04, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"FALLING", tag:"FALLING", prevS:"red", s:"red",
+    note:"Deepened from {{mcclellan_prev}} → {{mcclellan}} into the close — having opened the day positive (+6.79 at 15:01), breadth turned and kept falling right into the bell. A 15-point swing top to bottom. The single red on the board, and the one to watch: advance/decline is leading lower even as the index and flow held up." },
   { name:"Hindenburg", text:true, prevVal:"CLEAR", val:"CLEAR", prevTag:"CLEAR", tag:"CLEAR", prevS:"green", s:"green",
-    note:"No signal. McClellan is still positive at {{mcclellan}} — the breadth divergence condition is not met. Hindenburg requires simultaneous spikes in new 52-week highs AND lows with a negative McClellan. Not present." },
-  { name:"% > 200 DMA", prevNum:58.5, curNum:58.5, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
-    note:"Unchanged at {{dma200}} — structural participation is holding its ground. The broad market is entering Monday with the same structural health it closed with Friday. Long-term trend support is intact." },
-  { name:"Put/Call", prevNum:1.14, curNum:1.00, fmt:{dec:2}, prevTag:"BEARISH", tag:"BEARISH", prevS:"amber", s:"green",
-    note:"Eased to {{putcall}} from {{putcall_prev}} — hedging demand has pulled back meaningfully from Friday's close. At exactly 1.00, puts and calls are in balance. The options market is no longer skewing bearish; this is the clearest improvement from the prior session." },
-  { name:"SMFI", prevNum:50928, curNum:50928, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
-    note:"Unchanged at {{smfi}} — smart money flow is flat. Institutions have not repositioned overnight. Neutral is holding, neither a green light nor a red flag into the open." },
-  { name:"Market Tide", prevNum:-1484, curNum:-1493, fmt:{dec:0, pre:"$", suf:"M", comma:true}, prevTag:"NEGATIVE", tag:"NEGATIVE", prevS:"red", s:"red",
-    note:"Ticked a touch more negative to {{tide}} from {{tide_prev}} — bearish premium flow remains large and persistent. This is carrying over from Friday's deep bearish reading. The options market is still pricing in downside premium despite VIX and Put/Call easing." },
+    note:"No signal at the close. McClellan is negative now, but Hindenburg also requires simultaneous spikes in new 52-week highs AND lows — that condition is not present. Worth watching if breadth keeps deteriorating tomorrow, but CLEAR today." },
+  { name:"% > 200 DMA", prevNum:54.8, curNum:54.8, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
+    note:"Held at {{dma200}} into the close — structural participation did not crack despite the breadth reversal. More than half the market is still above its 200-day MA. The McClellan deterioration is a short-term momentum signal, not a structural one — the long-base health is intact." },
+  { name:"Put/Call", prevNum:0.88, curNum:1.04, fmt:{dec:2}, prevTag:"NEUTRAL", tag:"BEARISH", prevS:"green", s:"amber", flip:true,
+    note:"Jumped from {{putcall_prev}} → {{putcall}} into the close — hedging demand built through the final hour and pushed the ratio above 1.0. Crossed from NEUTRAL into BEARISH: the options market got more defensive as breadth rolled over. Not panic, but a clear shift in tone into the bell." },
+  { name:"SMFI", prevNum:50723, curNum:50704, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
+    note:"{{smfi}} at the close, essentially flat from {{smfi_prev}} earlier. Smart money flow is steady — no capitulation, no aggressive accumulation. Institutions sat largely still through the breadth reversal. NEUTRAL." },
+  { name:"Market Tide", prevNum:370, curNum:349, fmt:{dec:0, pre:"$", suf:"M", comma:true}, prevTag:"BULLISH", tag:"BULLISH", prevS:"green", s:"green",
+    note:"Closed at {{tide}}, a touch off the {{tide_prev}} mid-session reading but still solidly positive. Net bullish premium flow held into the bell — the standout divergence: Market Tide stayed green all day even as McClellan turned and Put/Call went bearish. Real-money flow leaned bullish while the breadth/options tape soured." },
 ];
 
 const concentration = [
@@ -1184,26 +1184,26 @@ const concentration = [
 ];
 
 const bars = [
-  { label:"% > 12 SMA", prev:55.9, cur:55.9, tag:"BULLISH" },
-  { label:"% > 20 SMA", prev:59.6, cur:59.7, tag:"BULLISH" },
-  { label:"% > 50 SMA", prev:54.2, cur:54.2, tag:"BULLISH" },
+  { label:"% > 12 SMA", prev:48.8, cur:45.4, tag:"CAUTIOUS" },
+  { label:"% > 20 SMA", prev:55.5, cur:52.9, tag:"BULLISH" },
+  { label:"% > 50 SMA", prev:51.8, cur:51.4, tag:"BULLISH" },
 ];
 
 const plays = {
   zen: {
-    e:"😇", label:"VIX calm, options hedge eased",
-    text:"{{green}} of {{total}} green in the pre-market. Structurally solid — {{dma200}} above the 200-day MA, McClellan positive at {{mcclellan}}, VIX back under 19. <b>Put/Call dropped to {{putcall}}</b> — the Friday hedge has been unwound. The overhang is still <b>Market Tide at {{tide}}</b>, but the market is entering Monday with a cleaner options picture than it left Friday.",
-    moves:[["≈","Hold core exposure — 200-DMA breadth intact and VIX declining into the open."],["⚠️","Market Tide at {{tide}} remains large bearish flow — watch whether it persists intraday."],["👀","McClellan at {{mcclellan}} and falling: a continued drop below zero would be the signal to trim."]]
+    e:"😇", label:"Flow held green; breadth rolled over",
+    text:"{{green}} of {{total}} green at the bell, CONSTRUCTIVE at {{composite}}. The story is a split tape: <b>Market Tide closed {{tide}}</b> (real-money flow stayed bullish) and Power Hour was {{power}} — but <b>McClellan deepened to {{mcclellan}}</b> and Put/Call crossed into BEARISH. Structure held ({{dma200}} above the 200-day MA); short-term breadth did not.",
+    moves:[["≈","Hold core exposure — flow and structure both held; the weakness is in breadth momentum, not money."],["⚠️","Watch McClellan: it swung from +6.79 at the open to {{mcclellan}} at the close — a real reversal."],["👀","If Market Tide flips negative to confirm the McClellan roll-over, the read changes. Today it didn't."]]
   },
   bull: {
-    e:"🐂", label:"Put/Call reset; breadth intact",
-    text:"<b>Put/Call fell to {{putcall}} — the clearest single improvement from Friday's close.</b> VIX pulled back to {{vix}}, all three momentum bars remain BULLISH (above 54%), and {{dma200}} of stocks hold above their 200-day MA. The broad market is entering Monday with structural health and a notably calmer options market.",
-    moves:[["▲","Put/Call at {{putcall}}: options hedging unwound overnight — market not bracing for a gap down."],["▲","VIX {{vix}}: pulled back from Friday's 19.71 drift toward 20 — calm tone into the open."],["▲","{{dma200}} above 200-day MA: structural participation unchanged through the weekend."]]
+    e:"🐂", label:"Flow stayed bullish all day",
+    text:"<b>Market Tide closed {{tide}} — net bullish premium flow held green through the entire session</b>, even as McClellan turned and Put/Call went bearish. {{dma200}} of stocks remain above their 200-day MA and VIX stayed calm at {{vix}}. When real-money flow diverges positive from a breadth wobble, flow usually wins. That's the bull case.",
+    moves:[["▲","Market Tide {{tide}}: the cleanest signal — institutional flow leaned bullish into the bell."],["▲","{{dma200}} above 200-day MA: structural participation intact off the June 5 low."],["▲","VIX {{vix}} calm + Power Hour {{power}}: no fear, no distribution into the close."]]
   },
   bear: {
-    e:"🐻", label:"Market Tide still deeply bearish",
-    text:"<b>Market Tide at {{tide}} — the bearish premium flow that defined Friday carried into Monday's pre-market reading.</b> McClellan is {{mcclellan}} and trending lower all week. Power Hour printed {{power}} on Friday's close. VIX eased, but the persistent size of bearish options flow is the dominant signal.",
-    moves:[["▼","Market Tide {{tide}}: one of the largest bearish flow readings of the recent period, and it's not fading."],["▼","McClellan {{mcclellan}} and falling: breadth is eroding steadily from the +15 peak earlier last week."],["▼","Power Hour distribution Friday: institutions sold the close — watch whether Monday opens with follow-through selling."]]
+    e:"🐻", label:"Breadth reversed into the close",
+    text:"<b>McClellan swung from +6.79 at the open to {{mcclellan}} at the bell — a 15-point intraday reversal.</b> Put/Call crossed into BEARISH at {{putcall}}, the 12-SMA momentum bar fell to CAUTIOUS, and the score degraded from RISK-ON (+5) at the open to CONSTRUCTIVE (+3) at the close. Breadth is leading lower; if flow follows, the June 5 bounce is in trouble.",
+    moves:[["▼","McClellan {{mcclellan}}: breadth went from positive to clearly negative in one session."],["▼","Put/Call {{putcall}}: hedging demand pushed the ratio above 1.0 — defensive into the bell."],["▼","Score faded RISK-ON (+5) → CONSTRUCTIVE (+3) across the day — momentum is one-directional, and it's down."]]
   },
 };
 
