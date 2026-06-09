@@ -40,7 +40,10 @@ jobs:
           git config user.email "bot@market-vitals.local"
 
       - name: Fetch & append snapshot (stdlib only — no deps)
-        run: python3 scripts/fetch_rotation.py --append data/rotation_history.json
+        # --force lets the authoritative CLOSE snapshot replace any same-day
+        # intraday/re-run entry. The script still refuses to overwrite a PRIOR
+        # day (its market-closed guard), so weekends/holidays write nothing.
+        run: python3 scripts/fetch_rotation.py --append data/rotation_history.json --force
 
       - name: Commit if changed
         run: |

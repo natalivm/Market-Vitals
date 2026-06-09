@@ -270,17 +270,32 @@ def main():
     if args.dry_run or not args.append:
         print(json.dumps(snap, indent=2, ensure_ascii=False))
         return
+
+    # Market-closed guard: if the latest close is NOT today (weekend/holiday, or
+    # a run before today's session has closed), the snapshot belongs to an
+    # earlier day that's already on record — never re-derive or overwrite it.
+    # This is what actually prevents stale clobber, so it holds even with --force.
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    if snap["date"] != today:
+        print(f"# market closed {today} (latest close is {snap['date']}, already recorded) — "
+              f"nothing to write.", file=sys.stderr)
+        return
+
     try:
         existing = {s["date"] for s in json.load(open(args.append)).get("history", [])}
     except Exception:
         existing = set()
+    # Same-day entry already present (an intraday reading, or a re-run). The
+    # scheduled CLOSE run is authoritative and passes --force to REPLACE it
+    # (append_to_history dedupes by date). A plain manual --append stays guarded.
     if snap["date"] in existing and not args.force:
-        sys.exit(f"ABORT: {snap['date']} already in {args.append} — refusing to overwrite "
-                 f"(weekend/holiday or re-run?). Use --force to replace.")
+        sys.exit(f"ABORT: {snap['date']} already in {args.append} — use --force to replace it "
+                 f"(the scheduled close run does; this guards ad-hoc manual runs).")
     append_to_history(snap, args.append)
     if not MOCK:
         json.dump(cache, open(SHARES_CACHE, "w"), indent=2)
-    print(f"# appended {snap['date']} to {args.append}", file=sys.stderr)
+    verb = "replaced" if snap["date"] in existing else "appended"
+    print(f"# {verb} {snap['date']} in {args.append}", file=sys.stderr)
 
 
 # ── offline mock data (deterministic) ─────────────────────────────────────────
