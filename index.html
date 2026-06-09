@@ -1099,20 +1099,17 @@
    ════════════════════════════════════════════════════════════════════ */
 const SCAN = {
   date:       "2026-06-09",
-  utc:        "13:02 UTC",
-  kyiv:       "4:02 PM Kyiv",
-  ribbon:     "PRE-MARKET",
-  scanName:   "pre-market scan",
-  prevLabel:  "prior close",
-  ghostLabel: "20:11",
-  composite:  { prev: 62, ghost: 62, cur: 58 },
-  ribbonMain: 'McClellan {{mcclellan}} (falling) · Put/Call <b>{{putcall}} EXTREME FEAR</b> · Market Tide <b style="color:var(--greed)">{{tide}}</b>',
-  momentum:   { tag: "LEANING BULLISH", score: "+1", was: "45–53%" },
+  utc:        "15:01 UTC",
+  kyiv:       "6:01 PM Kyiv",
+  ribbon:     "MID-SESSION",
+  scanName:   "mid-session scan",
+  prevLabel:  "pre-market",
+  ghostLabel: "13:02",
+  composite:  { prev: 58, ghost: 58, cur: 68 },
+  ribbonMain: 'McClellan {{mcclellan}} (rising) · Market Tide <b style="color:var(--fear)">{{tide}}</b> bearish · Put/Call {{putcall}} neutral',
+  momentum:   { tag: "STRONG BULLISH", score: "+3", was: "45–53%" },
   powerHour: {
-    show:   true,
-    tag:    "NEUTRAL",
-    state:  "amber",
-    detail: "SPY −0.22% in the last hour on 0.82× average volume (22% of the day's range) — a quiet, balanced close; the tape was neither bought nor sold with conviction into the bell.",
+    show:  false,
   },
   doomClock: {
     show:          true,
@@ -1141,22 +1138,22 @@ const GHOST_AT       = SCAN.composite.ghost;
 const COMPOSITE      = SCAN.composite.cur;
 
 const indicators = [
-  { name:"VIX", prevNum:18.75, curNum:18.06, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Eased to {{vix}} from {{vix_prev}} at yesterday's close — the options market is calmer heading into today's session. VIX back below 18.50 and well away from the critical 20 threshold. A constructive open for equities on this indicator." },
-  { name:"MOVE", prevNum:75.20, curNum:76.98, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Ticked up to {{move}} from {{move_prev}} — a small overnight move in bond volatility. Still firmly in CALM territory; the slight uptick is not a signal, just background noise. Rates are not a risk factor today." },
-  { name:"McClellan", prevNum:-8.04, curNum:-8.20, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"FALLING", tag:"FALLING", prevS:"red", s:"red",
-    note:"Slipped further to {{mcclellan}} from {{mcclellan_prev}} at yesterday's close. Breadth continues to deteriorate — the McClellan has been in negative territory since the Jun 8 mid-session read and has now made a marginal new low. Not a crash signal, but the trend is clear: fewer stocks are participating in any rally." },
+  { name:"VIX", prevNum:18.06, curNum:18.96, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
+    note:"Ticked up to {{vix}} from {{vix_prev}} at the pre-market read — the session open brought a small rise in index volatility. Still firmly CALM and nowhere near the 20 threshold. Not a concern; consistent with a normal intraday drift." },
+  { name:"MOVE", prevNum:76.98, curNum:76.98, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
+    note:"Unchanged at {{move}} — bond-market volatility is flat through the mid-session. Rates are not amplifying today's equity moves in either direction. Clean green." },
+  { name:"McClellan", prevNum:-8.20, curNum:15.68, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"FALLING", tag:"RISING", prevS:"red", s:"green",
+    note:"Surged to {{mcclellan}} from {{mcclellan_prev}} at the pre-market read — a sharp reversal of the multi-session downtrend. McClellan crossed back into positive territory and is now rising, meaning advancing stocks are outnumbering declining stocks on a broad basis. The breadth deterioration that dominated the morning narrative has reversed." },
   { name:"Hindenburg", text:true, prevVal:"CLEAR", val:"CLEAR", prevTag:"CLEAR", tag:"CLEAR", prevS:"green", s:"green",
-    note:"No signal. The Hindenburg Omen requires simultaneous spikes in new 52-week highs AND lows on a negative McClellan. McClellan is negative at {{mcclellan}}, but there are no concurrent high/low spike reports today. Still clear." },
-  { name:"% > 200 DMA", prevNum:54.8, curNum:54.8, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
-    note:"Holds at {{dma200}}, unchanged from yesterday's close. Structural breadth is sticky — this figure barely moved all week. Over half the market is still trading above its long-term trend line. That's the foundation holding the CONSTRUCTIVE read." },
-  { name:"Put/Call", prevNum:1.04, curNum:1.31, fmt:{dec:2}, prevTag:"BEARISH", tag:"EXTREME FEAR", prevS:"amber", s:"red", flip:true,
-    note:"Surged to {{putcall}} from {{putcall_prev}} at yesterday's close — a significant overnight jump into EXTREME FEAR territory. Put volume is overwhelming call volume. The bot flagged a separate EXTREME FEAR alert: historically, ratios above 1.2 are a contrarian buy signal, as excessive hedging often marks short-term bottoms." },
-  { name:"SMFI", prevNum:50704, curNum:50704, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
-    note:"Holds at {{smfi}}, unchanged from yesterday's close. Smart-money flow is flat — institutions have neither capitulated nor stepped up aggressively. A neutral holding pattern heading into today's session." },
-  { name:"Market Tide", prevNum:349, curNum:349, fmt:{dec:0, pre:"$", suf:"M", comma:true}, prevTag:"BULLISH", tag:"BULLISH", prevS:"green", s:"green",
-    note:"Holds at {{tide}}, the same bullish reading as yesterday's close. Net institutional options flow remains positive for the second consecutive session. While the McClellan breadth is weak, smart-money premium flow is not confirming the bear case." },
+    note:"No signal. Hindenburg requires a negative McClellan — McClellan is now firmly positive at {{mcclellan}}. Omen conditions are not met. Clean green." },
+  { name:"% > 200 DMA", prevNum:54.8, curNum:57.8, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
+    note:"Jumped to {{dma200}} from {{dma200_prev}} pre-market — structural breadth improved during the morning session. More stocks are trading above their long-term trend line, which confirms the McClellan recovery is real and broad-based, not just index-level." },
+  { name:"Put/Call", prevNum:1.31, curNum:0.94, fmt:{dec:2}, prevTag:"EXTREME FEAR", tag:"NEUTRAL", prevS:"red", s:"green", flip:true,
+    note:"Fell sharply to {{putcall}} from {{putcall_prev}} at the pre-market read — the extreme fear that characterized the morning open has dissipated. The contrarian buy signal from the 1.31 EXTREME FEAR reading played out: hedges were unwound as the session opened higher. Now firmly NEUTRAL." },
+  { name:"SMFI", prevNum:50704, curNum:50442, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
+    note:"Eased to {{smfi}} from {{smfi_prev}} — smart-money flow edged lower through the mid-session. Still in NEUTRAL territory; the decline is modest and not a signal of active institutional distribution. Background noise." },
+  { name:"Market Tide", prevNum:349, curNum:-449, fmt:{dec:0, pre:"$", suf:"M", comma:true}, prevTag:"BULLISH", tag:"BEARISH", prevS:"green", s:"red",
+    note:"Flipped to {{tide}} from {{tide_prev}} at the pre-market read — net institutional options flow turned negative as the session opened. The divergence is notable: breadth is improving (McClellan rising, %200DMA up) while smart-money premium flow is bearish. Distribution into strength is possible — the tape is climbing but institutional hedging is building." },
 ];
 
 const concentration = [
@@ -1175,26 +1172,26 @@ const concentration = [
 ];
 
 const bars = [
-  { label:"% > 12 SMA", prev:45.4, cur:45.4, tag:"CAUTIOUS" },
-  { label:"% > 20 SMA", prev:52.9, cur:52.7, tag:"BULLISH" },
-  { label:"% > 50 SMA", prev:51.4, cur:51.4, tag:"BULLISH" },
+  { label:"% > 12 SMA", prev:45.4, cur:58.5, tag:"BULLISH" },
+  { label:"% > 20 SMA", prev:52.7, cur:61.3, tag:"BULLISH" },
+  { label:"% > 50 SMA", prev:51.4, cur:55.5, tag:"BULLISH" },
 ];
 
 const plays = {
   zen: {
-    e:"😇", label:"Extreme fear meets CONSTRUCTIVE structure",
-    text:"{{green}} of {{total}} green pre-market. Structure is holding: {{dma200}} above the 200-day MA, VIX calm at {{vix}}, Market Tide positive at {{tide}}. The Put/Call at {{putcall}} is EXTREME FEAR — historically a contrarian buy signal — but McClellan at {{mcclellan}} confirms breadth is weak. Two competing signals; let the open resolve it.",
-    moves:[["≈","Hold existing positions — structural breadth (200-DMA) is intact and Market Tide is positive."],["⚠️","P/C {{putcall}} EXTREME FEAR: markets can stay oversold; wait for breadth confirmation before adding."],["👀","Watch McClellan direction at the open — a bounce toward zero would confirm the contrarian P/C read."]]
+    e:"😇", label:"Breadth rallied; smart money still cautious",
+    text:"{{green}} of {{total}} green mid-session. McClellan reversed from −8.20 to {{mcclellan}} — the morning breadth fear dissolved fast. P/C is back to neutral at {{putcall}}. But <b>Market Tide is {{tide}} (bearish)</b> — institutional options flow is negative even as the tape rallies. Breadth and momentum say buy; the Tide says institutions are hedging into strength.",
+    moves:[["≈","{{dma200}} above 200-DMA and McClellan rising — hold positions, the structural read improved."],["⚠️","Market Tide {{tide}}: institutional flow is bearish mid-session — watch if it deepens into the close."],["👀","Monitor McClellan through 20:00 UTC — if it holds positive into the bell, breadth is turning."]]
   },
   bull: {
-    e:"🐂", label:"Extreme fear is the contrarian signal",
-    text:"<b>Put/Call at {{putcall}} — the highest reading of the week and firmly in EXTREME FEAR territory.</b> Historically, ratios above 1.2 mark short-term exhaustion of selling. VIX eased to {{vix}}, Market Tide holds at {{tide}}, and {{dma200}} of stocks remain above their 200-day MA. The options market is priced for fear; the structure hasn't confirmed it.",
-    moves:[["▲","P/C {{putcall}}: extreme bearish positioning is a classic contrarian buy setup — watch for intraday reversal."],["▲","VIX {{vix}}: calmer than yesterday's close — the overnight fear hasn't translated into index options panic."],["▲","Market Tide {{tide}} and {{dma200}} above 200-DMA: institutional flow and structural breadth both remain constructive."]]
+    e:"🐂", label:"Breadth reversal confirms the morning low",
+    text:"<b>McClellan ripped from −8.20 to {{mcclellan}} — the sharpest single-session breadth reversal of the week.</b> All three momentum bars are firmly BULLISH (12SMA 58.5%, 20SMA 61.3%, 50SMA 55.5%). The pre-market EXTREME FEAR P/C at 1.31 was a textbook contrarian signal — fear peaked at the open and is now at {{putcall}} NEUTRAL. {{dma200}} above the 200-day MA.",
+    moves:[["▲","McClellan {{mcclellan}}: strong positive reversal from negative — advancing breadth is leading the rally."],["▲","P/C {{putcall}}: extreme fear unwound; hedging demand collapsed as the session opened up."],["▲","% > 12 SMA at 58.5%: short-term momentum jumped from CAUTIOUS to BULLISH — broad participation."]]
   },
   bear: {
-    e:"🐻", label:"Breadth deterioration is the real story",
-    text:"<b>McClellan at {{mcclellan}} — falling for the third consecutive session and now at its worst reading of the week.</b> Fewer and fewer stocks are participating in any rally. The P/C surge to {{putcall}} could signal panic hedging rather than smart money positioning. Breadth leading indices lower is the classic distribution pattern.",
-    moves:[["▼","McClellan {{mcclellan}}: consecutive sessions of deterioration mean the broad market is getting narrower, not healthier."],["▼","% > 12 SMA at 45.4%: short-term momentum is CAUTIOUS — more than half the market below its 12-day average."],["▼","P/C {{putcall}}: could be real fear, not just a contrarian signal — wait for price action to confirm direction."]]
+    e:"🐻", label:"Distribution into the breadth rally",
+    text:"<b>Market Tide {{tide}} — institutions are selling net premium into a session where McClellan is rising.</b> This divergence — breadth improving while smart-money flow turns negative — is a distribution signature. The rally may be retail-driven. SMFI eased to {{smfi}}. A closing Tide near {{tide}} with rising VIX would confirm the pattern.",
+    moves:[["▼","Market Tide {{tide}}: net bearish institutional premium flow into a rallying tape — watch for reversal."],["▼","SMFI {{smfi}}: edging lower mid-session; institutional participation is not endorsing this move."],["▼","Tide/breadth divergence: McClellan and Tide moving in opposite directions is a classic distribution tell."]]
   },
 };
 
