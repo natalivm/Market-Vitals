@@ -121,7 +121,7 @@
     /* ── view switching (Vitals ⇄ Rotation, same tab) ── */
     [hidden] { display: none !important; }
     .back-btn { margin-bottom: 16px; cursor: pointer; }
-    .rot-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); font-weight: 400; letter-spacing: .04em; }
+    .rot-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); font-weight: 400; letter-spacing: .04em; }
     .rot-intro { font-size: 13px; line-height: 1.6; color: #cdd6e2; margin: 0 4px 16px; max-width: 680px; }
     .rot-empty {
       grid-column: 1 / -1;
@@ -141,27 +141,22 @@
       display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px;
       border: 1px solid var(--line); border-left: 3px solid var(--fear);
       background: linear-gradient(180deg, var(--panel), var(--panel2));
-      border-radius: 12px; padding: 14px 18px; margin-bottom: 20px;
+      border-radius: 12px; padding: 14px 18px; margin-bottom: 14px;
     }
     .rot-regime.up { border-left-color: var(--greed); }
     .rr-head { font-family: 'Chakra Petch', sans-serif; font-weight: 700; font-size: 16px; letter-spacing: .02em; }
     .rr-breadth { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--fear2); }
-    .rr-bench { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); margin-left: auto; }
+    .rr-bench { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); margin-left: auto; }
     .rr-bench b { color: var(--txt); font-weight: 600; }
-    /* heatmap timeline */
-    .rot-heatwrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); margin-bottom: 8px; -webkit-overflow-scrolling: touch; }
-    .rot-heat { border-collapse: collapse; width: 100%; font-family: 'IBM Plex Mono', monospace; }
-    .rot-heat th, .rot-heat td { border: 1px solid var(--bg); padding: 0; text-align: center; }
-    .rot-heat thead th { background: var(--panel2); color: var(--muted); font-size: 10px; font-weight: 600; padding: 7px 8px; letter-spacing: .04em; position: sticky; top: 0; }
-    .rot-heat thead th:first-child, .rot-heat td.hm-sym { position: sticky; left: 0; z-index: 2; background: var(--panel2); text-align: left; padding: 6px 10px; min-width: 132px; }
-    .rot-heat thead th:first-child { z-index: 3; }
-    .hm-sym b { font-size: 12px; color: var(--txt); }
-    .hm-sym span { display: block; font-size: 9px; color: var(--muted); font-weight: 400; }
-    .hm-cell { min-width: 60px; height: 42px; cursor: default; color: #06210f; font-weight: 700; font-size: 11px; line-height: 1.25; }
-    .hm-cell small { display: block; font-size: 9px; font-weight: 600; opacity: .8; }
-    .hm-cell.out { color: #2a0a0a; }
-    .hm-legend { display: flex; flex-wrap: wrap; gap: 14px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); margin: 0 2px 22px; }
-    .hm-legend i { display: inline-block; width: 11px; height: 11px; border-radius: 3px; vertical-align: -1px; margin-right: 5px; }
+    /* top-movers trend chart (replaces the old per-sector heatmap) */
+    .trend-chart { border: 1px solid var(--line); border-radius: 12px; background: var(--panel); padding: 12px 14px 6px; margin-bottom: 16px; }
+    .trend-legend { display: flex; flex-wrap: wrap; gap: 8px 16px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; margin-bottom: 10px; }
+    .trend-legend .tl-item { color: var(--muted); display: inline-flex; align-items: center; gap: 5px; cursor: help; }
+    .trend-legend .tl-item i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .trend-svg { width: 100%; height: auto; display: block; }
+    .trend-svg .tg-axis { fill: var(--muted); font-size: 11px; font-family: 'IBM Plex Mono', monospace; }
+    .trend-svg .tg-grid { stroke: var(--line); stroke-width: 1; }
+    .trend-svg .tg-zero { stroke: var(--line2); stroke-width: 1; stroke-dasharray: 3 3; }
     /* money in / out columns */
     .rot-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 8px; }
     @media (max-width: 720px) { .rot-cols { grid-template-columns: 1fr; } }
@@ -172,9 +167,9 @@
     .rot-row { display: flex; align-items: baseline; gap: 8px; padding: 8px 14px; border-bottom: 1px solid var(--bg2); font-family: 'IBM Plex Mono', monospace; }
     .rot-row:last-child { border-bottom: none; }
     .rot-row .rr-sym { font-weight: 700; font-size: 12px; color: var(--txt); min-width: 46px; }
-    .rot-row .rr-name { font-size: 10px; color: var(--muted); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .rot-row .rr-flow { font-size: 11px; font-weight: 600; }
-    .rot-row .rr-pct { font-size: 10px; min-width: 52px; text-align: right; }
+    .rot-row .rr-name { font-size: 11px; color: var(--muted); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .rot-row .rr-flow { font-size: 12px; font-weight: 600; }
+    .rot-row .rr-pct { font-size: 11px; min-width: 52px; text-align: right; }
     .pos { color: var(--greed); } .neg { color: var(--fear); }
     .rr-badge { font-size: 8.5px; font-weight: 700; padding: 1px 5px; border-radius: 5px; letter-spacing: .03em; white-space: nowrap; }
     .b-dip { background: rgba(47,214,115,.16); color: var(--greed); }
@@ -184,10 +179,10 @@
     .conv-row { display: flex; align-items: center; gap: 8px; padding: 7px 14px; border-bottom: 1px solid var(--bg2); font-family: 'IBM Plex Mono', monospace; }
     .conv-row:last-child { border-bottom: none; }
     .conv-row .cv-sym { font-weight: 700; font-size: 12px; min-width: 46px; }
-    .conv-row .cv-name { font-size: 10px; color: var(--muted); flex: 1; }
+    .conv-row .cv-name { font-size: 11px; color: var(--muted); flex: 1; }
     .conv-bar { height: 6px; border-radius: 3px; min-width: 8px; }
-    .conv-row .cv-meta { font-size: 10px; color: var(--muted); white-space: nowrap; }
-    .rot-tiles { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+    .conv-row .cv-meta { font-size: 11px; color: var(--muted); white-space: nowrap; }
+    .rot-tiles { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
     .rot-tile {
       position: relative; cursor: help;
       border: 1px solid rgba(47,214,115,.3); background: rgba(47,214,115,.06);
@@ -195,19 +190,21 @@
     }
     .rot-tile b { font-size: 12px; color: var(--txt); } .rot-tile span { font-size: 11px; color: var(--greed); margin-left: 6px; }
     .rot-tile:hover { border-color: rgba(47,214,115,.65); }
-    .rot-tile[data-tip]::after {
+    /* reusable instant tooltip (no native title delay) — host any element */
+    [data-tip] { position: relative; }
+    [data-tip]::after {
       content: attr(data-tip);
       position: absolute; left: 50%; bottom: calc(100% + 8px);
       transform: translateX(-50%) translateY(4px);
       background: var(--panel2); border: 1px solid var(--line2); color: var(--txt);
       font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 400; line-height: 1.4;
-      padding: 6px 9px; border-radius: 7px; white-space: normal; max-width: 170px; width: max-content; text-align: center;
-      opacity: 0; pointer-events: none; transition: opacity .15s ease, transform .15s ease;
+      padding: 6px 9px; border-radius: 7px; white-space: normal; max-width: 220px; width: max-content; text-align: center;
+      opacity: 0; pointer-events: none; transition: opacity .12s ease, transform .12s ease;
       z-index: 60; box-shadow: 0 6px 18px rgba(0,0,0,.4);
     }
-    .rot-tile[data-tip]:hover::after { opacity: 1; transform: translateX(-50%) translateY(0); }
+    [data-tip]:hover::after { opacity: 1; transform: translateX(-50%) translateY(0); }
     /* ── at-a-glance KPI cards (boss-deck headline numbers) ── */
-    .rot-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+    .rot-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
     @media (max-width: 640px) { .rot-kpis { grid-template-columns: 1fr; } }
     .kpi {
       border: 1px solid var(--line); border-radius: 12px;
@@ -216,28 +213,28 @@
     }
     .kpi::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--line2); }
     .kpi.kpi-pos::before { background: var(--greed); } .kpi.kpi-neg::before { background: var(--fear); }
-    .kpi .k-lbl { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .06em; color: var(--muted); text-transform: uppercase; }
+    .kpi .k-lbl { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .06em; color: var(--muted); text-transform: uppercase; }
     .kpi .k-val { font-family: 'Chakra Petch', sans-serif; font-size: 22px; font-weight: 700; margin-top: 6px; line-height: 1.1; }
     .kpi .k-val.pos { color: var(--greed); } .kpi .k-val.neg { color: var(--fear); }
-    .kpi .k-sub { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); margin-top: 5px; }
+    .kpi .k-sub { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); margin-top: 5px; }
     /* ── net-flow diverging bar chart (the hero) ── */
-    .flow-chart { border: 1px solid var(--line); border-radius: 12px; background: var(--panel); padding: 11px 16px 14px; margin-bottom: 24px; }
+    .flow-chart { border: 1px solid var(--line); border-radius: 12px; background: var(--panel); padding: 11px 16px 14px; margin-bottom: 16px; }
     .flow-axis { display: grid; grid-template-columns: 46px 1fr 94px 26px; gap: 10px; align-items: center; padding-bottom: 9px; margin-bottom: 5px; border-bottom: 1px dashed var(--line); }
-    .fa-track { grid-column: 2; display: flex; justify-content: space-between; align-items: center; font-family: 'IBM Plex Mono', monospace; font-size: 10px; }
+    .fa-track { grid-column: 2; display: flex; justify-content: space-between; align-items: center; font-family: 'IBM Plex Mono', monospace; font-size: 11px; }
     .fa-out { color: var(--fear2); } .fa-in { color: var(--greed2); } .fa-zero { color: var(--line2); font-weight: 700; }
-    .flow-row { display: grid; grid-template-columns: 46px 1fr 94px 26px; align-items: center; gap: 10px; height: 21px; font-family: 'IBM Plex Mono', monospace; }
-    .fb-sym { font-size: 11px; font-weight: 700; color: var(--txt); }
+    .flow-row { display: grid; grid-template-columns: 46px 1fr 94px 26px; align-items: center; gap: 10px; height: 21px; font-family: 'IBM Plex Mono', monospace; cursor: help; }
+    .fb-sym { font-size: 12px; font-weight: 700; color: var(--txt); cursor: help; text-decoration: underline dotted rgba(125,139,160,.45); text-underline-offset: 3px; }
     .fb-track { position: relative; height: 13px; }
     .fb-track::before { content: ""; position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px; background: var(--line2); }
     .fb-bar { position: absolute; top: 0; height: 13px; border-radius: 2px; }
     .fb-bar.pos { background: linear-gradient(90deg, rgba(47,214,115,.45), var(--greed)); box-shadow: 0 0 8px rgba(47,214,115,.22); }
     .fb-bar.neg { background: linear-gradient(270deg, rgba(255,77,77,.45), var(--fear)); box-shadow: 0 0 8px rgba(255,77,77,.22); }
-    .fb-val { font-size: 11px; font-weight: 600; text-align: right; }
+    .fb-val { font-size: 12px; font-weight: 600; text-align: right; }
     .fb-val.pos { color: var(--greed); } .fb-val.neg { color: var(--fear); }
-    .fb-sig { font-size: 11px; text-align: center; }
+    .fb-sig { font-size: 12px; text-align: center; }
     .fb-sig .fb-new { font-style: normal; font-size: 7.5px; color: #56a8ff; border: 1px solid rgba(86,168,255,.4); border-radius: 3px; padding: 0 2px; margin-left: 3px; vertical-align: 1px; }
-    .flow-foot { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); text-align: center; margin-top: 11px; padding-top: 9px; border-top: 1px dashed var(--line); }
-    .rot-timeline-note { margin-bottom: 24px; }
+    .flow-foot { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); text-align: center; margin-top: 11px; padding-top: 9px; border-top: 1px dashed var(--line); }
+    .rot-timeline-note { margin-bottom: 16px; }
     .stamp {
       text-align: right;
       font-family: 'IBM Plex Mono', monospace;
@@ -819,6 +816,88 @@
       box-shadow: 0 0 0 1px rgba(255,255,255,.08);
     }
 
+    /* ── CYCLE PEAK DOOM CLOCK (weekly gauge, countdown-style) ── */
+    .doom-card {
+      margin-top: 16px;
+      padding: 15px 18px;
+      background:
+        radial-gradient(130% 160% at 90% -50%, rgba(255,77,77,.09), transparent 50%),
+        linear-gradient(180deg, var(--panel), var(--bg2));
+      border-color: var(--line2);
+    }
+    .doom-head {
+      display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+      padding-bottom: 11px; margin-bottom: 13px;
+      border-bottom: 1px solid var(--line);
+    }
+    .doom-eyebrow {
+      font-family: 'Chakra Petch', sans-serif; font-size: 12px; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .doom-sub { font-size: 11px; color: var(--muted); opacity: .8; }
+    .doom-phase {
+      align-self: center;
+      font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+      letter-spacing: .12em; padding: 3px 9px; border-radius: 999px;
+      border: 1px solid currentColor; font-weight: 600; white-space: nowrap;
+    }
+    /* the three related figures, side by side: clock → countdown = risk */
+    .doom-stat {
+      display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px 13px;
+      font-family: 'IBM Plex Mono', monospace; margin-bottom: 11px;
+    }
+    /* the three figures share one size so 9:17, 163 and 32% read as equals */
+    .doom-time, .doom-min b, .doom-risk-num {
+      font-weight: 700; font-size: clamp(26px, 6.2vw, 34px); line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+    .doom-time { color: var(--txt); letter-spacing: .02em; }
+    .dcolon { animation: dblink 1.1s steps(1, end) infinite; }
+    @keyframes dblink { 50% { opacity: .18; } }
+    .doom-sep { font-size: 18px; font-weight: 300; color: var(--line2); }
+    .doom-min { font-size: 13px; color: var(--muted); }
+    .doom-min b { color: #cdd6e2; }
+    .doom-riskwrap { display: inline-flex; align-items: baseline; gap: 7px; font-size: 13px; color: var(--muted); }
+    .doom-trend { font-size: 12px; }
+    .dim { color: var(--muted); }
+    .doom-track {
+      height: 7px; border-radius: 999px; background: var(--bg);
+      border: 1px solid var(--line); margin: 0 0 12px; overflow: hidden;
+    }
+    .doom-fill {
+      height: 100%; width: 0; border-radius: 999px;
+      /* fixed zone gradient sized to the FULL track (set in JS); the bar
+         "reveals" it as it grows, so the leading edge always shows the zone */
+      background-image: linear-gradient(90deg,
+        var(--greed), var(--greed2) 24%, var(--amber) 50%, var(--fear2) 74%, var(--fear) 92%);
+      background-repeat: no-repeat; background-position: left center;
+      transition: width 1.4s cubic-bezier(.22,1,.36,1);
+    }
+    .doom-cats { display: flex; flex-wrap: wrap; gap: 6px 7px; margin-bottom: 12px; }
+    .doom-cat {
+      font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; padding: 4px 8px;
+      border-radius: 7px; border: 1px solid var(--line2); color: var(--muted);
+      display: inline-flex; gap: 5px; align-items: center; white-space: nowrap;
+    }
+    .dc-green { border-color: rgba(47,214,115,.40); color: var(--greed2); }
+    .dc-green b { color: var(--greed); }
+    .dc-amber { border-color: rgba(255,200,61,.40); color: var(--amber); }
+    .dc-amber b { color: var(--amber); }
+    .dc-red { border-color: rgba(255,77,77,.45); color: var(--fear2); background: rgba(255,77,77,.06); }
+    .dc-red b { color: var(--fear); }
+    .doom-explain {
+      font-size: 11.5px; line-height: 1.55; color: var(--muted);
+      padding-top: 11px; border-top: 1px solid var(--line);
+    }
+    .doom-explain b { color: #cdd6e2; }
+    .doom-foot {
+      font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+      color: var(--muted); opacity: .75; margin-top: 7px;
+    }
+    @media (max-width: 560px) {
+      .doom-sub, .doom-sep { display: none; }
+    }
+
     /* ── FOOTER ── */
     footer {
       margin-top: 24px;
@@ -929,6 +1008,28 @@
     </div>
     <div id="bars"></div>
   </div>
+
+  <!-- CYCLE PEAK DOOM CLOCK — weekly cycle-top gauge (countdown style), at the
+       bottom of the page. Renders from SCAN.doomClock; set show:false to hide. -->
+  <div class="card doom-card" id="doomCard" hidden>
+    <div class="doom-head">
+      <span class="doom-eyebrow">🕛 Cycle Peak Doom Clock</span>
+      <span class="doom-sub">how late we are in the cycle</span>
+    </div>
+    <!-- The three figures are one reading shown three ways: clock → countdown = risk -->
+    <div class="doom-stat">
+      <span class="doom-time" id="doomTime">--:--</span>
+      <span class="doom-sep">→</span>
+      <span class="doom-min"><b id="doomMin">0</b> min to <span class="dim">“midnight”</span></span>
+      <span class="doom-sep">=</span>
+      <span class="doom-riskwrap"><span class="doom-risk-num" id="doomRisk">0%</span><span class="dim">peak risk</span><span class="doom-trend" id="doomTrend"></span></span>
+      <span class="doom-phase" id="doomPhase">—</span>
+    </div>
+    <div class="doom-track"><div class="doom-fill" id="doomFill"></div></div>
+    <div class="doom-cats" id="doomCats"></div>
+    <div class="doom-explain"><b>One reading, three ways:</b> the clock’s position, the countdown to <b>“midnight”</b> (a major market top), and the <b>% risk score</b> that sets them. A slow <b>weekly</b> gauge — <b>not</b> a trade signal, and it doesn’t move the Fear &amp; Greed needle.</div>
+    <div class="doom-foot"><span id="doomAsof"></span></div>
+  </div>
   </div><!-- /view-vitals -->
 
   <!-- ══ ROTATION RADAR VIEW (same tab) ══ -->
@@ -955,10 +1056,17 @@
     <!-- 2b ─ analyst read (the story behind the numbers) -->
     <div id="rotRead"></div>
 
-    <!-- 3 ─ HERO: net-flow diverging bar chart -->
+    <!-- 3 ─ HERO: where the money moved — this week's net flow + the 4-week trend -->
     <div class="sec-label">Where the Money Moved · <span id="rotFlowDate" style="color:var(--muted);font-weight:400"></span></div>
     <div class="rot-intro">Net institutional flow by sector, past 5 sessions. Bars grow <b style="color:var(--greed)">right</b> when money rotates <b>in</b>, <b style="color:var(--fear)">left</b> when it rotates <b>out</b> — length is the dollar size of the flow. 💰 buying the dip · ⚠️ selling into strength.</div>
     <div class="flow-chart" id="rotFlow"></div>
+
+    <!-- 3b ─ top-movers 4-week trend (replaces the old per-sector heatmap; appears once ≥2 readings exist) -->
+    <div id="rotTrendWrap" hidden>
+      <div class="sec-label sec-label--inset">Top Movers · <span style="color:var(--muted);font-weight:400">how the biggest flows have tracked, session by session</span></div>
+      <div class="trend-chart" id="rotTrend"></div>
+    </div>
+    <div id="rotTrendNote" class="rot-timeline-note"></div>
 
     <!-- 4 ─ conviction -->
     <div class="sec-label">14-Day Conviction · <span style="color:var(--muted);font-weight:400">is the move sustained?</span></div>
@@ -972,19 +1080,6 @@
     <div class="rot-tiles" id="rotHold"></div>
     <div id="rotHoldNote"></div>
 
-    <!-- 6 ─ weekly timeline (appears once ≥2 readings exist) -->
-    <div id="rotTimelineWrap" hidden>
-      <div class="sec-label">Rotation Timeline · <span style="color:var(--muted);font-weight:400">5-day flow, week by week</span></div>
-      <div class="rot-heatwrap"><table class="rot-heat" id="rotHeat"></table></div>
-      <div class="hm-legend">
-        <span><i style="background:#2fd673"></i>Inflow</span>
-        <span><i style="background:#ff4d4d"></i>Outflow</span>
-        <span>💰 buying the dip</span>
-        <span>⚠️ selling into strength</span>
-        <span>·NEW· first appearance</span>
-      </div>
-    </div>
-    <div id="rotTimelineNote" class="rot-timeline-note"></div>
   </div>
 
   <div id="indPopover"></div>
@@ -1004,25 +1099,48 @@
    ════════════════════════════════════════════════════════════════════ */
 const SCAN = {
   date:       "2026-06-08",
-  utc:        "20:11 UTC",
-  kyiv:       "11:11 PM Kyiv",
-  ribbon:     "CLOSING BELL",           // ribbon eyebrow label
-  scanName:   "closing-bell scan",      // footer phrasing
+  utc:        "13:01 UTC",
+  kyiv:       "4:01 PM Kyiv",
+  ribbon:     "PRE-MARKET",             // ribbon eyebrow label
+  scanName:   "pre-market scan",        // footer phrasing
   prevLabel:  "prior scan",             // what the PREV / ghost reading is
-  ghostLabel: "15:01",                  // tick label drawn on the gauge
-  composite:  { prev: 58, ghost: 72, cur: 62 },
+  ghostLabel: "20:11",                  // tick label drawn on the gauge
+  composite:  { prev: 58, ghost: 58, cur: 60 },
   // editorial ribbon one-liner — may use {{tokens}}
-  ribbonMain: 'McClellan {{mcclellan}} (falling) · Power Hour {{power}} · Market Tide <b style="color:var(--greed)">{{tide}}</b>',
-  momentum:   { tag: "LEANING BULLISH", score: "+1", was: "49–56%" },
+  ribbonMain: 'McClellan {{mcclellan}} (falling) · Put/Call {{putcall}} · Market Tide <b style="color:var(--fear)">{{tide}}</b>',
+  momentum:   { tag: "STRONG BULLISH", score: "+3", was: "55–60%" },
   // Power Hour — final-hour tape read. Lives INSIDE the gauge card (not a
   // core indicator). Shown ONLY when the feed posts it; set show:false on
   // days it isn't mentioned and the block disappears. {{power}} / {{power_detail}}
   // tokens still resolve from here for the ribbon and plays.
   powerHour: {
     show:   true,
-    tag:    "NEUTRAL",         // headline state
-    state:  "amber",           // green | amber | red
-    detail: "SPY −0.22% in the last hour on 0.78× average volume (22% of the day's range) — a quiet, balanced close; the tape was neither bought nor sold with conviction into the bell.",
+    tag:    "DISTRIBUTION",     // headline state
+    state:  "red",             // green | amber | red
+    detail: "SPY −0.25% last hour, 2.02× average volume, 29% of the day's range — the close was sold.",
+  },
+  // ── CYCLE PEAK DOOM CLOCK ── weekly cycle-top gauge from the separate
+  // "Cycle Peak Doom Clock" feed (logged to data/cycle_peak_history.csv).
+  // Contextual only — has ZERO effect on the Fear & Greed needle above.
+  // Set show:false on weeks the feed doesn't post it and the card disappears.
+  doomClock: {
+    show:          true,
+    clock:         "9:17",        // analog dial position; midnight = cycle peak
+    minToMidnight: 163,
+    risk:          32,            // Cycle Peak Risk %
+    riskChangeWk:  -3,            // ▼ negative = risk eased this week
+    phase:         "MATURING",
+    weeksLogged:   "3/4",
+    asof:          "2026-06-05 22:30 UTC",
+    cats: [
+      { name: "Rotation",       score: "2/6", s: "amber" },
+      { name: "Breadth",        score: "0/4", s: "green" },
+      { name: "Volatility",     score: "2/4", s: "amber" },
+      { name: "Rates & Credit", score: "0/4", s: "green" },
+      { name: "Macro",          score: "2/8", s: "green" },
+      { name: "Sentiment",      score: "1/6", s: "green" },
+      { name: "Valuation",      score: "4/4", s: "red"   },
+    ],
   },
 };
 
@@ -1032,22 +1150,22 @@ const GHOST_AT       = SCAN.composite.ghost;
 const COMPOSITE      = SCAN.composite.cur;
 
 const indicators = [
-  { name:"VIX", prevNum:18.45, curNum:18.75, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Edged up from {{vix_prev}} → {{vix}} into the close — still well under the 20 line and firmly CALM. The options market never priced fear today despite McClellan turning negative. The drift higher is mild and ordinary; volatility stayed compressed through the bell." },
-  { name:"MOVE", prevNum:75.20, curNum:75.20, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Unchanged at {{move}} into the close — bond-market volatility held flat all session. Rate risk was a non-factor in today's equity action. Clean green." },
-  { name:"McClellan", prevNum:-5.08, curNum:-8.04, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"FALLING", tag:"FALLING", prevS:"red", s:"red",
-    note:"Deepened from {{mcclellan_prev}} → {{mcclellan}} into the close — having opened the day positive (+6.79 at 15:01), breadth turned and kept falling right into the bell. A 15-point swing top to bottom. The single red on the board, and the one to watch: advance/decline is leading lower even as the index and flow held up." },
+  { name:"VIX", prevNum:19.71, curNum:18.78, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
+    note:"Pulled back to {{vix}} from {{vix_prev}} — the drift toward 20 that closed Friday has reversed at the open. Volatility is calm and moving lower. VIX under 19 is a constructive read for equities heading into the session." },
+  { name:"MOVE", prevNum:71.16, curNum:75.20, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
+    note:"Ticked up to {{move}} from {{move_prev}} — bond market volatility nudged higher but remains firmly in the CALM zone. Rates are a slight headwind but not a driver. Still green." },
+  { name:"McClellan", prevNum:7.03, curNum:6.78, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"FALLING", tag:"FALLING", prevS:"green", s:"green",
+    note:"Slipped further to {{mcclellan}} from {{mcclellan_prev}} — the downward drift from the +15 highs of Thursday continues into Monday's pre-market. Still positive, so breadth is intact, but the steady decline is worth watching. A move below zero would change the read." },
   { name:"Hindenburg", text:true, prevVal:"CLEAR", val:"CLEAR", prevTag:"CLEAR", tag:"CLEAR", prevS:"green", s:"green",
-    note:"No signal at the close. McClellan is negative now, but Hindenburg also requires simultaneous spikes in new 52-week highs AND lows — that condition is not present. Worth watching if breadth keeps deteriorating tomorrow, but CLEAR today." },
-  { name:"% > 200 DMA", prevNum:54.8, curNum:54.8, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
-    note:"Held at {{dma200}} into the close — structural participation did not crack despite the breadth reversal. More than half the market is still above its 200-day MA. The McClellan deterioration is a short-term momentum signal, not a structural one — the long-base health is intact." },
-  { name:"Put/Call", prevNum:0.88, curNum:1.04, fmt:{dec:2}, prevTag:"NEUTRAL", tag:"BEARISH", prevS:"green", s:"amber", flip:true,
-    note:"Jumped from {{putcall_prev}} → {{putcall}} into the close — hedging demand built through the final hour and pushed the ratio above 1.0. Crossed from NEUTRAL into BEARISH: the options market got more defensive as breadth rolled over. Not panic, but a clear shift in tone into the bell." },
-  { name:"SMFI", prevNum:50723, curNum:50704, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
-    note:"{{smfi}} at the close, essentially flat from {{smfi_prev}} earlier. Smart money flow is steady — no capitulation, no aggressive accumulation. Institutions sat largely still through the breadth reversal. NEUTRAL." },
-  { name:"Market Tide", prevNum:370, curNum:349, fmt:{dec:0, pre:"$", suf:"M", comma:true}, prevTag:"BULLISH", tag:"BULLISH", prevS:"green", s:"green",
-    note:"Closed at {{tide}}, a touch off the {{tide_prev}} mid-session reading but still solidly positive. Net bullish premium flow held into the bell — the standout divergence: Market Tide stayed green all day even as McClellan turned and Put/Call went bearish. Real-money flow leaned bullish while the breadth/options tape soured." },
+    note:"No signal. McClellan is still positive at {{mcclellan}} — the breadth divergence condition is not met. Hindenburg requires simultaneous spikes in new 52-week highs AND lows with a negative McClellan. Not present." },
+  { name:"% > 200 DMA", prevNum:58.5, curNum:58.5, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
+    note:"Unchanged at {{dma200}} — structural participation is holding its ground. The broad market is entering Monday with the same structural health it closed with Friday. Long-term trend support is intact." },
+  { name:"Put/Call", prevNum:1.14, curNum:1.00, fmt:{dec:2}, prevTag:"BEARISH", tag:"BEARISH", prevS:"amber", s:"green",
+    note:"Eased to {{putcall}} from {{putcall_prev}} — hedging demand has pulled back meaningfully from Friday's close. At exactly 1.00, puts and calls are in balance. The options market is no longer skewing bearish; this is the clearest improvement from the prior session." },
+  { name:"SMFI", prevNum:50928, curNum:50928, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
+    note:"Unchanged at {{smfi}} — smart money flow is flat. Institutions have not repositioned overnight. Neutral is holding, neither a green light nor a red flag into the open." },
+  { name:"Market Tide", prevNum:-1484, curNum:-1493, fmt:{dec:0, pre:"$", suf:"M", comma:true}, prevTag:"NEGATIVE", tag:"NEGATIVE", prevS:"red", s:"red",
+    note:"Ticked a touch more negative to {{tide}} from {{tide_prev}} — bearish premium flow remains large and persistent. This is carrying over from Friday's deep bearish reading. The options market is still pricing in downside premium despite VIX and Put/Call easing." },
 ];
 
 const concentration = [
@@ -1066,26 +1184,26 @@ const concentration = [
 ];
 
 const bars = [
-  { label:"% > 12 SMA", prev:48.8, cur:45.4, tag:"CAUTIOUS" },
-  { label:"% > 20 SMA", prev:55.5, cur:52.9, tag:"BULLISH" },
-  { label:"% > 50 SMA", prev:51.8, cur:51.4, tag:"BULLISH" },
+  { label:"% > 12 SMA", prev:55.9, cur:55.9, tag:"BULLISH" },
+  { label:"% > 20 SMA", prev:59.6, cur:59.7, tag:"BULLISH" },
+  { label:"% > 50 SMA", prev:54.2, cur:54.2, tag:"BULLISH" },
 ];
 
 const plays = {
   zen: {
-    e:"😇", label:"Flow held green; breadth rolled over",
-    text:"{{green}} of {{total}} green at the bell, CONSTRUCTIVE at {{composite}}. The story is a split tape: <b>Market Tide closed {{tide}}</b> (real-money flow stayed bullish) and Power Hour was {{power}} — but <b>McClellan deepened to {{mcclellan}}</b> and Put/Call crossed into BEARISH. Structure held ({{dma200}} above the 200-day MA); short-term breadth did not.",
-    moves:[["≈","Hold core exposure — flow and structure both held; the weakness is in breadth momentum, not money."],["⚠️","Watch McClellan: it swung from +6.79 at the open to {{mcclellan}} at the close — a real reversal."],["👀","If Market Tide flips negative to confirm the McClellan roll-over, the read changes. Today it didn't."]]
+    e:"😇", label:"VIX calm, options hedge eased",
+    text:"{{green}} of {{total}} green in the pre-market. Structurally solid — {{dma200}} above the 200-day MA, McClellan positive at {{mcclellan}}, VIX back under 19. <b>Put/Call dropped to {{putcall}}</b> — the Friday hedge has been unwound. The overhang is still <b>Market Tide at {{tide}}</b>, but the market is entering Monday with a cleaner options picture than it left Friday.",
+    moves:[["≈","Hold core exposure — 200-DMA breadth intact and VIX declining into the open."],["⚠️","Market Tide at {{tide}} remains large bearish flow — watch whether it persists intraday."],["👀","McClellan at {{mcclellan}} and falling: a continued drop below zero would be the signal to trim."]]
   },
   bull: {
-    e:"🐂", label:"Flow stayed bullish all day",
-    text:"<b>Market Tide closed {{tide}} — net bullish premium flow held green through the entire session</b>, even as McClellan turned and Put/Call went bearish. {{dma200}} of stocks remain above their 200-day MA and VIX stayed calm at {{vix}}. When real-money flow diverges positive from a breadth wobble, flow usually wins. That's the bull case.",
-    moves:[["▲","Market Tide {{tide}}: the cleanest signal — institutional flow leaned bullish into the bell."],["▲","{{dma200}} above 200-day MA: structural participation intact off the June 5 low."],["▲","VIX {{vix}} calm + Power Hour {{power}}: no fear, no distribution into the close."]]
+    e:"🐂", label:"Put/Call reset; breadth intact",
+    text:"<b>Put/Call fell to {{putcall}} — the clearest single improvement from Friday's close.</b> VIX pulled back to {{vix}}, all three momentum bars remain BULLISH (above 54%), and {{dma200}} of stocks hold above their 200-day MA. The broad market is entering Monday with structural health and a notably calmer options market.",
+    moves:[["▲","Put/Call at {{putcall}}: options hedging unwound overnight — market not bracing for a gap down."],["▲","VIX {{vix}}: pulled back from Friday's 19.71 drift toward 20 — calm tone into the open."],["▲","{{dma200}} above 200-day MA: structural participation unchanged through the weekend."]]
   },
   bear: {
-    e:"🐻", label:"Breadth reversed into the close",
-    text:"<b>McClellan swung from +6.79 at the open to {{mcclellan}} at the bell — a 15-point intraday reversal.</b> Put/Call crossed into BEARISH at {{putcall}}, the 12-SMA momentum bar fell to CAUTIOUS, and the score degraded from RISK-ON (+5) at the open to CONSTRUCTIVE (+3) at the close. Breadth is leading lower; if flow follows, the June 5 bounce is in trouble.",
-    moves:[["▼","McClellan {{mcclellan}}: breadth went from positive to clearly negative in one session."],["▼","Put/Call {{putcall}}: hedging demand pushed the ratio above 1.0 — defensive into the bell."],["▼","Score faded RISK-ON (+5) → CONSTRUCTIVE (+3) across the day — momentum is one-directional, and it's down."]]
+    e:"🐻", label:"Market Tide still deeply bearish",
+    text:"<b>Market Tide at {{tide}} — the bearish premium flow that defined Friday carried into Monday's pre-market reading.</b> McClellan is {{mcclellan}} and trending lower all week. Power Hour printed {{power}} on Friday's close. VIX eased, but the persistent size of bearish options flow is the dominant signal.",
+    moves:[["▼","Market Tide {{tide}}: one of the largest bearish flow readings of the recent period, and it's not fading."],["▼","McClellan {{mcclellan}} and falling: breadth is eroding steadily from the +15 peak earlier last week."],["▼","Power Hour distribution Friday: institutions sold the close — watch whether Monday opens with follow-through selling."]]
   },
 };
 
@@ -1382,6 +1500,64 @@ if (SCAN.powerHour && SCAN.powerHour.show) {
   document.getElementById("powerHourSlot").hidden = false;
 }
 
+/* ── CYCLE PEAK DOOM CLOCK (weekly countdown-style gauge) ── */
+const doomRiskColor = v =>
+  v < 25 ? "var(--greed)" : v < 45 ? "var(--amber)" : v < 65 ? "var(--fear2)" : "var(--fear)";
+
+// Size the fill's gradient to the FULL track width so the zone colors stay
+// fixed in place — the bar reveals more of the same gradient as it grows.
+function doomBarSize() {
+  const dc = SCAN.doomClock, fill = byId("doomFill");
+  if (!dc || !dc.show || !fill) return;
+  const track = fill.parentElement, w = track ? track.clientWidth : 0;
+  fill.style.backgroundSize =
+    (w > 0 ? w + "px" : (10000 / Math.max(dc.risk, 1)) + "%") + " 100%";
+}
+window.addEventListener("resize", doomBarSize, { passive: true });
+
+function buildDoomClock() {
+  const dc = SCAN.doomClock, card = byId("doomCard");
+  if (!card) return;
+  if (!dc || !dc.show) { card.hidden = true; return; }
+  card.hidden = false;
+  const col = doomRiskColor(dc.risk);
+  byId("doomTime").innerHTML = String(dc.clock).replace(":", '<span class="dcolon">:</span>');
+  const ph = byId("doomPhase");
+  ph.textContent = dc.phase; ph.style.color = col;
+  byId("doomRisk").style.color = col;
+  // 80%+ = danger: drop the zone gradient and flood the whole bar red.
+  const fill = byId("doomFill");
+  if (dc.risk >= 80) { fill.style.backgroundImage = "none"; fill.style.backgroundColor = "var(--fear)"; }
+  else               { fill.style.backgroundImage = ""; fill.style.backgroundColor = ""; }
+  doomBarSize();
+  const ch = dc.riskChangeWk || 0;
+  const arrow = ch < 0 ? "▼" : ch > 0 ? "▲" : "▬";
+  const tcol = ch < 0 ? "var(--greed)" : ch > 0 ? "var(--fear)" : "var(--muted)";
+  const mag = Math.abs(ch);
+  byId("doomTrend").innerHTML =
+    `<span style="color:${tcol}">${arrow}${mag} pt${mag === 1 ? "" : "s"}/wk</span>`;
+  byId("doomCats").innerHTML = dc.cats.map(c =>
+    `<span class="doom-cat dc-${c.s}">${c.name} <b>${c.score}</b></span>`).join("");
+  byId("doomAsof").textContent =
+    (dc.weeksLogged ? dc.weeksLogged + " wks logged · " : "") + (dc.asof || "");
+}
+function resetDoomClock() {
+  const dc = SCAN.doomClock;
+  if (!dc || !dc.show) return;
+  byId("doomMin").textContent = "0";
+  byId("doomRisk").textContent = "0%";
+  byId("doomFill").style.width = "0%";
+}
+function animateDoom() {
+  const dc = SCAN.doomClock;
+  if (!dc || !dc.show) return;
+  doomBarSize();
+  tweenNumber(byId("doomMin"),  0, dc.minToMidnight, { dec: 0 },           1400, 250);
+  tweenNumber(byId("doomRisk"), 0, dc.risk,          { dec: 0, suf: "%" }, 1400, 250);
+  setTimeout(() => { byId("doomFill").style.width = dc.risk + "%"; }, 250);
+}
+buildDoomClock();   // build static chrome now that doomRiskColor is initialized
+
 function resetCards() {
   cardAnims.forEach(a => {
     const d = a.d;
@@ -1493,6 +1669,7 @@ function renderRotation(data) {
 
   // ── flow universe: only sectors with a measured 5-day dollar flow ──
   const withFlow = latest.flows.filter(f => f.f5 != null && isFinite(f.f5));
+  const bootstrapping = withFlow.length === 0;
   const inflow   = withFlow.filter(f => f.f5 > 0);
   const outflow  = withFlow.filter(f => f.f5 < 0);
   const biggestOut = outflow.slice().sort((a, b) => a.f5 - b.f5)[0];                       // most negative
@@ -1504,13 +1681,21 @@ function renderRotation(data) {
     `<div class="kpi kpi-${tone}"><div class="k-lbl">${lbl}</div>` +
     `<div class="k-val ${tone}">${val}</div><div class="k-sub">${sub}</div></div>`;
   let kpis = "";
-  if (biggestOut) kpis += kpi("Largest 5-day outflow", `${biggestOut.sym} ${fmtFlow(biggestOut.f5)}`, "neg",
-                              `${biggestOut.name} · ${biggestOut.signal ? biggestOut.signal.toLowerCase() : "distribution"}`);
-  if (topDip)     kpis += kpi("Smart money buying the dip", `${topDip.sym} ${fmtFlow(topDip.f5)}`, "pos",
-                              `${topDip.name} · price ${rpct(topDip.d1)} on the day`);
-  kpis += kpi("Net 5-day flow", `${inflow.length} in · ${outflow.length} out`,
-              inflow.length >= outflow.length ? "pos" : "neg",
-              `${withFlow.length} sectors with measured flow`);
+  if (bootstrapping) {
+    const bestUp    = latest.flows.filter(f => f.d1 > 0).sort((a, b) => b.d1 - a.d1)[0];
+    const worstDown = latest.flows.filter(f => f.d1 < 0).sort((a, b) => a.d1 - b.d1)[0];
+    if (bestUp)    kpis += kpi("Top sector gainer (1-day)", `${bestUp.sym} ${rpct(bestUp.d1)}`, "pos", bestUp.name);
+    if (worstDown) kpis += kpi("Top sector loser (1-day)", `${worstDown.sym} ${rpct(worstDown.d1)}`, "neg", worstDown.name);
+    kpis += kpi("Flow data", "Bootstrapping…", "neg", "~5 sessions until net flows are measured");
+  } else {
+    if (biggestOut) kpis += kpi("Largest 5-day outflow", `${biggestOut.sym} ${fmtFlow(biggestOut.f5)}`, "neg",
+                                `${biggestOut.name} · ${biggestOut.signal ? biggestOut.signal.toLowerCase() : "distribution"}`);
+    if (topDip)     kpis += kpi("Smart money buying the dip", `${topDip.sym} ${fmtFlow(topDip.f5)}`, "pos",
+                                `${topDip.name} · price ${rpct(topDip.d1)} on the day`);
+    kpis += kpi("Net 5-day flow", `${inflow.length} in · ${outflow.length} out`,
+                inflow.length >= outflow.length ? "pos" : "neg",
+                `${withFlow.length} sectors with measured flow`);
+  }
   document.getElementById("rotKpis").innerHTML = kpis;
 
   // ── 2b. analyst read (the story behind the numbers) ──
@@ -1523,30 +1708,56 @@ function renderRotation(data) {
     `</div>`
   ) : "";
 
-  // ── 3. HERO: net-flow diverging bar chart (largest movers, both sides) ──
-  document.getElementById("rotFlowDate").textContent = shortDate(latest.date) + " close · 5-day net flow";
+  // ── 3. HERO: net-flow diverging bar chart — or price-move fallback while bootstrapping ──
   const TOPN = 18;
-  const ranked = withFlow.slice()
-    .sort((a, b) => Math.abs(b.f5) - Math.abs(a.f5))   // pick the biggest movers
-    .slice(0, TOPN)
-    .sort((a, b) => b.f5 - a.f5);                       // then signed order for the diverging look
-  const maxAbs = Math.max(...ranked.map(f => Math.abs(f.f5)), 1);
-  document.getElementById("rotFlow").innerHTML =
-    `<div class="flow-axis"><span></span><div class="fa-track">` +
-    `<span class="fa-out">← rotating out</span><span class="fa-zero">0</span><span class="fa-in">rotating in →</span></div></div>` +
-    ranked.map(f => {
-      const pos = f.f5 >= 0;
-      const w = (Math.abs(f.f5) / maxAbs * 50).toFixed(1);
-      const bar = pos
-        ? `<div class="fb-bar pos" style="left:50%;width:${w}%"></div>`
-        : `<div class="fb-bar neg" style="right:50%;width:${w}%"></div>`;
-      return `<div class="flow-row" title="${f.name} — 5D net flow ${fmtFlow(f.f5)} · price 1D ${rpct(f.d1)}">` +
-             `<span class="fb-sym">${f.sym}</span>` +
-             `<div class="fb-track">${bar}</div>` +
-             `<span class="fb-val ${pos ? "pos" : "neg"}">${fmtFlow(f.f5)}</span>` +
-             `<span class="fb-sig">${sigIcon(f.signal)}${f.new ? '<i class="fb-new">N</i>' : ""}</span></div>`;
-    }).join("") +
-    (withFlow.length > TOPN ? `<div class="flow-foot">Showing the ${TOPN} largest of ${withFlow.length} measured sector flows.</div>` : "");
+  if (bootstrapping) {
+    document.getElementById("rotFlowDate").textContent = shortDate(latest.date) + " close · 1-day price move";
+    const byPrice = latest.flows
+      .filter(f => f.d1 != null && isFinite(f.d1))
+      .sort((a, b) => Math.abs(b.d1) - Math.abs(a.d1))
+      .slice(0, TOPN)
+      .sort((a, b) => b.d1 - a.d1);
+    const maxD1 = Math.max(...byPrice.map(f => Math.abs(f.d1)), 1);
+    document.getElementById("rotFlow").innerHTML =
+      `<div class="flow-foot" style="margin-bottom:.6rem">⏳ Net-flow data bootstrapping — showing 1-day price moves until the bot collects ~5 days of shares-outstanding history.</div>` +
+      `<div class="flow-axis"><span></span><div class="fa-track">` +
+      `<span class="fa-out">← selling off</span><span class="fa-zero">0</span><span class="fa-in">rallying →</span></div></div>` +
+      byPrice.map(f => {
+        const pos = f.d1 >= 0;
+        const w = (Math.abs(f.d1) / maxD1 * 50).toFixed(1);
+        const bar = pos
+          ? `<div class="fb-bar pos" style="left:50%;width:${w}%"></div>`
+          : `<div class="fb-bar neg" style="right:50%;width:${w}%"></div>`;
+        return `<div class="flow-row" data-tip="${f.name} · 1D ${rpct(f.d1)} · 5D ${rpct(f.d5)}">` +
+               `<span class="fb-sym">${f.sym}</span>` +
+               `<div class="fb-track">${bar}</div>` +
+               `<span class="fb-val ${pos ? "pos" : "neg"}">${rpct(f.d1)}</span>` +
+               `<span class="fb-sig"></span></div>`;
+      }).join("");
+  } else {
+    document.getElementById("rotFlowDate").textContent = shortDate(latest.date) + " close · 5-day net flow";
+    const ranked = withFlow.slice()
+      .sort((a, b) => Math.abs(b.f5) - Math.abs(a.f5))   // pick the biggest movers
+      .slice(0, TOPN)
+      .sort((a, b) => b.f5 - a.f5);                       // then signed order for the diverging look
+    const maxAbs = Math.max(...ranked.map(f => Math.abs(f.f5)), 1);
+    document.getElementById("rotFlow").innerHTML =
+      `<div class="flow-axis"><span></span><div class="fa-track">` +
+      `<span class="fa-out">← rotating out</span><span class="fa-zero">0</span><span class="fa-in">rotating in →</span></div></div>` +
+      ranked.map(f => {
+        const pos = f.f5 >= 0;
+        const w = (Math.abs(f.f5) / maxAbs * 50).toFixed(1);
+        const bar = pos
+          ? `<div class="fb-bar pos" style="left:50%;width:${w}%"></div>`
+          : `<div class="fb-bar neg" style="right:50%;width:${w}%"></div>`;
+        return `<div class="flow-row" data-tip="${f.name} · 5D ${fmtFlow(f.f5)} · 1D ${rpct(f.d1)}">` +
+               `<span class="fb-sym">${f.sym}</span>` +
+               `<div class="fb-track">${bar}</div>` +
+               `<span class="fb-val ${pos ? "pos" : "neg"}">${fmtFlow(f.f5)}</span>` +
+               `<span class="fb-sig">${sigIcon(f.signal)}${f.new ? '<i class="fb-new">N</i>' : ""}</span></div>`;
+      }).join("") +
+      (withFlow.length > TOPN ? `<div class="flow-foot">Showing the ${TOPN} largest of ${withFlow.length} measured sector flows.</div>` : "");
+  }
 
   // ── 4. 14-day conviction ──
   const convRow = (c, color) =>
@@ -1563,48 +1774,93 @@ function renderRotation(data) {
   document.getElementById("rotHoldNote").innerHTML = latest.holdNote
     ? `<div class="rot-note"><span class="rn-ico">⚠️</span><p>${latest.holdNote}</p></div>` : "";
 
-  // ── 6. weekly timeline heatmap — only meaningful once ≥2 readings exist ──
+  // ── 3b. top-movers 4-week trend — only meaningful once ≥2 readings exist ──
   if (snaps.length >= 2) {
-    document.getElementById("rotTimelineWrap").hidden = false;
-    document.getElementById("rotTimelineNote").innerHTML = "";
-    renderHeatmap(snaps);
+    document.getElementById("rotTrendWrap").hidden = false;
+    document.getElementById("rotTrendNote").innerHTML = "";
+    renderTrend(snaps);
   } else {
-    document.getElementById("rotTimelineWrap").hidden = true;
-    document.getElementById("rotTimelineNote").innerHTML =
-      `<div class="rot-empty">📈 Weekly rotation timeline<br><span>Builds here automatically as more readings are added — one column per week.</span></div>`;
+    document.getElementById("rotTrendWrap").hidden = true;
+    document.getElementById("rotTrendNote").innerHTML =
+      `<div class="rot-empty">📈 4-week net-flow trend<br><span>Charts here automatically once a second reading is added — one point per week.</span></div>`;
   }
 }
 
-// Heatmap timeline — rows = union of syms, cols = dates. Cells are coloured by
-// the SIGN of the 5-day net flow (not the bot's daily in/out post bucket, which
-// flips day-to-day) so persistent accumulation/distribution reads consistently.
-function renderHeatmap(snaps) {
-  const latest = snaps[snaps.length - 1];
-  const dates = snaps.map(s => s.date);
-  const netFlow = f => f.f5 ?? f.f1 ?? 0;
-  const order = latest.flows.slice().sort((a, b) => netFlow(b) - netFlow(a));
-  const seen = new Set(order.map(f => f.sym));
-  const rows = order.map(f => ({ sym: f.sym, name: f.name }));
-  snaps.forEach(s => s.flows.forEach(f => { if (!seen.has(f.sym)) { seen.add(f.sym); rows.push({ sym: f.sym, name: f.name }); } }));
+// Top-movers trend — a compact multi-line chart of 5-day net flow over the last
+// 4 readings for the biggest CURRENT movers. Replaces the old per-sector heatmap:
+// instead of one row per sector (40+ rows that never fit), it plots only the
+// sectors that matter and shows the DIRECTION of the rotation over time. Lines
+// rise above the zero baseline when money is flowing in, drop below when out.
+function renderTrend(snaps) {
+  const TREND_MAX = 10;                                       // show up to the last 10 sessions
+  const recent = snaps.slice(-TREND_MAX);
+  const latest = recent[recent.length - 1];
+  const hasF5  = f => f.f5 != null && isFinite(f.f5);
 
-  const head = `<thead><tr><th>Sector</th>${dates.map(d => `<th>${shortDate(d)}</th>`).join("")}</tr></thead>`;
-  const body = "<tbody>" + rows.map(r => {
-    const cells = snaps.map(s => {
-      const f = s.flows.find(x => x.sym === r.sym);
-      if (!f) return `<td></td>`;
-      const nf = netFlow(f), pos = nf >= 0;
-      const c = pos ? "47,214,115" : "255,77,77";
-      const a = (0.28 + 0.6 * Math.min(1, Math.abs(nf) / 2000)).toFixed(2);
-      return `<td class="hm-cell ${pos ? "" : "out"}" style="background:rgba(${c},${a})" title="${f.name} — 5D net ${pos ? "inflow" : "outflow"} ${fmtFlow(f.f5)} · price 1D ${rpct(f.d1)}">${rpct(f.d1)} ${sigIcon(f.signal)}<small>${fmtFlow(f.f5)}</small></td>`;
-    }).join("");
-    return `<tr><td class="hm-sym"><b>${r.sym}</b><span>${r.name}</span></td>${cells}</tr>`;
-  }).join("") + "</tbody>";
-  document.getElementById("rotHeat").innerHTML = head + body;
+  // pick the biggest current movers (both inflow and outflow)
+  const movers = latest.flows.filter(hasF5)
+    .sort((a, b) => Math.abs(b.f5) - Math.abs(a.f5))
+    .slice(0, 7);
+  if (!movers.length) { document.getElementById("rotTrend").innerHTML = ""; return; }
+
+  const PAL = ["#2fd673", "#56a8ff", "#ffc83d", "#ff7a45", "#c77dff", "#37e0c4", "#ff6fa5"];
+  const series = movers.map((m, i) => {
+    const pts  = recent.map(s => { const f = s.flows.find(x => x.sym === m.sym); return f && hasF5(f) ? f.f5 : null; });
+    const last = [...pts].reverse().find(v => v != null);
+    return { sym: m.sym, name: m.name, color: PAL[i % PAL.length], signal: m.signal, pts, last };
+  });
+
+  // symmetric y-range around zero (flows go both ways)
+  const vals   = series.flatMap(s => s.pts).filter(v => v != null);
+  const maxAbs = Math.max(...vals.map(Math.abs), 1);
+
+  // geometry, in viewBox units (the SVG scales to its container width)
+  const W = 620, H = 230, padL = 56, padR = 14, padT = 14, padB = 28;
+  const n = recent.length;
+  const X = i => padL + (n === 1 ? 0 : i / (n - 1) * (W - padL - padR));
+  const Y = v => padT + (1 - (v + maxAbs) / (2 * maxAbs)) * (H - padT - padB);
+  const z = Y(0);
+
+  // gridlines + y-axis labels (+max / 0 / −max)
+  const grid =
+    `<line class="tg-grid" x1="${padL}" y1="${Y(maxAbs)}" x2="${W - padR}" y2="${Y(maxAbs)}"/>` +
+    `<line class="tg-zero" x1="${padL}" y1="${z}" x2="${W - padR}" y2="${z}"/>` +
+    `<line class="tg-grid" x1="${padL}" y1="${Y(-maxAbs)}" x2="${W - padR}" y2="${Y(-maxAbs)}"/>` +
+    `<text class="tg-axis" x="${padL - 8}" y="${Y(maxAbs) + 4}" text-anchor="end">${fmtFlow(maxAbs)}</text>` +
+    `<text class="tg-axis" x="${padL - 8}" y="${z + 4}" text-anchor="end">0</text>` +
+    `<text class="tg-axis" x="${padL - 8}" y="${Y(-maxAbs) + 4}" text-anchor="end">${fmtFlow(-maxAbs)}</text>`;
+
+  // x-axis date labels — thin them out once there are many sessions
+  const xstep = n > 8 ? 2 : 1;
+  const xlab = recent.map((s, i) => {
+    if (i !== 0 && i !== n - 1 && i % xstep !== 0) return "";
+    return `<text class="tg-axis" x="${X(i)}" y="${H - 8}" text-anchor="${i === 0 ? "start" : i === n - 1 ? "end" : "middle"}">${shortDate(s.date)}</text>`;
+  }).join("");
+
+  // one polyline + dots per series (gaps connect across any missing week)
+  const lines = series.map(s => {
+    const pres = s.pts.map((v, i) => v == null ? null : [X(i), Y(v)]).filter(Boolean);
+    const path = pres.map(p => `${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(" ");
+    const dots = pres.map(p => `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2.6" fill="${s.color}"/>`).join("");
+    return `<polyline points="${path}" fill="none" stroke="${s.color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>${dots}`;
+  }).join("");
+
+  const svg =
+    `<svg class="trend-svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" role="img" ` +
+    `aria-label="Top-mover 5-day net flow over the last ${n} readings">${grid}${xlab}${lines}</svg>`;
+
+  // legend: colour · symbol · latest flow · signal icon
+  const legend = `<div class="trend-legend">` + series.map(s =>
+    `<span class="tl-item" data-tip="${s.name}"><i style="background:${s.color}"></i>${s.sym} ` +
+    `<b style="color:${s.color}">${fmtFlow(s.last)}</b>${sigIcon(s.signal)}</span>`
+  ).join("") + `</div>`;
+
+  document.getElementById("rotTrend").innerHTML = legend + svg;
 }
 
 function renderRotationEmpty(msg) {
   document.getElementById("rotRegime").innerHTML = `<div class="rot-empty">📡 ${msg}<br><span>Add a reading to data/rotation_history.json and it renders here.</span></div>`;
-  ["rotKpis","rotRead","rotFlow","rotAcc","rotDist","rotHold","rotHoldNote","rotHeat"].forEach(id => { const e = document.getElementById(id); if (e) e.innerHTML = ""; });
+  ["rotKpis","rotRead","rotFlow","rotAcc","rotDist","rotHold","rotHoldNote","rotTrend"].forEach(id => { const e = document.getElementById(id); if (e) e.innerHTML = ""; });
 }
 let rotationLoaded = false;
 function loadRotation() {
@@ -1637,9 +1893,9 @@ if (location.hash === "#rotation") showView("rotation");
 function runAll() {
   needle.setAttribute("d", needleShape(PREV_COMPOSITE));
   document.getElementById("scoreNum").textContent = PREV_COMPOSITE;
-  resetCards(); resetBars();
+  resetCards(); resetBars(); resetDoomClock();
   setTimeout(() => animateGauge(PREV_COMPOSITE, COMPOSITE, 1600), 200);
-  runCards(); runBars();
+  runCards(); runBars(); animateDoom();
   const rb = document.getElementById("ribbon");
   rb.style.animation = "none"; void rb.offsetWidth; rb.style.animation = "";
 }
