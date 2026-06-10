@@ -226,13 +226,23 @@
     .fb-sym { font-size: 12px; font-weight: 700; color: var(--txt); cursor: help; text-decoration: underline dotted rgba(125,139,160,.45); text-underline-offset: 3px; }
     .fb-track { position: relative; height: 13px; }
     .fb-track::before { content: ""; position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px; background: var(--line2); }
-    .fb-bar { position: absolute; top: 0; height: 13px; border-radius: 2px; }
+    .fb-bar { position: absolute; top: 0; height: 13px; border-radius: 2px; transform-origin: var(--grow-from, left center); animation: barGrow .55s cubic-bezier(.22,.61,.36,1) both; }
     .fb-bar.pos { background: linear-gradient(90deg, rgba(47,214,115,.45), var(--greed)); box-shadow: 0 0 8px rgba(47,214,115,.22); }
     .fb-bar.neg { background: linear-gradient(270deg, rgba(255,77,77,.45), var(--fear)); box-shadow: 0 0 8px rgba(255,77,77,.22); }
     .fb-val { font-size: 12px; font-weight: 600; text-align: right; }
     .fb-val.pos { color: var(--greed); } .fb-val.neg { color: var(--fear); }
     .fb-delta { font-size: 10px; text-align: center; color: var(--muted); }
     .fb-delta.up { color: var(--greed); } .fb-delta.dn { color: var(--fear); }
+    .fb-delta.up, .fb-delta.dn { animation: deltaPop .5s ease both; animation-delay: .4s; }
+    @keyframes barGrow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+    @keyframes deltaPop {
+      0%   { transform: translateY(var(--pop-from, -3px)) scale(.4); opacity: 0; }
+      60%  { transform: translateY(0) scale(1.25); opacity: 1; }
+      100% { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .fb-bar, .fb-delta.up, .fb-delta.dn { animation: none; }
+    }
     .fb-sig { font-size: 12px; text-align: center; }
     .fb-sig .fb-new { font-style: normal; font-size: 7.5px; color: #56a8ff; border: 1px solid rgba(86,168,255,.4); border-radius: 3px; padding: 0 2px; margin-left: 3px; vertical-align: 1px; }
     .flow-foot { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); text-align: center; margin-top: 11px; padding-top: 9px; border-top: 1px dashed var(--line); }
@@ -1728,12 +1738,13 @@ function renderRotation(data) {
       `<div class="flow-foot" style="margin-bottom:.6rem">⏳ Net-flow data bootstrapping — showing 1-day price moves until the bot collects ~5 days of shares-outstanding history.</div>` +
       `<div class="flow-axis"><span></span><div class="fa-track">` +
       `<span class="fa-out">← selling off</span><span class="fa-zero">0</span><span class="fa-in">rallying →</span></div></div>` +
-      byPrice.map(f => {
+      byPrice.map((f, i) => {
         const pos = f.d1 >= 0;
         const w = (Math.abs(f.d1) / maxD1 * 50).toFixed(1);
+        const dly = (i * 0.03).toFixed(2);
         const bar = pos
-          ? `<div class="fb-bar pos" style="left:50%;width:${w}%"></div>`
-          : `<div class="fb-bar neg" style="right:50%;width:${w}%"></div>`;
+          ? `<div class="fb-bar pos" style="left:50%;width:${w}%;--grow-from:left center;animation-delay:${dly}s"></div>`
+          : `<div class="fb-bar neg" style="right:50%;width:${w}%;--grow-from:right center;animation-delay:${dly}s"></div>`;
         return `<div class="flow-row" data-tip="${f.name} · 1D ${rpct(f.d1)} · 5D ${rpct(f.d5)}">` +
                `<span class="fb-sym">${f.sym}</span>` +
                `<div class="fb-track">${bar}</div>` +
@@ -1751,22 +1762,24 @@ function renderRotation(data) {
     document.getElementById("rotFlow").innerHTML =
       `<div class="flow-axis"><span></span><div class="fa-track">` +
       `<span class="fa-out">← rotating out</span><span class="fa-zero">0</span><span class="fa-in">rotating in →</span></div></div>` +
-      ranked.map(f => {
+      ranked.map((f, i) => {
         const pos = f.f5 >= 0;
         const w = (Math.abs(f.f5) / maxAbs * 50).toFixed(1);
+        const dly = (i * 0.03).toFixed(2);
         const bar = pos
-          ? `<div class="fb-bar pos" style="left:50%;width:${w}%"></div>`
-          : `<div class="fb-bar neg" style="right:50%;width:${w}%"></div>`;
+          ? `<div class="fb-bar pos" style="left:50%;width:${w}%;--grow-from:left center;animation-delay:${dly}s"></div>`
+          : `<div class="fb-bar neg" style="right:50%;width:${w}%;--grow-from:right center;animation-delay:${dly}s"></div>`;
         const pf5 = prevF5Map.has(f.sym) ? prevF5Map.get(f.sym) : null;
         const delta = (pf5 != null && f.f5 != null) ? f.f5 - pf5 : null;
         const dCls = delta === null ? "" : delta > 0 ? "up" : delta < 0 ? "dn" : "";
         const dArrow = delta === null ? "" : delta > 0 ? "▲" : delta < 0 ? "▼" : "–";
+        const popFrom = delta > 0 ? "3px" : "-3px";
         const prevTip = pf5 != null ? ` · prev ${fmtFlow(pf5)}` : "";
         return `<div class="flow-row" data-tip="${f.name} · 5D ${fmtFlow(f.f5)} · 1D ${rpct(f.d1)}${prevTip}">` +
                `<span class="fb-sym">${f.sym}</span>` +
                `<div class="fb-track">${bar}</div>` +
                `<span class="fb-val ${pos ? "pos" : "neg"}">${fmtFlow(f.f5)}</span>` +
-               `<span class="fb-delta ${dCls}" title="${delta !== null ? (delta >= 0 ? "+" : "") + fmtFlow(delta) + " vs prev" : ""}">${dArrow}</span>` +
+               `<span class="fb-delta ${dCls}" style="--pop-from:${popFrom};animation-delay:${(0.4 + i * 0.03).toFixed(2)}s" title="${delta !== null ? (delta >= 0 ? "+" : "") + fmtFlow(delta) + " vs prev" : ""}">${dArrow}</span>` +
                `<span class="fb-sig">${sigIcon(f.signal)}${f.new ? '<i class="fb-new">N</i>' : ""}</span></div>`;
       }).join("") +
       (withFlow.length > TOPN ? `<div class="flow-foot">Showing the ${TOPN} largest of ${withFlow.length} measured sector flows.</div>` : "");
