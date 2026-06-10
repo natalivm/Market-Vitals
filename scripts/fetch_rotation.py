@@ -29,6 +29,8 @@ import argparse
 import json
 import os
 import sys
+import time
+import urllib.error
 import urllib.request
 from datetime import datetime, timezone
 
@@ -42,14 +44,35 @@ UA = {"User-Agent": "Mozilla/5.0 (Market-Vitals rotation bot)"}
 MIN_COVERAGE = 30          # of 41 tickers; abort below this
 SELLOFF, RALLY = 0.66, 0.34  # breadth thresholds for the regime label
 SHARES_CACHE = "data/rotation_shares.json"
+HTTP_RETRIES = 4           # attempts per URL before giving up on it
+HTTP_BACKOFF = 1.5         # seconds; exponential (1.5, 3, 6, …) on transient errors
 
 MOCK = False
 
 
 # ── HTTP ──────────────────────────────────────────────────────────────────────
 def _get(url, timeout=20):
-    with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=timeout) as r:
-        return json.loads(r.read().decode())
+    """GET + parse JSON with retry/backoff. Yahoo throttles bursts (HTTP 429)
+    and occasionally times out; without retries a transient blip drops ticker
+    coverage below MIN_COVERAGE and aborts the whole run — which also skips the
+    shares-cache write and breaks the flow bootstrap chain. Retrying transient
+    failures keeps a single flaky response from costing a day of flow history."""
+    last_err = None
+    for attempt in range(HTTP_RETRIES):
+        try:
+            with urllib.request.urlopen(
+                    urllib.request.Request(url, headers=UA), timeout=timeout) as r:
+                return json.loads(r.read().decode())
+        except urllib.error.HTTPError as e:
+            last_err = e
+            # 429 (rate-limit) and 5xx are transient; 4xx (e.g. 404) are not.
+            if e.code != 429 and e.code < 500:
+                raise
+        except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as e:
+            last_err = e
+        if attempt < HTTP_RETRIES - 1:
+            time.sleep(HTTP_BACKOFF * (2 ** attempt))
+    raise last_err
 
 
 def _chart(sym):
