@@ -1139,16 +1139,16 @@
    ════════════════════════════════════════════════════════════════════ */
 const SCAN = {
   date:       "2026-06-10",
-  utc:        "15:01 UTC",
-  kyiv:       "6:01 PM Kyiv",
+  utc:        "17:01 UTC",
+  kyiv:       "8:01 PM Kyiv",
   ribbon:     "MID-SESSION",               // ribbon eyebrow label
-  scanName:   "mid-session scan",          // footer phrasing
-  prevLabel:  "Jun 9 close",              // what the PREV / ghost reading is
-  ghostLabel: "Jun 9",                    // tick label drawn on the gauge
-  composite:  { prev: 63, ghost: 63, cur: 68 },
+  scanName:   "afternoon scan",            // footer phrasing
+  prevLabel:  "15:01 scan",               // what the PREV / ghost reading is
+  ghostLabel: "15:01",                    // tick label drawn on the gauge
+  composite:  { prev: 68, ghost: 68, cur: 50 },
   // editorial ribbon one-liner — may use {{tokens}}
-  ribbonMain: 'CPI 4.2% hot · VIX {{vix}} (elevated) · Put/Call {{putcall}} · Market Tide <b style="color:var(--greed)">{{tide}}</b>',
-  momentum:   { tag: "STRONG BULLISH", score: "+3", was: "62–65%" },
+  ribbonMain: 'Put/Call <b style="color:var(--fear)">{{putcall}}</b> EXTREME FEAR · VIX {{vix}} (elevated) · Market Tide <b style="color:var(--fear)">{{tide}}</b>',
+  momentum:   { tag: "STRONG BULLISH", score: "+3", was: "60–64%" },
   powerHour: {
     show:   false,
     tag:    "",
@@ -1186,22 +1186,22 @@ const GHOST_AT       = SCAN.composite.ghost;
 const COMPOSITE      = SCAN.composite.cur;
 
 const indicators = [
-  { name:"VIX", prevNum:19.93, curNum:20.89, fmt:{dec:2}, prevTag:"CALM", tag:"ELEVATED", prevS:"green", s:"amber",
-    note:"Crossed 20 to {{vix}} — flipped from CALM to ELEVATED. The proximate cause is today's CPI print (4.2% headline, highest since April 2023), which revives rate-hike risk. Geopolitical oil shock from the Iran conflict adds a second layer. At 20 the VIX is amber, not red — markets are repricing risk, not panicking." },
-  { name:"MOVE", prevNum:76.98, curNum:77.03, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Essentially flat at {{move}} — bond volatility barely moved on the hot CPI, which is interesting. The market is pricing in persistent inflation more than an imminent Fed pivot. Rates are steady; this is not a credit-event environment." },
-  { name:"McClellan", prevNum:18.28, curNum:13.59, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"RISING", tag:"FALLING", prevS:"green", s:"green",
-    note:"Eased to {{mcclellan}} from {{mcclellan_prev}} — breadth momentum slipped from yesterday's reversal high but remains positive. Falling from 18 to 13 is a digestion move after a sharp reversal, not a breakdown. Still green; watch for a close below zero." },
+  { name:"VIX", prevNum:20.89, curNum:21.69, fmt:{dec:2}, prevTag:"ELEVATED", tag:"ELEVATED", prevS:"amber", s:"amber",
+    note:"Climbed further to {{vix}} from {{vix_prev}} — fear is building through the afternoon. Still ELEVATED rather than panic-level, but the direction is the concern: VIX rose alongside a Put/Call surge into EXTREME FEAR. The CPI shock and Iran oil tensions are now feeding through to options demand." },
+  { name:"MOVE", prevNum:77.03, curNum:77.03, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
+    note:"Unchanged at {{move}} — bond volatility remains firmly CALM and is the steady anchor of the board. The equity fear is not bleeding into rates: this is an options-positioning and sentiment story, not a credit or rates dislocation." },
+  { name:"McClellan", prevNum:13.59, curNum:11.87, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"FALLING", tag:"FALLING", prevS:"green", s:"green",
+    note:"Eased again to {{mcclellan}} from {{mcclellan_prev}} — breadth momentum keeps slipping but is still positive. The grind lower from 18 toward 12 says the late-week reversal is losing steam. Still green, but it has now fallen two scans running; a move below zero would flip the breadth story." },
   { name:"Hindenburg", text:true, prevVal:"CLEAR", val:"CLEAR", prevTag:"CLEAR", tag:"CLEAR", prevS:"green", s:"green",
-    note:"No signal. McClellan is positive at {{mcclellan}} — the breadth divergence condition that triggers Hindenburg requires simultaneous new highs and new lows alongside a negative McClellan. That's not the tape today." },
-  { name:"% > 200 DMA", prevNum:58.1, curNum:59.1, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
-    note:"Ticked up to {{dma200}} from {{dma200_prev}} — the quiet bright spot mid-session. Broad market participation is slowly widening even as macro headwinds mount. More than half of all stocks are above their long-term trend line and that number is growing." },
-  { name:"Put/Call", prevNum:1.15, curNum:0.78, fmt:{dec:2}, prevTag:"BEARISH", tag:"NEUTRAL", prevS:"amber", s:"green",
-    note:"Dropped sharply to {{putcall}} from {{putcall_prev}} — the biggest single-indicator improvement today. Despite hot CPI and geopolitical noise, options traders are not reaching for puts mid-session. NEUTRAL Put/Call on a CPI day is a resilience signal." },
-  { name:"SMFI", prevNum:50678, curNum:50166, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
-    note:"Dipped slightly to {{smfi}} from {{smfi_prev}} — smart money flow ticked lower but holds the NEUTRAL range. Institutions are cautious on the inflation read but not pulling bids aggressively." },
-  { name:"Market Tide", prevNum:-793, curNum:-1, fmt:{dec:0, pre:"$", suf:"M", comma:true}, prevTag:"NEGATIVE", tag:"BALANCED", prevS:"red", s:"green",
-    note:"Surged from {{tide_prev}} to essentially flat at {{tide}} — this is the most dramatic single-day shift in the read. The options-market premium flow went from deeply negative to BALANCED, meaning the institutional bid absorbed all of yesterday's bearish overhang. A key reason the composite upgraded to CONSTRUCTIVE+3 despite the macro noise." },
+    note:"No signal. McClellan is still positive at {{mcclellan}} — the breadth divergence condition that triggers Hindenburg requires a negative McClellan alongside simultaneous new highs and lows. Despite the sentiment deterioration, the breadth structure hasn't broken." },
+  { name:"% > 200 DMA", prevNum:59.1, curNum:59.6, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
+    note:"Edged up to {{dma200}} from {{dma200_prev}} — the lone improving indicator. Underlying participation is actually widening even as the options market panics. This divergence (healthy breadth vs. EXTREME FEAR sentiment) is exactly the contrarian setup the Bot flags below." },
+  { name:"Put/Call", prevNum:0.78, curNum:1.23, fmt:{dec:2}, prevTag:"NEUTRAL", tag:"EXTREME FEAR", prevS:"green", s:"red",
+    note:"Spiked to {{putcall}} from {{putcall_prev}} — a violent reversal from this morning's neutral read into EXTREME FEAR. Put volume is now overwhelming calls. Above 1.2 is historically a CONTRARIAN buy zone: when everyone rushes to hedge at once, the downside is often already priced. The single biggest driver of today's downgrade to MIXED." },
+  { name:"SMFI", prevNum:50166, curNum:50297, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
+    note:"Ticked up to {{smfi}} from {{smfi_prev}} — smart money flow nudged higher and holds NEUTRAL. Notably, institutions are NOT joining the retail put-buying panic; SMFI rising while Put/Call spikes is another sign the fear is positioning-driven, not conviction selling." },
+  { name:"Market Tide", prevNum:-1, curNum:-242, fmt:{dec:0, pre:"$", suf:"M", comma:true}, prevTag:"BALANCED", tag:"NEGATIVE", prevS:"green", s:"red",
+    note:"Rolled back over to {{tide}} from {{tide_prev}} — this morning's balanced flow gave way to renewed bearish premium as the afternoon's fear took hold. At -$242M it's negative again but far from the -$793M low seen yesterday. The overhang returned but is milder than mid-week." },
 ];
 
 const concentration = [
@@ -1220,26 +1220,26 @@ const concentration = [
 ];
 
 const bars = [
-  { label:"% > 12 SMA", prev:60.4, cur:62.8, tag:"BULLISH" },
-  { label:"% > 20 SMA", prev:62.6, cur:64.7, tag:"BULLISH" },
-  { label:"% > 50 SMA", prev:55.9, cur:57.2, tag:"BULLISH" },
+  { label:"% > 12 SMA", prev:62.8, cur:60.2, tag:"BULLISH" },
+  { label:"% > 20 SMA", prev:64.7, cur:64.1, tag:"BULLISH" },
+  { label:"% > 50 SMA", prev:57.2, cur:56.8, tag:"BULLISH" },
 ];
 
 const plays = {
   zen: {
-    e:"😇", label:"Market absorbed hot CPI — tape is resilient",
-    text:"{{green}} of {{total}} green mid-session despite 4.2% CPI (highest since April 2023) and oil near $90 on Iran tensions. The tell is Market Tide: from {{tide_prev}} yesterday to essentially flat {{tide}} today — institutions absorbed the macro shock without pulling bids. Put/Call dropped to {{putcall}} on a hot inflation day, which is the opposite of panic. VIX crossed 20 to {{vix}} (amber) but the underlying breadth is expanding.",
-    moves:[["≈","Composite improved to CONSTRUCTIVE+3 on a bad macro day — the market's ability to absorb CPI+geopolitics is itself a signal."],["⚠️","VIX {{vix}} just crossed ELEVATED — any escalation in Iran or a second inflation catalyst could spike it quickly."],["👀","McClellan {{mcclellan}}: still positive but falling from yesterday's reversal high — watch for a close below zero."]]
+    e:"😇", label:"Sentiment cracked, structure held",
+    text:"{{green}} of {{total}} green but the composite slid to MIXED as Put/Call spiked to {{putcall}} — EXTREME FEAR. The split to read: <b>sentiment deteriorated sharply while market structure held.</b> Put/Call and Market Tide ({{tide}}) flipped red on afternoon fear, yet % > 200 DMA actually rose to {{dma200}} and SMFI ticked up — institutions aren't joining the put-buying panic. MOVE is unchanged and CALM. This is a positioning wobble layered on a still-healthy breadth base, not a structural break.",
+    moves:[["≈","Don't chase the fear print — breadth (% > 200 DMA {{dma200}}) and smart money (SMFI) diverge from the EXTREME FEAR sentiment."],["⚠️","Put/Call {{putcall}} above 1.2 is historically a contrarian zone, but it can stay elevated — size any contrarian add small."],["👀","McClellan {{mcclellan}} has fallen two scans running; a close below zero would turn the divergence bearish."]]
   },
   bull: {
-    e:"🐂", label:"Market Tide flipped, Put/Call collapsed",
-    text:"<b>Market Tide went from {{tide_prev}} to {{tide}} — the entire options-market overhang dissolved in one session.</b> Put/Call fell to {{putcall}} on a day when most investors expected hedging to spike on hot CPI. {{dma200}} of stocks above their 200-day MA and climbing. All three momentum bars pushed higher (62–65% range). The market is telling you the macro noise was already priced.",
-    moves:[["▲","Market Tide {{tide}}: near-zero from deeply negative — institutional premium flow flipped; biggest positive shift on the board."],["▲","Put/Call {{putcall}}: fell on hot CPI day — resilience signal, not complacency given the underlying breadth improvement."],["▲","% > 200 DMA {{dma200}}: rising on a bad macro day — broad participation widening when it should be narrowing."]]
+    e:"🐂", label:"EXTREME FEAR = contrarian setup",
+    text:"<b>Put/Call at {{putcall}} just crossed into EXTREME FEAR — put volume is overwhelming calls.</b> The Bot flags this directly: above 1.2 is historically a CONTRARIAN BUY signal. What makes the setup credible here is the divergence — while options traders panic, {{dma200}} of stocks sit above their 200-day MA (rising) and SMFI ({{smfi}}) ticked UP. Smart money is not selling. When everyone rushes to hedge at once on healthy breadth, the downside is often already priced.",
+    moves:[["▲","Put/Call {{putcall}}: EXTREME FEAR above 1.2 — the contrarian reading the Bot itself calls out as a buy zone."],["▲","% > 200 DMA {{dma200}}: rising into the fear — broad participation widening, the opposite of a real breakdown."],["▲","SMFI {{smfi}}: institutions nudged in while retail bought puts — no conviction selling underneath the panic."]]
   },
   bear: {
-    e:"🐻", label:"CPI 4.2% + oil shock = delayed risk",
-    text:"<b>Today's macro read is a ticking clock: CPI 4.2% (highest since April 2023) driven by an oil shock from the Iran conflict.</b> Energy up 23.5% YoY and near $90/barrel. The market is shrugging mid-session but inflation at this level revives Fed tightening risk and compresses margins. VIX {{vix}} just crossed ELEVATED. McClellan {{mcclellan}} is falling off its reversal high. If oil escalates or the Fed responds, the mid-session resilience unwinds fast.",
-    moves:[["▼","CPI 4.2%: a third consecutive monthly acceleration driven by energy — not transitory; the Fed's hand may be forced."],["▼","VIX {{vix}}: crossed 20 into ELEVATED — the calm is fragile; a second catalyst (escalation, Fed speak) breaks it."],["▼","McClellan {{mcclellan}}: falling from 18.28 — breadth momentum is decelerating mid-week; watch for a close near zero."]]
+    e:"🐻", label:"Fear is spreading across the board",
+    text:"<b>Two indicators flipped red this afternoon: Put/Call to {{putcall}} (EXTREME FEAR) and Market Tide to {{tide}} (bearish flow returned).</b> VIX climbed again to {{vix}}. The composite halved from +3 to MIXED in two hours — that's a fast deterioration. CPI 4.2% and the Iran oil shock are the backdrop, and now the options market is pricing in real downside. McClellan {{mcclellan}} is falling for a second straight scan. If breadth follows sentiment lower, the contrarian thesis fails.",
+    moves:[["▼","Put/Call {{putcall}}: a violent reversal from 0.78 this morning to EXTREME FEAR — sentiment broke down intraday."],["▼","Market Tide {{tide}}: bearish premium flow returned after a morning of balance — the overhang is back."],["▼","VIX {{vix}}: still climbing — fear is building, not fading; any fresh catalyst pushes it toward panic."]]
   },
 };
 
