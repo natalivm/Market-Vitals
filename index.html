@@ -1139,16 +1139,15 @@
    ════════════════════════════════════════════════════════════════════ */
 const SCAN = {
   date:       "2026-06-10",
-  utc:        "17:01 UTC",
-  kyiv:       "8:01 PM Kyiv",
-  ribbon:     "MID-SESSION",               // ribbon eyebrow label
-  scanName:   "afternoon scan",            // footer phrasing
-  prevLabel:  "15:01 scan",               // what the PREV / ghost reading is
-  ghostLabel: "15:01",                    // tick label drawn on the gauge
-  composite:  { prev: 68, ghost: 68, cur: 50 },
-  // editorial ribbon one-liner — may use {{tokens}}
-  ribbonMain: 'Put/Call <b style="color:var(--fear)">{{putcall}}</b> EXTREME FEAR · VIX {{vix}} (elevated) · Market Tide <b style="color:var(--fear)">{{tide}}</b>',
-  momentum:   { tag: "STRONG BULLISH", score: "+3", was: "60–64%" },
+  utc:        "19:01 UTC",
+  kyiv:       "10:01 PM Kyiv",
+  ribbon:     "30 MIN TO CLOSE",
+  scanName:   "pre-close scan",
+  prevLabel:  "17:01 scan",
+  ghostLabel: "17:01",
+  composite:  { prev: 50, ghost: 50, cur: 46 },
+  ribbonMain: 'McClellan <b style="color:var(--fear)">{{mcclellan}}</b> (near zero) · Put/Call <b style="color:var(--fear)">{{putcall}}</b> EXTREME FEAR · Tide <b style="color:var(--fear)">{{tide}}</b>',
+  momentum:   { tag: "STRONG BULLISH", score: "+3", was: "54–59%" },
   powerHour: {
     show:   false,
     tag:    "",
@@ -1186,22 +1185,22 @@ const GHOST_AT       = SCAN.composite.ghost;
 const COMPOSITE      = SCAN.composite.cur;
 
 const indicators = [
-  { name:"VIX", prevNum:20.89, curNum:21.69, fmt:{dec:2}, prevTag:"ELEVATED", tag:"ELEVATED", prevS:"amber", s:"amber",
-    note:"Climbed further to {{vix}} from {{vix_prev}} — fear is building through the afternoon. Still ELEVATED rather than panic-level, but the direction is the concern: VIX rose alongside a Put/Call surge into EXTREME FEAR. The CPI shock and Iran oil tensions are now feeding through to options demand." },
+  { name:"VIX", prevNum:21.69, curNum:21.51, fmt:{dec:2}, prevTag:"ELEVATED", tag:"ELEVATED", prevS:"amber", s:"amber",
+    note:"Eased slightly to {{vix}} from {{vix_prev}} — marginally better but still firmly ELEVATED into the close. A VIX that can't break lower despite Put/Call near 1.22 into the bell suggests the fear is sticky; it isn't pricing in a snap-back yet." },
   { name:"MOVE", prevNum:77.03, curNum:77.03, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Unchanged at {{move}} — bond volatility remains firmly CALM and is the steady anchor of the board. The equity fear is not bleeding into rates: this is an options-positioning and sentiment story, not a credit or rates dislocation." },
-  { name:"McClellan", prevNum:13.59, curNum:11.87, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"FALLING", tag:"FALLING", prevS:"green", s:"green",
-    note:"Eased again to {{mcclellan}} from {{mcclellan_prev}} — breadth momentum keeps slipping but is still positive. The grind lower from 18 toward 12 says the late-week reversal is losing steam. Still green, but it has now fallen two scans running; a move below zero would flip the breadth story." },
+    note:"Unchanged at {{move}} for the third straight scan — bond volatility is the one constant anchor today. The entire afternoon's fear story is an equity-options phenomenon; rates markets are not confirming the panic. Absent MOVE deteriorating, the bear case has an important missing piece." },
+  { name:"McClellan", prevNum:11.87, curNum:3.81, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"FALLING", tag:"FALLING", prevS:"green", s:"green",
+    note:"Dropped sharply to {{mcclellan}} from {{mcclellan_prev}} — the most important number on the board right now. Three consecutive scan declines: 18 → 13 → 11 → 3.81. Still green (positive), but barely. A close at or below zero flips the breadth picture from 'digesting a reversal' to 'breakdown in progress' and opens the Hindenburg window." },
   { name:"Hindenburg", text:true, prevVal:"CLEAR", val:"CLEAR", prevTag:"CLEAR", tag:"CLEAR", prevS:"green", s:"green",
-    note:"No signal. McClellan is still positive at {{mcclellan}} — the breadth divergence condition that triggers Hindenburg requires a negative McClellan alongside simultaneous new highs and lows. Despite the sentiment deterioration, the breadth structure hasn't broken." },
-  { name:"% > 200 DMA", prevNum:59.1, curNum:59.6, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
-    note:"Edged up to {{dma200}} from {{dma200_prev}} — the lone improving indicator. Underlying participation is actually widening even as the options market panics. This divergence (healthy breadth vs. EXTREME FEAR sentiment) is exactly the contrarian setup the Bot flags below." },
-  { name:"Put/Call", prevNum:0.78, curNum:1.23, fmt:{dec:2}, prevTag:"NEUTRAL", tag:"EXTREME FEAR", prevS:"green", s:"red",
-    note:"Spiked to {{putcall}} from {{putcall_prev}} — a violent reversal from this morning's neutral read into EXTREME FEAR. Put volume is now overwhelming calls. Above 1.2 is historically a CONTRARIAN buy zone: when everyone rushes to hedge at once, the downside is often already priced. The single biggest driver of today's downgrade to MIXED." },
-  { name:"SMFI", prevNum:50166, curNum:50297, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
-    note:"Ticked up to {{smfi}} from {{smfi_prev}} — smart money flow nudged higher and holds NEUTRAL. Notably, institutions are NOT joining the retail put-buying panic; SMFI rising while Put/Call spikes is another sign the fear is positioning-driven, not conviction selling." },
-  { name:"Market Tide", prevNum:-1, curNum:-242, fmt:{dec:0, pre:"$", suf:"M", comma:true}, prevTag:"BALANCED", tag:"NEGATIVE", prevS:"green", s:"red",
-    note:"Rolled back over to {{tide}} from {{tide_prev}} — this morning's balanced flow gave way to renewed bearish premium as the afternoon's fear took hold. At -$242M it's negative again but far from the -$793M low seen yesterday. The overhang returned but is milder than mid-week." },
+    note:"No signal yet. McClellan at {{mcclellan}} is still above zero — the Hindenburg trigger requires a negative McClellan alongside simultaneous new highs and new lows. But with McClellan at 3.81 and falling, this indicator is the one to watch on Monday's open. One more leg down in breadth and the condition is met." },
+  { name:"% > 200 DMA", prevNum:59.6, curNum:58.9, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
+    note:"Ticked down to {{dma200}} from {{dma200_prev}} — the brief afternoon rise reversed into the close. Still HEALTHY and well above 50%, but the trend has now been: 58.1 → 59.1 → 59.6 → 58.9 — a one-session blip, not a sustained improvement." },
+  { name:"Put/Call", prevNum:1.23, curNum:1.22, fmt:{dec:2}, prevTag:"EXTREME FEAR", tag:"EXTREME FEAR", prevS:"red", s:"red",
+    note:"Essentially unchanged at {{putcall}} — EXTREME FEAR is locking in into the close. The contrarian signal is now well-established: Put/Call above 1.2 for two straight scans historically marks a short-term washout bottom. But the absence of any relief means there is no 'fear exhaustion' signal yet; the reset may come Monday." },
+  { name:"SMFI", prevNum:50297, curNum:49912, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
+    note:"Dropped to {{smfi}} from {{smfi_prev}} — fell below 50,000 for the first time this week. Still NEUTRAL, but the direction turned: smart money flow went from nudging higher to slipping. Not a conviction sell signal, but institutions are now trimming rather than adding into the close." },
+  { name:"Market Tide", prevNum:-242, curNum:-436, fmt:{dec:0, pre:"$", suf:"M", comma:true}, prevTag:"NEGATIVE", tag:"NEGATIVE", prevS:"red", s:"red",
+    note:"Deepened to {{tide}} from {{tide_prev}} — bearish options premium accelerated into the final hour. This is now approaching Monday's pre-market level (−$793M) and is the biggest single deterioration of the afternoon session. The close will cement the weekly flow read." },
 ];
 
 const concentration = [
@@ -1220,26 +1219,26 @@ const concentration = [
 ];
 
 const bars = [
-  { label:"% > 12 SMA", prev:62.8, cur:60.2, tag:"BULLISH" },
-  { label:"% > 20 SMA", prev:64.7, cur:64.1, tag:"BULLISH" },
-  { label:"% > 50 SMA", prev:57.2, cur:56.8, tag:"BULLISH" },
+  { label:"% > 12 SMA", prev:60.2, cur:54.2, tag:"BULLISH" },
+  { label:"% > 20 SMA", prev:64.1, cur:58.7, tag:"BULLISH" },
+  { label:"% > 50 SMA", prev:56.8, cur:52.9, tag:"BULLISH" },
 ];
 
 const plays = {
   zen: {
-    e:"😇", label:"Sentiment cracked, structure held",
-    text:"{{green}} of {{total}} green but the composite slid to MIXED as Put/Call spiked to {{putcall}} — EXTREME FEAR. The split to read: <b>sentiment deteriorated sharply while market structure held.</b> Put/Call and Market Tide ({{tide}}) flipped red on afternoon fear, yet % > 200 DMA actually rose to {{dma200}} and SMFI ticked up — institutions aren't joining the put-buying panic. MOVE is unchanged and CALM. This is a positioning wobble layered on a still-healthy breadth base, not a structural break.",
-    moves:[["≈","Don't chase the fear print — breadth (% > 200 DMA {{dma200}}) and smart money (SMFI) diverge from the EXTREME FEAR sentiment."],["⚠️","Put/Call {{putcall}} above 1.2 is historically a contrarian zone, but it can stay elevated — size any contrarian add small."],["👀","McClellan {{mcclellan}} has fallen two scans running; a close below zero would turn the divergence bearish."]]
+    e:"😇", label:"Washed out into the close — watch Monday open",
+    text:"{{green}} of {{total}} green into the bell. The week ends with Put/Call at {{putcall}} (EXTREME FEAR, second scan) and Market Tide at {{tide}} — a fully bearish flow close. The counterbalance: MOVE is CALM at {{move}}, % > 200 DMA holds HEALTHY at {{dma200}}, and Hindenburg is still clear. <b>The key variable into the weekend is McClellan at {{mcclellan}} — three scans from 18 to 3.81.</b> A Monday open below zero tips the breadth picture and puts Hindenburg in play.",
+    moves:[["≈","Sentiment is washed out — historically two straight EXTREME FEAR Put/Call closes precede a bounce, not further selling."],["⚠️","McClellan {{mcclellan}}: the number to watch Monday. Below zero = breadth breakdown; hold above zero = base builds."],["👀","Market Tide {{tide}} into the close: bearish flow accelerated into the bell — confirms this isn't just a blip."]]
   },
   bull: {
-    e:"🐂", label:"EXTREME FEAR = contrarian setup",
-    text:"<b>Put/Call at {{putcall}} just crossed into EXTREME FEAR — put volume is overwhelming calls.</b> The Bot flags this directly: above 1.2 is historically a CONTRARIAN BUY signal. What makes the setup credible here is the divergence — while options traders panic, {{dma200}} of stocks sit above their 200-day MA (rising) and SMFI ({{smfi}}) ticked UP. Smart money is not selling. When everyone rushes to hedge at once on healthy breadth, the downside is often already priced.",
-    moves:[["▲","Put/Call {{putcall}}: EXTREME FEAR above 1.2 — the contrarian reading the Bot itself calls out as a buy zone."],["▲","% > 200 DMA {{dma200}}: rising into the fear — broad participation widening, the opposite of a real breakdown."],["▲","SMFI {{smfi}}: institutions nudged in while retail bought puts — no conviction selling underneath the panic."]]
+    e:"🐂", label:"Two straight EXTREME FEAR closes = contrarian signal",
+    text:"<b>Put/Call above 1.2 for two straight scans is a historically reliable short-term washout marker.</b> When put volume overwhelms calls for this long, the hedges are already on — the panic is expressed, not incoming. Add the MOVE picture: bond volatility at a calm {{move}} means no credit or rates event is driving this. The fear is equity-options driven, which unwinds faster. Monday's open will be the tell: if McClellan {{mcclellan}} stabilises above zero, the contrarian setup confirms.",
+    moves:[["▲","Put/Call {{putcall}}: two scans at EXTREME FEAR — statistically, this duration of extreme hedging marks short-term exhaustion."],["▲","MOVE {{move}}: bond calm separates this from a macro dislocation — equity fear without a rates shock is recoverable."],["▲","% > 200 DMA {{dma200}}: still above 58% — the broad market hasn't broken its long-term trend despite the sell-off in sentiment."]]
   },
   bear: {
-    e:"🐻", label:"Fear is spreading across the board",
-    text:"<b>Two indicators flipped red this afternoon: Put/Call to {{putcall}} (EXTREME FEAR) and Market Tide to {{tide}} (bearish flow returned).</b> VIX climbed again to {{vix}}. The composite halved from +3 to MIXED in two hours — that's a fast deterioration. CPI 4.2% and the Iran oil shock are the backdrop, and now the options market is pricing in real downside. McClellan {{mcclellan}} is falling for a second straight scan. If breadth follows sentiment lower, the contrarian thesis fails.",
-    moves:[["▼","Put/Call {{putcall}}: a violent reversal from 0.78 this morning to EXTREME FEAR — sentiment broke down intraday."],["▼","Market Tide {{tide}}: bearish premium flow returned after a morning of balance — the overhang is back."],["▼","VIX {{vix}}: still climbing — fear is building, not fading; any fresh catalyst pushes it toward panic."]]
+    e:"🐻", label:"McClellan at 3.81 — one tick from breakdown",
+    text:"<b>McClellan {{mcclellan}}: three consecutive scan declines, from 18 to 3.81 — approaching zero into the close of the week.</b> If it opens below zero Monday, Hindenburg is in play and the breadth divergence that held the MIXED label intact is gone. Market Tide deepened to {{tide}} — nearly back to Monday's −$793M level. SMFI slipped below 50,000 for the first time this week. The structure is eroding from the inside while the sentiment indicators (Put/Call, Tide) are already red.",
+    moves:[["▼","McClellan {{mcclellan}}: 18 → 13 → 11 → 3.81 in three scans — one more leg down = negative = Hindenburg window opens."],["▼","Market Tide {{tide}}: deepening into the close; the week ends with accelerating bearish premium, not exhaustion."],["▼","SMFI {{smfi}}: dropped below 50,000 — institutional trimming is now confirmed; not a panic but a quiet exit."]]
   },
 };
 
