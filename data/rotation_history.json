@@ -1,6 +1,6 @@
 {
-  "_schema": "rotation_history v1 \u2014 one snapshot per close (the ~20:00 UTC / 10:30 PM Kyiv scan). Flows in USD millions (1200 = $1.2B, 0.15 = $150K). dir: in=inflow post, out=outflow post. tier: core|sub. signal: BUYING THE DIP | SELLING INTO STRENGTH | null. new=NEW INFLOW/OUTFLOW flag. Append one object per trading day; the dashboard renders the growing timeline.",
-  "_rules": "Only confirmed Rotation Radar Bot feed numbers. Append-only. Never invent or carry-forward. Omit a flow field when the feed didn't show it. The optional 'read' field is editorial analyst commentary (headline + points[{t,d}] + watch) rendered as the 'Analyst Read' panel \u2014 interpretation only, every number it cites must come from the feed data above it.",
+  "_schema": "rotation_history v1 — one snapshot per close (the ~20:00 UTC / 10:30 PM Kyiv scan). Flows in USD millions (1200 = $1.2B, 0.15 = $150K). dir: in=inflow post, out=outflow post. tier: core|sub. signal: BUYING THE DIP | SELLING INTO STRENGTH | null. new=NEW INFLOW/OUTFLOW flag. Append one object per trading day; the dashboard renders the growing timeline.",
+  "_rules": "Only confirmed Rotation Radar Bot feed numbers. Append-only. Never invent or carry-forward. Omit a flow field when the feed didn't show it. The optional 'read' field is editorial analyst commentary (headline + points[{t,d}] + watch) rendered as the 'Analyst Read' panel — interpretation only, every number it cites must come from the feed data above it.",
   "history": [
     {
       "date": "2026-06-01",
@@ -15,18 +15,18 @@
         "d20": 5.22
       },
       "read": {
-        "headline": "Flat tape, heavy distribution underneath \u2014 money rotated out of leaders into beaten-down cyclicals.",
+        "headline": "Flat tape, heavy distribution underneath — money rotated out of leaders into beaten-down cyclicals.",
         "points": [
           {
             "t": "Tech, semis & financials sold into strength",
-            "d": "SMH drew +$180.9M on the day but bled \u2212$632.5M over 5 sessions (SELLING INTO STRENGTH); XLF leaked \u2212$326.4M (\u2212$380.8M/5d), XLE \u2212$424.6M/5d, XLV \u2212$308.1M/5d, XLC \u2212$191.4M/5d \u2014 all red on flow while SPY closed +0.24%."
+            "d": "SMH drew +$180.9M on the day but bled −$632.5M over 5 sessions (SELLING INTO STRENGTH); XLF leaked −$326.4M (−$380.8M/5d), XLE −$424.6M/5d, XLV −$308.1M/5d, XLC −$191.4M/5d — all red on flow while SPY closed +0.24%."
           },
           {
             "t": "Cyclicals & staples bought the dip",
             "d": "Six core 'down-on-price' sectors were flagged BUYING THE DIP: XLY pulled +$695.1M over 5 days, XLP +$164.2M, XOP +$136.4M, XRT +$87.8M, XLRE +$80.7M, XLI +$199.6M."
           }
         ],
-        "watch": "SMH's \u2212$632.5M 5-day flow turning deeper, or XLF outflow extending, would confirm rotation out of 2026's leaders. 14-day conviction already has XLK and XLE in sustained institutional distribution ($2.0B and $4.2B)."
+        "watch": "SMH's −$632.5M 5-day flow turning deeper, or XLF outflow extending, would confirm rotation out of 2026's leaders. 14-day conviction already has XLK and XLE in sustained institutional distribution ($2.0B and $4.2B)."
       },
       "conviction": {
         "accumulation": [
@@ -616,22 +616,22 @@
         "d20": 5.79
       },
       "read": {
-        "headline": "A green tape hiding a quiet exit \u2014 distribution was already running two sessions before the break.",
+        "headline": "A green tape hiding a quiet exit — distribution was already running two sessions before the break.",
         "points": [
           {
             "t": "The strongest names were the ones being sold",
-            "d": "SMH carried a \u2212$1.2B 5-day outflow flagged \u26a0\ufe0f Selling into Strength even while up +4.01% on the day and +24.75% over 20 sessions. IAI showed the same: green-ish tape, \u2212$106.8M out."
+            "d": "SMH carried a −$1.2B 5-day outflow flagged ⚠️ Selling into Strength even while up +4.01% on the day and +24.75% over 20 sessions. IAI showed the same: green-ish tape, −$106.8M out."
           },
           {
             "t": "Financials and energy leaked under a flat index",
-            "d": "XLF bled \u2212$380.8M and XLE \u2212$424.6M (5-day) while SPY sat green on every horizon (+0.14% / +1.20% / +5.79%). Distribution with no price warning attached."
+            "d": "XLF bled −$380.8M and XLE −$424.6M (5-day) while SPY sat green on every horizon (+0.14% / +1.20% / +5.79%). Distribution with no price warning attached."
           },
           {
             "t": "Money rotated toward value and defensives",
-            "d": "XLY +$695.1M, XLI +$199.6M, XLP +$164.2M and XRT +$87.8M all printed \ud83d\udcb0 Buying the Dip \u2014 institutions rotating into laggards while trimming the leaders."
+            "d": "XLY +$695.1M, XLI +$199.6M, XLP +$164.2M and XRT +$87.8M all printed 💰 Buying the Dip — institutions rotating into laggards while trimming the leaders."
           }
         ],
-        "watch": "A market near highs on flat breadth while its biggest sectors (financials, semis) bleed institutional money is late-cycle behavior \u2014 when flow diverges from price, price usually follows."
+        "watch": "A market near highs on flat breadth while its biggest sectors (financials, semis) bleed institutional money is late-cycle behavior — when flow diverges from price, price usually follows."
       },
       "conviction": {
         "accumulation": [
@@ -1200,22 +1200,22 @@
         "d20": 4.25
       },
       "read": {
-        "headline": "The sell-off's fault lines were already drawn \u2014 money was leaving financials and defensives while price was still flat.",
+        "headline": "The sell-off's fault lines were already drawn — money was leaving financials and defensives while price was still flat.",
         "points": [
           {
             "t": "Financials distribution was already a 14-day pattern",
-            "d": "XLF showed a \u2212$919.5M 5-day outflow at the close while finishing only \u22121.04% on the day, and the conviction board flagged it 5/14 days 'Selling into Strength' worth +$3.1B. The exit was well underway before the tape cracked."
+            "d": "XLF showed a −$919.5M 5-day outflow at the close while finishing only −1.04% on the day, and the conviction board flagged it 5/14 days 'Selling into Strength' worth +$3.1B. The exit was well underway before the tape cracked."
           },
           {
             "t": "The defensives 'holding up' were the ones being sold",
-            "d": "XLV bled \u2212$1.3B (5-day) while closing GREEN (+0.77%); XLP leaked \u2212$132.7M and XLU printed \ud83d\udcb0 BUYING THE DIP despite a \u22123.07% 5-day. Strength used as an exit \u2014 classic distribution."
+            "d": "XLV bled −$1.3B (5-day) while closing GREEN (+0.77%); XLP leaked −$132.7M and XLU printed 💰 BUYING THE DIP despite a −3.07% 5-day. Strength used as an exit — classic distribution."
           },
           {
             "t": "Semis absorbed the hit",
             "d": "SMH pulled +$1.3B of inflow on the day (+$661.3M 5-day) and was one of only four names 'Holding Up' at midday (+1.51%), alongside DRAM (+0.52%). The buy-the-semis-crash thesis started here."
           }
         ],
-        "watch": "A defensive that's green on price but red on 5-day flow (XLV, XLP) is where the next leg down starts; XLF's outflow breaking past \u2212$1B would confirm the rotation has further to run."
+        "watch": "A defensive that's green on price but red on 5-day flow (XLV, XLP) is where the next leg down starts; XLF's outflow breaking past −$1B would confirm the rotation has further to run."
       },
       "conviction": {
         "accumulation": [
@@ -2383,18 +2383,18 @@
         "d20": 0.92
       },
       "read": {
-        "headline": "Price flipped, money didn't \u2014 this is a rotation, not a liquidation.",
+        "headline": "Price flipped, money didn't — this is a rotation, not a liquidation.",
         "points": [
           {
             "t": "Semis & tech bought through the crash",
-            "d": "SMH drew ~$770M of 5-day inflow on BOTH the up day (Jun 4, SPY +0.42%) and the \u22129% crash (Jun 5). XLK inflow grew +$63M \u2192 +$190M, XME +$65M \u2192 +$122M. The harder they fell, the more money came in \u2014 conviction, not panic."
+            "d": "SMH drew ~$770M of 5-day inflow on BOTH the up day (Jun 4, SPY +0.42%) and the −9% crash (Jun 5). XLK inflow grew +$63M → +$190M, XME +$65M → +$122M. The harder they fell, the more money came in — conviction, not panic."
           },
           {
             "t": "Financials & defensives sold into strength",
-            "d": "XLF leaked \u2212$1.1B \u2192 \u2212$1.4B while still green on price; XLP \u2212$440M \u2192 \u2212$644M, plus XLV, XLE and IAI (9 of 14 days) all net sellers both days."
+            "d": "XLF leaked −$1.1B → −$1.4B while still green on price; XLP −$440M → −$644M, plus XLV, XLE and IAI (9 of 14 days) all net sellers both days."
           }
         ],
-        "watch": "SMH 5-day flow turning negative would break the dip-buy thesis; XLF outflow past \u2212$1.4B deepens the rotation. A 'holding-up' defensive that's already red on flow is where the next leg down starts."
+        "watch": "SMH 5-day flow turning negative would break the dip-buy thesis; XLF outflow past −$1.4B deepens the rotation. A 'holding-up' defensive that's already red on flow is where the next leg down starts."
       },
       "conviction": {
         "accumulation": [
@@ -2522,7 +2522,7 @@
           "chg": 7.25
         }
       ],
-      "holdNote": "The sectors \"Holding Up\" on Jun 5 are the exact sectors being quietly sold. XLF (+0.21% on the tape) leaked \u2212$1.4B. XLV, XLP, XLU \u2014 all green on price, all net outflows. Classic late-cycle distribution into strength: the defensives look safe on the screen while institutions use that strength to exit. Meanwhile the scary-looking semis crash is where smart money is adding.",
+      "holdNote": "The sectors \"Holding Up\" on Jun 5 are the exact sectors being quietly sold. XLF (+0.21% on the tape) leaked −$1.4B. XLV, XLP, XLU — all green on price, all net outflows. Classic late-cycle distribution into strength: the defensives look safe on the screen while institutions use that strength to exit. Meanwhile the scary-looking semis crash is where smart money is adding.",
       "flows": [
         {
           "sym": "XLF",
@@ -4045,8 +4045,8 @@
           "new": true
         },
         {
-          "sym": "ICLN",
-          "name": "Clean Energy (iShares)",
+          "sym": "IAI",
+          "name": "Broker-Dealers",
           "tier": "sub",
           "dir": "out",
           "d1": -1.76,
@@ -4105,8 +4105,8 @@
           "signal": null
         },
         {
-          "sym": "TAN",
-          "name": "Solar",
+          "sym": "REMX",
+          "name": "Rare Earth & Crit. Min.",
           "tier": "sub",
           "dir": "out",
           "d1": -2.81,
@@ -4140,8 +4140,19 @@
           "signal": null
         },
         {
-          "sym": "SLX",
-          "name": "Steel",
+          "sym": "LIT",
+          "name": "Lithium & Battery",
+          "tier": "sub",
+          "dir": "in",
+          "d1": 1.97,
+          "d5": -9.02,
+          "d20": -14.2,
+          "signal": null,
+          "new": true
+        },
+        {
+          "sym": "HACK",
+          "name": "Cybersecurity",
           "tier": "sub",
           "dir": "out",
           "d1": -0.08,
@@ -4152,8 +4163,8 @@
           "signal": null
         },
         {
-          "sym": "BOTZ",
-          "name": "Robotics & AI",
+          "sym": "WCLD",
+          "name": "Cloud Computing",
           "tier": "sub",
           "dir": "out",
           "d1": -1.83,
@@ -4163,8 +4174,8 @@
           "signal": null
         },
         {
-          "sym": "LIT",
-          "name": "Lithium & Battery",
+          "sym": "BOTZ",
+          "name": "Robotics & AI",
           "tier": "sub",
           "dir": "out",
           "d1": 1.87,
@@ -4185,8 +4196,8 @@
           "signal": null
         },
         {
-          "sym": "HACK",
-          "name": "Cybersecurity",
+          "sym": "PBW",
+          "name": "Clean Energy",
           "tier": "sub",
           "dir": "out",
           "d1": -1.72,
@@ -4196,8 +4207,8 @@
           "signal": null
         },
         {
-          "sym": "WCLD",
-          "name": "Cloud Computing",
+          "sym": "ICLN",
+          "name": "Clean Energy (iShares)",
           "tier": "sub",
           "dir": "out",
           "d1": -2.09,
@@ -4207,8 +4218,8 @@
           "signal": null
         },
         {
-          "sym": "BITO",
-          "name": "Bitcoin Futures",
+          "sym": "JETS",
+          "name": "Airlines",
           "tier": "sub",
           "dir": "out",
           "d1": -2.03,
