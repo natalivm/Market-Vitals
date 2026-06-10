@@ -1138,21 +1138,17 @@
    Plus: composite, compositePrev, ghostComposite, date, utc, kyiv …
    ════════════════════════════════════════════════════════════════════ */
 const SCAN = {
-  date:       "2026-06-09",
-  utc:        "19:01 UTC",
-  kyiv:       "10:01 PM Kyiv",
-  ribbon:     "30 MIN TO CLOSE",        // ribbon eyebrow label
-  scanName:   "pre-close scan",         // footer phrasing
-  prevLabel:  "prior scan",             // what the PREV / ghost reading is
-  ghostLabel: "13:01",                  // tick label drawn on the gauge
-  composite:  { prev: 60, ghost: 60, cur: 63 },
+  date:       "2026-06-10",
+  utc:        "15:01 UTC",
+  kyiv:       "6:01 PM Kyiv",
+  ribbon:     "MID-SESSION",               // ribbon eyebrow label
+  scanName:   "mid-session scan",          // footer phrasing
+  prevLabel:  "Jun 9 close",              // what the PREV / ghost reading is
+  ghostLabel: "Jun 9",                    // tick label drawn on the gauge
+  composite:  { prev: 63, ghost: 63, cur: 68 },
   // editorial ribbon one-liner — may use {{tokens}}
-  ribbonMain: 'McClellan {{mcclellan}} (rising) · Put/Call {{putcall}} · Market Tide <b style="color:var(--fear)">{{tide}}</b>',
-  momentum:   { tag: "STRONG BULLISH", score: "+3", was: "60–63%" },
-  // Power Hour — final-hour tape read. Lives INSIDE the gauge card (not a
-  // core indicator). Shown ONLY when the feed posts it; set show:false on
-  // days it isn't mentioned and the block disappears. {{power}} / {{power_detail}}
-  // tokens still resolve from here for the ribbon and plays.
+  ribbonMain: 'CPI 4.2% hot · VIX {{vix}} (elevated) · Put/Call {{putcall}} · Market Tide <b style="color:var(--greed)">{{tide}}</b>',
+  momentum:   { tag: "STRONG BULLISH", score: "+3", was: "62–65%" },
   powerHour: {
     show:   false,
     tag:    "",
@@ -1190,22 +1186,22 @@ const GHOST_AT       = SCAN.composite.ghost;
 const COMPOSITE      = SCAN.composite.cur;
 
 const indicators = [
-  { name:"VIX", prevNum:18.78, curNum:19.93, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Ticked up to {{vix}} from {{vix_prev}} but remains firmly CALM — the 20 level is close but the session is constructive. A VIX that nudges toward 20 while the composite improves is just the market pricing in normal late-session uncertainty, not fear." },
-  { name:"MOVE", prevNum:75.20, curNum:76.98, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Edged higher to {{move}} from {{move_prev}} — bond volatility is ticking but still well inside the CALM zone. Rates are a minor ambient headwind, not driving today's equity action." },
-  { name:"McClellan", prevNum:6.78, curNum:18.28, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"FALLING", tag:"RISING", prevS:"green", s:"green",
-    note:"Jumped to {{mcclellan}} from {{mcclellan_prev}} and flipped from falling to rising — this is the single biggest improvement in today's read. After four sessions of decline from the +15 high, breadth momentum has reversed sharply. A rising McClellan above +10 means more stocks are participating in the move, not fewer." },
+  { name:"VIX", prevNum:19.93, curNum:20.89, fmt:{dec:2}, prevTag:"CALM", tag:"ELEVATED", prevS:"green", s:"amber",
+    note:"Crossed 20 to {{vix}} — flipped from CALM to ELEVATED. The proximate cause is today's CPI print (4.2% headline, highest since April 2023), which revives rate-hike risk. Geopolitical oil shock from the Iran conflict adds a second layer. At 20 the VIX is amber, not red — markets are repricing risk, not panicking." },
+  { name:"MOVE", prevNum:76.98, curNum:77.03, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
+    note:"Essentially flat at {{move}} — bond volatility barely moved on the hot CPI, which is interesting. The market is pricing in persistent inflation more than an imminent Fed pivot. Rates are steady; this is not a credit-event environment." },
+  { name:"McClellan", prevNum:18.28, curNum:13.59, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"RISING", tag:"FALLING", prevS:"green", s:"green",
+    note:"Eased to {{mcclellan}} from {{mcclellan_prev}} — breadth momentum slipped from yesterday's reversal high but remains positive. Falling from 18 to 13 is a digestion move after a sharp reversal, not a breakdown. Still green; watch for a close below zero." },
   { name:"Hindenburg", text:true, prevVal:"CLEAR", val:"CLEAR", prevTag:"CLEAR", tag:"CLEAR", prevS:"green", s:"green",
-    note:"No signal. McClellan surged to {{mcclellan}} — well above zero and rising. The breadth divergence condition that triggers Hindenburg is the opposite of what we're seeing right now." },
-  { name:"% > 200 DMA", prevNum:58.5, curNum:58.1, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
-    note:"Dipped a touch to {{dma200}} from {{dma200_prev}} — a rounding move, not a structural break. The broad market remains solidly HEALTHY with more than half of all stocks above their long-term trend line." },
-  { name:"Put/Call", prevNum:1.00, curNum:1.15, fmt:{dec:2}, prevTag:"BEARISH", tag:"BEARISH", prevS:"green", s:"amber",
-    note:"Rose to {{putcall}} from {{putcall_prev}} — hedging demand crept back up through the session. The morning's balanced 1.00 has given way to renewed put-buying into the close, a sign that traders are not fully trusting today's constructive tape. Caution flag, not panic." },
-  { name:"SMFI", prevNum:50928, curNum:50678, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
-    note:"Eased to {{smfi}} from {{smfi_prev}} — smart money flow dipped slightly but remains in the NEUTRAL range. No rush for exits, no surge of conviction buying either. Institutions are in wait-and-see mode into the close." },
-  { name:"Market Tide", prevNum:-1493, curNum:-793, fmt:{dec:0, pre:"$", suf:"M", comma:true}, prevTag:"NEGATIVE", tag:"NEGATIVE", prevS:"red", s:"red",
-    note:"Improved to {{tide}} from {{tide_prev}} — the bearish flow is still negative but cut nearly in half versus Monday's pre-market reading. That's a meaningful reduction in bearish premium activity. Still red, but the trend is moving in the right direction." },
+    note:"No signal. McClellan is positive at {{mcclellan}} — the breadth divergence condition that triggers Hindenburg requires simultaneous new highs and new lows alongside a negative McClellan. That's not the tape today." },
+  { name:"% > 200 DMA", prevNum:58.1, curNum:59.1, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
+    note:"Ticked up to {{dma200}} from {{dma200_prev}} — the quiet bright spot mid-session. Broad market participation is slowly widening even as macro headwinds mount. More than half of all stocks are above their long-term trend line and that number is growing." },
+  { name:"Put/Call", prevNum:1.15, curNum:0.78, fmt:{dec:2}, prevTag:"BEARISH", tag:"NEUTRAL", prevS:"amber", s:"green",
+    note:"Dropped sharply to {{putcall}} from {{putcall_prev}} — the biggest single-indicator improvement today. Despite hot CPI and geopolitical noise, options traders are not reaching for puts mid-session. NEUTRAL Put/Call on a CPI day is a resilience signal." },
+  { name:"SMFI", prevNum:50678, curNum:50166, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
+    note:"Dipped slightly to {{smfi}} from {{smfi_prev}} — smart money flow ticked lower but holds the NEUTRAL range. Institutions are cautious on the inflation read but not pulling bids aggressively." },
+  { name:"Market Tide", prevNum:-793, curNum:-1, fmt:{dec:0, pre:"$", suf:"M", comma:true}, prevTag:"NEGATIVE", tag:"BALANCED", prevS:"red", s:"green",
+    note:"Surged from {{tide_prev}} to essentially flat at {{tide}} — this is the most dramatic single-day shift in the read. The options-market premium flow went from deeply negative to BALANCED, meaning the institutional bid absorbed all of yesterday's bearish overhang. A key reason the composite upgraded to CONSTRUCTIVE+3 despite the macro noise." },
 ];
 
 const concentration = [
@@ -1224,26 +1220,26 @@ const concentration = [
 ];
 
 const bars = [
-  { label:"% > 12 SMA", prev:55.9, cur:60.4, tag:"BULLISH" },
-  { label:"% > 20 SMA", prev:59.7, cur:62.6, tag:"BULLISH" },
-  { label:"% > 50 SMA", prev:54.2, cur:55.9, tag:"BULLISH" },
+  { label:"% > 12 SMA", prev:60.4, cur:62.8, tag:"BULLISH" },
+  { label:"% > 20 SMA", prev:62.6, cur:64.7, tag:"BULLISH" },
+  { label:"% > 50 SMA", prev:55.9, cur:57.2, tag:"BULLISH" },
 ];
 
 const plays = {
   zen: {
-    e:"😇", label:"Breadth reversed; flow easing",
-    text:"{{green}} of {{total}} green into the close. The story of the session is McClellan: {{mcclellan}} and rising after four days of decline — breadth is recovering. <b>Market Tide at {{tide}}</b> is still negative but roughly half what it was Monday morning. The composite lifted to CONSTRUCTIVE. VIX calm at {{vix}}. One amber (Put/Call {{putcall}}) and one red (Market Tide) are the remaining headwinds.",
-    moves:[["≈","Hold core exposure — McClellan reversal and CONSTRUCTIVE composite are structural positives."],["⚠️","Put/Call at {{putcall}} ticked back up intraday — options market not fully convinced; watch the close print."],["👀","Market Tide {{tide}} is improving but still red: if it doesn't turn positive in the next session, the options overhang persists."]]
+    e:"😇", label:"Market absorbed hot CPI — tape is resilient",
+    text:"{{green}} of {{total}} green mid-session despite 4.2% CPI (highest since April 2023) and oil near $90 on Iran tensions. The tell is Market Tide: from {{tide_prev}} yesterday to essentially flat {{tide}} today — institutions absorbed the macro shock without pulling bids. Put/Call dropped to {{putcall}} on a hot inflation day, which is the opposite of panic. VIX crossed 20 to {{vix}} (amber) but the underlying breadth is expanding.",
+    moves:[["≈","Composite improved to CONSTRUCTIVE+3 on a bad macro day — the market's ability to absorb CPI+geopolitics is itself a signal."],["⚠️","VIX {{vix}} just crossed ELEVATED — any escalation in Iran or a second inflation catalyst could spike it quickly."],["👀","McClellan {{mcclellan}}: still positive but falling from yesterday's reversal high — watch for a close below zero."]]
   },
   bull: {
-    e:"🐂", label:"McClellan reversal confirms breadth",
-    text:"<b>McClellan surged to {{mcclellan}} and flipped rising — the sharpest single-day breadth improvement of the week.</b> All three momentum bars are at session highs (60–63% range). {{dma200}} of stocks above the 200-day MA with a rising McClellan is the broadest participation we've seen since the week opened. Market Tide cut in half from {{tide_prev}} to {{tide}} — the options-market fear is fading.",
-    moves:[["▲","McClellan {{mcclellan}}: rising sharply from the +6.78 low — breadth expanding, not contracting."],["▲","Momentum bars all climbed: 12 SMA 60.4%, 20 SMA 62.6%, 50 SMA 55.9% — broad participation."],["▲","Market Tide {{tide}}: bearish flow roughly halved vs. Monday — the options-market overhang is dissipating."]]
+    e:"🐂", label:"Market Tide flipped, Put/Call collapsed",
+    text:"<b>Market Tide went from {{tide_prev}} to {{tide}} — the entire options-market overhang dissolved in one session.</b> Put/Call fell to {{putcall}} on a day when most investors expected hedging to spike on hot CPI. {{dma200}} of stocks above their 200-day MA and climbing. All three momentum bars pushed higher (62–65% range). The market is telling you the macro noise was already priced.",
+    moves:[["▲","Market Tide {{tide}}: near-zero from deeply negative — institutional premium flow flipped; biggest positive shift on the board."],["▲","Put/Call {{putcall}}: fell on hot CPI day — resilience signal, not complacency given the underlying breadth improvement."],["▲","% > 200 DMA {{dma200}}: rising on a bad macro day — broad participation widening when it should be narrowing."]]
   },
   bear: {
-    e:"🐻", label:"Put/Call and Market Tide still red",
-    text:"<b>Put/Call at {{putcall}} — hedging demand crept back as the session wore on.</b> Market Tide at {{tide}} is still net bearish into the close; the premium flow has improved but not turned. VIX pushed back toward {{vix}}. The composite is CONSTRUCTIVE but one Put/Call spike or a Market Tide re-escalation flips the read quickly.",
-    moves:[["▼","Put/Call {{putcall}}: rose from 1.00 this morning — traders are re-hedging into the close, not de-risking."],["▼","Market Tide {{tide}}: still negative; until this turns positive the options market is pricing in downside."],["▼","VIX {{vix}}: nudging toward 20 again — any catalyst into tomorrow and the calm label is at risk."]]
+    e:"🐻", label:"CPI 4.2% + oil shock = delayed risk",
+    text:"<b>Today's macro read is a ticking clock: CPI 4.2% (highest since April 2023) driven by an oil shock from the Iran conflict.</b> Energy up 23.5% YoY and near $90/barrel. The market is shrugging mid-session but inflation at this level revives Fed tightening risk and compresses margins. VIX {{vix}} just crossed ELEVATED. McClellan {{mcclellan}} is falling off its reversal high. If oil escalates or the Fed responds, the mid-session resilience unwinds fast.",
+    moves:[["▼","CPI 4.2%: a third consecutive monthly acceleration driven by energy — not transitory; the Fed's hand may be forced."],["▼","VIX {{vix}}: crossed 20 into ELEVATED — the calm is fragile; a second catalyst (escalation, Fed speak) breaks it."],["▼","McClellan {{mcclellan}}: falling from 18.28 — breadth momentum is decelerating mid-week; watch for a close near zero."]]
   },
 };
 
