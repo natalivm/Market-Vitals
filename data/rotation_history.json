@@ -1,5 +1,5 @@
 {
-  "_schema": "rotation_history v1 — one snapshot per close (the ~20:00 UTC / 10:30 PM Kyiv scan). Flows in USD millions (1200 = $1.2B, 0.15 = $150K). dir: in=inflow post, out=outflow post. tier: core|sub. signal: BUYING THE DIP | SELLING INTO STRENGTH | null. new=NEW INFLOW/OUTFLOW flag. Append one object per trading day; the dashboard renders the growing timeline.",
+  "_schema": "rotation_history v1 — one snapshot per close (the ~20:00 UTC / 10:30 PM Kyiv scan). Flows in USD millions (1200 = $1.2B, 0.15 = $150K). dir: in=inflow post, out=outflow post. tier: core|sub. signal: BUYING THE DIP | SELLING INTO STRENGTH | null. new=NEW INFLOW/OUTFLOW flag. Append one object per trading day; the dashboard renders the growing timeline. The optional 'tags' object ({selling_into_strength, buying_the_dip, of}) is our own tally of how many sector cards carried each signal tag in the feed — an observed count, NOT the bot's regime-banner 'selling' figure (which counts a broader universe and is only set when that banner is captured).",
   "_rules": "Only confirmed Rotation Radar Bot feed numbers. Append-only. Never invent or carry-forward. Omit a flow field when the feed didn't show it. The optional 'read' field is editorial analyst commentary (headline + points[{t,d}] + watch) rendered as the 'Analyst Read' panel — interpretation only, every number it cites must come from the feed data above it.",
   "history": [
     {
@@ -4234,6 +4234,11 @@
       "ts": "2026-06-10T20:01:00Z",
       "regime": "TWO-WAY SECTOR ROTATION",
       "total": 41,
+      "tags": {
+        "selling_into_strength": 10,
+        "buying_the_dip": 5,
+        "of": 41
+      },
       "benchmark": {
         "sym": "SPY",
         "d1": -1.39,
