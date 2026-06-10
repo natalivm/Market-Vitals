@@ -222,7 +222,7 @@
     .flow-axis { display: grid; grid-template-columns: 46px 1fr 94px 26px; gap: 10px; align-items: center; padding-bottom: 9px; margin-bottom: 5px; border-bottom: 1px dashed var(--line); }
     .fa-track { grid-column: 2; display: flex; justify-content: space-between; align-items: center; font-family: 'IBM Plex Mono', monospace; font-size: 11px; }
     .fa-out { color: var(--fear2); } .fa-in { color: var(--greed2); } .fa-zero { color: var(--line2); font-weight: 700; }
-    .flow-row { display: grid; grid-template-columns: 46px 1fr 94px 26px; align-items: center; gap: 10px; height: 21px; font-family: 'IBM Plex Mono', monospace; cursor: help; }
+    .flow-row { display: grid; grid-template-columns: 46px 1fr 94px 20px 26px; align-items: center; gap: 10px; height: 21px; font-family: 'IBM Plex Mono', monospace; cursor: help; }
     .fb-sym { font-size: 12px; font-weight: 700; color: var(--txt); cursor: help; text-decoration: underline dotted rgba(125,139,160,.45); text-underline-offset: 3px; }
     .fb-track { position: relative; height: 13px; }
     .fb-track::before { content: ""; position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px; background: var(--line2); }
@@ -231,6 +231,8 @@
     .fb-bar.neg { background: linear-gradient(270deg, rgba(255,77,77,.45), var(--fear)); box-shadow: 0 0 8px rgba(255,77,77,.22); }
     .fb-val { font-size: 12px; font-weight: 600; text-align: right; }
     .fb-val.pos { color: var(--greed); } .fb-val.neg { color: var(--fear); }
+    .fb-delta { font-size: 10px; text-align: center; color: var(--muted); }
+    .fb-delta.up { color: var(--greed); } .fb-delta.dn { color: var(--fear); }
     .fb-sig { font-size: 12px; text-align: center; }
     .fb-sig .fb-new { font-style: normal; font-size: 7.5px; color: #56a8ff; border: 1px solid rgba(86,168,255,.4); border-radius: 3px; padding: 0 2px; margin-left: 3px; vertical-align: 1px; }
     .flow-foot { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); text-align: center; margin-top: 11px; padding-top: 9px; border-top: 1px dashed var(--line); }
@@ -1708,6 +1710,10 @@ function renderRotation(data) {
     `</div>`
   ) : "";
 
+  // ── prev-snapshot lookup for delta arrows ──
+  const prevSnap = snaps.length >= 2 ? snaps[snaps.length - 2] : null;
+  const prevF5Map = prevSnap ? new Map(prevSnap.flows.map(x => [x.sym, x.f5])) : new Map();
+
   // ── 3. HERO: net-flow diverging bar chart — or price-move fallback while bootstrapping ──
   const TOPN = 18;
   if (bootstrapping) {
@@ -1732,6 +1738,7 @@ function renderRotation(data) {
                `<span class="fb-sym">${f.sym}</span>` +
                `<div class="fb-track">${bar}</div>` +
                `<span class="fb-val ${pos ? "pos" : "neg"}">${rpct(f.d1)}</span>` +
+               `<span class="fb-delta"></span>` +
                `<span class="fb-sig"></span></div>`;
       }).join("");
   } else {
@@ -1750,10 +1757,16 @@ function renderRotation(data) {
         const bar = pos
           ? `<div class="fb-bar pos" style="left:50%;width:${w}%"></div>`
           : `<div class="fb-bar neg" style="right:50%;width:${w}%"></div>`;
-        return `<div class="flow-row" data-tip="${f.name} · 5D ${fmtFlow(f.f5)} · 1D ${rpct(f.d1)}">` +
+        const pf5 = prevF5Map.has(f.sym) ? prevF5Map.get(f.sym) : null;
+        const delta = (pf5 != null && f.f5 != null) ? f.f5 - pf5 : null;
+        const dCls = delta === null ? "" : delta > 0 ? "up" : delta < 0 ? "dn" : "";
+        const dArrow = delta === null ? "" : delta > 0 ? "▲" : delta < 0 ? "▼" : "–";
+        const prevTip = pf5 != null ? ` · prev ${fmtFlow(pf5)}` : "";
+        return `<div class="flow-row" data-tip="${f.name} · 5D ${fmtFlow(f.f5)} · 1D ${rpct(f.d1)}${prevTip}">` +
                `<span class="fb-sym">${f.sym}</span>` +
                `<div class="fb-track">${bar}</div>` +
                `<span class="fb-val ${pos ? "pos" : "neg"}">${fmtFlow(f.f5)}</span>` +
+               `<span class="fb-delta ${dCls}" title="${delta !== null ? (delta >= 0 ? "+" : "") + fmtFlow(delta) + " vs prev" : ""}">${dArrow}</span>` +
                `<span class="fb-sig">${sigIcon(f.signal)}${f.new ? '<i class="fb-new">N</i>' : ""}</span></div>`;
       }).join("") +
       (withFlow.length > TOPN ? `<div class="flow-foot">Showing the ${TOPN} largest of ${withFlow.length} measured sector flows.</div>` : "");
