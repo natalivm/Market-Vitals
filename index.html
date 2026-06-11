@@ -1138,21 +1138,21 @@
    Plus: composite, compositePrev, ghostComposite, date, utc, kyiv …
    ════════════════════════════════════════════════════════════════════ */
 const SCAN = {
-  date:       "2026-06-10",
-  utc:        "20:11 UTC",
-  kyiv:       "11:11 PM Kyiv",
-  ribbon:     "AT THE CLOSE",
-  scanName:   "closing scan",
-  prevLabel:  "19:01 scan",
-  ghostLabel: "19:01",
-  composite:  { prev: 46, ghost: 46, cur: 42 },
-  ribbonMain: 'McClellan <b style="color:var(--fear)">{{mcclellan}}</b> (near zero) · Put/Call <b style="color:var(--fear)">{{putcall}}</b> EXTREME FEAR · Tide <b style="color:var(--fear)">{{tide}}</b> · {{power}}',
+  date:       "2026-06-11",
+  utc:        "13:01 UTC",
+  kyiv:       "4:01 PM Kyiv",
+  ribbon:     "PRE-MARKET",
+  scanName:   "pre-market scan",
+  prevLabel:  "Jun 10 close",
+  ghostLabel: "Jun 10",
+  composite:  { prev: 42, ghost: 42, cur: 42 },
+  ribbonMain: 'MOVE <b style="color:var(--greed)">{{move}}</b> CALM · Put/Call <b style="color:var(--fear)">{{putcall}}</b> BEARISH · Tide <b style="color:var(--fear)">{{tide}}</b> · {{power}}',
   momentum:   { tag: "STRONG BULLISH", score: "+3", was: "52–57%" },
   powerHour: {
     show:   true,
     tag:    "DISTRIBUTION",
     state:  "red",
-    detail: "SPY −0.28% last hr · 1.29× vol · 29% of day",
+    detail: "SPY −0.28% last hr · 1.31× vol · 29% of day",
   },
   doomClock: {
     show:          true,
@@ -1181,22 +1181,22 @@ const GHOST_AT       = SCAN.composite.ghost;
 const COMPOSITE      = SCAN.composite.cur;
 
 const indicators = [
-  { name:"VIX", prevNum:21.51, curNum:21.83, fmt:{dec:2}, prevTag:"ELEVATED", tag:"ELEVATED", prevS:"amber", s:"amber",
-    note:"Ticked back up to {{vix}} from {{vix_prev}} into the bell — the brief pre-close dip reversed. Still ELEVATED, and the close-of-day high tells you the fear didn't resolve intraday. Carries into the weekend with the options market on edge." },
-  { name:"MOVE", prevNum:77.03, curNum:77.03, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Unchanged at {{move}} for the fourth straight scan — bond volatility never flinched all day. This is the most important counterweight on the board: a full session of equity-options fear with zero confirmation from the rates market. No credit event, no rates dislocation — the fear is sentiment, not systemic." },
-  { name:"McClellan", prevNum:3.81, curNum:0.88, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"FALLING", tag:"FALLING", prevS:"green", s:"green",
-    note:"Closed at {{mcclellan}} — essentially at the zero line after four straight scan declines: 18 → 13 → 11 → 3.81 → 0.88. Technically still positive (still green), but this is the knife's edge. Monday's open decides it: any further slip turns McClellan negative and, paired with the EXTREME FEAR backdrop, opens the Hindenburg divergence window. This is THE number to watch." },
+  { name:"VIX", prevNum:21.83, curNum:21.48, fmt:{dec:2}, prevTag:"ELEVATED", tag:"ELEVATED", prevS:"amber", s:"amber",
+    note:"Eased to {{vix}} from {{vix_prev}} at yesterday's close — the first cooling after the steady grind higher. Still ELEVATED above 21, so the options market hasn't relaxed, but the pre-market read says fear stopped building overnight. Direction matters more than level here today." },
+  { name:"MOVE", prevNum:77.03, curNum:73.95, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
+    note:"Finally moved — and moved DOWN, to {{move}} from {{move_prev}} after four scans frozen at 77.03. Bond volatility is the lowest of the whole stretch. The rates market spent the entire equity-fear episode unbothered and is now actively calming. Whatever yesterday's tape stress was, fixed income is voting 'not systemic.'" },
+  { name:"McClellan", prevNum:0.88, curNum:0.88, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"FALLING", tag:"FALLING", prevS:"green", s:"green",
+    note:"Holding at {{mcclellan}} — exactly where it closed, still sitting on the zero line after the five-scan slide 18 → 13 → 11 → 3.81 → 0.88. The breakdown didn't happen overnight, but neither did the bounce. Still positive, still green, still THE number on the board: a negative print today opens the Hindenburg divergence window." },
   { name:"Hindenburg", text:true, prevVal:"CLEAR", val:"CLEAR", prevTag:"CLEAR", tag:"CLEAR", prevS:"green", s:"green",
-    note:"Still clear at the close — but barely. McClellan at {{mcclellan}} sits right on zero; the Hindenburg trigger requires a negative McClellan alongside simultaneous new highs and new lows. The condition is one scan away from being live. If Monday opens with McClellan below zero, this flips to the watch list immediately." },
-  { name:"% > 200 DMA", prevNum:58.9, curNum:57.4, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
-    note:"Slipped to {{dma200}} from {{dma200_prev}} into the close — the broad-participation cushion is thinning. Still HEALTHY above 50%, but the week's trend rolled over: 58.5 → 59.1 → 59.6 → 58.9 → 57.4. The structural support that justified the contrarian read is eroding, slowly." },
-  { name:"Put/Call", prevNum:1.22, curNum:1.26, fmt:{dec:2}, prevTag:"EXTREME FEAR", tag:"EXTREME FEAR", prevS:"red", s:"red",
-    note:"Edged higher to {{putcall}} at the close — EXTREME FEAR for a third straight scan, and the highest reading of the run. Put volume is overwhelming calls into the weekend. Three consecutive >1.2 closes is a strong contrarian washout marker historically — but a still-rising Put/Call means the fear hasn't peaked yet. No exhaustion signal; the hedges keep piling on." },
-  { name:"SMFI", prevNum:49912, curNum:49812, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
-    note:"Eased again to {{smfi}} from {{smfi_prev}} — second straight decline, now further below the 50,000 line. Still NEUTRAL, but the steady drift lower says institutions trimmed into the close rather than stepping in to buy the fear. Quiet de-risking, not panic." },
-  { name:"Market Tide", prevNum:-436, curNum:-563, fmt:{dec:0, pre:"$", suf:"M", comma:true}, prevTag:"NEGATIVE", tag:"NEGATIVE", prevS:"red", s:"red",
-    note:"Deepened again to {{tide}} from {{tide_prev}} — bearish options premium accelerated right into the bell. The week closes with flow heading toward Monday's −$793M low, not recovering from it. Combined with the DISTRIBUTION Power Hour (SPY sold off the last hour on 1.29× volume), institutions distributed into the close." },
+    note:"Still clear — and still one tick away. McClellan at {{mcclellan}} remains glued to zero; the Omen needs a negative McClellan plus simultaneous new highs and new lows. Nothing triggered overnight, but the condition stays live until McClellan puts distance back above zero." },
+  { name:"% > 200 DMA", prevNum:57.4, curNum:57.4, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
+    note:"Flat at {{dma200}} — the slide stopped where it closed. Still comfortably HEALTHY above the 50% line, and after the rollover trend (59.6 → 58.9 → 57.4) a flat read is a small win for the bulls. The long-term participation base is holding, not eroding further." },
+  { name:"Put/Call", prevNum:1.26, curNum:1.11, fmt:{dec:2}, prevTag:"EXTREME FEAR", tag:"BEARISH", prevS:"red", s:"amber",
+    note:"The big overnight change: cooled to {{putcall}} from {{putcall_prev}}, stepping down from EXTREME FEAR to plain BEARISH after three straight >1.2 closes. The hedging frenzy peaked and is unwinding — the classic sequence after a washout extreme. Still elevated above 1.0 (puts outnumber calls), so fear remains, but the panic phase looks done unless the tape gives it a fresh reason." },
+  { name:"SMFI", prevNum:49812, curNum:49812, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
+    note:"Unchanged at {{smfi}} — pre-market, so no new institutional footprint yet after two scans of quiet trimming. Still below the 50,000 line. Watch whether today's session prints accumulation or a third decline; that tells you if smart money bought the fear or kept de-risking." },
+  { name:"Market Tide", prevNum:-563, curNum:-548, fmt:{dec:0, pre:"$", suf:"M", comma:true}, prevTag:"NEGATIVE", tag:"NEGATIVE", prevS:"red", s:"red",
+    note:"Barely improved to {{tide}} from {{tide_prev}} — still firmly BEARISH FLOW. This is now the stubborn red on the board: while Put/Call and VIX cooled overnight, options premium is still leaning bearish by half a billion dollars. The fear gauges are relaxing faster than the actual money flow." },
 ];
 
 const concentration = [
@@ -1215,26 +1215,26 @@ const concentration = [
 ];
 
 const bars = [
-  { label:"% > 12 SMA", prev:54.2, cur:51.8, tag:"BULLISH" },
-  { label:"% > 20 SMA", prev:58.7, cur:56.8, tag:"BULLISH" },
-  { label:"% > 50 SMA", prev:52.9, cur:52.0, tag:"BULLISH" },
+  { label:"% > 12 SMA", prev:51.8, cur:52.0, tag:"BULLISH" },
+  { label:"% > 20 SMA", prev:56.8, cur:56.7, tag:"BULLISH" },
+  { label:"% > 50 SMA", prev:52.0, cur:52.0, tag:"BULLISH" },
 ];
 
 const plays = {
   zen: {
-    e:"😇", label:"Distribution close — McClellan on the zero line",
-    text:"{{green}} of {{total}} green at the bell, but the composite slipped to MIXED (−1) and Power Hour read DISTRIBUTION ({{power_detail}}) — institutions sold the final hour. The week closes on a knife's edge: <b>McClellan at {{mcclellan}}, essentially zero after five straight declines.</b> Put/Call {{putcall}} (EXTREME FEAR, third scan) and Market Tide {{tide}} are deeply red; the only anchor left is MOVE, still CALM at {{move}}. Monday's open is binary — McClellan holds positive and the contrarian washout thesis lives, or it breaks zero and the Hindenburg window opens.",
-    moves:[["≈","Don't add into the weekend gap — distribution close + McClellan on zero is too binary to position ahead of Monday."],["⚠️","McClellan {{mcclellan}}: literally on the zero line. This single number decides whether next week is a bounce or a breakdown."],["👀","Power Hour DISTRIBUTION: SPY sold the last hour on 1.29× volume — institutions used the close to exit, not accumulate."]]
+    e:"😇", label:"Fear cooling, flow still red — McClellan holds zero",
+    text:"{{green}} of {{total}} green pre-market and the composite holds at MIXED (−1) — but the internals improved overnight. <b>Put/Call stepped down to {{putcall}} (BEARISH, off the EXTREME FEAR extreme), VIX eased to {{vix}}, and MOVE dropped to {{move}}</b> — the calmest bond read of the whole stretch. McClellan held the zero line at {{mcclellan}}; the overnight breakdown didn't come. What hasn't healed: Market Tide {{tide}} is still bearish flow, and yesterday's Power Hour read DISTRIBUTION ({{power_detail}}). Sentiment is thawing faster than the money — let the tape confirm before treating the washout as done.",
+    moves:[["≈","Fear gauges cooled but flow didn't — wait for Market Tide to flip (or at least halve) before adding risk."],["⚠️","McClellan {{mcclellan}}: still glued to the zero line. Held overnight, but a negative print today reopens the Hindenburg window."],["👀","First scans after the open: does SMFI tick up (institutions buying the fear) or log a third straight decline?"]]
   },
   bull: {
-    e:"🐂", label:"Third EXTREME FEAR close, bonds still calm",
-    text:"<b>Put/Call {{putcall}} — a third consecutive EXTREME FEAR close, the highest of the run.</b> Three straight >1.2 readings is a textbook washout signature: the hedging is maximal, which historically precedes a mean-reversion bounce more often than further collapse. The structural argument still holds at the margin — MOVE is CALM at {{move}} (no rates/credit event), and {{dma200}} of stocks remain above their 200-day line. If McClellan {{mcclellan}} holds the zero line Monday, this is a fear-driven dip, not a structural top.",
-    moves:[["▲","Put/Call {{putcall}}: three EXTREME FEAR closes — the deepest, longest hedging run of the week; classic exhaustion setup."],["▲","MOVE {{move}}: four scans unchanged and CALM — the rates market flatly refuses to confirm the equity panic."],["▲","% > 200 DMA {{dma200}}: still HEALTHY above 57% — the long-term trend base hasn't broken despite a week of selling sentiment."]]
+    e:"🐂", label:"The washout is unwinding — bonds lead the all-clear",
+    text:"<b>The exhaustion setup is resolving the bullish way: Put/Call {{putcall}}, down from three straight EXTREME FEAR closes, and MOVE at {{move}} — a new low for the run after four frozen scans.</b> The rates market never confirmed the equity panic and is now actively easing. McClellan {{mcclellan}} survived the night on the zero line, {{dma200}} of stocks still sit above their 200-day, and Momentum Pulse holds STRONG BULLISH (+3). The classic post-washout sequence — hedges peak, then unwind while structure holds — is playing out on schedule.",
+    moves:[["▲","Put/Call {{putcall}}: the peak-fear print (1.26) is in and the unwind has started — historically the bounce window."],["▲","MOVE {{move}}: dropped to the calmest level of the stretch — fixed income is voting 'not systemic,' louder than before."],["▲","McClellan {{mcclellan}} held zero through the close and overnight — the breakdown had its chance and didn't take it."]]
   },
   bear: {
-    e:"🐻", label:"Institutions distributed into the close",
-    text:"<b>Power Hour DISTRIBUTION ({{power_detail}}) plus Market Tide deepening to {{tide}} — the close was institutional selling, not retail panic.</b> McClellan collapsed to {{mcclellan}}, one tick from negative after five straight declines, and SMFI fell for a second scan. Three indicators are now red (Put/Call, Market Tide, Power Hour). The contrarian thesis depends entirely on McClellan holding zero — but the close tells you smart money used the final hour to reduce, and the weekly flow ({{tide}}) is heading toward Monday's −$793M low. The structure is cracking from the inside.",
-    moves:[["▼","McClellan {{mcclellan}}: 18 → 13 → 11 → 3.81 → 0.88 over five scans — on the zero line; one more leg = Hindenburg window."],["▼","Power Hour DISTRIBUTION: SPY −0.28% on 1.29× volume in the last hour — institutions distributed into strength, classic top behavior."],["▼","Market Tide {{tide}}: deepened into the bell — the week ends with accelerating bearish premium, no sign of exhaustion."]]
+    e:"🐻", label:"Flow hasn't turned — the relief is sentiment only",
+    text:"<b>Market Tide {{tide}} — still half a billion dollars of bearish premium, barely improved from the close — while yesterday's final hour printed DISTRIBUTION ({{power_detail}}).</b> The things that cooled overnight (Put/Call, VIX) are sentiment gauges; the things that measure actual positioning (Tide, SMFI below 50,000, Power Hour) are all still red or amber. McClellan {{mcclellan}} didn't bounce — it's still flat on the zero line after a five-scan collapse, and % > 200 DMA only stopped falling, at {{dma200}}. A market that stops hedging while institutions keep selling is complacent, not healed.",
+    moves:[["▼","Market Tide {{tide}}: fear gauges relaxed but the bearish flow barely budged — the money hasn't changed its mind."],["▼","McClellan {{mcclellan}}: no bounce off zero — holding isn't recovering; the Hindenburg window stays one tick away."],["▼","Power Hour DISTRIBUTION carried into the morning read: the last institutional act on tape was selling into the close on 1.31× volume."]]
   },
 };
 
