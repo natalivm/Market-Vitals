@@ -425,6 +425,14 @@ def validate_file(path):
 
 
 def append_to_history(snap, path):
+    # Write-path guard: every snapshot is validated HERE, not just by callers
+    # that remember to. A corrupt entry (duplicate tickers, missing signal keys)
+    # once reached the stored history via an edit that skipped validate() —
+    # this makes the write itself refuse, whatever the route in.
+    errs, _ = validate(snap, require_complete=True)
+    if errs:
+        raise ValueError(f"refusing to write invalid snapshot {snap.get('date', '?')}: "
+                         + "; ".join(errs))
     with open(path) as fh:
         doc = json.load(fh)
     hist = [s for s in doc.get("history", []) if s.get("date") != snap["date"]]

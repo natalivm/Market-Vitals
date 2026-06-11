@@ -26,11 +26,13 @@ USAGE
   python3 scripts/fetch_rotation.py --mock --dry-run     # offline, synthetic data
 """
 import argparse
+import http.cookiejar
 import json
 import os
 import sys
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
 
@@ -38,8 +40,9 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from parse_rotation import UNIVERSE, REGISTRY, validate, append_to_history  # reuse
 
 YH_CHART = "https://query1.finance.yahoo.com/v8/finance/chart/{sym}?range=2mo&interval=1d"
-YH_QS = ("https://query2.finance.yahoo.com/v10/finance/quoteSummary/{sym}"
-         "?modules=defaultKeyStatistics")
+YH_QUOTE = "https://query1.finance.yahoo.com/v7/finance/quote"  # batched; needs a crumb
+YH_CRUMB = "https://query1.finance.yahoo.com/v1/test/getcrumb"
+YH_COOKIE = "https://fc.yahoo.com"                              # primes the consent cookie
 UA = {"User-Agent": "Mozilla/5.0 (Market-Vitals rotation bot)"}
 MIN_COVERAGE = 30          # of 41 tickers; abort below this
 SELLOFF, RALLY = 0.66, 0.34  # breadth thresholds for the regime label
@@ -99,16 +102,65 @@ def fetch_closes(sym):
     return closes, last_date
 
 
-def fetch_shares(sym):
-    """Current shares outstanding (snapshot), or None. Best-effort — Yahoo's ETF
-    coverage is spotty; flows degrade gracefully to omitted when missing."""
-    if MOCK:
-        return _mock_shares(sym)
+_SESSION = None  # cached (cookie-opener, crumb) for the Yahoo quote endpoint
+
+
+def _yahoo_session():
+    """(opener, crumb) for authenticated quote calls, or (opener, None) if the
+    handshake fails. Yahoo's quote/quoteSummary endpoints now require a crumb
+    obtained after priming a consent cookie — the old anonymous quoteSummary
+    call returns 401, which silently killed the flow pipeline. Best-effort: a
+    failed handshake just means flows stay omitted (graceful bootstrap), never
+    a crashed run."""
+    global _SESSION
+    if _SESSION is not None:
+        return _SESSION
+    jar = http.cookiejar.CookieJar()
+    opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(jar))
+    crumb = None
     try:
-        s = _get(YH_QS.format(sym=sym))["quoteSummary"]["result"][0]["defaultKeyStatistics"]
-        return s.get("sharesOutstanding", {}).get("raw")
+        try:  # fc.yahoo.com 404s but still sets the cookie we need
+            opener.open(urllib.request.Request(YH_COOKIE, headers=UA), timeout=20)
+        except urllib.error.HTTPError:
+            pass
+        with opener.open(urllib.request.Request(YH_CRUMB, headers=UA), timeout=20) as r:
+            crumb = (r.read().decode().strip() or None)
     except Exception:
-        return None
+        crumb = None
+    _SESSION = (opener, crumb)
+    return _SESSION
+
+
+def fetch_all_shares(syms):
+    """{sym: shares_outstanding} via the batched v7 quote endpoint (one request
+    per ~40 tickers, with a crumb). Best-effort — returns {} if the handshake
+    fails or a symbol has no coverage, so flows degrade gracefully to omitted."""
+    if MOCK:
+        return {s: _mock_shares(s) for s in syms}
+    opener, crumb = _yahoo_session()
+    if not crumb:
+        return {}
+    out = {}
+    for i in range(0, len(syms), 40):
+        batch = syms[i:i + 40]
+        url = f"{YH_QUOTE}?symbols={urllib.parse.quote(','.join(batch))}&crumb={urllib.parse.quote(crumb)}"
+        for attempt in range(HTTP_RETRIES):
+            try:
+                with opener.open(urllib.request.Request(url, headers=UA), timeout=20) as r:
+                    data = json.loads(r.read().decode())
+                for q in data.get("quoteResponse", {}).get("result", []):
+                    so = q.get("sharesOutstanding")
+                    if so:
+                        out[q.get("symbol")] = so
+                break
+            except urllib.error.HTTPError as e:
+                if e.code != 429 and e.code < 500:
+                    break
+            except (urllib.error.URLError, TimeoutError, json.JSONDecodeError):
+                pass
+            if attempt < HTTP_RETRIES - 1:
+                time.sleep(HTTP_BACKOFF * (2 ** attempt))
+    return out
 
 
 # ── derivation ────────────────────────────────────────────────────────────────
@@ -216,6 +268,14 @@ def build(history_path):
               f"snapshot dated {data_date}.", file=sys.stderr)
     bperf, _ = perf(bench_closes)
 
+    # One batched, crumb-authenticated call for all shares outstanding (drives
+    # the flow derivation). Empty dict if Yahoo's auth handshake fails — flows
+    # then stay omitted and the dashboard shows its bootstrap fallback.
+    share_map = fetch_all_shares([u[0] for u in UNIVERSE])
+    print(f"# shares outstanding fetched for {len(share_map)}/{len(UNIVERSE)} tickers"
+          f"{' — flow pipeline degraded (omitting flows)' if not share_map else ''}",
+          file=sys.stderr)
+
     flows, fetched = [], 0
     for sym, name, tier in UNIVERSE:
         closes, _ = fetch_closes(sym)
@@ -223,7 +283,7 @@ def build(history_path):
             continue
         fetched += 1
         p, last = perf(closes)
-        shares = fetch_shares(sym)
+        shares = share_map.get(sym)
         f1, f5 = derive_flows(sym, last, shares, cache)
         update_cache(cache, sym, date, shares, last)
         direction = "in" if (p["d1"] or 0) >= 0 else "out"
@@ -305,19 +365,37 @@ def main():
         return
 
     try:
-        existing = {s["date"] for s in json.load(open(args.append)).get("history", [])}
+        hist = json.load(open(args.append)).get("history", [])
     except Exception:
-        existing = set()
-    # Same-day entry already present (an intraday reading, or a re-run). The
-    # scheduled CLOSE run is authoritative and passes --force to REPLACE it
-    # (append_to_history dedupes by date). A plain manual --append stays guarded.
-    if snap["date"] in existing and not args.force:
-        sys.exit(f"ABORT: {snap['date']} already in {args.append} — use --force to replace it "
-                 f"(the scheduled close run does; this guards ad-hoc manual runs).")
+        hist = []
+    prior = next((s for s in hist if s.get("date") == snap["date"]), None)
+
+    if prior is not None:
+        # A same-day entry already exists (intraday reading, re-run, or — more
+        # importantly — a hand-transcribed real-feed snapshot). Don't let the
+        # auto-bot clobber a RICHER entry: a hand snapshot carries measured
+        # flows, conviction streaks, and the editorial "read" the bot can't
+        # produce. Only replace when our snapshot is at least as rich.
+        # Ordered by how irreplaceable each piece is: the editorial "read" and
+        # conviction streaks are hand/feed-only (the bot can't synthesize them),
+        # so they outrank raw flow coverage.
+        def richness(s):
+            return (1 if s.get("read") else 0,
+                    1 if s.get("conviction") else 0,
+                    sum(1 for f in s.get("flows", []) if "f5" in f))
+        if richness(snap) < richness(prior):
+            print(f"# kept existing {snap['date']} — richer than this run "
+                  f"(existing read/conv/flows={richness(prior)} > bot={richness(snap)}). "
+                  f"Nothing written.", file=sys.stderr)
+            return
+        if not args.force:
+            sys.exit(f"ABORT: {snap['date']} already in {args.append} — use --force to replace it "
+                     f"(the scheduled close run does; this guards ad-hoc manual runs).")
+
     append_to_history(snap, args.append)
     if not MOCK:
         json.dump(cache, open(SHARES_CACHE, "w"), indent=2)
-    verb = "replaced" if snap["date"] in existing else "appended"
+    verb = "replaced" if prior is not None else "appended"
     print(f"# {verb} {snap['date']} in {args.append}", file=sys.stderr)
 
 
