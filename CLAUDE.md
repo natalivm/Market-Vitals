@@ -19,16 +19,17 @@
 
 ## TOKEN-EFFICIENT UPDATES — READ ONLY THE DATA SECTION
 
-`index.html` is ~1,200 lines. The CSS (~5k tokens) and render infrastructure
-(~5k tokens) never change for a data update. **Only read the data section:**
+`index.html` is ~2,000 lines. The CSS and render infrastructure never change
+for a data update. **Only read the data section** — the `SCAN` config block,
+which currently lives around lines 1140–1241 (ending at the `DATA END` marker):
 
 ```
-Read index.html  offset=783  limit=80
+Read index.html  offset=1138  limit=105
 ```
 
-This covers the `SCAN` config + `indicators` + `bars` + `plays` blocks
-(lines 784–860, ending at the `DATA END` marker). That's ~80 lines /
-~400 tokens instead of the full ~12,000-token file.
+If the file has shifted, don't trust this offset blindly — locate the block
+first with `Grep "const SCAN = \{"` (start) and `Grep "DATA END"` (end), then
+read that exact range. That's ~105 lines instead of the full ~12,000-token file.
 
 After editing, append to `data/vitals_history.csv` (always in the same commit).
 
