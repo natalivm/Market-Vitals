@@ -94,13 +94,13 @@ def parse_pct(s):
 # ── feed structure ───────────────────────────────────────────────────────────
 HEADER_RE = re.compile(r"ROTATION RADAR:\s*(.+)", re.I)
 FOOTER_RE = re.compile(r"Rotation Radar\s*\|\s*(\d{4}-\d{2}-\d{2})\s+(\d{2}:\d{2})\s*UTC", re.I)
-TICKER_RE = re.compile(r"^([A-Z]{2,6})\s*\(([^)]+)\)")
+TICKER_RE = re.compile(r"^([A-Z]{2,6})\s*\((.+)\)")  # greedy: handles nested-paren names, e.g. "Clean Energy (iShares)"
 DAILY_RE = re.compile(r"1D:\s*([+-]?\d[\d.]*)%\s*\|\s*5D:\s*([+-]?\d[\d.]*)%\s*\|\s*20D:\s*([+-]?\d[\d.]*)%", re.I)
 FLOW1_RE = re.compile(r"1D:\s*([+-]?\$?[\d,.]+\s*[BMK]?)", re.I)
 FLOW5_RE = re.compile(r"5D:\s*([+-]?\$?[\d,.]+\s*[BMK]?)", re.I)
 BENCH_RE = re.compile(r"Benchmark:\s*([A-Z]{2,6})", re.I)
 SELLING_RE = re.compile(r"(\d+)\s*/\s*(\d+)\s*sectors? are selling", re.I)
-CONV_RE = re.compile(r"^([A-Z]{2,6})\s*\(([^)]+)\)\s*\|\s*(\d+)/14 days .*?\|\s*([+-]?\$?[\d,.]+\s*[BMK]?)", re.I)
+CONV_RE = re.compile(r"^([A-Z]{2,6})\s*\((.+)\)\s*\|\s*(\d+)/14 days .*?\|\s*([+-]?\$?[\d,.]+\s*[BMK]?)", re.I)  # greedy name: handles nested parens
 
 
 def section_of(header: str):
@@ -368,10 +368,14 @@ def validate(snap, require_complete=True):
     errs, warns = [], []
     for k in ("date", "ts", "regime", "benchmark", "flows"):
         if k not in snap:
-            if k == "flows" or require_complete:
+            # regime comes from the BROAD MARKET banner, which the feed doesn't
+            # always post — it's always a warning, never a hard error. flows is
+            # always required; date/ts/benchmark are required when complete.
+            hard = (k == "flows") or (require_complete and k != "regime")
+            if hard:
                 errs.append(f"missing required field: {k}")
             else:
-                warns.append(f"missing field (fill before storing): {k}")
+                warns.append(f"missing field (optional / fill if available): {k}")
     if "date" in snap and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(snap["date"])):
         errs.append(f"bad date: {snap['date']!r}")
     if "ts" in snap and not re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z", str(snap["ts"])):
