@@ -1,0 +1,157 @@
+ROTATION RADAR: CORE SECTOR INFLOWS
+Benchmark: SPY | 1D: +1.77% | 5D: -2.48% | 20D: -0.54%
+XLC (Communications)
+1D: +1.05% | 5D: -0.83% | 20D: -3.93% | NEW INFLOW
+Flow: 1D: -$88.8M | 5D: -$153.4M
+SELLING INTO STRENGTH
+XBI (Biotech)
+1D: +3.14% | 5D: -0.39% | 20D: -2.17% | NEW INFLOW
+Flow: 1D: +$149.5M | 5D: -$133.5M
+SELLING INTO STRENGTH
+XRT (Retail)
+1D: +3.08% | 5D: +4.88% | 20D: +9.86%
+Flow: 1D: +$42.5M | 5D: -$103.3M
+SELLING INTO STRENGTH
+XLP (Consumer Staples)
+1D: -0.26% | 5D: +3.93% | 20D: +0.64%
+Flow: 1D: +$21.2M | 5D: -$87.0M
+SELLING INTO STRENGTH
+XHB (Homebuilders)
+1D: +4.15% | 5D: +2.91% | 20D: +8.88%
+Flow: 1D: +$52.5M | 5D: -$69.1M
+SELLING INTO STRENGTH
+XLV (Healthcare)
+1D: +0.84% | 5D: +1.35% | 20D: +5.06%
+Flow: 1D: +$53.9M | 5D: -$51.2M
+SELLING INTO STRENGTH
+XLRE (Real Estate)
+1D: -0.17% | 5D: +1.16% | 20D: +1.59%
+Flow: 1D: +$11.2M | 5D: -$50.2M
+SELLING INTO STRENGTH
+XLF (Financials)
+1D: +0.70% | 5D: +0.78% | 20D: +3.15%
+Flow: 1D: +$91.0M | 5D: +$379.6M
+XLB (Materials)
+1D: +3.31% | 5D: -0.74% | 20D: -1.58% | NEW INFLOW
+Flow: 1D: +$27.5M | 5D: +$252.1M
+XLI (Industrials)
+1D: +3.23% | 5D: -0.58% | 20D: +0.88%
+Flow: 1D: +$60.2M | 5D: +$200.4M
+XLU (Utilities)
+1D: +0.09% | 5D: +0.23% | 20D: -1.41%
+Flow: 1D: +$28.6M | 5D: +$57.2M
+XLY (Consumer Discretionary)
+1D: +2.58% | 5D: -0.72% | 20D: -1.94% | NEW INFLOW
+Flow: 1D: +$0 | 5D: -$28.2M
+Trading Apologist Rotation Radar | 2026-06-11 20:01 UTC
+
+ROTATION RADAR: CORE SECTOR OUTFLOWS
+XLK (Technology)
+1D: +3.81% | 5D: -5.08% | 20D: +3.68% | NEW OUTFLOW
+Flow: 1D: +$293.7M | 5D: +$861.6M
+BUYING THE DIP
+XLE (Energy)
+1D: -1.99% | 5D: -2.82% | 20D: -0.93%
+Flow: 1D: +$17.4M | 5D: -$637.1M
+Trading Apologist Rotation Radar | 2026-06-11 20:01 UTC
+
+ROTATION RADAR: SUB-SECTOR INFLOWS
+IAI (Broker-Dealers)
+1D: +1.22% | 5D: -1.64% | 20D: +1.39%
+Flow: 1D: +$0 | 5D: -$106.8M
+SELLING INTO STRENGTH
+KRE (Regional Banking)
+1D: +1.02% | 5D: +3.42% | 20D: +7.79%
+Flow: 1D: +$230.4M | 5D: +$35.3M
+KBE (Banking)
+1D: +1.09% | 5D: +3.19% | 20D: +6.80%
+Flow: 1D: +$16.2M | 5D: +$14.1M
+XTN (Transportation)
+1D: +3.63% | 5D: +3.39% | 20D: +16.02%
+Flow: 1D: +$4.5M | 5D: +$2.3M
+XHE (Healthcare Equipment)
+1D: +0.49% | 5D: +0.81% | 20D: +5.28%
+Flow: 1D: +$0 | 5D: -$2.0M
+XAR (Aerospace & Defense)
+1D: +6.59% | 5D: +1.38% | 20D: +5.25%
+Flow: 1D: +$13.5M | 5D: -$225.0K
+SLX (Steel)
+1D: +4.77% | 5D: -2.31% | 20D: -0.54%
+Flow: 1D: -$3.1M | 5D: +$3.6M
+DRAM (Memory)
+1D: +13.36% | 5D: -1.01% | 20D: +19.24%
+JETS (Airlines)
+1D: +6.37% | 5D: +3.52% | 20D: +10.93%
+BITO (Bitcoin Futures)
+1D: +2.67% | 5D: +0.06% | 20D: -20.34% | NEW INFLOW
+MSOS (Cannabis)
+1D: -1.77% | 5D: +3.24% | 20D: +8.33%
+Trading Apologist Rotation Radar | 2026-06-11 20:01 UTC
+
+ROTATION RADAR: SUB-SECTOR OUTFLOWS
+SMH (Semiconductors)
+1D: +6.75% | 5D: -2.88% | 20D: +6.46%
+Flow: 1D: +$696.0M | 5D: +$173.0M
+BUYING THE DIP
+IGV (Software)
+1D: -0.59% | 5D: -9.01% | 20D: +2.75% | NEW OUTFLOW
+Flow: 1D: +$186.6M | 5D: +$93.8M
+BUYING THE DIP
+ICLN (Clean Energy (iShares))
+1D: +4.43% | 5D: -10.22% | 20D: -5.21%
+Flow: 1D: +$0 | 5D: +$85.4M
+BUYING THE DIP
+COPX (Copper Miners)
+1D: +7.37% | 5D: -7.83% | 20D: -9.52%
+Flow: 5D: +$66.7M
+BUYING THE DIP
+GDX (Gold Miners)
+1D: +5.45% | 5D: -9.92% | 20D: -19.12%
+Flow: 1D: -$13.3K | 5D: -$36.4M
+TAN (Solar)
+1D: +5.43% | 5D: -11.46% | 20D: -2.26%
+Flow: 1D: +$0 | 5D: -$35.3M
+URA (Uranium)
+1D: +5.62% | 5D: -11.04% | 20D: -16.09%
+Flow: 5D: -$21.4M
+OIH (Oil Services)
+1D: +0.70% | 5D: -2.98% | 20D: -2.64%
+Flow: 1D: +$21.2M | 5D: -$21.0M
+REMX (Rare Earth & Critical Minerals)
+1D: +9.13% | 5D: -4.23% | 20D: -12.57%
+Flow: 1D: -$21.5M | 5D: -$7.0M
+BOTZ (Robotics & AI)
+1D: +2.81% | 5D: -7.04% | 20D: -10.50%
+Flow: 5D: -$6.6M
+LIT (Lithium & Battery)
+1D: +5.38% | 5D: -3.15% | 20D: -9.96%
+Flow: 5D: -$3.1M
+HACK (Cybersecurity)
+1D: +2.59% | 5D: -4.55% | 20D: +13.38% | NEW OUTFLOW
+WCLD (Cloud Computing)
+1D: -0.45% | 5D: -7.45% | 20D: +11.57% | NEW OUTFLOW
+XOP (Oil & Gas Exploration)
+1D: -2.71% | 5D: -4.44% | 20D: -2.91%
+Flow: 1D: +$116.9M | 5D: -$196.8M
+XME (Metals & Mining)
+1D: +5.31% | 5D: -7.97% | 20D: -4.01%
+Flow: 1D: +$0 | 5D: -$106.3M
+Trading Apologist Rotation Radar | 2026-06-11 20:01 UTC
+
+ROTATION RADAR: HIGH CONVICTION SIGNALS (14D)
+SUSTAINED INSTITUTIONAL ACCUMULATION
+IGV (Software) | 7/14 days "Buying the Dip" | +$657.0M
+ICLN (Clean Energy (iShares)) | 7/14 days "Buying the Dip" | +$597.8M
+COPX (Copper Miners) | 6/14 days "Buying the Dip" | +$400.1M
+SUSTAINED INSTITUTIONAL DISTRIBUTION
+IAI (Broker-Dealers) | 10/14 days "Selling into Strength" | +$1.1B
+XLY (Consumer Discretionary) | 7/14 days "Selling into Strength" | +$2.0B
+XLE (Energy) | 6/14 days "Selling into Strength" | +$2.0B
+XLF (Financials) | 5/14 days "Selling into Strength" | +$4.1B
+XLP (Consumer Staples) | 5/14 days "Selling into Strength" | +$2.1B
+XLK (Technology) | 5/14 days "Selling into Strength" | +$1.6B
+XRT (Retail) | 5/14 days "Selling into Strength" | +$1.2B
+XLV (Healthcare) | 5/14 days "Selling into Strength" | +$1.2B
+XME (Metals & Mining) | 5/14 days "Selling into Strength" | +$1.1B
+XLRE (Real Estate) | 5/14 days "Selling into Strength" | +$521.2M
+Trading Apologist Rotation Radar | 2026-06-11 20:00 UTC
