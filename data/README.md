@@ -83,6 +83,27 @@ parallel and is unchanged.
 > Confirmed feed numbers only; append-only; copy percentages exactly. The
 > per-stock heat-map *tiles* are an image only — not transcribed.
 
+## Schema — `moc_imbalance_history.json`
+
+**Market-On-Close (closing-auction) order imbalances** from the `#MACRO` feed.
+One row per close. Magnitudes are notional **USD millions** (`809.2` = $809.2M).
+A **BUY** imbalance pressures prices up into the bell; **SELL** pressures down —
+magnitude alone is not directional. Contextual only; not a core board indicator.
+
+| Field    | Meaning                                                  | Example      |
+|----------|----------------------------------------------------------|--------------|
+| `date`   | Trading session the close imbalance refers to            | `2026-06-11` |
+| `ts`     | Post time (ISO-8601 UTC) if the feed gave one, else null | `null`       |
+| `side`   | `BUY` / `SELL` / `null` when the feed posted magnitude only | `null`    |
+| `sp500`  | S&P 500 imbalance, USD millions                          | `809.2`      |
+| `ndx100` | Nasdaq 100 imbalance, USD millions                       | `428.6`      |
+| `dow30`  | Dow 30 imbalance, USD millions                           | `892.1`      |
+| `mag7`   | Mag 7 imbalance, USD millions                            | `581.8`      |
+
+> Append-only; confirmed numbers only. **Never guess the buy/sell side** — if
+> the feed showed magnitude without direction, record `side: null`. Omit a
+> basket the feed didn't show.
+
 Notes:
 - `market_tide_musd` is in **millions** (`-1524` means −$1,524M). Negative = bearish flow.
 - Label text uses `STRONG_BULLISH` (underscore) so it stays single-token in CSV.
