@@ -1139,17 +1139,20 @@
    ════════════════════════════════════════════════════════════════════ */
 const SCAN = {
   date:       "2026-06-11",
-  utc:        "19:01 UTC",
-  kyiv:       "10:01 PM Kyiv",
-  ribbon:     "30 MIN TO CLOSE",
-  scanName:   "pre-close scan",
-  prevLabel:  "17:01 scan",
-  ghostLabel: "17:01",
-  composite:  { prev: 66, ghost: 66, cur: 74 },
-  ribbonMain: 'VIX <b style="color:var(--greed)">{{vix}}</b> CALM · McClellan <b style="color:var(--greed)">{{mcclellan}}</b> RISING · Tide <b style="color:var(--greed)">{{tide}}</b> BULLISH FLOW',
-  momentum:   { tag: "STRONG BULLISH", score: "+3", was: "53–59%" },
+  utc:        "20:11 UTC",
+  kyiv:       "11:11 PM Kyiv",
+  ribbon:     "AT THE CLOSE",
+  scanName:   "closing scan",
+  prevLabel:  "19:01 scan",
+  ghostLabel: "19:01",
+  composite:  { prev: 74, ghost: 74, cur: 80 },
+  ribbonMain: 'VIX <b style="color:var(--greed)">{{vix}}</b> CALM · Tide <b style="color:var(--greed)">{{tide}}</b> BULLISH FLOW · Power Hour {{power}}',
+  momentum:   { tag: "STRONG BULLISH", score: "+3", was: "59–67%" },
   powerHour: {
-    show:   false,
+    show:   true,
+    tag:    "ACCUMULATION",
+    state:  "green",
+    detail: "SPY +0.26% last hr · 1.77× vol · 28% of day",
   },
   doomClock: {
     show:          true,
@@ -1178,22 +1181,22 @@ const GHOST_AT       = SCAN.composite.ghost;
 const COMPOSITE      = SCAN.composite.cur;
 
 const indicators = [
-  { name:"VIX", prevNum:21.28, curNum:19.75, fmt:{dec:2}, prevTag:"ELEVATED", tag:"CALM", prevS:"amber", s:"green",
-    note:"Broke below 21 to {{vix}} from {{vix_prev}} — the first CALM print of the entire episode, and the amber finally goes green. After days grinding ELEVATED above 21, the options market has exhaled into the close. VIX flipping calm while breadth thrusts is the volatility confirmation the recovery was missing this morning — fear isn't just leaking out now, it's gone." },
+  { name:"VIX", prevNum:19.75, curNum:19.52, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
+    note:"Settled at {{vix}} into the bell, a touch lower from {{vix_prev}} — CALM and holding well below 21. Volatility never re-flared through the afternoon; the options market closed the day fully relaxed. From an ELEVATED grind above 21 this morning to a calm sub-20 close, the fear premium has bled completely out." },
   { name:"MOVE", prevNum:73.95, curNum:73.95, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Anchored at {{move}} all day — the calmest level of the whole stretch and never wavering. Bond volatility refused to confirm the equity fear from the start and now sits as the quiet foundation under a risk-on close. Fixed income's steady 'not systemic' vote was the early tell that the washout would resolve up, not down." },
-  { name:"McClellan", prevNum:6.02, curNum:23.62, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"RISING", tag:"RISING", prevS:"green", s:"green",
-    note:"Kept climbing — {{mcclellan}} from {{mcclellan_prev}}, now the strongest breadth-momentum read of the run. From a five-scan slide that bottomed at 0.88 this morning, the oscillator has thrust to +23 by the close: this isn't a dead-cat bounce off zero, it's a genuine breadth expansion. The Hindenburg window is firmly shut with McClellan this far above the line." },
+    note:"Closed at {{move}} — frozen calm all day, the quiet anchor under a risk-on close. Bond volatility never twitched through the whole episode; fixed income's 'not systemic' vote held start to finish. The steadiest read on the board." },
+  { name:"McClellan", prevNum:23.62, curNum:13.00, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"RISING", tag:"RISING", prevS:"green", s:"green",
+    note:"Cooled to {{mcclellan}} from {{mcclellan_prev}} into the close, but still well above zero and the feed keeps it tagged rising. The intraday spike to +23 settled back to a healthier +13 — breadth momentum is positive and expanding off the morning's near-zero base, just not at the frothiest peak. Green and constructive; the Hindenburg window stays firmly shut." },
   { name:"Hindenburg", text:true, prevVal:"CLEAR", val:"CLEAR", prevTag:"CLEAR", tag:"CLEAR", prevS:"green", s:"green",
-    note:"Clear, with the divergence threat fully off the table. McClellan at {{mcclellan}} has put real distance above zero, so the negative-oscillator leg the Omen requires is nowhere close. What sat one tick open all of yesterday is now a non-issue barring a fresh breadth rollover." },
-  { name:"% > 200 DMA", prevNum:58.5, curNum:61.3, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
-    note:"Pushed up to {{dma200}} from {{dma200_prev}} — the highest of the stretch and a clean reversal of the earlier rollover. More than three in five stocks now sit above their 200-day, comfortably HEALTHY. The long-term participation base isn't just holding, it's widening — the broad confirmation behind the McClellan thrust and the risk-on tape." },
-  { name:"Put/Call", prevNum:1.29, curNum:1.13, fmt:{dec:2}, prevTag:"EXTREME FEAR", tag:"BEARISH", prevS:"red", s:"amber",
-    note:"Stepped back down to {{putcall}} from {{putcall_prev}}, off the EXTREME FEAR spike that flared at 17:01. Still above 1.0 (puts outnumber calls), so it stays BEARISH and amber — the one sentiment gauge still leaning defensive into a green close. That tension is the Bot's own headline: a risk-on board with hedgers who haven't capitulated. Historically that lingering put demand is fuel, not a warning." },
-  { name:"SMFI", prevNum:49271, curNum:49137, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
-    note:"Eased again to {{smfi}} from {{smfi_prev}} — the lone holdout that never joined the rally. Still below the 50,000 line and drifting lower while everything else turned green, so the institutional footprint stayed cautious through the close. The one asterisk on a risk-on board: the broad tape recovered faster than smart-money positioning confirmed." },
-  { name:"Market Tide", prevNum:201, curNum:678, fmt:{dec:0, pre:"$", suf:"M", comma:true}, tokFmt:{dec:0, pre:"$", suf:"M", comma:true, plus:true}, prevTag:"BULLISH FLOW", tag:"BULLISH FLOW", prevS:"green", s:"green",
-    note:"Surged to {{tide}} from {{tide_prev}} — bullish flow more than tripled into the close. From half a billion of bearish premium this morning to nearly +$700M now, the money-flow turn is decisive, not tentative. This is real premium chasing the recovery, and it's what separates a sentiment-only bounce from a genuine risk-on regime shift." },
+    note:"Clear, with the divergence threat off the table. McClellan at {{mcclellan}} keeps comfortable distance above zero, so the negative-oscillator leg the Omen needs is nowhere in sight. A non-issue barring a fresh breadth rollover." },
+  { name:"% > 200 DMA", prevNum:61.3, curNum:60.2, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
+    note:"Eased back to {{dma200}} from {{dma200_prev}} but stayed comfortably HEALTHY — three in five stocks still hold their 200-day. A slight give-back from the intraday high, not a rollover; the long-term participation base closed the day broadly intact and well above the 50% line." },
+  { name:"Put/Call", prevNum:1.13, curNum:1.06, fmt:{dec:2}, prevTag:"BEARISH", tag:"BEARISH", prevS:"amber", s:"amber",
+    note:"Drifted lower to {{putcall}} from {{putcall_prev}} into the close — the hedging unwind kept grinding. Still just above 1.0 (puts edge calls), so it holds the BEARISH tag and stays the lone sentiment amber on a risk-on board. The Bot's own headline tension: hedgers easing but not yet capitulating, which historically leaves dry powder rather than a warning." },
+  { name:"SMFI", prevNum:49137, curNum:48909, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
+    note:"Slipped again to {{smfi}} from {{smfi_prev}} — the tell that won't confirm. Smart-money positioning drifted lower for a third straight scan into a +7 risk-on close, staying well under 50,000. With sector flows showing the broad tape lifting on tiny net volume, this is the read that says institutions stayed parked: the close was a low-participation melt-up, not big money chasing in." },
+  { name:"Market Tide", prevNum:678, curNum:1020, fmt:{dec:0, pre:"$", suf:"M", comma:true}, tokFmt:{dec:0, pre:"$", suf:"M", comma:true, plus:true}, prevTag:"BULLISH FLOW", tag:"BULLISH FLOW", prevS:"green", s:"green",
+    note:"Surged past a billion to {{tide}} from {{tide_prev}} — options premium flow kept accelerating into the bell, now the strongest BULLISH FLOW read of the run. Paired with Power Hour ACCUMULATION and the buy-side MOC imbalance, the late-day demand was real where it showed up. The question the rest of the board raises: how much of that >$1B is concentrated mega-cap/options positioning versus broad participation." },
 ];
 
 const concentration = [
@@ -1212,26 +1215,26 @@ const concentration = [
 ];
 
 const bars = [
-  { label:"% > 12 SMA", prev:55.3, cur:65.8, tag:"STRONG" },
-  { label:"% > 20 SMA", prev:59.1, cur:67.3, tag:"STRONG" },
-  { label:"% > 50 SMA", prev:52.9, cur:58.7, tag:"BULLISH" },
+  { label:"% > 12 SMA", prev:65.8, cur:64.1, tag:"BULLISH" },
+  { label:"% > 20 SMA", prev:67.3, cur:65.6, tag:"STRONG" },
+  { label:"% > 50 SMA", prev:58.7, cur:56.6, tag:"BULLISH" },
 ];
 
 const plays = {
   zen: {
-    e:"😇", label:"Risk-on into the close — VIX calm, breadth thrusting, flow surging",
-    text:"{{green}} of {{total}} green and the composite closed at RISK-ON (+5) — the strongest board of the run, capping a full one-day reversal from this morning's MIXED washout. <b>VIX broke under 21 to {{vix}} (CALM, the last fear gauge to flip), McClellan thrust to {{mcclellan}}, and Market Tide more than tripled to {{tide}}.</b> % > 200 DMA pushed to {{dma200}}, the highest of the stretch, and Momentum Pulse has 12- and 20-day breadth now reading STRONG. The single asterisk: Put/Call {{putcall}} is still BEARISH and SMFI {{smfi}} drifted lower — sentiment and smart-money positioning haven't fully capitulated to the tape. A clean risk-on close, with just enough lingering caution to keep it honest.",
-    moves:[["▲","VIX {{vix}}: the last red-to-green flip — volatility going CALM is the confirmation breadth and flow were waiting on."],["▲","Market Tide {{tide}}: bullish flow tripled into the bell — real premium chasing the move, not a sentiment-only pop."],["≈","Put/Call {{putcall}} + SMFI {{smfi}}: hedgers and institutions haven't chased — the contrarian fuel, but also the one thing left to confirm."]]
+    e:"😇", label:"Risk-on close — strong where the money was, thin everywhere else",
+    text:"{{green}} of {{total}} green and the composite closed at RISK-ON (+7) — the strongest board of the run, a full one-day reversal from this morning's MIXED washout. <b>VIX held CALM at {{vix}}, Market Tide surged past a billion to {{tide}}, and Power Hour printed ACCUMULATION ({{power_detail}}) — the late-day pump that matched the buy-side MOC imbalance.</b> But read it with the flow underneath: SMFI slipped again to {{smfi}}, and the broad sectors lifted on tiny net volume. The real buying was concentrated in mega-cap tech and semis; the rest of the tape got carried on thin participation. A genuine risk-on close — strong where the money showed up, hollow where it didn't.",
+    moves:[["▲","Market Tide {{tide}} + Power Hour ACCUMULATION: real demand into the bell — but heavily mega-cap/options concentrated."],["≈","SMFI {{smfi}}: third straight slip into a +7 close — institutions stayed parked, so the breadth came on light volume."],["⚠️","Needle in EXTREME GREED on a narrow, low-participation lift — the zone where chasing the close gets punished."]]
   },
   bull: {
-    e:"🐂", label:"Full-board risk-on — the washout reversed in a single day",
-    text:"<b>The exhaustion setup didn't just resolve up, it ripped: VIX flipped CALM at {{vix}}, McClellan thrust to {{mcclellan}} — the strongest of the run — and Market Tide surged to {{tide}}.</b> % > 200 DMA closed at {{dma200}}, the high of the stretch, with MOVE anchored CALM at {{move}} and Momentum Pulse STRONG BULLISH (+3) on broadening breadth (12- and 20-day now STRONG). This is the textbook post-washout snapback: peak hedging, then a breadth thrust while structure holds — and today it ran the full length in one session to RISK-ON (+5). And there's still gas in the tank: Put/Call {{putcall}} shows hedgers haven't even capitulated yet.",
-    moves:[["▲","McClellan {{mcclellan}}: a thrust to +23 from near-zero this morning — breadth expansions this sharp tend to have follow-through."],["▲","VIX {{vix}} CALM + Tide {{tide}}: volatility and money flow both confirming — the recovery has all three legs now."],["▲","Put/Call {{putcall}} still BEARISH: lingering put demand on a risk-on board is contrarian fuel for the next leg, not a brake."]]
+    e:"🐂", label:"Full risk-on close — real money where it counts",
+    text:"<b>The washout reversed the whole way in a day and closed at the highs: RISK-ON (+7), with VIX CALM at {{vix}}, Market Tide surging past a billion to {{tide}}, and Power Hour confirming ACCUMULATION into the bell.</b> MOVE anchored CALM at {{move}}, McClellan holds positive at {{mcclellan}}, {{dma200}} of stocks sit above their 200-day, and Momentum Pulse is STRONG BULLISH (+3). And the buying that mattered was real: semis drew +$696M and tech +$294M on the day. When the late pump comes with a buy-side MOC imbalance, a billion-dollar tide, and accumulation on the tape, the path of least resistance is up.",
+    moves:[["▲","Market Tide {{tide}}: strongest bullish flow of the run, and Power Hour ACCUMULATION confirms real demand into the close."],["▲","Mega-cap leadership is genuine: SMH +$696M, XLK +$294M of actual buy flow — the engine of the tape is being bought, not faded."],["▲","VIX {{vix}} CALM + McClellan {{mcclellan}} positive: volatility and breadth both onside heading into tomorrow."]]
   },
   bear: {
-    e:"🐻", label:"Smart money never showed — and hedgers still aren't buying it",
-    text:"<b>SMFI drifted to {{smfi}}, still under the 50,000 line and lower than this morning — the institutional footprint sat out the entire one-day rip.</b> A board that races from MIXED to RISK-ON (+5) in a single session is a violent snapback, and those can round-trip just as fast. Put/Call {{putcall}} is still BEARISH with puts outnumbering calls even into a green close, and the composite needle has run to the top of GREED — the zone where chasing starts to get punished. The tape, breadth and flow are unanimous; the two gauges that measure actual positioning (SMFI, Put/Call) are not. Respect the move, but a one-day vertical recovery on non-confirming smart money is when complacency is highest.",
-    moves:[["▼","SMFI {{smfi}}: another decline into a risk-on close — institutions trimmed while the rest of the board thrust. The footprint disagrees."],["⚠️","Needle at the top of GREED after a one-day MIXED→RISK-ON sprint — the snapback can give back as fast as it came."],["≈","Put/Call {{putcall}} still >1.0: read it as fuel if you're long, but it also means the move ran without sentiment confirming it."]]
+    e:"🐻", label:"A melt-up nobody showed up for — institutions stayed home",
+    text:"<b>The +7 close hides a thin tape: SMFI slipped a third time to {{smfi}}, and the broad sectors pumped 2–4% on net flows of a few tens of millions — price lifted because nobody was selling, not because anyone was buying.</b> With institutions parked, the order book went thin and a little momentum demand air-pocketed the broad market higher. The real flow was narrow — concentrated in mega-cap tech, semis, and options-driven Tide — while sector flows still showed SELLING INTO STRENGTH and the 14-day conviction list is heavy distribution. A low-participation lift is fragile by construction: the same thin book that floated it up has no buyer base underneath to catch a fade. Needle in EXTREME GREED makes chasing this close the worst risk/reward of the run.",
+    moves:[["▼","SMFI {{smfi}}: institutions sat out the entire rip — the breadth came on fumes, not conviction."],["⚠️","Broad sectors +2–4% on tiny net flow = thin liquidity, no real buyer base — air-pockets down as easily as it floated up."],["≈","Power Hour ACCUMULATION + buy MOC into the close: a forced-auction pop often gives part of itself back the next morning."]]
   },
 };
 
