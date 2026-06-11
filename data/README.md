@@ -63,6 +63,26 @@ append-only.
 > `docs/rotation_feed_spec.md`. Use `parse_rotation.py` instead when capturing
 > the original bot's feed by hand.
 
+## Schema — `sector_heatmap_history.json`
+
+A **second Rotation Radar format** the feed introduced on **2026-06-10**: a
+**Sector Heat Map** that reports each sector's *cap-weighted % move* (the feed's
+"sector score") plus a whole-market cap-weighted move. This is a different,
+additional store — the ETF net-flow feed (`rotation_history.json`) continues in
+parallel and is unchanged.
+
+| Field            | Meaning                                                        | Example      |
+|------------------|----------------------------------------------------------------|--------------|
+| `date`           | Trading session the map covers, ISO date                       | `2026-06-10` |
+| `scan`           | Feed's scan label                                              | `EOD`        |
+| `market`         | Whole-universe (R3000 + S&P 500) cap-weighted move, percent    | `-1.55`      |
+| `sectors[]`      | Per-sector cap-weighted move, ordered best→worst as the feed lists them | — |
+| `sectors[].name` | Sector label as the feed displays it                           | `Industrials`|
+| `sectors[].move` | That sector's cap-weighted move, percent                       | `-3.42`      |
+
+> Confirmed feed numbers only; append-only; copy percentages exactly. The
+> per-stock heat-map *tiles* are an image only — not transcribed.
+
 Notes:
 - `market_tide_musd` is in **millions** (`-1524` means −$1,524M). Negative = bearish flow.
 - Label text uses `STRONG_BULLISH` (underscore) so it stays single-token in CSV.
