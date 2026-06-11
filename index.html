@@ -1711,13 +1711,18 @@ function renderRotation(data) {
   const prevF5 = sym => prevF5Map.has(sym) ? prevF5Map.get(sym) : null;
 
   // ── 1. headline verdict banner ──
-  const up = /BULL|INFLOW|RALLY|RISK-ON/i.test(latest.regime);
-  const pctSell = Math.round(latest.selling / latest.total * 100);
+  // regime/selling come from the BROAD MARKET post, which the feed doesn't
+  // always include — degrade gracefully when they're absent.
   const bm = latest.benchmark;
+  const hasRegime  = !!latest.regime;
+  const hasSelling = latest.selling != null && latest.total != null;
+  const up = hasRegime ? /BULL|INFLOW|RALLY|RISK-ON/i.test(latest.regime)
+                       : !!(bm && bm.d1 > 0);   // fall back to benchmark direction
+  const pctSell = hasSelling ? Math.round(latest.selling / latest.total * 100) : null;
   document.getElementById("rotRegime").innerHTML =
     `<div class="rot-regime ${up ? "up" : ""}">
-       <span class="rr-head">${latest.regime}</span>
-       <span class="rr-breadth">${latest.selling}/${latest.total} sectors selling (${pctSell}%)</span>
+       <span class="rr-head">${hasRegime ? latest.regime : "SECTOR FLOWS"}</span>
+       ${hasSelling ? `<span class="rr-breadth">${latest.selling}/${latest.total} sectors selling (${pctSell}%)</span>` : ""}
        ${bm ? `<span class="rr-bench">${bm.sym} <b>${rpct(bm.d1)}</b> 1D · ${rpct(bm.d5)} 5D · ${rpct(bm.d20)} 20D</span>` : ""}
      </div>`;
 
