@@ -65,20 +65,24 @@ append-only.
 
 ## Schema — `sector_heatmap_history.json`
 
-A **second Rotation Radar format** the feed introduced on **2026-06-10**: a
-**Sector Heat Map** that reports each sector's *cap-weighted % move* (the feed's
-"sector score") plus a whole-market cap-weighted move. This is a different,
-additional store — the ETF net-flow feed (`rotation_history.json`) continues in
-parallel and is unchanged.
+A **heat-map format** reporting each sector's *cap-weighted % move* (the feed's
+"sector score") plus a whole-universe cap-weighted move. **Two feed variants
+share this store:** the **Rotation Radar Bot**'s "SECTOR HEAT MAP" (universe =
+all stocks, R3000 + S&P 500; introduced 2026-06-10) and, from **2026-06-11**,
+the **Market Vitals Bot**'s "S&P 500 HEAT MAP" (universe = S&P 500). This is a
+separate, additional store — the ETF net-flow feed (`rotation_history.json`)
+continues in parallel and is unchanged.
 
 | Field            | Meaning                                                        | Example      |
 |------------------|----------------------------------------------------------------|--------------|
-| `date`           | Trading session the map covers, ISO date                       | `2026-06-10` |
+| `date`           | Trading session the map covers, ISO date                       | `2026-06-11` |
 | `scan`           | Feed's scan label                                              | `EOD`        |
-| `market`         | Whole-universe (R3000 + S&P 500) cap-weighted move, percent    | `-1.55`      |
+| `source`         | Feed variant (`Rotation Radar` \| `Market Vitals`), from 2026-06-11 | `Market Vitals` |
+| `universe`       | Stock universe the map covers, from 2026-06-11                 | `S&P 500`    |
+| `market`         | Whole-universe cap-weighted move, percent                     | `1.70`       |
 | `sectors[]`      | Per-sector cap-weighted move, ordered best→worst as the feed lists them | — |
-| `sectors[].name` | Sector label as the feed displays it                           | `Industrials`|
-| `sectors[].move` | That sector's cap-weighted move, percent                       | `-3.42`      |
+| `sectors[].name` | Sector label **as the feed displays it** (labels differ slightly between variants — keep verbatim) | `Basic Materials` |
+| `sectors[].move` | That sector's cap-weighted move, percent                       | `3.40`       |
 
 > Confirmed feed numbers only; append-only; copy percentages exactly. The
 > per-stock heat-map *tiles* are an image only — not transcribed.

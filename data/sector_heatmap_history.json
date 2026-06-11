@@ -1,10 +1,12 @@
 {
-  "_schema": "sector_heatmap_history v1 — Rotation Radar 'Sector Heat Map' feed, which replaced the ETF net-flow format on 2026-06-10. One snapshot per post. 'date' = the trading session the map covers; 'scan' = the feed's scan label (e.g. EOD). 'market' = cap-weighted move of the whole universe (R3000 + S&P 500), in percent. 'sectors' = each sector's cap-weighted move (the feed's 'sector score'), in percent, ordered best→worst exactly as the feed lists them. The per-stock heat-map tiles are an image only and are NOT transcribed here.",
-  "_rules": "Only confirmed Rotation Radar Bot feed numbers. Append-only — never edit or delete a committed snapshot. Never invent or carry-forward a value. Copy every percentage exactly as shown (no rounding). Sector names are kept as the feed displays them. The previous ETF-flow store lives in rotation_history.json and is preserved unchanged; this is an additional store for the new format.",
+  "_schema": "sector_heatmap_history v1 — daily heat-map readings of sector cap-weighted moves ('sector score'). Two feed variants share this store: the Rotation Radar Bot's 'SECTOR HEAT MAP' (universe = all stocks, R3000 + S&P 500) and, from 2026-06-11, the Market Vitals Bot's 'S&P 500 HEAT MAP' (universe = S&P 500). One snapshot per post. 'date' = trading session covered; 'scan' = feed scan label (e.g. EOD). 'market' = whole-universe cap-weighted move (percent). 'sectors' = each sector's cap-weighted move (percent), ordered best→worst exactly as the feed lists them. 'universe' and 'source' record the variant (present from 2026-06-11). The per-stock heat-map tiles are an image only and are NOT transcribed here.",
+  "_rules": "Only confirmed feed numbers. Append-only — never edit or delete a committed snapshot's values. Never invent or carry-forward. Copy every percentage exactly as shown (no rounding). Sector names are kept as the feed displays them (labels differ slightly between the two variants — keep verbatim). The ETF net-flow store lives in rotation_history.json and is preserved unchanged.",
   "history": [
     {
       "date": "2026-06-10",
       "scan": "EOD",
+      "source": "Rotation Radar",
+      "universe": "R3000 + S&P 500",
       "market": -1.55,
       "sectors": [
         { "name": "Cons Defensive", "move": 1.52 },
@@ -18,6 +20,26 @@
         { "name": "Technology",     "move": -2.26 },
         { "name": "Materials",      "move": -2.62 },
         { "name": "Industrials",    "move": -3.42 }
+      ]
+    },
+    {
+      "date": "2026-06-11",
+      "scan": "EOD",
+      "source": "Market Vitals",
+      "universe": "S&P 500",
+      "market": 1.70,
+      "sectors": [
+        { "name": "Industrials",            "move": 3.40 },
+        { "name": "Basic Materials",        "move": 2.89 },
+        { "name": "Technology",             "move": 2.84 },
+        { "name": "Consumer Cyclical",      "move": 2.58 },
+        { "name": "Healthcare",             "move": 0.94 },
+        { "name": "Financial Services",     "move": 0.68 },
+        { "name": "Communication Services", "move": 0.34 },
+        { "name": "Real Estate",            "move": -0.09 },
+        { "name": "Utilities",              "move": -0.09 },
+        { "name": "Consumer Defensive",     "move": -0.41 },
+        { "name": "Energy",                 "move": -2.11 }
       ]
     }
   ]
