@@ -9,17 +9,50 @@
       "universe": "R3000 + S&P 500",
       "market": -1.55,
       "sectors": [
-        { "name": "Cons Defensive", "move": 1.52 },
-        { "name": "Energy",         "move": 1.27 },
-        { "name": "Utilities",      "move": -0.07 },
-        { "name": "Real Estate",    "move": -0.08 },
-        { "name": "Financials",     "move": -0.42 },
-        { "name": "Healthcare",     "move": -1.16 },
-        { "name": "Comm Services",  "move": -1.54 },
-        { "name": "Cons Cyclical",  "move": -2.02 },
-        { "name": "Technology",     "move": -2.26 },
-        { "name": "Materials",      "move": -2.62 },
-        { "name": "Industrials",    "move": -3.42 }
+        {
+          "name": "Cons Defensive",
+          "move": 1.52
+        },
+        {
+          "name": "Energy",
+          "move": 1.27
+        },
+        {
+          "name": "Utilities",
+          "move": -0.07
+        },
+        {
+          "name": "Real Estate",
+          "move": -0.08
+        },
+        {
+          "name": "Financials",
+          "move": -0.42
+        },
+        {
+          "name": "Healthcare",
+          "move": -1.16
+        },
+        {
+          "name": "Comm Services",
+          "move": -1.54
+        },
+        {
+          "name": "Cons Cyclical",
+          "move": -2.02
+        },
+        {
+          "name": "Technology",
+          "move": -2.26
+        },
+        {
+          "name": "Materials",
+          "move": -2.62
+        },
+        {
+          "name": "Industrials",
+          "move": -3.42
+        }
       ]
     },
     {
@@ -27,19 +60,105 @@
       "scan": "EOD",
       "source": "Market Vitals",
       "universe": "S&P 500",
-      "market": 1.70,
+      "market": 1.7,
       "sectors": [
-        { "name": "Industrials",            "move": 3.40 },
-        { "name": "Basic Materials",        "move": 2.89 },
-        { "name": "Technology",             "move": 2.84 },
-        { "name": "Consumer Cyclical",      "move": 2.58 },
-        { "name": "Healthcare",             "move": 0.94 },
-        { "name": "Financial Services",     "move": 0.68 },
-        { "name": "Communication Services", "move": 0.34 },
-        { "name": "Real Estate",            "move": -0.09 },
-        { "name": "Utilities",              "move": -0.09 },
-        { "name": "Consumer Defensive",     "move": -0.41 },
-        { "name": "Energy",                 "move": -2.11 }
+        {
+          "name": "Industrials",
+          "move": 3.4
+        },
+        {
+          "name": "Basic Materials",
+          "move": 2.89
+        },
+        {
+          "name": "Technology",
+          "move": 2.84
+        },
+        {
+          "name": "Consumer Cyclical",
+          "move": 2.58
+        },
+        {
+          "name": "Healthcare",
+          "move": 0.94
+        },
+        {
+          "name": "Financial Services",
+          "move": 0.68
+        },
+        {
+          "name": "Communication Services",
+          "move": 0.34
+        },
+        {
+          "name": "Real Estate",
+          "move": -0.09
+        },
+        {
+          "name": "Utilities",
+          "move": -0.09
+        },
+        {
+          "name": "Consumer Defensive",
+          "move": -0.41
+        },
+        {
+          "name": "Energy",
+          "move": -2.11
+        }
+      ]
+    },
+    {
+      "date": "2026-06-12",
+      "scan": "EOD",
+      "source": "Rotation Radar",
+      "universe": "R3000 + S&P 500",
+      "market": 0.48,
+      "sectors": [
+        {
+          "name": "Basic Materials",
+          "move": 2.01
+        },
+        {
+          "name": "Financial Services",
+          "move": 1.38
+        },
+        {
+          "name": "Utilities",
+          "move": 1.13
+        },
+        {
+          "name": "Real Estate",
+          "move": 0.88
+        },
+        {
+          "name": "Energy",
+          "move": 0.83
+        },
+        {
+          "name": "Consumer Defensive",
+          "move": 0.69
+        },
+        {
+          "name": "Industrials",
+          "move": 0.53
+        },
+        {
+          "name": "Communication Services",
+          "move": 0.42
+        },
+        {
+          "name": "Technology",
+          "move": 0.23
+        },
+        {
+          "name": "Consumer Cyclical",
+          "move": 0.12
+        },
+        {
+          "name": "Healthcare",
+          "move": -0.13
+        }
       ]
     }
   ]
