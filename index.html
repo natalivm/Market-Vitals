@@ -1139,15 +1139,15 @@
    ════════════════════════════════════════════════════════════════════ */
 const SCAN = {
   date:       "2026-06-12",
-  utc:        "15:01 UTC",
-  kyiv:       "6:01 PM Kyiv",
-  ribbon:     "MID-SESSION",
-  scanName:   "mid-session scan",
-  prevLabel:  "13:01 scan",
-  ghostLabel: "13:01",
-  composite:  { prev: 80, ghost: 80, cur: 77 },
+  utc:        "19:01 UTC",
+  kyiv:       "10:01 PM Kyiv",
+  ribbon:     "30 MIN TO CLOSE",
+  scanName:   "pre-close scan",
+  prevLabel:  "15:01 scan",
+  ghostLabel: "15:01",
+  composite:  { prev: 77, ghost: 77, cur: 74 },
   ribbonMain: 'VIX <b style="color:var(--greed)">{{vix}}</b> CALM · McClellan <b style="color:var(--greed)">{{mcclellan}}</b> RISING · Tide <b style="color:var(--amber)">{{tide}}</b> BALANCED',
-  momentum:   { tag: "STRONG BULLISH", score: "+3", was: "57–65%" },
+  momentum:   { tag: "STRONG BULLISH", score: "+3", was: "62–74%" },
   powerHour: {
     show:   false,
     tag:    "ACCUMULATION",
@@ -1181,22 +1181,22 @@ const GHOST_AT       = SCAN.composite.ghost;
 const COMPOSITE      = SCAN.composite.cur;
 
 const indicators = [
-  { name:"VIX", prevNum:19.42, curNum:19.32, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Holding CALM at {{vix}}, a hair lower than {{vix_prev}} — volatility never stirred through the morning session, pinned well below 21 with the fear premium fully drained. The quiet backdrop the breadth surge is running on." },
+  { name:"VIX", prevNum:19.32, curNum:18.20, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
+    note:"Eased to {{vix}} from {{vix_prev}} — slipped under 19 for the first time this run, the lowest CALM print of the stretch. Volatility kept draining into the close; the fear premium isn't just gone, it's making new lows. The quiet floor under a broad tape." },
   { name:"MOVE", prevNum:69.45, curNum:69.45, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Unchanged at {{move}} — bond volatility frozen in the high-60s, the steadiest anchor on the board. Fixed income's 'not systemic' read holds without a flicker." },
-  { name:"McClellan", prevNum:13.13, curNum:40.83, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"RISING", tag:"RISING", prevS:"green", s:"green",
-    note:"Thrust to {{mcclellan}} from {{mcclellan_prev}} — a major breadth surge, the strongest reading of the run by a wide margin. Advancers are swamping decliners through midday; this is exactly the broad participation the thin late-day melt-ups had been missing. Firmly rising, and it slams the Hindenburg window shut." },
+    note:"Unchanged at {{move}} — bond volatility frozen in the high-60s for a second straight scan, the steadiest anchor on the board. Fixed income's 'not systemic' read holds without a flicker into the bell." },
+  { name:"McClellan", prevNum:40.83, curNum:37.98, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"RISING", tag:"RISING", prevS:"green", s:"green",
+    note:"Eased to {{mcclellan}} from {{mcclellan_prev}} — a small step back from the midday peak, but still a powerful breadth reading near the top of the run. Advancers stayed firmly ahead of decliners into the close; the broad participation that arrived midday held through the bell. Firmly rising, and the Hindenburg window stays shut." },
   { name:"Hindenburg", text:true, prevVal:"CLEAR", val:"CLEAR", prevTag:"CLEAR", tag:"CLEAR", prevS:"green", s:"green",
-    note:"Clear. McClellan thrusting to {{mcclellan}} puts the oscillator far above zero — the negative-breadth leg the Omen needs is the opposite of what the tape is doing right now. A non-issue." },
-  { name:"% > 200 DMA", prevNum:60.2, curNum:62.3, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
-    note:"Firmed to {{dma200}} from {{dma200_prev}} — long-term participation expanding, nearly two in three stocks now hold their 200-day. The broadening McClellan flags shows up here too: the base under the tape is widening, not narrowing." },
-  { name:"Put/Call", prevNum:0.85, curNum:0.82, fmt:{dec:2}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"green", s:"green",
-    note:"Steady at {{putcall}} from {{putcall_prev}}, holding under 1.0 and NEUTRAL — sentiment stays balanced with the BEARISH tag gone for a second straight scan. Hedging pressure has cleared and isn't leaning against the rally; no longer the board's dissenter." },
-  { name:"SMFI", prevNum:48681, curNum:49202, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
-    note:"Ticked up to {{smfi}} from {{smfi_prev}} — a small bounce after four straight slips, but still under the 50,000 line. The footprint stopped deteriorating, yet it hasn't turned constructive: smart money is no longer trimming, but it isn't leading this breadth surge either. The board's quiet skeptic, now joined by a Market Tide that just went flat." },
-  { name:"Market Tide", prevNum:1019, curNum:47, fmt:{dec:0, pre:"$", suf:"M", comma:true}, tokFmt:{dec:0, pre:"$", suf:"M", comma:true, plus:true}, prevTag:"BULLISH FLOW", tag:"BALANCED", prevS:"green", s:"amber",
-    note:"Collapsed to {{tide}} from {{tide_prev}} — the billion-dollar BULLISH FLOW of yesterday's close has fully evaporated, flipping to BALANCED amber. Options premium flow is roughly net-flat at midday: the concentrated late-day demand that powered the melt-up is gone. The tension this scan — breadth surging while flow dries up — a broad tape with no fresh money pushing it." },
+    note:"Clear. McClellan holding at {{mcclellan}} keeps the oscillator far above zero — the negative-breadth leg the Omen needs is the opposite of the tape into the close. A non-issue." },
+  { name:"% > 200 DMA", prevNum:62.3, curNum:62.2, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
+    note:"Essentially flat at {{dma200}} vs {{dma200_prev}} — long-term participation holding near the highs of the run, roughly five in eight stocks above their 200-day. The broadened base under the tape didn't give any ground into the close." },
+  { name:"Put/Call", prevNum:0.82, curNum:0.85, fmt:{dec:2}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"green", s:"green",
+    note:"Ticked up to {{putcall}} from {{putcall_prev}}, still comfortably under 1.0 and NEUTRAL — sentiment stays balanced with the BEARISH tag gone for a third straight scan. Hedging pressure isn't leaning against the rally; no longer the board's dissenter." },
+  { name:"SMFI", prevNum:49202, curNum:49654, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
+    note:"Edged up to {{smfi}} from {{smfi_prev}} — a second straight bounce, but still under the 50,000 line. The footprint is healing slowly: smart money has stopped trimming, yet it still isn't leading this breadth surge. The board's quiet skeptic, alongside a Market Tide that slipped just negative." },
+  { name:"Market Tide", prevNum:47, curNum:-87, fmt:{dec:0, pre:"$", suf:"M", comma:true}, tokFmt:{dec:0, pre:"$", suf:"M", comma:true, plus:true}, prevTag:"BALANCED", tag:"BALANCED", prevS:"amber", s:"amber",
+    note:"Slipped to {{tide}} from {{tide_prev}} — flow stayed muted into the close and edged barely negative, holding BALANCED amber. The billion-dollar BULLISH FLOW from yesterday's bell never came back. Options premium is net-flat-to-slightly-soft: the broad tape closed strong on its own momentum, not on fresh demand." },
 ];
 
 const concentration = [
@@ -1215,26 +1215,26 @@ const concentration = [
 ];
 
 const bars = [
-  { label:"% > 12 SMA", prev:64.5, cur:73.5, tag:"STRONG" },
-  { label:"% > 20 SMA", prev:65.3, cur:73.7, tag:"STRONG" },
-  { label:"% > 50 SMA", prev:56.5, cur:61.9, tag:"BULLISH" },
+  { label:"% > 12 SMA", prev:73.5, cur:72.0, tag:"STRONG" },
+  { label:"% > 20 SMA", prev:73.7, cur:72.3, tag:"STRONG" },
+  { label:"% > 50 SMA", prev:61.9, cur:61.3, tag:"BULLISH" },
 ];
 
 const plays = {
   zen: {
-    e:"😇", label:"Breadth finally broadens — but the money that drove it has stepped back",
-    text:"{{green}} of {{total}} green, composite eases to RISK-ON (+6) — a notch softer than the open, but the <i>quality</i> of the board just changed. <b>McClellan thrust to {{mcclellan}} (from {{mcclellan_prev}}), %&gt;200DMA firmed to {{dma200}}, and Momentum Pulse jumped to ~73% of stocks above their short MAs — the broad participation the thin late-day melt-ups had been missing finally showed up.</b> The catch is on the flow side: Market Tide collapsed from over a billion to {{tide}} (BALANCED), and SMFI at {{smfi}} still won't clear 50,000. So the read flips from yesterday: breadth is now genuinely broad, but the concentrated money that powered the rip has stepped back. A healthier-looking tape — running on its own momentum rather than fresh demand.",
-    moves:[["▲","McClellan {{mcclellan}} + ~73% of stocks above short MAs: a real, broad breadth thrust — the participation that was missing before."],["≈","Market Tide {{tide}} BALANCED: the billion-dollar flow evaporated — the rally is coasting, not being pushed."],["⚠️","Needle still near EXTREME GREED while flow dries up — broad tape, but thin fuel underneath."]]
+    e:"😇", label:"A strong, broad close — but the money never came back to push it",
+    text:"{{green}} of {{total}} green, composite eases to RISK-ON (+5) and the needle backs out of EXTREME GREED to the top of the GREED band — a notch softer than midday, but the close is genuinely broad. <b>McClellan held at {{mcclellan}}, %&gt;200DMA steady at {{dma200}}, and Momentum Pulse stayed strong with ~72% of stocks above their short MAs into the bell.</b> VIX drained to {{vix}}, a new low for the run. The catch is unchanged from midday: Market Tide slipped to {{tide}} (BALANCED) and SMFI at {{smfi}} still won't clear 50,000. So the read holds — breadth is broad and vol is dead, but the concentrated money that powered the rip stayed on the sidelines. A healthy close, coasting on its own momentum rather than fresh demand.",
+    moves:[["▲","McClellan {{mcclellan}} + ~72% of stocks above short MAs: broad participation held all the way into the close."],["≈","Market Tide {{tide}} BALANCED: flow never came back — the rally coasted to the bell, it wasn't pushed."],["▼","Score +6 → +5, needle eased out of EXTREME GREED: a strong but slightly cooler close."]]
   },
   bull: {
-    e:"🐂", label:"The melt-up just got real breadth under it",
-    text:"<b>Yesterday's worry was a thin, flow-driven tape — that worry just got answered: McClellan thrust to {{mcclellan}}, %&gt;200DMA climbed to {{dma200}}, and Momentum Pulse surged with ~73% of stocks above their 12- and 20-day lines.</b> This is the broad participation a durable rally needs — advancers swamping decliners across the whole universe, not just a handful of mega-caps. VIX CALM at {{vix}}, MOVE frozen at {{move}}, Put/Call NEUTRAL at {{putcall}}, Hindenburg clear. The flow cooled to balanced, but breadth this strong tends to lead price — when the whole list is participating, you don't need a billion-dollar tide every hour to keep going.",
-    moves:[["▲","McClellan {{mcclellan}}: strongest breadth thrust of the run — broad participation, the missing piece, has arrived."],["▲","Momentum Pulse ~73% above short MAs + %&gt;200DMA {{dma200}}: the base under the tape is widening, not narrowing."],["▲","VIX {{vix}} CALM + Put/Call {{putcall}} NEUTRAL: vol and sentiment both onside while breadth leads."]]
+    e:"🐂", label:"Breadth held into the bell with vol at new lows",
+    text:"<b>The melt-up closed with real breadth still under it: McClellan held at {{mcclellan}}, %&gt;200DMA steady at {{dma200}}, and Momentum Pulse kept ~72% of stocks above their 12- and 20-day lines into the close.</b> This is the broad participation a durable rally needs — the whole list, not a handful of mega-caps. VIX drained to {{vix}}, a new CALM low for the run, MOVE frozen at {{move}}, Put/Call NEUTRAL at {{putcall}}, Hindenburg clear. Flow cooled, but breadth this broad with vol this quiet tends to carry — when the whole list is participating, you don't need a billion-dollar tide every hour to hold the gains.",
+    moves:[["▲","McClellan {{mcclellan}} + ~72% above short MAs: broad breadth held into the close."],["▲","VIX {{vix}} — a new CALM low for the run: no fear premium anywhere on the board."],["▲","%&gt;200DMA {{dma200}} steady + Put/Call {{putcall}} NEUTRAL: the broadened base and balanced sentiment both held."]]
   },
   bear: {
-    e:"🐻", label:"The fuel just ran out under a needle still in greed",
-    text:"<b>Market Tide collapsed from over a billion to {{tide}} (BALANCED) and SMFI at {{smfi}} still can't clear 50,000 — the money that drove this rally has stepped back, even as the breadth gauges spike.</b> A breadth thrust on fading flow is a warning as much as a green light: it often marks the moment the late, momentum-chasing crowd piles in (~73% of stocks suddenly above their short MAs) right as the institutions who move size go net-flat. The score already ticked from +7 to +6 — the first deceleration of the run. With the needle still parked near EXTREME GREED and no fresh demand behind the tape, the breadth surge risks being the exhaustion blow-off of a one-day rip rather than the start of a new leg.",
-    moves:[["▼","Market Tide {{tide}}: the billion-dollar flow evaporated to balanced — the rally lost its push."],["▼","SMFI {{smfi}}: a tick higher but still sub-50k — smart money isn't leading the breadth spike, the crowd is."],["⚠️","Score eased +7 → +6 with the needle still in greed: the first deceleration, on thinning fuel."]]
+    e:"🐻", label:"A strong close on no fuel — the tide never came back",
+    text:"<b>Market Tide closed at {{tide}} (BALANCED, now slightly negative) and SMFI at {{smfi}} still can't clear 50,000 — the money that drove this rally never returned, even as the breadth gauges held high into the bell.</b> A broad tape on absent flow is a warning as much as a green light: it's often where the late, momentum-chasing crowd holds the bag (~72% of stocks above their short MAs) while the institutions who move size stay net-flat. The score has now eased two scans running, +7 → +6 → +5, and the needle backed out of EXTREME GREED. A strong close with no fresh demand behind it risks being the exhaustion of a one-day rip rather than the launch of a new leg.",
+    moves:[["▼","Market Tide {{tide}}: flow slipped negative — the billion-dollar push never came back."],["▼","SMFI {{smfi}}: a tick higher but still sub-50k — smart money sat out the breadth run."],["⚠️","Score eased +6 → +5, needle out of EXTREME GREED: a second straight deceleration on thin fuel."]]
   },
 };
 
