@@ -1139,20 +1139,20 @@
    ════════════════════════════════════════════════════════════════════ */
 const SCAN = {
   date:       "2026-06-15",
-  utc:        "19:02 UTC",
-  kyiv:       "10:02 PM Kyiv",
-  ribbon:     "30 MIN TO CLOSE",
-  scanName:   "pre-close scan",
-  prevLabel:  "17:02 scan",
-  ghostLabel: "17:02",
-  composite:  { prev: 92, ghost: 92, cur: 74 },
-  ribbonMain: 'VIX <b style="color:var(--greed)">{{vix}}</b> CALM · McClellan <b style="color:var(--greed)">{{mcclellan}}</b> FALLING · Tide <b style="color:var(--greed)">{{tide}}</b> BULLISH FLOW',
-  momentum:   { tag: "STRONG BULLISH", score: "+3", was: "72–76%" },
+  utc:        "20:11 UTC",
+  kyiv:       "11:11 PM Kyiv",
+  ribbon:     "CLOSE",
+  scanName:   "EOD scan",
+  prevLabel:  "19:02 scan",
+  ghostLabel: "19:02",
+  composite:  { prev: 74, ghost: 74, cur: 74 },
+  ribbonMain: 'VIX <b style="color:var(--greed)">{{vix}}</b> CALM · McClellan <b style="color:var(--amber)">{{mcclellan}}</b> FALLING · Tide <b style="color:var(--greed)">{{tide}}</b> BULLISH FLOW',
+  momentum:   { tag: "STRONG BULLISH", score: "+3", was: "69–73%" },
   powerHour: {
-    show:   false,
+    show:   true,
     tag:    "NEUTRAL",
     state:  "amber",
-    detail: "SPY +0.09% last hr · 0.76× vol · 20% of day",
+    detail: "SPY −0.05% last hr · 1.27× vol · 34% of day",
   },
   doomClock: {
     show:          true,
@@ -1181,22 +1181,22 @@ const GHOST_AT       = SCAN.composite.ghost;
 const COMPOSITE      = SCAN.composite.cur;
 
 const indicators = [
-  { name:"VIX", prevNum:16.04, curNum:16.17, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Ticked up slightly to {{vix}} from {{vix_prev}} — still firmly CALM, well below any stress threshold. The vol floor holds into the close." },
+  { name:"VIX", prevNum:16.17, curNum:16.09, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
+    note:"Eased back to {{vix}} from {{vix_prev}} — vol stayed CALM through the close. No fear premium anywhere on the board at the bell." },
   { name:"MOVE", prevNum:69.36, curNum:69.36, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Unchanged at {{move}} for a fourth straight read — bond volatility frozen in the high-60s. Fixed income's 'not systemic' anchor holds without a flicker." },
-  { name:"McClellan", prevNum:44.74, curNum:36.08, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"RISING", tag:"FALLING", prevS:"green", s:"amber",
-    note:"Pulled back to {{mcclellan}} from {{mcclellan_prev}} and flipped to FALLING — breadth is rolling over into the close. Still deep in positive territory and Hindenburg stays clear, but the direction shift from rising to falling is a yellow flag." },
+    note:"Unchanged at {{move}} — bond volatility frozen for the entire session. Fixed income's 'not systemic' read held without a flicker." },
+  { name:"McClellan", prevNum:36.08, curNum:35.43, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"FALLING", tag:"FALLING", prevS:"amber", s:"amber",
+    note:"Continued lower to {{mcclellan}} from {{mcclellan_prev}} — breadth eased further into the close, still FALLING. Positive territory and Hindenburg clear, but the trend off the midday peak is now two scans of softening." },
   { name:"Hindenburg", text:true, prevVal:"CLEAR", val:"CLEAR", prevTag:"CLEAR", tag:"CLEAR", prevS:"green", s:"green",
-    note:"Clear. McClellan at {{mcclellan}} is still solidly positive — the negative-breadth divergence the Omen requires is absent." },
-  { name:"% > 200 DMA", prevNum:62.6, curNum:61.9, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
-    note:"Eased slightly to {{dma200}} from {{dma200_prev}} — long-term participation still HEALTHY, roughly 5-in-8 stocks above their 200-day. The broadened base is holding." },
-  { name:"Put/Call", prevNum:0.78, curNum:0.90, fmt:{dec:2}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"green", s:"amber",
-    note:"Rose to {{putcall}} from {{putcall_prev}} — still NEUTRAL but hedging demand picked up into the close, a notable jump. Approaching territory where late-day protection buying can signal anxiety under the surface." },
-  { name:"SMFI", prevNum:49122, curNum:48650, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
-    note:"Slipped further to {{smfi}} from {{smfi_prev}} — a third straight decline, still sub-50k. Smart money continues to fade even as the broad tape holds green. The board's consistent skeptic." },
-  { name:"Market Tide", prevNum:464, curNum:444, fmt:{dec:0, pre:"$", suf:"M", comma:true}, tokFmt:{dec:0, pre:"$", suf:"M", comma:true, plus:true}, prevTag:"BULLISH FLOW", tag:"BULLISH FLOW", prevS:"green", s:"green",
-    note:"Eased slightly to {{tide}} from {{tide_prev}} — still solidly BULLISH FLOW. Real demand remains behind the tape into the bell; the flow backdrop holds even as breadth cools." },
+    note:"Clear. McClellan at {{mcclellan}} remains well above zero — the negative-breadth divergence the Omen requires is absent." },
+  { name:"% > 200 DMA", prevNum:61.9, curNum:61.7, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
+    note:"Slipped slightly to {{dma200}} from {{dma200_prev}} — long-term participation still HEALTHY. The broadened base held through the session; no structural damage." },
+  { name:"Put/Call", prevNum:0.90, curNum:0.91, fmt:{dec:2}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
+    note:"Edged to {{putcall}} from {{putcall_prev}} — hedging demand ticked up once more into the close, now at the highest Put/Call of the day. Still NEUTRAL, but the drift is worth watching." },
+  { name:"SMFI", prevNum:48650, curNum:48129, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
+    note:"Continued lower to {{smfi}} from {{smfi_prev}} — fourth straight decline. Smart money footprint is drifting further below the 50k line, not just cautious but now trending away. The board's consistent negative signal." },
+  { name:"Market Tide", prevNum:444, curNum:448, fmt:{dec:0, pre:"$", suf:"M", comma:true}, tokFmt:{dec:0, pre:"$", suf:"M", comma:true, plus:true}, prevTag:"BULLISH FLOW", tag:"BULLISH FLOW", prevS:"green", s:"green",
+    note:"Ticked up to {{tide}} from {{tide_prev}} — finished the day BULLISH FLOW and strengthened slightly into the bell. Real demand backed this close." },
 ];
 
 const concentration = [
@@ -1215,26 +1215,26 @@ const concentration = [
 ];
 
 const bars = [
-  { label:"% > 12 SMA", prev:76.3, cur:72.9, tag:"STRONG" },
-  { label:"% > 20 SMA", prev:71.6, cur:68.6, tag:"STRONG" },
-  { label:"% > 50 SMA", prev:66.0, cur:64.5, tag:"BULLISH" },
+  { label:"% > 12 SMA", prev:72.9, cur:72.9, tag:"STRONG" },
+  { label:"% > 20 SMA", prev:68.6, cur:69.5, tag:"STRONG" },
+  { label:"% > 50 SMA", prev:64.5, cur:63.2, tag:"BULLISH" },
 ];
 
 const plays = {
   zen: {
-    e:"😇", label:"A softening close — breadth rolled over but flow held",
-    text:"{{green}} of {{total}} green, composite eases to RISK-ON (+5) as McClellan flipped to FALLING ({{mcclellan}}) and Put/Call climbed to {{putcall}}. <b>Market Tide held at {{tide}} BULLISH FLOW and VIX stayed CALM at {{vix}} — the close isn't breaking down, it's cooling off.</b> %>200DMA steady at {{dma200}}, Hindenburg clear, Momentum Pulse still STRONG BULLISH. The score drop from +7 → +5 reflects a real intraday softening, but the board remains net-positive with no red indicators.",
-    moves:[["▼","McClellan {{mcclellan}} FALLING: breadth rolled over from the midday peak — advancers giving some back."],["▼","Put/Call {{putcall}}: hedging picked up into the close — late-day protection buying."],["▲","Market Tide {{tide}} BULLISH FLOW: real demand held at the bell despite the breadth cooldown."]]
+    e:"😇", label:"Solid green close — flow held, vol quiet, breadth still constructive",
+    text:"{{green}} of {{total}} green at the bell, RISK-ON (+5) with Market Tide finishing at {{tide}} BULLISH FLOW and VIX CALM at {{vix}}. <b>Power Hour was neutral (SPY −0.05%, 1.27× vol, 34% of day), but the close held: %>200DMA {{dma200}} HEALTHY, Hindenburg clear, Momentum Pulse STRONG BULLISH.</b> The three ambers (McClellan FALLING, Put/Call {{putcall}}, SMFI {{smfi}}) are all softening trends, not breaks — the session closed green and broadly held.",
+    moves:[["▲","Market Tide {{tide}} BULLISH FLOW: demand backed the close — the rally had real fuel."],["≈","Power Hour neutral: final hour was quiet, not distributional."],["▼","SMFI {{smfi}}: fourth straight decline — institutional footprint still drifting lower."]]
   },
   bull: {
-    e:"🐂", label:"Flow held into the close — the tape has a real bid under it",
-    text:"<b>Market Tide finishing at {{tide}} BULLISH FLOW while VIX stays CALM at {{vix}}, MOVE frozen at {{move}} and Hindenburg clear — the vol-and-flow backdrop into this close is genuinely constructive.</b> %>200DMA at {{dma200}} means the broad participation built this week didn't evaporate. The score pullback to +5 is intraday breadth cooling (McClellan FALLING, Put/Call ticking up) not a structural shift — this looks like a healthy fade into the bell after a strong session, not distribution.",
-    moves:[["▲","Market Tide {{tide}}: demand held at the close — the rally wasn't abandoned."],["▲","VIX {{vix}} CALM + MOVE {{move}} flat: no fear into the bell."],["≈","McClellan FALLING + Put/Call {{putcall}}: breadth and sentiment cooling, but from elevated levels."]]
+    e:"🐂", label:"Flow + vol confirm: a genuine broad green close",
+    text:"<b>Market Tide closed at {{tide}} BULLISH FLOW, VIX at {{vix}} CALM, MOVE unchanged at {{move}} and Hindenburg clear — the four cleanest risk-off signals all stayed quiet.</b> %>200DMA {{dma200}} means the broad base held all day. Power Hour was flat (SPY −0.05%), not distributional — when the final hour is quiet on above-average vol (1.27×) and the tape still closes green broadly, it tends to carry. The three amber indicators (McClellan, Put/Call, SMFI) reflect cooling, not reversal.",
+    moves:[["▲","Market Tide {{tide}}: real demand into the close — no abandonment of the rally."],["▲","VIX {{vix}} + MOVE {{move}}: vol stayed dead all session."],["▲","Power Hour neutral on 1.27× vol: sellers didn't show up in the final hour."]]
   },
   bear: {
-    e:"🐻", label:"Score fading into the close — three amber, SMFI deteriorating",
-    text:"<b>The score pulled from +7 midday to +5 at the close: McClellan rolled to FALLING ({{mcclellan}}), Put/Call climbed to {{putcall}}, and SMFI slipped further to {{smfi}} — three amber indicators simultaneously softening into the bell.</b> SMFI has now declined three straight scans without clearing 50k; it's not just absent from this rally, it's drifting lower. A three-amber close with declining institutional footprint and rising hedging demand is the kind of subtle late-day deterioration that often precedes a weaker open the following session.",
-    moves:[["▼","SMFI {{smfi}}: three straight scans lower — smart money drifting away, not just cautious."],["▼","Put/Call {{putcall}}: hedging jumped into the close — someone is buying protection."],["▼","McClellan FALLING {{mcclellan}}: breadth peaked midday and rolled — late buying was narrower than it looked."]]
+    e:"🐻", label:"Four straight SMFI declines — smart money still not here",
+    text:"<b>SMFI fell for a fourth consecutive scan to {{smfi}}, Put/Call crept to {{putcall}}, and McClellan continued FALLING at {{mcclellan}} — all three amber indicators worsened into the close.</b> SMFI at 48,129 is 1,871 points below the neutral threshold and trending in the wrong direction; the institutional footprint is not just absent from this rally, it's actively declining. A broad green close with rising hedging, falling breadth direction, and a sinking smart-money index warrants watching — the tape is fine for now, but the undercurrents are soft.",
+    moves:[["▼","SMFI {{smfi}}: four straight scan declines — drifting lower, not stabilizing."],["▼","McClellan FALLING {{mcclellan}}: breadth peaked midday, gave back ground all afternoon."],["▼","Put/Call {{putcall}}: highest hedging read of the day at the bell."]]
   },
 };
 

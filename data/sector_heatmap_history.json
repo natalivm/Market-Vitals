@@ -1,6 +1,6 @@
 {
-  "_schema": "sector_heatmap_history v1 — daily heat-map readings of sector cap-weighted moves ('sector score'). Two feed variants share this store: the Rotation Radar Bot's 'SECTOR HEAT MAP' (universe = all stocks, R3000 + S&P 500) and, from 2026-06-11, the Market Vitals Bot's 'S&P 500 HEAT MAP' (universe = S&P 500). One snapshot per post. 'date' = trading session covered; 'scan' = feed scan label (e.g. EOD). 'market' = whole-universe cap-weighted move (percent). 'sectors' = each sector's cap-weighted move (percent), ordered best→worst exactly as the feed lists them. 'universe' and 'source' record the variant (present from 2026-06-11). The per-stock heat-map tiles are an image only and are NOT transcribed here.",
-  "_rules": "Only confirmed feed numbers. Append-only — never edit or delete a committed snapshot's values. Never invent or carry-forward. Copy every percentage exactly as shown (no rounding). Sector names are kept as the feed displays them (labels differ slightly between the two variants — keep verbatim). The ETF net-flow store lives in rotation_history.json and is preserved unchanged.",
+  "_schema": "sector_heatmap_history v1 \u2014 daily heat-map readings of sector cap-weighted moves ('sector score'). Two feed variants share this store: the Rotation Radar Bot's 'SECTOR HEAT MAP' (universe = all stocks, R3000 + S&P 500) and, from 2026-06-11, the Market Vitals Bot's 'S&P 500 HEAT MAP' (universe = S&P 500). One snapshot per post. 'date' = trading session covered; 'scan' = feed scan label (e.g. EOD). 'market' = whole-universe cap-weighted move (percent). 'sectors' = each sector's cap-weighted move (percent), ordered best\u2192worst exactly as the feed lists them. 'universe' and 'source' record the variant (present from 2026-06-11). The per-stock heat-map tiles are an image only and are NOT transcribed here.",
+  "_rules": "Only confirmed feed numbers. Append-only \u2014 never edit or delete a committed snapshot's values. Never invent or carry-forward. Copy every percentage exactly as shown (no rounding). Sector names are kept as the feed displays them (labels differ slightly between the two variants \u2014 keep verbatim). The ETF net-flow store lives in rotation_history.json and is preserved unchanged.",
   "history": [
     {
       "date": "2026-06-10",
@@ -211,6 +211,112 @@
         {
           "name": "Healthcare",
           "move": -0.13
+        }
+      ]
+    },
+    {
+      "date": "2026-06-15",
+      "scan": "EOD",
+      "source": "Rotation Radar",
+      "universe": "R3000 + S&P 500",
+      "market": 1.68,
+      "sectors": [
+        {
+          "name": "Technology",
+          "move": 3.49
+        },
+        {
+          "name": "Communication Services",
+          "move": 2.37
+        },
+        {
+          "name": "Consumer Cyclical",
+          "move": 1.73
+        },
+        {
+          "name": "Industrials",
+          "move": 1.32
+        },
+        {
+          "name": "Basic Materials",
+          "move": 1.18
+        },
+        {
+          "name": "Utilities",
+          "move": 0.55
+        },
+        {
+          "name": "Financial Services",
+          "move": 0.34
+        },
+        {
+          "name": "Healthcare",
+          "move": -0.33
+        },
+        {
+          "name": "Consumer Defensive",
+          "move": -0.51
+        },
+        {
+          "name": "Real Estate",
+          "move": -0.85
+        },
+        {
+          "name": "Energy",
+          "move": -3.23
+        }
+      ]
+    },
+    {
+      "date": "2026-06-15",
+      "scan": "EOD",
+      "source": "Market Vitals",
+      "universe": "S&P 500",
+      "market": 1.63,
+      "sectors": [
+        {
+          "name": "Technology",
+          "move": 3.43
+        },
+        {
+          "name": "Communication Services",
+          "move": 2.41
+        },
+        {
+          "name": "Consumer Cyclical",
+          "move": 1.84
+        },
+        {
+          "name": "Industrials",
+          "move": 1.1
+        },
+        {
+          "name": "Basic Materials",
+          "move": 0.85
+        },
+        {
+          "name": "Utilities",
+          "move": 0.37
+        },
+        {
+          "name": "Financial Services",
+          "move": 0.35
+        },
+        {
+          "name": "Consumer Defensive",
+          "move": -0.48
+        },
+        {
+          "name": "Healthcare",
+          "move": -0.66
+        },
+        {
+          "name": "Real Estate",
+          "move": -0.88
+        },
+        {
+          "name": "Energy",
+          "move": -3.62
         }
       ]
     }
