@@ -1918,7 +1918,20 @@ function renderTrend(snaps) {
   // geometry, in viewBox units (the SVG scales to its container width)
   const W = 620, H = 230, padL = 56, padR = 14, padT = 14, padB = 28;
   const n = recent.length;
-  const X = i => padL + (n === 1 ? 0 : i / (n - 1) * (W - padL - padR));
+
+  // Space x-positions by actual trading-day calendar, skipping weekends,
+  // so a Mon–Fri gap (skipping Sat/Sun) renders as 1 step, not 3.
+  function tradingDaysBetween(d0, d1) {
+    // count Mon–Fri days from d0 up to (not including) d1
+    let count = 0, cur = new Date(d0);
+    while (cur < d1) { const dow = cur.getUTCDay(); if (dow !== 0 && dow !== 6) count++; cur.setUTCDate(cur.getUTCDate() + 1); }
+    return count;
+  }
+  const dates  = recent.map(s => new Date(s.date + "T00:00:00Z"));
+  const d0     = dates[0], dN = dates[n - 1];
+  const total  = tradingDaysBetween(d0, dN) || 1;          // total trading days in range
+  const tpos   = dates.map(d => tradingDaysBetween(d0, d)); // trading-day index of each point
+  const X      = i => padL + (tpos[i] / total) * (W - padL - padR);
   const Y = v => padT + (1 - (v + maxAbs) / (2 * maxAbs)) * (H - padT - padB);
   const z = Y(0);
 
