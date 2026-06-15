@@ -1944,10 +1944,27 @@ function renderTrend(snaps) {
     `<text class="tg-axis" x="${padL - 8}" y="${z + 4}" text-anchor="end">0</text>` +
     `<text class="tg-axis" x="${padL - 8}" y="${Y(-maxAbs) + 4}" text-anchor="end">${fmtFlow(-maxAbs)}</text>`;
 
-  // x-axis date labels — thin them out once there are many sessions
-  const xstep = n > 8 ? 2 : 1;
+  // x-axis date labels — pick evenly spaced ticks that land cleanly on the
+  // last point and never crowd the right edge (the old "every 2nd + always
+  // last" rule double-labelled the end, e.g. Jun 12 right next to Jun 15).
+  const targetTicks = 6;
+  const span = n - 1;
+  let step = Math.max(1, Math.round(span / (targetTicks - 1)));
+  // nudge toward a step that divides the span evenly, so ticks stay equally
+  // spaced AND the final tick lands exactly on the last point
+  for (const cand of [step, step + 1, step - 1, step + 2]) {
+    if (cand >= 1 && span % cand === 0) { step = cand; break; }
+  }
+  const labelIdx = new Set();
+  for (let i = 0; i < n; i += step) labelIdx.add(i);
+  labelIdx.add(n - 1);
+  const ordered = [...labelIdx].sort((a, b) => a - b);
+  // drop the 2nd-to-last tick if it sits too close to the final one
+  if (ordered.length >= 2 && (ordered[ordered.length - 1] - ordered[ordered.length - 2]) < step * 0.6) {
+    labelIdx.delete(ordered[ordered.length - 2]);
+  }
   const xlab = recent.map((s, i) => {
-    if (i !== 0 && i !== n - 1 && i % xstep !== 0) return "";
+    if (!labelIdx.has(i)) return "";
     return `<text class="tg-axis" x="${X(i)}" y="${H - 8}" text-anchor="${i === 0 ? "start" : i === n - 1 ? "end" : "middle"}">${shortDate(s.date)}</text>`;
   }).join("");
 
