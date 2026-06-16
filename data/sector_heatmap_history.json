@@ -319,6 +319,112 @@
           "move": -3.62
         }
       ]
+    },
+    {
+      "date": "2026-06-16",
+      "scan": "EOD",
+      "source": "Rotation Radar",
+      "universe": "R3000 + S&P 500",
+      "market": -0.53,
+      "sectors": [
+        {
+          "name": "Financial Services",
+          "move": 1.55
+        },
+        {
+          "name": "Utilities",
+          "move": 0.63
+        },
+        {
+          "name": "Industrials",
+          "move": 0.55
+        },
+        {
+          "name": "Communication Services",
+          "move": 0.5
+        },
+        {
+          "name": "Basic Materials",
+          "move": 0.37
+        },
+        {
+          "name": "Consumer Defensive",
+          "move": 0.27
+        },
+        {
+          "name": "Real Estate",
+          "move": 0.18
+        },
+        {
+          "name": "Healthcare",
+          "move": -0.1
+        },
+        {
+          "name": "Consumer Cyclical",
+          "move": -0.16
+        },
+        {
+          "name": "Energy",
+          "move": -0.43
+        },
+        {
+          "name": "Technology",
+          "move": -2.28
+        }
+      ]
+    },
+    {
+      "date": "2026-06-16",
+      "scan": "EOD",
+      "source": "Market Vitals",
+      "universe": "S&P 500",
+      "market": -0.45,
+      "sectors": [
+        {
+          "name": "Financial Services",
+          "move": 1.53
+        },
+        {
+          "name": "Industrials",
+          "move": 0.92
+        },
+        {
+          "name": "Utilities",
+          "move": 0.61
+        },
+        {
+          "name": "Communication Services",
+          "move": 0.56
+        },
+        {
+          "name": "Basic Materials",
+          "move": 0.34
+        },
+        {
+          "name": "Consumer Defensive",
+          "move": 0.26
+        },
+        {
+          "name": "Real Estate",
+          "move": 0.22
+        },
+        {
+          "name": "Healthcare",
+          "move": 0.01
+        },
+        {
+          "name": "Consumer Cyclical",
+          "move": -0.22
+        },
+        {
+          "name": "Energy",
+          "move": -0.34
+        },
+        {
+          "name": "Technology",
+          "move": -2.12
+        }
+      ]
     }
   ]
 }

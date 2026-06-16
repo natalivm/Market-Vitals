@@ -1139,17 +1139,20 @@
    ════════════════════════════════════════════════════════════════════ */
 const SCAN = {
   date:       "2026-06-16",
-  utc:        "17:02 UTC",
-  kyiv:       "8:02 PM Kyiv",
-  ribbon:     "MID-SESSION",
-  scanName:   "mid-session scan",
-  prevLabel:  "13:02 pre-mkt",
-  ghostLabel: "20:11",
-  composite:  { prev: 74, ghost: 74, cur: 74 },
-  ribbonMain: 'VIX <b style="color:var(--greed)">{{vix}}</b> CALM · MOVE <b style="color:var(--greed)">{{move}}</b> CALM · Tide <b style="color:var(--fear)">{{tide}}</b> BEARISH FLOW',
+  utc:        "20:11 UTC",
+  kyiv:       "11:11 PM Kyiv",
+  ribbon:     "CLOSE",
+  scanName:   "EOD scan",
+  prevLabel:  "17:02 scan",
+  ghostLabel: "17:02",
+  composite:  { prev: 74, ghost: 74, cur: 50 },  // cur: gauge # not in feed; 50 = neutral midline, mapped from MIXED-zone history (MIXED -1 →42, +0 →46-50)
+  ribbonMain: 'VIX <b style="color:var(--greed)">{{vix}}</b> CALM · Put/Call <b style="color:var(--amber)">{{putcall}}</b> BEARISH · Tide <b style="color:var(--fear)">{{tide}}</b> BEARISH FLOW',
   momentum:   { tag: "STRONG BULLISH", score: "+3", was: "67–72%" },
   powerHour: {
-    show: false,
+    show:   true,
+    tag:    "DISTRIBUTION",
+    state:  "red",
+    detail: "SPY −0.18% last hr · 1.29× vol · 35% of day",
   },
   doomClock: {
     show:          true,
@@ -1178,22 +1181,22 @@ const GHOST_AT       = SCAN.composite.ghost;
 const COMPOSITE      = SCAN.composite.cur;
 
 const indicators = [
-  { name:"VIX", prevNum:16.13, curNum:15.90, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Ticked down to {{vix}} from the {{vix_prev}} pre-market read — still CALM, no fear premium anywhere. Volatility stays dead even as the session's flow turned defensive." },
-  { name:"MOVE", prevNum:69.36, curNum:69.36, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Unchanged at {{move}} — bond volatility remains frozen. Fixed income reads 'not systemic' for a second straight scan without a flicker." },
-  { name:"McClellan", prevNum:38.18, curNum:39.06, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"FALLING", tag:"RISING", prevS:"amber", s:"green",
-    note:"Firmed to {{mcclellan}} from {{mcclellan_prev}} and the feed now tags it RISING — breadth momentum turned up and the indicator flipped green. Comfortably positive, Hindenburg clear." },
+  { name:"VIX", prevNum:15.90, curNum:16.14, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
+    note:"Closed at {{vix}}, a touch up from the {{vix_prev}} midday read but still CALM — no fear premium in vol even as the tape sold off into the bell." },
+  { name:"MOVE", prevNum:69.36, curNum:69.38, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
+    note:"Closed at {{move}}, essentially flat — bond volatility stayed frozen all session. Fixed income still reads 'not systemic'." },
+  { name:"McClellan", prevNum:39.06, curNum:34.42, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"RISING", tag:"FALLING", prevS:"green", s:"green",
+    note:"Rolled back to {{mcclellan}} from the {{mcclellan_prev}} midday read — the feed flips it to FALLING as breadth momentum faded into the close. Still positive and green, Hindenburg clear, but the intraday turn was lower." },
   { name:"Hindenburg", text:true, prevVal:"CLEAR", val:"CLEAR", prevTag:"CLEAR", tag:"CLEAR", prevS:"green", s:"green",
-    note:"Clear. With McClellan now RISING at {{mcclellan}}, the negative-breadth divergence the Omen requires is nowhere in sight." },
-  { name:"% > 200 DMA", prevNum:65.2, curNum:63.2, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
-    note:"Eased to {{dma200}} from {{dma200_prev}} — gave back part of the pre-market jump but long-term participation stays HEALTHY, well above the 60% line." },
-  { name:"Put/Call", prevNum:0.88, curNum:1.07, fmt:{dec:2}, prevTag:"NEUTRAL", tag:"BEARISH", prevS:"amber", s:"amber",
-    note:"Jumped to {{putcall}} from {{putcall_prev}} — hedging demand picked up sharply and the feed now tags it BEARISH. The options crowd leaned defensive as the session's flow turned." },
-  { name:"SMFI", prevNum:47609, curNum:47165, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
-    note:"Slipped again to {{smfi}} from {{smfi_prev}} — still drifting below the 50k line. The institutional footprint remains the board's quiet, persistent soft spot." },
-  { name:"Market Tide", prevNum:461, curNum:-425, fmt:{dec:0, pre:"$", suf:"M", comma:true}, tokFmt:{dec:0, pre:"$", suf:"M", comma:true, plus:true}, prevTag:"BULLISH FLOW", tag:"BEARISH FLOW", prevS:"green", s:"red",
-    note:"Flipped hard to {{tide}} from a bullish {{tide_prev}} — net premium flow turned BEARISH and is now the headline negative. Real money pulled premium out of the tape mid-session." },
+    note:"Clear. McClellan at {{mcclellan}} stays positive — the negative-breadth divergence the Omen needs never appeared." },
+  { name:"% > 200 DMA", prevNum:63.2, curNum:62.8, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
+    note:"Eased to {{dma200}} from {{dma200_prev}} — a marginal give-back, still HEALTHY above the 60% line. The long-term base held even on a down day." },
+  { name:"Put/Call", prevNum:1.07, curNum:1.12, fmt:{dec:2}, prevTag:"BEARISH", tag:"BEARISH", prevS:"amber", s:"amber",
+    note:"Climbed to {{putcall}} from {{putcall_prev}} — hedging demand kept building into the close, the feed's flagged 'elevated fear.' Still BEARISH and the day's clearest sentiment tell." },
+  { name:"SMFI", prevNum:47165, curNum:46553, fmt:{dec:0, comma:true}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"amber", s:"amber",
+    note:"Fell again to {{smfi}} from {{smfi_prev}} — still sliding below the 50k line. The institutional footprint stayed soft all session." },
+  { name:"Market Tide", prevNum:-425, curNum:-710, fmt:{dec:0, pre:"$", suf:"M", comma:true}, tokFmt:{dec:0, pre:"$", suf:"M", comma:true, plus:true}, prevTag:"BEARISH FLOW", tag:"BEARISH FLOW", prevS:"red", s:"red",
+    note:"Deepened to {{tide}} from {{tide_prev}} — net premium flow grew more BEARISH into the close. Real-money selling pressure was the dominant flow read of the day." },
 ];
 
 const concentration = [
@@ -1212,26 +1215,26 @@ const concentration = [
 ];
 
 const bars = [
-  { label:"% > 12 SMA", prev:70.7, cur:71.6, tag:"STRONG" },
-  { label:"% > 20 SMA", prev:71.7, cur:69.2, tag:"STRONG" },
-  { label:"% > 50 SMA", prev:67.4, cur:66.7, tag:"STRONG" },
+  { label:"% > 12 SMA", prev:71.6, cur:70.1, tag:"STRONG" },
+  { label:"% > 20 SMA", prev:69.2, cur:67.7, tag:"STRONG" },
+  { label:"% > 50 SMA", prev:66.7, cur:64.9, tag:"BULLISH" },
 ];
 
 const plays = {
   zen: {
-    e:"😇", label:"Constructive but two-sided — vol dead quiet, flow turned defensive",
-    text:"{{green}} of {{total}} green, CONSTRUCTIVE (+4): VIX CALM at {{vix}}, MOVE frozen at {{move}}, McClellan flipped to RISING at {{mcclellan}} and %>200DMA HEALTHY at {{dma200}}. <b>But the demand side cracked: Market Tide reversed to {{tide}} BEARISH FLOW and Put/Call jumped to {{putcall}} BEARISH.</b> Momentum Pulse holds STRONG BULLISH with all three SMAs STRONG — price structure intact while the flow undercurrent turned cautious.",
-    moves:[["▲","McClellan {{mcclellan}}: flipped to RISING — breadth momentum turned up, green."],["▼","Market Tide {{tide}}: reversed to BEARISH FLOW — the day's headline negative."],["▼","Put/Call {{putcall}}: jumped to BEARISH — hedging demand picked up."]]
+    e:"😇", label:"Mixed close — distribution into the bell, but the long-term base held",
+    text:"{{green}} of {{total}} green, but the score slipped to MIXED (+1): Market Tide deepened to {{tide}} BEARISH FLOW, Put/Call climbed to {{putcall}} BEARISH and Power Hour printed DISTRIBUTION into the bell. <b>Still, VIX stayed CALM at {{vix}}, %>200DMA held HEALTHY at {{dma200}}, Hindenburg is clear and Momentum Pulse is STRONG BULLISH.</b> A soft, distribution-led close — but the structural base under the tape didn't crack.",
+    moves:[["▼","Power Hour DISTRIBUTION: SPY sold the final hour on 1.29× vol."],["▼","Market Tide {{tide}}: net premium flow deepened bearish into the close."],["▲","%>200DMA {{dma200}} + VIX {{vix}}: base HEALTHY, vol still CALM."]]
   },
   bull: {
-    e:"🐂", label:"Vol dead, breadth rising, momentum STRONG — the bull case still stands",
-    text:"<b>VIX {{vix}} CALM, MOVE unchanged at {{move}}, McClellan now RISING at {{mcclellan}} and Hindenburg clear — every risk-off trigger is quiet.</b> %>200DMA holds HEALTHY at {{dma200}} and Momentum Pulse is STRONG BULLISH with 12/20/50 SMAs all STRONG. The price-and-breadth structure under this tape is still firmly intact even as intraday flow wobbles.",
-    moves:[["▲","McClellan {{mcclellan}} RISING + Hindenburg clear: breadth turned up, no divergence."],["▲","Momentum Pulse STRONG BULLISH: 12/20/50 SMAs all STRONG."],["▲","VIX {{vix}} + MOVE {{move}}: volatility frozen across stocks and bonds."]]
+    e:"🐂", label:"Vol calm, base HEALTHY, breadth STRONG — the structure survived a down day",
+    text:"<b>Even on a red close, VIX held CALM at {{vix}}, MOVE froze at {{move}}, %>200DMA stayed HEALTHY at {{dma200}} and Momentum Pulse is STRONG BULLISH with 12/20 SMAs STRONG.</b> Hindenburg is clear and McClellan, though now FALLING, is still positive at {{mcclellan}}. The selling was orderly — no vol spike, no breadth collapse. A pullback within an intact uptrend, not a regime change.",
+    moves:[["▲","VIX {{vix}} + MOVE {{move}}: zero stress in vol on a down day."],["▲","%>200DMA {{dma200}}: long-term base HEALTHY, barely dented."],["▲","Momentum Pulse STRONG BULLISH: breadth structure still firm."]]
   },
   bear: {
-    e:"🐻", label:"Demand reversed: Tide bearish, Put/Call bearish, SMFI still sinking",
-    text:"<b>Market Tide flipped to {{tide}} BEARISH FLOW and Put/Call jumped to {{putcall}} BEARISH — the demand side of the board reversed mid-session.</b> SMFI slipped again to {{smfi}}, still below 50k and trending the wrong way. With three flow/positioning reads now negative, the verdict downgraded to CONSTRUCTIVE (+4) from RISK-ON. Price holds and vol is calm, but real money is leaning defensive.",
-    moves:[["▼","Market Tide {{tide}}: net premium flipped to BEARISH FLOW."],["▼","Put/Call {{putcall}}: jumped to BEARISH — hedging demand rising."],["▼","SMFI {{smfi}}: still sliding below 50k — institutional footprint soft."]]
+    e:"🐻", label:"Distribution into the close, flow bearish, Put/Call rising — sellers in control",
+    text:"<b>Power Hour flipped to DISTRIBUTION as SPY sold the final hour, Market Tide deepened to {{tide}} BEARISH FLOW and Put/Call climbed to {{putcall}} BEARISH.</b> McClellan rolled over to FALLING at {{mcclellan}} and SMFI slid again to {{smfi}}, still below 50k. The composite dropped to MIXED (+1) from CONSTRUCTIVE — the board's flow, sentiment and breadth-momentum reads all turned lower into the close. Price held, but sellers had the tape by the bell.",
+    moves:[["▼","Power Hour DISTRIBUTION: institutional selling into the close."],["▼","Market Tide {{tide}} + Put/Call {{putcall}}: flow bearish, hedging rising."],["▼","McClellan {{mcclellan}} + SMFI {{smfi}}: breadth momentum and smart money both rolling lower."]]
   },
 };
 
