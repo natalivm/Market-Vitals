@@ -6569,27 +6569,6 @@
           "new": true
         }
       ]
-    },
-    {
-      "date": "2026-06-16",
-      "ts": "2026-06-16T14:15:00Z",
-      "regime": "BROAD MARKET SELL-OFF",
-      "selling": 9,
-      "total": 11,
-      "holding_up": [
-        {
-          "sym": "XLRE",
-          "name": "Real Estate",
-          "chg": 0.51
-        },
-        {
-          "sym": "JETS",
-          "name": "Airlines",
-          "chg": 1.54
-        }
-      ],
-      "holdNote": "Intraday read: regime, breadth (9/11 sectors selling, 82%) and the holding-up names (XLRE +0.51%, JETS +1.54%) are from the 2026-06-16 14:15 UTC BROAD MARKET SELL-OFF post. Per-ETF net flows, benchmark and 14-day conviction were not in that post and are pending the ~20:00 UTC close scan \u2014 until then the hero net-flow chart shows no bars.",
-      "flows": []
     }
   ]
 }
