@@ -1145,7 +1145,7 @@ const SCAN = {
   scanName:   "EOD scan",
   prevLabel:  "17:02 scan",
   ghostLabel: "17:02",
-  composite:  { prev: 74, ghost: 74, cur: 74 },
+  composite:  { prev: 74, ghost: 74, cur: 50 },  // cur: gauge # not in feed; 50 = neutral midline, mapped from MIXED-zone history (MIXED -1 →42, +0 →46-50)
   ribbonMain: 'VIX <b style="color:var(--greed)">{{vix}}</b> CALM · Put/Call <b style="color:var(--amber)">{{putcall}}</b> BEARISH · Tide <b style="color:var(--fear)">{{tide}}</b> BEARISH FLOW',
   momentum:   { tag: "STRONG BULLISH", score: "+3", was: "67–72%" },
   powerHour: {
