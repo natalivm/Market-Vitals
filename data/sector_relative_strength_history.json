@@ -1,0 +1,28 @@
+{
+  "_schema": "sector_relative_strength_history v1 — daily SECTOR RELATIVE STRENGTH readings from the Rotation Radar Bot. Each sector/group line is its % change vs the prior day's close (intraday relative-strength tape, NOT the cap-weighted 'sector score' in sector_heatmap_history.json). Unlike the heat map, this list mixes GICS sectors with breadth/style proxies (IWM small caps, SMH semis, XLK tech) and is ordered best→worst as the feed lists them. 'benchmark' is the SPY line. 's' is the feed's dot color: green=outperform/leading, gray=mid-pack, red=underperform/lagging. Append one object per reading; confirmed feed numbers only.",
+  "_rules": "Only confirmed Rotation Radar Bot feed numbers. Append-only; never edit or delete committed rows. Copy percentages exactly. Record ts=null when the post shows no UTC timestamp — never guess one. Omit a line the feed didn't show rather than back-filling.",
+  "history": [
+    {
+      "date": "2026-06-16",
+      "scan": "DAILY",
+      "ts": null,
+      "source": "Rotation Radar",
+      "benchmark": { "sym": "SPY", "move": -0.66 },
+      "sectors": [
+        { "name": "Financials", "sym": "XLF", "move": 1.51, "s": "green" },
+        { "name": "Utilities", "sym": "XLU", "move": 0.72, "s": "green" },
+        { "name": "Industrials", "sym": "XLI", "move": 0.57, "s": "green" },
+        { "name": "Materials", "sym": "XLB", "move": 0.44, "s": "green" },
+        { "name": "Real Estate", "sym": "XLRE", "move": 0.24, "s": "green" },
+        { "name": "Cons Staples", "sym": "XLP", "move": 0.13, "s": "green" },
+        { "name": "Comm Services", "sym": "XLC", "move": 0.11, "s": "green" },
+        { "name": "Healthcare", "sym": "XLV", "move": 0.08, "s": "gray" },
+        { "name": "Cons Discretionary", "sym": "XLY", "move": -0.09, "s": "gray" },
+        { "name": "Energy", "sym": "XLE", "move": -0.16, "s": "red" },
+        { "name": "Small Caps", "sym": "IWM", "move": -1.01, "s": "red" },
+        { "name": "Technology", "sym": "XLK", "move": -2.75, "s": "red" },
+        { "name": "Semiconductors", "sym": "SMH", "move": -4.42, "s": "red" }
+      ]
+    }
+  ]
+}
