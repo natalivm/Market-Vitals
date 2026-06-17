@@ -87,6 +87,31 @@ continues in parallel and is unchanged.
 > Confirmed feed numbers only; append-only; copy percentages exactly. The
 > per-stock heat-map *tiles* are an image only — not transcribed.
 
+## Schema — `sector_relative_strength_history.json`
+
+**SECTOR RELATIVE STRENGTH — DAILY** from the **Rotation Radar Bot**. Each line
+is a sector/group's **% change vs the prior day's close** (an intraday
+relative-strength tape) — distinct from the cap-weighted "sector score" in
+`sector_heatmap_history.json`. The list mixes GICS sectors with breadth/style
+proxies (IWM, SMH, XLK) and is ordered best→worst as the feed lists them.
+
+| Field             | Meaning                                                       | Example      |
+|-------------------|---------------------------------------------------------------|--------------|
+| `date`            | Trading session the reading covers, ISO date                  | `2026-06-16` |
+| `scan`            | Feed's scan label                                             | `DAILY`      |
+| `ts`              | Post time (ISO-8601 UTC) if shown, else `null` — never guess  | `null`       |
+| `source`          | Feed variant                                                  | `Rotation Radar` |
+| `benchmark`       | The SPY reference line `{sym, move}`                          | `{"sym":"SPY","move":-0.66}` |
+| `sectors[]`       | Per-line readings, ordered best→worst as the feed lists them  | —            |
+| `sectors[].name`  | Group label as the feed displays it                           | `Financials` |
+| `sectors[].sym`   | ETF/proxy ticker                                              | `XLF`        |
+| `sectors[].move`  | % change vs prior close                                       | `1.51`       |
+| `sectors[].s`     | Feed dot color: `green` (leading) / `gray` (mid-pack) / `red` (lagging) | `green` |
+
+> Confirmed feed numbers only; append-only; copy percentages exactly. Record
+> `ts: null` when the post shows no UTC timestamp. The chart image itself is not
+> transcribed beyond the listed values.
+
 ## Schema — `moc_imbalance_history.json`
 
 **Market-On-Close (closing-auction) order imbalances** from the `#MACRO` feed.

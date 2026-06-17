@@ -1183,8 +1183,8 @@ const COMPOSITE      = SCAN.composite.cur;
 const indicators = [
   { name:"VIX", prevNum:15.90, curNum:16.14, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
     note:"Closed at {{vix}}, a touch up from the {{vix_prev}} midday read but still CALM — no fear premium in vol even as the tape sold off into the bell." },
-  { name:"MOVE", prevNum:69.36, curNum:69.38, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Closed at {{move}}, essentially flat — bond volatility stayed frozen all session. Fixed income still reads 'not systemic'." },
+  { name:"MOVE", prevNum:69.36, curNum:67.28, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
+    note:"Eased to {{move}} from {{move_prev}} — bond volatility ground ~3% lower to the live close (the Bot feed's 69.38 was the day's stale open). Still deeply CALM; fixed income reads 'not systemic.'" },
   { name:"McClellan", prevNum:39.06, curNum:34.42, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"RISING", tag:"FALLING", prevS:"green", s:"green",
     note:"Rolled back to {{mcclellan}} from the {{mcclellan_prev}} midday read — the feed flips it to FALLING as breadth momentum faded into the close. Still positive and green, Hindenburg clear, but the intraday turn was lower." },
   { name:"Hindenburg", text:true, prevVal:"CLEAR", val:"CLEAR", prevTag:"CLEAR", tag:"CLEAR", prevS:"green", s:"green",
@@ -1228,7 +1228,7 @@ const plays = {
   },
   bull: {
     e:"🐂", label:"Vol calm, base HEALTHY, breadth STRONG — the structure survived a down day",
-    text:"<b>Even on a red close, VIX held CALM at {{vix}}, MOVE froze at {{move}}, %>200DMA stayed HEALTHY at {{dma200}} and Momentum Pulse is STRONG BULLISH with 12/20 SMAs STRONG.</b> Hindenburg is clear and McClellan, though now FALLING, is still positive at {{mcclellan}}. The selling was orderly — no vol spike, no breadth collapse. A pullback within an intact uptrend, not a regime change.",
+    text:"<b>Even on a red close, VIX held CALM at {{vix}}, MOVE eased to {{move}}, %>200DMA stayed HEALTHY at {{dma200}} and Momentum Pulse is STRONG BULLISH with 12/20 SMAs STRONG.</b> Hindenburg is clear and McClellan, though now FALLING, is still positive at {{mcclellan}}. The selling was orderly — no vol spike, no breadth collapse. A pullback within an intact uptrend, not a regime change.",
     moves:[["▲","VIX {{vix}} + MOVE {{move}}: zero stress in vol on a down day."],["▲","%>200DMA {{dma200}}: long-term base HEALTHY, barely dented."],["▲","Momentum Pulse STRONG BULLISH: breadth structure still firm."]]
   },
   bear: {
