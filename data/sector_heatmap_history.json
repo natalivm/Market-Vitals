@@ -478,6 +478,59 @@
           "move": -2.92
         }
       ]
+    },
+    {
+      "date": "2026-06-17",
+      "scan": "EOD",
+      "source": "Rotation Radar",
+      "universe": "R3000 + S&P 500",
+      "market": -1.16,
+      "sectors": [
+        {
+          "name": "Industrials",
+          "move": -0.05
+        },
+        {
+          "name": "Technology",
+          "move": -0.57
+        },
+        {
+          "name": "Financial Services",
+          "move": -0.58
+        },
+        {
+          "name": "Healthcare",
+          "move": -1.01
+        },
+        {
+          "name": "Energy",
+          "move": -1.07
+        },
+        {
+          "name": "Utilities",
+          "move": -1.28
+        },
+        {
+          "name": "Basic Materials",
+          "move": -1.35
+        },
+        {
+          "name": "Consumer Defensive",
+          "move": -2.06
+        },
+        {
+          "name": "Real Estate",
+          "move": -2.44
+        },
+        {
+          "name": "Consumer Cyclical",
+          "move": -2.51
+        },
+        {
+          "name": "Communication Services",
+          "move": -2.99
+        }
+      ]
     }
   ]
 }
