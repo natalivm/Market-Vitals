@@ -1138,21 +1138,21 @@
    Plus: composite, compositePrev, ghostComposite, date, utc, kyiv …
    ════════════════════════════════════════════════════════════════════ */
 const SCAN = {
-  date:       "2026-06-17",
-  utc:        "20:11 UTC",
-  kyiv:       "11:11 PM Kyiv",
-  ribbon:     "CLOSE",
-  scanName:   "EOD scan",
-  prevLabel:  "19:02 scan",
-  ghostLabel: "19:02",
-  composite:  { prev: 70, ghost: 70, cur: 35 },  // cur: gauge # not in feed; 35 = CAUTIOUS/fear-zone placeholder (MIXED -1 →42, scale ~-4/step below)
+  date:       "2026-06-18",
+  utc:        "13:01 UTC",
+  kyiv:       "4:01 PM Kyiv",
+  ribbon:     "PRE-MARKET",
+  scanName:   "Pre-market scan",
+  prevLabel:  "Jun 17 close",
+  ghostLabel: "Jun 17",
+  composite:  { prev: 35, ghost: 35, cur: 42 },  // cur: gauge # not in feed; 42 = MIXED/-1 placeholder (CAUTIOUS -3 was 35, scale ~+3.5/step up)
   ribbonMain: 'VIX <b style="color:var(--greed)">{{vix}}</b> CALM · McClellan <b style="color:var(--fear)">{{mcclellan}}</b> NEGATIVE · Hindenburg <b style="color:var(--fear)">TRIGGERED</b>',
-  momentum:   { tag: "LEANING BULLISH", score: "+1", was: "53–57%" },
+  momentum:   { tag: "LEANING BULLISH", score: "+1", was: "46–53%" },
   powerHour: {
     show:   true,
     tag:    "DISTRIBUTION",
     state:  "red",
-    detail: "SPY −0.68% last hr · 2.21× vol · 40% of day",
+    detail: "SPY −0.68% last hr · 2.25× vol · 40% of day",
   },
   doomClock: {
     show:          true,
@@ -1181,22 +1181,22 @@ const GHOST_AT       = SCAN.composite.ghost;
 const COMPOSITE      = SCAN.composite.cur;
 
 const indicators = [
-  { name:"VIX", prevNum:16.89, curNum:18.73, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Jumped to {{vix}} from {{vix_prev}} — the largest VIX of the week as the tape sold off into the close, but still tagged CALM. Vol is waking up, not yet stressed." },
-  { name:"MOVE", prevNum:69.36, curNum:67.28, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Eased to {{move}} from {{move_prev}} — bond volatility ticked lower even as equities fell. Fixed income stays CALM, 'not systemic.'" },
-  { name:"McClellan", prevNum:5.63, curNum:-9.42, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"FALLING", tag:"FALLING", prevS:"green", s:"red",
-    note:"Fell through zero to {{mcclellan}} from {{mcclellan_prev}} — McClellan is now NEGATIVE and still falling, flipping red. Breadth momentum has rolled over, and a negative McClellan is exactly the condition that triggered the Hindenburg Omen." },
-  { name:"Hindenburg", text:true, prevVal:"CLEAR", val:"TRIGGERED", prevTag:"CLEAR", tag:"TRIGGERED", prevS:"green", s:"red",
-    note:"TRIGGERED. New Highs 115 (4.7%) and New Lows 63 (2.6%) are both elevated while McClellan turned negative and SPY stays in an uptrend — the classic split-market signal. Single signals are common; watch for a cluster (3+ in 30 days) before reading it as a top." },
-  { name:"% > 200 DMA", prevNum:60.9, curNum:58.3, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
-    note:"Slipped to {{dma200}} from {{dma200_prev}} — eased below 60% but the feed still tags it HEALTHY. The long-term base is the last green pillar holding." },
-  { name:"Put/Call", prevNum:1.07, curNum:1.11, fmt:{dec:2}, prevTag:"BEARISH", tag:"BEARISH", prevS:"amber", s:"amber",
-    note:"Climbed to {{putcall}} from {{putcall_prev}} — hedging demand rose with the selloff. Still BEARISH and amber." },
-  { name:"SMFI", prevNum:45285, curNum:44608, fmt:{dec:0, comma:true}, prevTag:"DISTRIBUTION", tag:"DISTRIBUTION", prevS:"amber", s:"amber",
-    note:"Fell again to {{smfi}} from {{smfi_prev}} — the DISTRIBUTION flag persists. Smart money sold into the rally and the rolldown alike; the divergence that warned all day played out into the close." },
-  { name:"Market Tide", prevNum:156, curNum:-19, fmt:{dec:0, pre:"$", suf:"M", comma:true}, tokFmt:{dec:0, pre:"$", suf:"M", comma:true, plus:true}, prevTag:"BULLISH FLOW", tag:"BALANCED", prevS:"green", s:"amber",
-    note:"Faded to {{tide}} from {{tide_prev}} — the afternoon's bullish flow drained back to roughly flat as sellers took over. BALANCED, no longer supportive." },
+  { name:"VIX", prevNum:18.73, curNum:17.14, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
+    note:"Eased back to {{vix}} from {{vix_prev}} — overnight vol settled after the close-of-day spike. Still CALM and green; no pre-market fear." },
+  { name:"MOVE", prevNum:67.28, curNum:69.36, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
+    note:"Ticked up to {{move}} from {{move_prev}} — bond volatility nudged higher but stays firmly CALM. Fixed income remains 'not systemic.'" },
+  { name:"McClellan", prevNum:-9.42, curNum:-9.40, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"FALLING", tag:"FALLING", prevS:"red", s:"red",
+    note:"Essentially unchanged at {{mcclellan}} from {{mcclellan_prev}} — McClellan stays NEGATIVE and FALLING, still red. Breadth momentum has not recovered, and a negative McClellan keeps the Hindenburg condition live." },
+  { name:"Hindenburg", text:true, prevVal:"TRIGGERED", val:"TRIGGERED", prevTag:"TRIGGERED", tag:"TRIGGERED", prevS:"red", s:"red",
+    note:"Still TRIGGERED. New Highs 115 (4.7%) and New Lows 63 (2.6%) both elevated while McClellan stays negative and SPY holds its uptrend — the classic split-market signal persists. Single signals are common; watch for a cluster (3+ in 30 days) before reading it as a top." },
+  { name:"% > 200 DMA", prevNum:58.3, curNum:58.2, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
+    note:"Flat at {{dma200}} from {{dma200_prev}} — holding just below 60% and still tagged HEALTHY. The long-term base is the green pillar still standing." },
+  { name:"Put/Call", prevNum:1.11, curNum:0.67, fmt:{dec:2}, prevTag:"BEARISH", tag:"COMPLACENT", prevS:"amber", s:"amber",
+    note:"Collapsed to {{putcall}} from {{putcall_prev}} — hedging demand evaporated and call volume is now overwhelming puts. The feed flags COMPLACENT (below 0.7); extreme complacency is historically a contrarian sell signal." },
+  { name:"SMFI", prevNum:44608, curNum:43932, fmt:{dec:0, comma:true}, prevTag:"DISTRIBUTION", tag:"DISTRIBUTION", prevS:"amber", s:"amber",
+    note:"Slipped again to {{smfi}} from {{smfi_prev}} — the DISTRIBUTION flag persists. Smart money keeps stepping back; the divergence is unresolved into the open." },
+  { name:"Market Tide", prevNum:-19, curNum:-16, fmt:{dec:0, pre:"$", suf:"M", comma:true}, tokFmt:{dec:0, pre:"$", suf:"M", comma:true, plus:true}, prevTag:"BALANCED", tag:"BALANCED", prevS:"amber", s:"amber",
+    note:"Roughly flat at {{tide}} from {{tide_prev}} — net premium flow stays near zero and BALANCED. Neither supportive nor pressuring; sidelined." },
 ];
 
 const concentration = [
@@ -1215,26 +1215,26 @@ const concentration = [
 ];
 
 const bars = [
-  { label:"% > 12 SMA", prev:60.6, cur:45.6, tag:"CAUTIOUS" },
-  { label:"% > 20 SMA", prev:63.4, cur:50.8, tag:"BULLISH" },
-  { label:"% > 50 SMA", prev:60.6, cur:53.3, tag:"BULLISH" },
+  { label:"% > 12 SMA", prev:45.6, cur:45.5, tag:"CAUTIOUS" },
+  { label:"% > 20 SMA", prev:50.8, cur:50.6, tag:"BULLISH" },
+  { label:"% > 50 SMA", prev:53.3, cur:53.2, tag:"BULLISH" },
 ];
 
 const plays = {
   zen: {
-    e:"😇", label:"Cautious close — Hindenburg triggered, but a single signal in an uptrend",
-    text:"{{green}} of {{total}} green and the score flipped to CAUTIOUS (-3): the Hindenburg Omen TRIGGERED (Highs 115 / Lows 63 with McClellan negative), McClellan fell through zero to {{mcclellan}} and Power Hour printed heavy DISTRIBUTION (SPY -0.68% on 2.21× vol). <b>But VIX is still CALM at {{vix}}, %>200DMA holds HEALTHY at {{dma200}} and SPY remains in an uptrend — a single Omen is common; it only matters as a cluster (3+ in 30 days).</b> Real risk-off into the bell, but not yet a confirmed top.",
-    moves:[["▼","Hindenburg TRIGGERED: split-market signal — watch for a cluster."],["▼","McClellan {{mcclellan}}: fell negative — breadth momentum rolled over."],["▼","Power Hour DISTRIBUTION: SPY -0.68% last hr on 2.21× vol."]]
+    e:"😇", label:"Pre-market hold — Hindenburg still flagged, but VIX calm and the base HEALTHY",
+    text:"{{green}} of {{total}} green and the Bot lifts the score to MIXED (-1) from CAUTIOUS (-3): the Hindenburg Omen is still TRIGGERED (Highs 115 / Lows 63 with McClellan negative at {{mcclellan}}) and SMFI stays in DISTRIBUTION. <b>But overnight VIX eased to {{vix}} CALM, %>200DMA holds HEALTHY at {{dma200}} and Market Tide is back near flat at {{tide}}.</b> A split-market warning that hasn't resolved — but no fresh fear into the open, and the score is recovering, not deteriorating.",
+    moves:[["≈","Score MIXED (-1): up from CAUTIOUS (-3) — warning persists, not escalating."],["▼","Hindenburg still TRIGGERED + McClellan {{mcclellan}}: split-market signal live."],["▲","VIX {{vix}} CALM: no pre-market fear spike."]]
   },
   bull: {
-    e:"🐂", label:"VIX still calm, base HEALTHY, SPY in uptrend — one Omen isn't a top",
-    text:"<b>Even with the Hindenburg trigger, VIX held CALM at {{vix}}, MOVE eased to {{move}}, %>200DMA stayed HEALTHY at {{dma200}} and Momentum Pulse is still LEANING BULLISH.</b> The Omen fired on a single day with SPY in an uptrend — and the feed itself notes single signals are common; only a cluster of 3+ in 30 days has historically mattered. No vol spike, no break of the long-term base. A sharp pullback, not yet a regime change.",
-    moves:[["▲","VIX {{vix}} CALM: no fear spike even on the selloff."],["▲","%>200DMA {{dma200}}: long-term base still HEALTHY."],["≈","Hindenburg: single signal — needs a cluster to confirm."]]
+    e:"🐂", label:"VIX back to calm, base HEALTHY, Momentum still LEANING BULLISH — one Omen isn't a top",
+    text:"<b>VIX eased to {{vix}} CALM, %>200DMA stayed HEALTHY at {{dma200}}, and the 20- and 50-day SMAs are still BULLISH (50.6% / 53.2%) with Momentum Pulse holding LEANING BULLISH (+1).</b> The Hindenburg Omen remains a single, unconfirmed signal in an ongoing uptrend — the feed itself notes only a cluster of 3+ in 30 days has historically mattered. No vol spike, no break of the long-term base; the composite is climbing back, not falling.",
+    moves:[["▲","VIX {{vix}} CALM: vol settled back down pre-market."],["▲","%>200DMA {{dma200}} HEALTHY: long-term base intact."],["≈","Momentum LEANING BULLISH: 20/50-day SMA still bullish."]]
   },
   bear: {
-    e:"🐻", label:"Hindenburg triggered, McClellan negative, distribution into the close — the warning landed",
-    text:"<b>The Hindenburg Omen TRIGGERED — Highs 115 (4.7%) and Lows 63 (2.6%) both elevated with McClellan now negative at {{mcclellan}}, the split-market signal.</b> It caps a day where SMFI's DISTRIBUTION divergence played out: Power Hour sold off hard (SPY -0.68% on 2.21× vol), Market Tide faded to {{tide}} BALANCED and Momentum Pulse dropped to LEANING BULLISH (+1) with the 12-SMA now CAUTIOUS. The composite collapsed from CONSTRUCTIVE (+4) to CAUTIOUS (-3) in two scans — the smart-money warning that flashed all day is now confirmed by breadth.",
-    moves:[["▼","Hindenburg TRIGGERED + McClellan {{mcclellan}} negative: split-market top signal."],["▼","SMFI {{smfi}} DISTRIBUTION + Power Hour: institutions sold, the tape followed."],["▼","Score CONSTRUCTIVE (+4) → CAUTIOUS (-3): a full risk-off swing into the close."]]
+    e:"🐻", label:"Hindenburg still triggered, McClellan negative, Put/Call flips to COMPLACENT — the warning stands",
+    text:"<b>The Hindenburg Omen remains TRIGGERED — Highs 115 (4.7%) and Lows 63 (2.6%) both elevated with McClellan negative at {{mcclellan}}.</b> Now Put/Call has collapsed to {{putcall}} (COMPLACENT) — call volume is overwhelming puts, and extreme complacency is a classic contrarian sell signal layered on top of the split-market warning. SMFI stays in DISTRIBUTION at {{smfi}} and yesterday's Power Hour printed heavy selling (SPY -0.68% on 2.25× vol). Breadth and smart-money both still point down.",
+    moves:[["▼","Hindenburg TRIGGERED + McClellan {{mcclellan}} negative: split-market top signal live."],["▼","Put/Call {{putcall}} COMPLACENT: crowd unhedged — contrarian sell signal."],["▼","SMFI {{smfi}} DISTRIBUTION: institutions still stepping back."]]
   },
 };
 
