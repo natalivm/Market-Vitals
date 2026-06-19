@@ -23,6 +23,28 @@
         { "name": "Technology", "sym": "XLK", "move": -2.75, "s": "red" },
         { "name": "Semiconductors", "sym": "SMH", "move": -4.42, "s": "red" }
       ]
+    },
+    {
+      "date": "2026-06-18",
+      "scan": "EOD",
+      "ts": null,
+      "source": "Rotation Radar",
+      "benchmark": { "sym": "SPY", "move": 0.94 },
+      "sectors": [
+        { "name": "Semiconductors", "sym": "SMH", "move": 5.79, "s": "green" },
+        { "name": "Technology", "sym": "XLK", "move": 3.02, "s": "green" },
+        { "name": "Small Caps", "sym": "IWM", "move": 2.02, "s": "green" },
+        { "name": "Cons Discretionary", "sym": "XLY", "move": 1.52, "s": "green" },
+        { "name": "Industrials", "sym": "XLI", "move": 1.06, "s": "green" },
+        { "name": "Utilities", "sym": "XLU", "move": 0.63, "s": "green" },
+        { "name": "Comm Services", "sym": "XLC", "move": 0.04, "s": "gray" },
+        { "name": "Materials", "sym": "XLB", "move": -0.10, "s": "gray" },
+        { "name": "Real Estate", "sym": "XLRE", "move": -0.27, "s": "red" },
+        { "name": "Cons Staples", "sym": "XLP", "move": -0.30, "s": "red" },
+        { "name": "Financials", "sym": "XLF", "move": -0.65, "s": "red" },
+        { "name": "Healthcare", "sym": "XLV", "move": -0.66, "s": "red" },
+        { "name": "Energy", "sym": "XLE", "move": -1.55, "s": "red" }
+      ]
     }
   ]
 }
