@@ -7745,6 +7745,30 @@
     {
       "date": "2026-06-18",
       "ts": "2026-06-18T20:01:00Z",
+      "benchmark": {
+        "sym": "SPY",
+        "d1": 0.95,
+        "d5": 1.39,
+        "d20": 0.91
+      },
+      "read": {
+        "headline": "Risk-on tape led by tech/semis (SPY +0.95%/1d) \u2014 XLK (+$9.0B/1d) and SMH (+$7.1B/1d) dwarf every other flow, while institutions keep distributing defensives/financials and dip-buying broadens across the beaten-down.",
+        "points": [
+          {
+            "t": "Tech & semis are the whole inflow story",
+            "d": "XLK led core inflows (+3.22%/1d, +$9.0B/1d, +$8.6B/5d) and SMH led the sub-sectors (+5.76%/1d, +$7.1B/1d, +$7.5B/5d). DRAM ran +10.12%/1d (+49.54%/20d) on the memory theme. Inflows are overwhelmingly concentrated in semis/AI."
+          },
+          {
+            "t": "Sustained distribution in defensives & financials",
+            "d": "14-day conviction stayed distribution-heavy: IAI a perfect 14/14d Selling into Strength (+$1.5B), XLP 6/14d (+$2.5B), XLE 6/14d (+$2.0B), XLY 6/14d (+$1.3B), XRT 7/14d (+$1.4B). IAI's own 5-day flow turned negative (-$106.8M)."
+          },
+          {
+            "t": "Dip-buying broadened across the wreckage",
+            "d": "BUYING THE DIP tags spread to XAR (+$809.1M/5d), XLB (+$279.7M), XRT (+$144.8M), XOP (+$133.8M), XLRE (+$107.7M) and XLV (+$63.1M), plus KRE (+$254.7M) and IGV (+$93.8M) \u2014 accumulation into the sectors that sold off."
+          }
+        ],
+        "watch": "Energy is the clear laggard \u2014 XLE -1.75%/1d, -10.18%/20d with -$170.5M/1d outflow; XOP -12.23%/20d; OIH -9.57%/5d, -14.62%/20d. Breadth is narrow: with semis/AI carrying the tape, watch whether the SMH/XLK inflow holds \u2014 if it cracks there's little broad participation underneath."
+      },
       "conviction": {
         "accumulation": [
           {
@@ -7817,11 +7841,10 @@
           }
         ]
       },
-      "benchmark": {
-        "sym": "SPY",
-        "d1": 0.95,
-        "d5": 1.39,
-        "d20": 0.91
+      "tags": {
+        "selling_into_strength": 1,
+        "buying_the_dip": 8,
+        "of": 41
       },
       "flows": [
         {
@@ -8311,30 +8334,7 @@
           "signal": null,
           "new": true
         }
-      ],
-      "tags": {
-        "selling_into_strength": 1,
-        "buying_the_dip": 8,
-        "of": 41
-      },
-      "read": {
-        "headline": "Risk-on tape led by tech/semis (SPY +0.95%/1d) \u2014 XLK (+$9.0B/1d) and SMH (+$7.1B/1d) dwarf every other flow, while institutions keep distributing defensives/financials and dip-buying broadens across the beaten-down.",
-        "points": [
-          {
-            "t": "Tech & semis are the whole inflow story",
-            "d": "XLK led core inflows (+3.22%/1d, +$9.0B/1d, +$8.6B/5d) and SMH led the sub-sectors (+5.76%/1d, +$7.1B/1d, +$7.5B/5d). DRAM ran +10.12%/1d (+49.54%/20d) on the memory theme. Inflows are overwhelmingly concentrated in semis/AI."
-          },
-          {
-            "t": "Sustained distribution in defensives & financials",
-            "d": "14-day conviction stayed distribution-heavy: IAI a perfect 14/14d Selling into Strength (+$1.5B), XLP 6/14d (+$2.5B), XLE 6/14d (+$2.0B), XLY 6/14d (+$1.3B), XRT 7/14d (+$1.4B). IAI's own 5-day flow turned negative (-$106.8M)."
-          },
-          {
-            "t": "Dip-buying broadened across the wreckage",
-            "d": "BUYING THE DIP tags spread to XAR (+$809.1M/5d), XLB (+$279.7M), XRT (+$144.8M), XOP (+$133.8M), XLRE (+$107.7M) and XLV (+$63.1M), plus KRE (+$254.7M) and IGV (+$93.8M) \u2014 accumulation into the sectors that sold off."
-          }
-        ],
-        "watch": "Energy is the clear laggard \u2014 XLE -1.75%/1d, -10.18%/20d with -$170.5M/1d outflow; XOP -12.23%/20d; OIH -9.57%/5d, -14.62%/20d. Breadth is narrow: with semis/AI carrying the tape, watch whether the SMH/XLK inflow holds \u2014 if it cracks there's little broad participation underneath."
-      }
+      ]
     }
   ]
 }
