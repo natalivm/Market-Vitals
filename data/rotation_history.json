@@ -8888,6 +8888,70 @@
           "new": true
         }
       ]
+    },
+    {
+      "date": "2026-06-23",
+      "ts": "2026-06-23T13:30:00Z",
+      "regime": "BROAD MARKET SELL-OFF",
+      "selling": 32,
+      "total": 40,
+      "read": {
+        "headline": "Broad-based sell-off on the 06-23 pre-market scan \u2014 32 of 40 sectors selling (80%). Defensives (XLP +1.69%, XLV +1.00%) and a handful of thematics (ICLN +2.51%, OIH +0.89%) were the only groups holding up; per-ETF net flows weren't posted for this scan.",
+        "points": [
+          {
+            "t": "Defensives led the few holdouts",
+            "d": "Consumer Staples (XLP +1.69%) and Healthcare (XLV +1.00%) topped the holding-up list alongside Real Estate (XLRE +0.36%) \u2014 a classic risk-off lean while 80% of sectors sold."
+          },
+          {
+            "t": "A few thematics bucked the tape",
+            "d": "Clean Energy (ICLN +2.51%), Oil Services (OIH +0.89%), Software (IGV +0.31%), Transportation (XTN +0.26%) and Broker-Dealers (IAI +0.32%) also held green against the broad decline."
+          }
+        ],
+        "watch": "Banner-only scan: the sub/core INFLOW & OUTFLOW posts weren't captured, so net-flow direction by ETF is pending for 06-23. Watch whether the defensive bid (staples, healthcare) holds if the sell-off broadens."
+      },
+      "holding_up": [
+        {
+          "sym": "XLV",
+          "name": "Healthcare",
+          "chg": 1.0
+        },
+        {
+          "sym": "XLP",
+          "name": "Consumer Staples",
+          "chg": 1.69
+        },
+        {
+          "sym": "XLRE",
+          "name": "Real Estate",
+          "chg": 0.36
+        },
+        {
+          "sym": "XTN",
+          "name": "Transportation",
+          "chg": 0.26
+        },
+        {
+          "sym": "IGV",
+          "name": "Software",
+          "chg": 0.31
+        },
+        {
+          "sym": "OIH",
+          "name": "Oil Services",
+          "chg": 0.89
+        },
+        {
+          "sym": "ICLN",
+          "name": "Clean Energy (iShares)",
+          "chg": 2.51
+        },
+        {
+          "sym": "IAI",
+          "name": "Broker-Dealers",
+          "chg": 0.32
+        }
+      ],
+      "flows": []
     }
   ]
 }
