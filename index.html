@@ -1139,20 +1139,20 @@
    ════════════════════════════════════════════════════════════════════ */
 const SCAN = {
   date:       "2026-06-23",
-  utc:        "13:02 UTC",
-  kyiv:       "4:02 PM Kyiv",
-  ribbon:     "PRE-MARKET",
-  scanName:   "pre-market scan",
-  prevLabel:  "Jun 22 EOD",
-  ghostLabel: "Jun 22",
-  composite:  { prev: 50, ghost: 50, cur: 46 },  // cur: gauge # not in feed; 46 = CAUTIOUS/−2 (~4/step: +4=70, 0=54, −1=50, −2=46). Jun 22 EOD was MIXED/−1 (50) → needle ticks down.
-  ribbonMain: 'Hindenburg <b style="color:var(--fear)">CLUSTER</b> (3 in 30d) · VIX <b style="color:var(--amber)">{{vix}}</b> ELEVATED · Tide <b style="color:var(--fear)">{{tide}}</b> BEARISH FLOW',
-  momentum:   { tag: "LEANING BULLISH", score: "+1", was: "46–53%" },
+  utc:        "17:02 UTC",
+  kyiv:       "8:02 PM Kyiv",
+  ribbon:     "AFTERNOON",
+  scanName:   "afternoon scan",
+  prevLabel:  "15:02 UTC",
+  ghostLabel: "Jun 23 open",
+  composite:  { prev: 70, ghost: 46, cur: 66 },  // cur: gauge # not in feed; CONSTRUCTIVE/+3 → 66 (~4/step: +4=70, +3=66, 0=54, −2=46). 15:02 was +4/70; Jun 23 open was CAUTIOUS/−2/46 — needle recovered sharply off the open, eases one notch from midday.
+  ribbonMain: 'Omen <b style="color:var(--greed)">CLEARED</b> · VIX <b style="color:var(--greed)">{{vix}}</b> back CALM · Put/Call <b style="color:var(--amber)">{{putcall}}</b> BEARISH · Tide <b style="color:var(--fear)">{{tide}}</b> BEARISH FLOW',
+  momentum:   { tag: "STRONG BULLISH", score: "+3", was: "52–59%" },
   powerHour: {
-    show:   true,
+    show:   false,
     tag:    "NEUTRAL",
     state:  "amber",
-    detail: "SPY +0.09% last hr · 0.92× vol · 32% of day",
+    detail: "",
   },
   doomClock: {
     show:          true,
@@ -1181,22 +1181,22 @@ const GHOST_AT       = SCAN.composite.ghost;
 const COMPOSITE      = SCAN.composite.cur;
 
 const indicators = [
-  { name:"VIX", prevNum:17.28, curNum:20.13, fmt:{dec:2}, prevTag:"CALM", tag:"ELEVATED", prevS:"green", s:"amber",
-    note:"Jumped to {{vix}} from {{vix_prev}} — the first read above 20 in this stretch, flipping the tag to ELEVATED (amber). Volatility finally woke up overnight; the calm that masked the deteriorating internals all of yesterday is gone." },
+  { name:"VIX", prevNum:19.27, curNum:18.80, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
+    note:"Eased to {{vix}} from {{vix_prev}} — back firmly CALM after spiking above 20 at this morning's open. The volatility scare that opened the session has fully unwound; equity vol is quiet again into the afternoon." },
   { name:"MOVE", prevNum:65.39, curNum:65.39, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Unchanged at {{move}} — bond volatility flat and firmly CALM even as equity VIX jumped. Fixed income remains 'not systemic'; the stress is equity-only so far." },
-  { name:"McClellan", prevNum:-3.93, curNum:-3.93, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"RISING", tag:"RISING", prevS:"red", s:"red",
-    note:"Unchanged at {{mcclellan}} — still negative, and NEGATIVE breadth against an SPY uptrend is precisely the split that keeps firing the Omen. The feed tags it RISING but it hasn't crossed back above zero." },
-  { name:"Hindenburg", text:true, prevVal:"TRIGGERED", val:"TRIGGERED", prevTag:"TRIGGERED", tag:"CLUSTER", prevS:"red", s:"red",
-    note:"TRIGGERED again — Highs 175 (7.1%), Lows 89 (3.6%) — and now a CLUSTER: 3 signals in 30 days. That's the threshold the feed flags as having preceded nearly every major decline since 1987. No longer a single isolated signal." },
-  { name:"% > 200 DMA", prevNum:58.1, curNum:57.7, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
-    note:"Eased to {{dma200}} from {{dma200_prev}} — drifting lower but still tagged HEALTHY. The long-term base is the last green standing alongside MOVE; watch whether it holds the high-50s." },
-  { name:"Put/Call", prevNum:1.04, curNum:1.03, fmt:{dec:2}, prevTag:"BEARISH", tag:"BEARISH", prevS:"amber", s:"amber",
-    note:"Holding at {{putcall}} — above 1.0 and still tagged BEARISH (amber). Hedging stays elevated into the open; the crowd is positioned defensively alongside the Omen cluster." },
-  { name:"SMFI", prevNum:41152, curNum:40814, fmt:{dec:0, comma:true}, prevTag:"DISTRIBUTION", tag:"DISTRIBUTION", prevS:"amber", s:"amber",
-    note:"Fell again to {{smfi}} from {{smfi_prev}} — institutional DISTRIBUTION continues. Smart money keeps selling into the market; the divergence now sits alongside an Omen cluster and elevated VIX." },
-  { name:"Market Tide", prevNum:-328, curNum:-315, fmt:{dec:0, pre:"$", suf:"M", comma:true}, tokFmt:{dec:0, pre:"$", suf:"M", comma:true, plus:true}, prevTag:"BEARISH FLOW", tag:"BEARISH FLOW", prevS:"red", s:"red",
-    note:"Still {{tide}} BEARISH FLOW — net premium flow negative for a third straight read. The selling pressure under the tape is persistent, confirming the distribution theme rather than fading." },
+    note:"Unchanged at {{move}} — bond volatility flat and firmly CALM all session. Fixed income never flinched through the morning's equity scare; no systemic stress." },
+  { name:"McClellan", prevNum:11.04, curNum:10.46, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"RISING", tag:"RISING", prevS:"green", s:"green",
+    note:"Positive at {{mcclellan}} — flipped green after opening negative (−3.93). Breadth is back above zero in line with SPY's uptrend, healing the negative-breadth split that fired the Omen this morning." },
+  { name:"Hindenburg", text:true, prevVal:"CLEAR", val:"CLEAR", prevTag:"CLEAR", tag:"CLEAR", prevS:"green", s:"green",
+    note:"CLEAR — the 3-in-30-day Omen cluster flagged at the open is no longer triggering. With McClellan back positive, new highs and lows are no longer both elevated; the signal has stood down for now." },
+  { name:"% > 200 DMA", prevNum:60.9, curNum:60.4, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
+    note:"Eased a touch to {{dma200}} from {{dma200_prev}} — still solidly HEALTHY in the low-60s. The long-term base held green all session, anchoring the recovery." },
+  { name:"Put/Call", prevNum:0.98, curNum:1.17, fmt:{dec:2}, prevTag:"NEUTRAL", tag:"BEARISH", prevS:"green", s:"amber",
+    note:"Rose to {{putcall}} from {{putcall_prev}} — back above 1.0 and flipping to BEARISH (amber). Hedging picked up into the afternoon even as VIX calmed; the one sentiment gauge that deteriorated this read." },
+  { name:"SMFI", prevNum:41078, curNum:41251, fmt:{dec:0, comma:true}, prevTag:"RECOVERING", tag:"RECOVERING", prevS:"amber", s:"amber",
+    note:"Ticked up to {{smfi}} from {{smfi_prev}} — a second straight gain off this morning's distribution low (40,814). Smart-money flow is recovering, though the feed leaves it uncolored, so it stays neutral (amber) rather than confirmed green." },
+  { name:"Market Tide", prevNum:-333, curNum:-613, fmt:{dec:0, pre:"$", suf:"M", comma:true}, tokFmt:{dec:0, pre:"$", suf:"M", comma:true, plus:true}, prevTag:"BEARISH FLOW", tag:"BEARISH FLOW", prevS:"red", s:"red",
+    note:"Deepened to {{tide}} BEARISH FLOW from −$333M — net premium flow more negative into the afternoon. The lone red on the board and the clearest tell that the bid is thin beneath the recovering tape." },
 ];
 
 const concentration = [
@@ -1215,26 +1215,26 @@ const concentration = [
 ];
 
 const bars = [
-  { label:"% > 12 SMA", prev:45.4, cur:45.7, tag:"CAUTIOUS" },
-  { label:"% > 20 SMA", prev:50.3, cur:50.9, tag:"BULLISH" },
-  { label:"% > 50 SMA", prev:53.3, cur:53.2, tag:"BULLISH" },
+  { label:"% > 12 SMA", prev:49.9, cur:52.0, tag:"BULLISH" },
+  { label:"% > 20 SMA", prev:54.6, cur:55.3, tag:"BULLISH" },
+  { label:"% > 50 SMA", prev:58.3, cur:58.7, tag:"BULLISH" },
 ];
 
 const plays = {
   zen: {
-    e:"😇", label:"Cautious open — Hindenburg cluster (3 in 30d) and VIX elevated; the warning is escalating",
-    text:"{{green}} of {{total}} green and the Bot opens CAUTIOUS (−2): the <b>Hindenburg Omen has now CLUSTERED — 3 signals in 30 days</b>, the threshold the feed flags as having preceded nearly every major decline since 1987. VIX jumped to {{vix}} (ELEVATED), McClellan stays negative at {{mcclellan}}, SMFI keeps DISTRIBUTION at {{smfi}} and Market Tide holds {{tide}} BEARISH FLOW. MOVE is still CALM at {{move}} and %>200DMA HEALTHY at {{dma200}}, but the risk signals stacked up overnight.",
-    moves:[["▼","Hindenburg CLUSTER: 3 Omen signals in 30 days — the historically dangerous threshold."],["▼","VIX {{vix}} ELEVATED: volatility finally woke up — fear entering the tape."],["≈","Score CAUTIOUS (−2): faded another step from MIXED (−1) at the close."]]
+    e:"😇", label:"Sharp intraday recovery — the morning's Omen cluster cleared and VIX calmed",
+    text:"{{green}} of {{total}} green and the Bot reads CONSTRUCTIVE (+3) — a sharp turn from this morning's CAUTIOUS (−2) open. The <b>Hindenburg Omen cluster has CLEARED</b>, VIX settled back to {{vix}} CALM from above 20, and McClellan flipped positive to {{mcclellan}} — the negative-breadth split that fired the Omen has healed. MOVE stays CALM at {{move}} and %>200DMA HEALTHY at {{dma200}}. The remaining drags are flow-based: Market Tide {{tide}} BEARISH FLOW and Put/Call back to BEARISH at {{putcall}}.",
+    moves:[["▲","Hindenburg cleared: the 3-in-30d Omen cluster is no longer triggering."],["▲","VIX {{vix}} back CALM + McClellan {{mcclellan}} positive: the open's fear faded."],["≈","Score CONSTRUCTIVE (+3): recovered from CAUTIOUS (−2) at the open."]]
   },
   bull: {
-    e:"🐂", label:"MOVE calm, base still healthy — and clusters can mark fear extremes too",
-    text:"<b>MOVE is CALM at {{move}}, %>200DMA still HEALTHY at {{dma200}} and Momentum Pulse holds LEANING BULLISH (+1) with the 20- and 50-day SMAs bullish.</b> Even an Omen cluster is a probabilistic warning, not a trigger — SPY is still in an uptrend, and elevated VIX with a BEARISH Put/Call ({{putcall}}) can mark contrarian fear extremes. The long-term base under the tape hasn't broken, and bond volatility never flinched.",
-    moves:[["▲","MOVE {{move}} CALM + %>200DMA {{dma200}} HEALTHY: base intact, no bond stress."],["▲","Momentum LEANING BULLISH (+1): 20- & 50-day SMAs still bullish."],["≈","SPY still in uptrend: the Omen cluster is a warning, not a trigger."]]
+    e:"🐂", label:"Omen cleared, breadth flipped green, Momentum STRONG BULLISH",
+    text:"<b>The board healed through the session: {{green}} of {{total}} green, McClellan positive at {{mcclellan}}, VIX back to {{vix}} CALM and the Hindenburg Omen cleared.</b> Momentum Pulse jumped to STRONG BULLISH (+3) with all three SMAs bullish (12-day 52.0%, 20-day 55.3%, 50-day 58.7%). MOVE never flinched at {{move}} and the long-term base holds HEALTHY at {{dma200}}. This morning's escalating warning unwound within hours — the cluster proved a fear spike, not a trigger.",
+    moves:[["▲","{{green}} of {{total}} green + Momentum STRONG BULLISH (+3): internals flipped constructive."],["▲","Omen cleared + VIX {{vix}} CALM: the morning's risk signals reversed."],["▲","McClellan {{mcclellan}} positive: breadth back above zero with SPY's uptrend."]]
   },
   bear: {
-    e:"🐻", label:"Hindenburg cluster + VIX elevated + flow bearish — the signal the bot says precedes major declines",
-    text:"<b>The Hindenburg Omen has clustered — 3 signals in 30 days (Highs 175/7.1%, Lows 89/3.6%) — which the feed notes has preceded nearly every major decline since 1987.</b> VIX jumped to {{vix}} ELEVATED, McClellan is negative at {{mcclellan}} against an SPY uptrend (the textbook split market), SMFI keeps distributing at {{smfi}}, Put/Call is BEARISH at {{putcall}} and Market Tide is {{tide}} BEARISH FLOW for a third straight read. The composite has faded CONSTRUCTIVE (+3) → MIXED (−1) → CAUTIOUS (−2), and the 12-day SMA sits at 45.7% CAUTIOUS. The risk signals are stacking now, not isolated.",
-    moves:[["▼","Hindenburg CLUSTER (3 in 30d): the signal that precedes major declines."],["▼","VIX {{vix}} ELEVATED + Tide {{tide}} BEARISH: fear and selling both rising."],["▼","Score CAUTIOUS (−2): third straight step lower; internals stacking bearish."]]
+    e:"🐻", label:"Flow stays bearish — Tide deepening and Put/Call back above 1.0",
+    text:"<b>Under the green surface, the money flow is still leaking: Market Tide deepened to {{tide}} BEARISH FLOW (from −$333M) and Put/Call climbed back to {{putcall}} BEARISH.</b> SMFI is only recovering off this morning's distribution low, and the broader Rotation tape read a BROAD MARKET SELL-OFF (32 of 40 sectors selling) earlier today. The composite snapped back to CONSTRUCTIVE (+3), but premium flow and hedging say the bid is thin — a green board built on a calmer VIX, not on buyers stepping in.",
+    moves:[["▼","Market Tide {{tide}} BEARISH FLOW: net premium flow deepened, not faded."],["▼","Put/Call {{putcall}} back BEARISH: hedging picked up into the afternoon."],["≈","Breadth was a BROAD MARKET SELL-OFF earlier — 32/40 sectors selling."]]
   },
 };
 
