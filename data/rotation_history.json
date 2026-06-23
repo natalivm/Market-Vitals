@@ -1,6 +1,6 @@
 {
-  "_schema": "rotation_history v1 \u2014 one snapshot per close (the ~20:00 UTC / 10:30 PM Kyiv scan). Flows in USD millions (1200 = $1.2B, 0.15 = $150K). dir: in=inflow post, out=outflow post. tier: core|sub. signal: BUYING THE DIP | SELLING INTO STRENGTH | null. new=NEW INFLOW/OUTFLOW flag. Append one object per trading day; the dashboard renders the growing timeline. The optional 'tags' object ({selling_into_strength, buying_the_dip, of}) is our own tally of how many sector cards carried each signal tag in the feed \u2014 an observed count, NOT the bot's regime-banner 'selling' figure (which counts a broader universe and is only set when that banner is captured).",
-  "_rules": "Only confirmed Rotation Radar Bot feed numbers. Append-only. Never invent or carry-forward. Omit a flow field when the feed didn't show it. The optional 'read' field is editorial analyst commentary (headline + points[{t,d}] + watch) rendered as the 'Analyst Read' panel \u2014 interpretation only, every number it cites must come from the feed data above it.",
+  "_schema": "rotation_history v1 — one snapshot per close (the ~20:00 UTC / 10:30 PM Kyiv scan). Flows in USD millions (1200 = $1.2B, 0.15 = $150K). dir: in=inflow post, out=outflow post. tier: core|sub. signal: BUYING THE DIP | SELLING INTO STRENGTH | null. new=NEW INFLOW/OUTFLOW flag. Append one object per trading day; the dashboard renders the growing timeline. The optional 'tags' object ({selling_into_strength, buying_the_dip, of}) is our own tally of how many sector cards carried each signal tag in the feed — an observed count, NOT the bot's regime-banner 'selling' figure (which counts a broader universe and is only set when that banner is captured).",
+  "_rules": "Only confirmed Rotation Radar Bot feed numbers. Append-only. Never invent or carry-forward. Omit a flow field when the feed didn't show it. The optional 'read' field is editorial analyst commentary (headline + points[{t,d}] + watch) rendered as the 'Analyst Read' panel — interpretation only, every number it cites must come from the feed data above it.",
   "history": [
     {
       "date": "2026-06-01",
@@ -15,18 +15,18 @@
         "d20": 5.22
       },
       "read": {
-        "headline": "Flat tape, heavy distribution underneath \u2014 money rotated out of leaders into beaten-down cyclicals.",
+        "headline": "Flat tape, heavy distribution underneath — money rotated out of leaders into beaten-down cyclicals.",
         "points": [
           {
             "t": "Tech, semis & financials sold into strength",
-            "d": "SMH drew +$180.9M on the day but bled \u2212$632.5M over 5 sessions (SELLING INTO STRENGTH); XLF leaked \u2212$326.4M (\u2212$380.8M/5d), XLE \u2212$424.6M/5d, XLV \u2212$308.1M/5d, XLC \u2212$191.4M/5d \u2014 all red on flow while SPY closed +0.24%."
+            "d": "SMH drew +$180.9M on the day but bled −$632.5M over 5 sessions (SELLING INTO STRENGTH); XLF leaked −$326.4M (−$380.8M/5d), XLE −$424.6M/5d, XLV −$308.1M/5d, XLC −$191.4M/5d — all red on flow while SPY closed +0.24%."
           },
           {
             "t": "Cyclicals & staples bought the dip",
             "d": "Six core 'down-on-price' sectors were flagged BUYING THE DIP: XLY pulled +$695.1M over 5 days, XLP +$164.2M, XOP +$136.4M, XRT +$87.8M, XLRE +$80.7M, XLI +$199.6M."
           }
         ],
-        "watch": "SMH's \u2212$632.5M 5-day flow turning deeper, or XLF outflow extending, would confirm rotation out of 2026's leaders. 14-day conviction already has XLK and XLE in sustained institutional distribution ($2.0B and $4.2B)."
+        "watch": "SMH's −$632.5M 5-day flow turning deeper, or XLF outflow extending, would confirm rotation out of 2026's leaders. 14-day conviction already has XLK and XLE in sustained institutional distribution ($2.0B and $4.2B)."
       },
       "conviction": {
         "accumulation": [
@@ -616,22 +616,22 @@
         "d20": 5.79
       },
       "read": {
-        "headline": "A green tape hiding a quiet exit \u2014 distribution was already running two sessions before the break.",
+        "headline": "A green tape hiding a quiet exit — distribution was already running two sessions before the break.",
         "points": [
           {
             "t": "The strongest names were the ones being sold",
-            "d": "SMH carried a \u2212$1.2B 5-day outflow flagged \u26a0\ufe0f Selling into Strength even while up +4.01% on the day and +24.75% over 20 sessions. IAI showed the same: green-ish tape, \u2212$106.8M out."
+            "d": "SMH carried a −$1.2B 5-day outflow flagged ⚠️ Selling into Strength even while up +4.01% on the day and +24.75% over 20 sessions. IAI showed the same: green-ish tape, −$106.8M out."
           },
           {
             "t": "Financials and energy leaked under a flat index",
-            "d": "XLF bled \u2212$380.8M and XLE \u2212$424.6M (5-day) while SPY sat green on every horizon (+0.14% / +1.20% / +5.79%). Distribution with no price warning attached."
+            "d": "XLF bled −$380.8M and XLE −$424.6M (5-day) while SPY sat green on every horizon (+0.14% / +1.20% / +5.79%). Distribution with no price warning attached."
           },
           {
             "t": "Money rotated toward value and defensives",
-            "d": "XLY +$695.1M, XLI +$199.6M, XLP +$164.2M and XRT +$87.8M all printed \ud83d\udcb0 Buying the Dip \u2014 institutions rotating into laggards while trimming the leaders."
+            "d": "XLY +$695.1M, XLI +$199.6M, XLP +$164.2M and XRT +$87.8M all printed 💰 Buying the Dip — institutions rotating into laggards while trimming the leaders."
           }
         ],
-        "watch": "A market near highs on flat breadth while its biggest sectors (financials, semis) bleed institutional money is late-cycle behavior \u2014 when flow diverges from price, price usually follows."
+        "watch": "A market near highs on flat breadth while its biggest sectors (financials, semis) bleed institutional money is late-cycle behavior — when flow diverges from price, price usually follows."
       },
       "conviction": {
         "accumulation": [
@@ -1200,22 +1200,22 @@
         "d20": 4.25
       },
       "read": {
-        "headline": "The sell-off's fault lines were already drawn \u2014 money was leaving financials and defensives while price was still flat.",
+        "headline": "The sell-off's fault lines were already drawn — money was leaving financials and defensives while price was still flat.",
         "points": [
           {
             "t": "Financials distribution was already a 14-day pattern",
-            "d": "XLF showed a \u2212$919.5M 5-day outflow at the close while finishing only \u22121.04% on the day, and the conviction board flagged it 5/14 days 'Selling into Strength' worth +$3.1B. The exit was well underway before the tape cracked."
+            "d": "XLF showed a −$919.5M 5-day outflow at the close while finishing only −1.04% on the day, and the conviction board flagged it 5/14 days 'Selling into Strength' worth +$3.1B. The exit was well underway before the tape cracked."
           },
           {
             "t": "The defensives 'holding up' were the ones being sold",
-            "d": "XLV bled \u2212$1.3B (5-day) while closing GREEN (+0.77%); XLP leaked \u2212$132.7M and XLU printed \ud83d\udcb0 BUYING THE DIP despite a \u22123.07% 5-day. Strength used as an exit \u2014 classic distribution."
+            "d": "XLV bled −$1.3B (5-day) while closing GREEN (+0.77%); XLP leaked −$132.7M and XLU printed 💰 BUYING THE DIP despite a −3.07% 5-day. Strength used as an exit — classic distribution."
           },
           {
             "t": "Semis absorbed the hit",
             "d": "SMH pulled +$1.3B of inflow on the day (+$661.3M 5-day) and was one of only four names 'Holding Up' at midday (+1.51%), alongside DRAM (+0.52%). The buy-the-semis-crash thesis started here."
           }
         ],
-        "watch": "A defensive that's green on price but red on 5-day flow (XLV, XLP) is where the next leg down starts; XLF's outflow breaking past \u2212$1B would confirm the rotation has further to run."
+        "watch": "A defensive that's green on price but red on 5-day flow (XLV, XLP) is where the next leg down starts; XLF's outflow breaking past −$1B would confirm the rotation has further to run."
       },
       "conviction": {
         "accumulation": [
@@ -2383,18 +2383,18 @@
         "d20": 0.92
       },
       "read": {
-        "headline": "Price flipped, money didn't \u2014 this is a rotation, not a liquidation.",
+        "headline": "Price flipped, money didn't — this is a rotation, not a liquidation.",
         "points": [
           {
             "t": "Semis & tech bought through the crash",
-            "d": "SMH drew ~$770M of 5-day inflow on BOTH the up day (Jun 4, SPY +0.42%) and the \u22129% crash (Jun 5). XLK inflow grew +$63M \u2192 +$190M, XME +$65M \u2192 +$122M. The harder they fell, the more money came in \u2014 conviction, not panic."
+            "d": "SMH drew ~$770M of 5-day inflow on BOTH the up day (Jun 4, SPY +0.42%) and the −9% crash (Jun 5). XLK inflow grew +$63M → +$190M, XME +$65M → +$122M. The harder they fell, the more money came in — conviction, not panic."
           },
           {
             "t": "Financials & defensives sold into strength",
-            "d": "XLF leaked \u2212$1.1B \u2192 \u2212$1.4B while still green on price; XLP \u2212$440M \u2192 \u2212$644M, plus XLV, XLE and IAI (9 of 14 days) all net sellers both days."
+            "d": "XLF leaked −$1.1B → −$1.4B while still green on price; XLP −$440M → −$644M, plus XLV, XLE and IAI (9 of 14 days) all net sellers both days."
           }
         ],
-        "watch": "SMH 5-day flow turning negative would break the dip-buy thesis; XLF outflow past \u2212$1.4B deepens the rotation. A 'holding-up' defensive that's already red on flow is where the next leg down starts."
+        "watch": "SMH 5-day flow turning negative would break the dip-buy thesis; XLF outflow past −$1.4B deepens the rotation. A 'holding-up' defensive that's already red on flow is where the next leg down starts."
       },
       "conviction": {
         "accumulation": [
@@ -2522,7 +2522,7 @@
           "chg": 7.25
         }
       ],
-      "holdNote": "The sectors \"Holding Up\" on Jun 5 are the exact sectors being quietly sold. XLF (+0.21% on the tape) leaked \u2212$1.4B. XLV, XLP, XLU \u2014 all green on price, all net outflows. Classic late-cycle distribution into strength: the defensives look safe on the screen while institutions use that strength to exit. Meanwhile the scary-looking semis crash is where smart money is adding.",
+      "holdNote": "The sectors \"Holding Up\" on Jun 5 are the exact sectors being quietly sold. XLF (+0.21% on the tape) leaked −$1.4B. XLV, XLP, XLU — all green on price, all net outflows. Classic late-cycle distribution into strength: the defensives look safe on the screen while institutions use that strength to exit. Meanwhile the scary-looking semis crash is where smart money is adding.",
       "flows": [
         {
           "sym": "XLF",
@@ -3027,18 +3027,18 @@
         "d20": 0.25
       },
       "read": {
-        "headline": "Flat tape, violent rotation \u2014 strength sold, weakness bought.",
+        "headline": "Flat tape, violent rotation — strength sold, weakness bought.",
         "points": [
           {
             "t": "Core sectors distributed into a green open",
-            "d": "SPY closed +0.26% but the heavyweight sectors were net sellers over 5 days \u2014 XLF \u2212$566.8M, XLE \u2212$483.5M, XLY \u2212$408.7M, XRT \u2212$313.1M, XLP \u2212$249.2M \u2014 every one tagged SELLING INTO STRENGTH. The flat index masked a steady exit from financials, energy and discretionary."
+            "d": "SPY closed +0.26% but the heavyweight sectors were net sellers over 5 days — XLF −$566.8M, XLE −$483.5M, XLY −$408.7M, XRT −$313.1M, XLP −$249.2M — every one tagged SELLING INTO STRENGTH. The flat index masked a steady exit from financials, energy and discretionary."
           },
           {
             "t": "Tech & semis bought the dip hard",
-            "d": "XLK flipped to a NEW OUTFLOW on price (\u22125.87% 5D) yet drew +$249.8M of 1-day inflow and +$288.0M over 5 days \u2014 active dip-buying. SMH led the tape at +5.00% on +$526.7M of 5-day inflow; XME (+$24.4M, BUYING THE DIP) and IGV (+$186.6M) show the same pattern. Money is rotating from the old leaders into beaten-down growth."
+            "d": "XLK flipped to a NEW OUTFLOW on price (−5.87% 5D) yet drew +$249.8M of 1-day inflow and +$288.0M over 5 days — active dip-buying. SMH led the tape at +5.00% on +$526.7M of 5-day inflow; XME (+$24.4M, BUYING THE DIP) and IGV (+$186.6M) show the same pattern. Money is rotating from the old leaders into beaten-down growth."
           }
         ],
-        "watch": "IAI is the most persistent seller \u2014 10/14 days SELLING INTO STRENGTH, +$1.1B cumulative; XLF distribution is now +$6.0B over 14 days. If SMH/XLK 5-day inflows reverse to net outflow, the dip-buy thesis breaks. MSOS +12.92%, DRAM +8.48% and BITO are momentum outliers, not rotation signals."
+        "watch": "IAI is the most persistent seller — 10/14 days SELLING INTO STRENGTH, +$1.1B cumulative; XLF distribution is now +$6.0B over 14 days. If SMH/XLK 5-day inflows reverse to net outflow, the dip-buy thesis breaks. MSOS +12.92%, DRAM +8.48% and BITO are momentum outliers, not rotation signals."
       },
       "conviction": {
         "accumulation": [
@@ -3160,7 +3160,7 @@
           "chg": 1.14
         }
       ],
-      "holdNote": "The tape was nearly flat (SPY +0.26%) but the rotation underneath was violent. Semis and tech led on both price and flow \u2014 SMH +5.00% (+$526.7M 5-day inflow), XLK dip-bought (+$249.8M 1-day) despite a 5-day NEW OUTFLOW. Meanwhile financials, energy and defensives were sold into the open: XLF \u2212$566.8M, XLE \u2212$483.5M, XLP \u2212$249.2M \u2014 all flat-to-green on price, all net sellers (SELLING INTO STRENGTH). Smart money is leaving last cycle's leaders and accumulating beaten-down growth. MSOS, DRAM and BITO are momentum outliers, not part of the institutional rotation.",
+      "holdNote": "The tape was nearly flat (SPY +0.26%) but the rotation underneath was violent. Semis and tech led on both price and flow — SMH +5.00% (+$526.7M 5-day inflow), XLK dip-bought (+$249.8M 1-day) despite a 5-day NEW OUTFLOW. Meanwhile financials, energy and defensives were sold into the open: XLF −$566.8M, XLE −$483.5M, XLP −$249.2M — all flat-to-green on price, all net sellers (SELLING INTO STRENGTH). Smart money is leaving last cycle's leaders and accumulating beaten-down growth. MSOS, DRAM and BITO are momentum outliers, not part of the institutional rotation.",
       "flows": [
         {
           "sym": "XLF",
@@ -3664,7 +3664,7 @@
         "d20": -0.34
       },
       "read": {
-        "headline": "Green tape, red flows \u2014 broad distribution into strength, two-way dip-buying in beaten-down tech.",
+        "headline": "Green tape, red flows — broad distribution into strength, two-way dip-buying in beaten-down tech.",
         "points": [
           {
             "t": "Defensives & financials sold into the rally",
@@ -3672,10 +3672,10 @@
           },
           {
             "t": "Crushed tech & miners drew dip-buyers",
-            "d": "XME (-12.55% 5D) pulled +$103.6M of 5-day inflow \u2014 BUYING THE DIP. IGV (-11.20% 5D) drew +$93.8M and ICLN +$85.4M, both BUYING THE DIP. COPX BUYING THE DIP (+$66.7M 5D) on a -14.50% slide. The conviction-accumulation board (XLC, COPX, XLP, IGV, ICLN) is buying weakness while the index rallies."
+            "d": "XME (-12.55% 5D) pulled +$103.6M of 5-day inflow — BUYING THE DIP. IGV (-11.20% 5D) drew +$93.8M and ICLN +$85.4M, both BUYING THE DIP. COPX BUYING THE DIP (+$66.7M 5D) on a -14.50% slide. The conviction-accumulation board (XLC, COPX, XLP, IGV, ICLN) is buying weakness while the index rallies."
           }
         ],
-        "watch": "XLF/XLY distribution streaks (7/14 days) deepening would confirm institutions are exiting the rally. Sustained BUYING THE DIP in IGV/COPX/ICLN against their price downtrends is the two-way tell \u2014 if that flow reverses, the dip-buy thesis breaks. SMH flipped to NEW OUTFLOW (-$224.1M 5D) \u2014 watch whether semis lose their bid."
+        "watch": "XLF/XLY distribution streaks (7/14 days) deepening would confirm institutions are exiting the rally. Sustained BUYING THE DIP in IGV/COPX/ICLN against their price downtrends is the two-way tell — if that flow reverses, the dip-buy thesis breaks. SMH flipped to NEW OUTFLOW (-$224.1M 5D) — watch whether semis lose their bid."
       },
       "conviction": {
         "accumulation": [
@@ -4228,7 +4228,7 @@
         "d20": -1.54
       },
       "read": {
-        "headline": "Index red across every horizon, but flows split two ways \u2014 heavy distribution into the green-tape defensives and financials, dip-buying in crushed tech and clean energy.",
+        "headline": "Index red across every horizon, but flows split two ways — heavy distribution into the green-tape defensives and financials, dip-buying in crushed tech and clean energy.",
         "points": [
           {
             "t": "Sectors that closed green were the ones being sold",
@@ -4236,10 +4236,10 @@
           },
           {
             "t": "Beaten-down tech and clean energy drew dip-buyers",
-            "d": "XLK (-9.81% 5D) pulled +$499.0M of 5-day inflow flagged BUYING THE DIP, with XLB (-3.83% 5D) +$466.4M alongside it. IGV (-8.49% 5D) drew +$93.8M, ICLN (-13.99% 5D) +$85.4M and COPX (-14.13% 5D) +$66.7M, all BUYING THE DIP \u2014 the accumulation board (IGV, ICLN, COPX, XLC, XLP) is buying weakness while the index falls."
+            "d": "XLK (-9.81% 5D) pulled +$499.0M of 5-day inflow flagged BUYING THE DIP, with XLB (-3.83% 5D) +$466.4M alongside it. IGV (-8.49% 5D) drew +$93.8M, ICLN (-13.99% 5D) +$85.4M and COPX (-14.13% 5D) +$66.7M, all BUYING THE DIP — the accumulation board (IGV, ICLN, COPX, XLC, XLP) is buying weakness while the index falls."
           }
         ],
-        "watch": "SMH flipped to NEW OUTFLOW \u2014 +$917.6M on the day against a -$650.2M 5-day, semis sold into the bounce. If the XLF/XLY/IAI distribution streaks keep extending while the IGV/COPX/ICLN dip-buys reverse, the two-way support underneath this tape breaks."
+        "watch": "SMH flipped to NEW OUTFLOW — +$917.6M on the day against a -$650.2M 5-day, semis sold into the bounce. If the XLF/XLY/IAI distribution streaks keep extending while the IGV/COPX/ICLN dip-buys reverse, the two-way support underneath this tape breaks."
       },
       "conviction": {
         "accumulation": [
@@ -4819,7 +4819,7 @@
         "d20": -0.54
       },
       "read": {
-        "headline": "Broad market lifted on thin flow while the real buying stayed narrow \u2014 tech & semis were bought, everything else got carried.",
+        "headline": "Broad market lifted on thin flow while the real buying stayed narrow — tech & semis were bought, everything else got carried.",
         "points": [
           {
             "t": "The genuine demand was concentrated",
@@ -4827,14 +4827,14 @@
           },
           {
             "t": "The broad rally ran on trivial net flow",
-            "d": "Core sectors rose 1\u20134% on tiny flows and were tagged SELLING INTO STRENGTH: XLC +1.05% on \u2212$153.4M/5d, XRT +3.08% on \u2212$103.3M, XHB +4.15% on \u2212$69.1M, plus XLV and XLRE \u2014 all green-on-price, red-on-flow. Price lifted on thin participation, not buying."
+            "d": "Core sectors rose 1–4% on tiny flows and were tagged SELLING INTO STRENGTH: XLC +1.05% on −$153.4M/5d, XRT +3.08% on −$103.3M, XHB +4.15% on −$69.1M, plus XLV and XLRE — all green-on-price, red-on-flow. Price lifted on thin participation, not buying."
           },
           {
             "t": "Smart money kept distributing underneath",
-            "d": "14-day distribution stays heavy: IAI 10/14 days selling into strength (+$1.1B), XLF +$4.1B, XLP +$2.1B, XLE and XLY +$2.0B each, XLK +$1.6B. XLE also bled \u2212$637.1M over 5 days."
+            "d": "14-day distribution stays heavy: IAI 10/14 days selling into strength (+$1.1B), XLF +$4.1B, XLP +$2.1B, XLE and XLY +$2.0B each, XLK +$1.6B. XLE also bled −$637.1M over 5 days."
           }
         ],
-        "watch": "Whether the narrow tech/semis buying broadens out, or the thin broad-market lift fades back toward 5-day flows that are still net negative (SPY \u22122.48%/5d). A low-participation melt-up has no buyer base underneath if momentum stalls."
+        "watch": "Whether the narrow tech/semis buying broadens out, or the thin broad-market lift fades back toward 5-day flows that are still net negative (SPY −2.48%/5d). A low-participation melt-up has no buyer base underneath if momentum stalls."
       },
       "conviction": {
         "accumulation": [
@@ -5410,18 +5410,18 @@
         "points": [
           {
             "t": "New money rotated into the laggards",
-            "d": "COPX (+3.46%), REMX (+2.71%), LIT (+2.09%) and OIH (+0.56%) all printed NEW INFLOW despite deep 20-day holes (\u22122.98% to \u22125.20%); COPX drew +$66.7M over 5 days. Even BITO flagged a NEW INFLOW off a \u221222.17%/20d base. The fresh demand showed up in beaten-down materials, miners and commodities \u2014 not the leaders."
+            "d": "COPX (+3.46%), REMX (+2.71%), LIT (+2.09%) and OIH (+0.56%) all printed NEW INFLOW despite deep 20-day holes (−2.98% to −5.20%); COPX drew +$66.7M over 5 days. Even BITO flagged a NEW INFLOW off a −22.17%/20d base. The fresh demand showed up in beaten-down materials, miners and commodities — not the leaders."
           },
           {
             "t": "The day's green came with red flow on the crowded winners",
-            "d": "XME (+1.73%), XLY (+0.26%), XRT (+0.07%) and IAI (+1.87%) all rose on the day yet were tagged SELLING INTO STRENGTH on negative flow (XLY \u2212$132.2M/1d, XME \u2212$238.8M/5d, IAI \u2212$106.8M/5d). Financials led price \u2014 XLF +1.30%, KRE +1.51%, KBE +1.45% \u2014 but XLF still bled \u2212$496.6M on the day."
+            "d": "XME (+1.73%), XLY (+0.26%), XRT (+0.07%) and IAI (+1.87%) all rose on the day yet were tagged SELLING INTO STRENGTH on negative flow (XLY −$132.2M/1d, XME −$238.8M/5d, IAI −$106.8M/5d). Financials led price — XLF +1.30%, KRE +1.51%, KBE +1.45% — but XLF still bled −$496.6M on the day."
           },
           {
             "t": "Software was the one dip that got bought",
-            "d": "IGV slipped to a NEW OUTFLOW on price (\u22125.31%/5d) yet pulled +$186.6M/1d tagged BUYING THE DIP, alongside XLV (+$77.0M) and ICLN (+$85.4M/5d). 14-day conviction shows sustained accumulation only in IGV (+$750.8M), ICLN (+$683.2M) and COPX (+$333.4M); distribution stayed far broader \u2014 IAI 10/14d (+$1.1B), XLY and XLE +$2.0B each, XLP +$2.1B, XRT +$1.3B."
+            "d": "IGV slipped to a NEW OUTFLOW on price (−5.31%/5d) yet pulled +$186.6M/1d tagged BUYING THE DIP, alongside XLV (+$77.0M) and ICLN (+$85.4M/5d). 14-day conviction shows sustained accumulation only in IGV (+$750.8M), ICLN (+$683.2M) and COPX (+$333.4M); distribution stayed far broader — IAI 10/14d (+$1.1B), XLY and XLE +$2.0B each, XLP +$2.1B, XRT +$1.3B."
           }
         ],
-        "watch": "Whether the new inflows into miners and commodities (COPX, REMX, LIT, OIH) build into durable leadership, or fade like the cloud/cyber/cannabis names (WCLD, HACK, MSOS) that just flipped to NEW OUTFLOW. SPY is still \u22120.89%/20d, so the broad lift hasn't repaired the longer trend."
+        "watch": "Whether the new inflows into miners and commodities (COPX, REMX, LIT, OIH) build into durable leadership, or fade like the cloud/cyber/cannabis names (WCLD, HACK, MSOS) that just flipped to NEW OUTFLOW. SPY is still −0.89%/20d, so the broad lift hasn't repaired the longer trend."
       },
       "conviction": {
         "accumulation": [
@@ -5988,22 +5988,22 @@
         "d20": 2.01
       },
       "read": {
-        "headline": "Close scan: a broad green tape (SPY +1.66%) over textbook rotation \u2014 the crowded winners (staples, discretionary, retail, materials) sold into strength while fresh money chased miners, semis and alt-assets.",
+        "headline": "Close scan: a broad green tape (SPY +1.66%) over textbook rotation — the crowded winners (staples, discretionary, retail, materials) sold into strength while fresh money chased miners, semis and alt-assets.",
         "points": [
           {
             "t": "Distribution into the crowded winners held into the close",
-            "d": "XLP (\u2212$420.5M/5d), XLY (\u2212$91.5M/5d), XRT (\u2212$79.0M/5d), XLB (\u2212$57.2M/5d), XME (\u2212$257.1M/5d) and IAI (\u2212$106.8M/5d) all carried negative 5-day flow with SELLING INTO STRENGTH tags. 14-day conviction confirms the persistence: IAI 11/14d (+$1.2B), XLY 7/14d (+$1.9B), XRT 7/14d (+$1.4B), XLP 6/14d (+$2.5B), XLE 6/14d (+$2.0B)."
+            "d": "XLP (−$420.5M/5d), XLY (−$91.5M/5d), XRT (−$79.0M/5d), XLB (−$57.2M/5d), XME (−$257.1M/5d) and IAI (−$106.8M/5d) all carried negative 5-day flow with SELLING INTO STRENGTH tags. 14-day conviction confirms the persistence: IAI 11/14d (+$1.2B), XLY 7/14d (+$1.9B), XRT 7/14d (+$1.4B), XLP 6/14d (+$2.5B), XLE 6/14d (+$2.0B)."
           },
           {
             "t": "Fresh money rotated into laggards and alt-assets",
-            "d": "GDX (+6.50%/1d), URA (+5.49%), LIT (+9.09%/5d) and BITO (+4.68%) all flagged NEW INFLOW off negative/shallow 20-day reads, joined by REMX. XOP (\u22129.07%/20d) drew BUYING THE DIP (+$100.0M/5d), as did software IGV (+$186.6M/1d) and clean-energy ICLN (+$85.4M/5d). Sustained 14-day accumulation sits only in ICLN 9/14d (+$768.6M), IGV 8/14d (+$750.8M) and COPX 5/14d (+$333.4M)."
+            "d": "GDX (+6.50%/1d), URA (+5.49%), LIT (+9.09%/5d) and BITO (+4.68%) all flagged NEW INFLOW off negative/shallow 20-day reads, joined by REMX. XOP (−9.07%/20d) drew BUYING THE DIP (+$100.0M/5d), as did software IGV (+$186.6M/1d) and clean-energy ICLN (+$85.4M/5d). Sustained 14-day accumulation sits only in ICLN 9/14d (+$768.6M), IGV 8/14d (+$750.8M) and COPX 5/14d (+$333.4M)."
           },
           {
             "t": "Defensives and momentum names flipped to NEW OUTFLOW",
-            "d": "XLV (Healthcare, \u2212$98.2M/5d), XHE (Healthcare Equipment), HACK (+9.68%/20d), WCLD (+7.78%/20d) and MSOS (+11.79%/20d) all printed NEW OUTFLOW \u2014 defensive healthcare plus the cyber/cloud/cannabis momentum trades are being sold. Meanwhile tech and semis led price: XLK +3.71%/1d, SMH +4.38%/1d (+$1.1B/5d), DRAM +9.41%/1d (+39.20%/20d)."
+            "d": "XLV (Healthcare, −$98.2M/5d), XHE (Healthcare Equipment), HACK (+9.68%/20d), WCLD (+7.78%/20d) and MSOS (+11.79%/20d) all printed NEW OUTFLOW — defensive healthcare plus the cyber/cloud/cannabis momentum trades are being sold. Meanwhile tech and semis led price: XLK +3.71%/1d, SMH +4.38%/1d (+$1.1B/5d), DRAM +9.41%/1d (+39.20%/20d)."
           }
         ],
-        "watch": "Whether the NEW OUTFLOWs in healthcare, cyber, cloud and cannabis mark momentum rolling over, or just profit-taking inside an uptrend. The dip-buying in energy/miners (XOP, COPX, GDX, URA) vs. distribution in staples/discretionary is the cleanest rotation tell on the board. SPY closed +2.01%/20d \u2014 the broad trend has now turned up; watch which side builds next week."
+        "watch": "Whether the NEW OUTFLOWs in healthcare, cyber, cloud and cannabis mark momentum rolling over, or just profit-taking inside an uptrend. The dip-buying in energy/miners (XOP, COPX, GDX, URA) vs. distribution in staples/discretionary is the cleanest rotation tell on the board. SPY closed +2.01%/20d — the broad trend has now turned up; watch which side builds next week."
       },
       "conviction": {
         "accumulation": [
@@ -6581,26 +6581,26 @@
         "d20": 1.57
       },
       "read": {
-        "headline": "Down day, uptrend intact (SPY \u22120.61%/1d but +1.57%/20d) over a textbook rotation \u2014 the crowded winners sold into strength while fresh money bought the tech/semis dip and chased miners, uranium and crypto.",
+        "headline": "Down day, uptrend intact (SPY −0.61%/1d but +1.57%/20d) over a textbook rotation — the crowded winners sold into strength while fresh money bought the tech/semis dip and chased miners, uranium and crypto.",
         "points": [
           {
             "t": "Tech & semis sold on price but drew dip-buying",
-            "d": "XLK \u22122.69%/1d, SMH \u22124.81%/1d and DRAM \u22124.22%/1d led the tape lower, yet SMH still pulled +$1.6B/5d of inflow and XLK +$94.8M/5d \u2014 the leadership fell in price but money bought the dip rather than fleeing."
+            "d": "XLK −2.69%/1d, SMH −4.81%/1d and DRAM −4.22%/1d led the tape lower, yet SMH still pulled +$1.6B/5d of inflow and XLK +$94.8M/5d — the leadership fell in price but money bought the dip rather than fleeing."
           },
           {
             "t": "Distribution into the crowded winners",
-            "d": "XME (\u2212$245.3M/5d), XLY (\u2212$62.4M/5d) and IAI (\u2212$106.8M/5d) carried SELLING INTO STRENGTH. 14-day conviction confirms the persistence: IAI 12/14d (+$1.3B), XLY 7/14d (+$1.6B), XRT 7/14d (+$1.4B), XLP 6/14d (+$2.5B), XLE 6/14d (+$2.0B), XLRE 5/14d (+$521.2M)."
+            "d": "XME (−$245.3M/5d), XLY (−$62.4M/5d) and IAI (−$106.8M/5d) carried SELLING INTO STRENGTH. 14-day conviction confirms the persistence: IAI 12/14d (+$1.3B), XLY 7/14d (+$1.6B), XRT 7/14d (+$1.4B), XLP 6/14d (+$2.5B), XLE 6/14d (+$2.0B), XLRE 5/14d (+$521.2M)."
           },
           {
             "t": "Dip-buying in energy, miners and laggards",
-            "d": "XLE (+$311.8M/5d) and XOP (+$307.6M/5d) drew BUYING THE DIP off deep 20-day losses (\u22128.72%, \u221210.83%), joined by KRE (+$396.5M/5d), IGV (+$93.8M/5d) and ICLN (+$85.4M/5d). GDX, URA, LIT and BITO all flagged NEW INFLOW; sustained 14-day accumulation sits only in ICLN 10/14d (+$854.0M), IGV 8/14d (+$750.8M) and COPX 5/14d (+$333.4M)."
+            "d": "XLE (+$311.8M/5d) and XOP (+$307.6M/5d) drew BUYING THE DIP off deep 20-day losses (−8.72%, −10.83%), joined by KRE (+$396.5M/5d), IGV (+$93.8M/5d) and ICLN (+$85.4M/5d). GDX, URA, LIT and BITO all flagged NEW INFLOW; sustained 14-day accumulation sits only in ICLN 10/14d (+$854.0M), IGV 8/14d (+$750.8M) and COPX 5/14d (+$333.4M)."
           },
           {
             "t": "Defensives and momentum names flipped to NEW OUTFLOW",
-            "d": "XLV (Healthcare) and XLRE (Real Estate) flipped to NEW OUTFLOW on the core side \u2014 though both still drew dip-buying (+$207.8M, +$144.0M/5d) \u2014 while WCLD (Cloud) and MSOS (Cannabis) printed NEW OUTFLOW among sub-sectors."
+            "d": "XLV (Healthcare) and XLRE (Real Estate) flipped to NEW OUTFLOW on the core side — though both still drew dip-buying (+$207.8M, +$144.0M/5d) — while WCLD (Cloud) and MSOS (Cannabis) printed NEW OUTFLOW among sub-sectors."
           }
         ],
-        "watch": "Whether the price drop in tech/semis (SMH \u22124.81%/1d, DRAM \u22124.22%) marks leadership rolling over or just a dip being bought (SMH +$1.6B/5d inflow argues the latter). The cleanest rotation tell is dip-buying in energy/miners (XLE, XOP, GDX, URA) against distribution in the crowded winners (XME, XLY, IAI). SPY held +1.57%/20d \u2014 the broad trend is still up."
+        "watch": "Whether the price drop in tech/semis (SMH −4.81%/1d, DRAM −4.22%) marks leadership rolling over or just a dip being bought (SMH +$1.6B/5d inflow argues the latter). The cleanest rotation tell is dip-buying in energy/miners (XLE, XOP, GDX, URA) against distribution in the crowded winners (XME, XLY, IAI). SPY held +1.57%/20d — the broad trend is still up."
       },
       "conviction": {
         "accumulation": [
@@ -7167,15 +7167,15 @@
         "d20": 0.93
       },
       "read": {
-        "headline": "Broad-based sell-off (32/40 sectors selling, SPY \u22121.30%/1d) into a Hindenburg trigger \u2014 only AI/semis leadership held while distribution hit the crowded defensives and financials and dip-buying broadened across the beaten-down.",
+        "headline": "Broad-based sell-off (32/40 sectors selling, SPY −1.30%/1d) into a Hindenburg trigger — only AI/semis leadership held while distribution hit the crowded defensives and financials and dip-buying broadened across the beaten-down.",
         "points": [
           {
             "t": "Only semis/AI leadership held up",
-            "d": "With 80% of sectors selling, the green list was narrow: SMH (+1.29%/1d, +$1.1B/5d inflow), XBI (+2.95%/1d, +$289.8M/5d), DRAM (+21.91%/5d) and XAR (+1.23%/1d). Even XLK held its price drop to \u22120.43% but carried SELLING INTO STRENGTH (\u2212$124.3M/5d). SMH's +$1.1B/5d is the last big inflow standing \u2014 if it cracks there's little underneath."
+            "d": "With 80% of sectors selling, the green list was narrow: SMH (+1.29%/1d, +$1.1B/5d inflow), XBI (+2.95%/1d, +$289.8M/5d), DRAM (+21.91%/5d) and XAR (+1.23%/1d). Even XLK held its price drop to −0.43% but carried SELLING INTO STRENGTH (−$124.3M/5d). SMH's +$1.1B/5d is the last big inflow standing — if it cracks there's little underneath."
           },
           {
             "t": "Sustained distribution in defensives & financials",
-            "d": "14-day conviction stayed distribution-heavy: IAI 13/14d (+$1.4B), XRT 7/14d (+$1.4B), XLP 6/14d (+$2.5B), XLE 6/14d (+$2.0B), XLY 6/14d (+$1.3B), XLRE 5/14d (+$521.2M). XLP (\u2212$133.0M/5d) and XLY (\u2212$91.5M/5d) carried negative 5-day flow."
+            "d": "14-day conviction stayed distribution-heavy: IAI 13/14d (+$1.4B), XRT 7/14d (+$1.4B), XLP 6/14d (+$2.5B), XLE 6/14d (+$2.0B), XLY 6/14d (+$1.3B), XLRE 5/14d (+$521.2M). XLP (−$133.0M/5d) and XLY (−$91.5M/5d) carried negative 5-day flow."
           },
           {
             "t": "Dip-buying broadened across the wreckage",
@@ -7183,10 +7183,10 @@
           },
           {
             "t": "Fresh rotation flips: NEW OUTFLOW vs NEW INFLOW",
-            "d": "NEW OUTFLOW hit XLV, XRT, XTN (core) and KRE, KBE, MSOS (sub) \u2014 defensives, financials and transports flipping to outflow. NEW INFLOW flagged ICLN, URA, BOTZ and BITO \u2014 alt-energy, uranium, robotics and crypto drawing fresh money off depressed 20-day reads."
+            "d": "NEW OUTFLOW hit XLV, XRT, XTN (core) and KRE, KBE, MSOS (sub) — defensives, financials and transports flipping to outflow. NEW INFLOW flagged ICLN, URA, BOTZ and BITO — alt-energy, uranium, robotics and crypto drawing fresh money off depressed 20-day reads."
           }
         ],
-        "watch": "Whether the 32/40 broad sell-off plus the Hindenburg trigger marks a genuine top or a one-day flush \u2014 SPY still held +0.93%/20d, barely. Semis/AI (SMH +$1.1B/5d) is the only leadership left; watch if it follows the tape down. The cleanest tell is dip-buying in financials/energy (KRE, XOP, XLE) against sustained distribution in staples and broker-dealers (XLP, IAI)."
+        "watch": "Whether the 32/40 broad sell-off plus the Hindenburg trigger marks a genuine top or a one-day flush — SPY still held +0.93%/20d, barely. Semis/AI (SMH +$1.1B/5d) is the only leadership left; watch if it follows the tape down. The cleanest tell is dip-buying in financials/energy (KRE, XOP, XLE) against sustained distribution in staples and broker-dealers (XLP, IAI)."
       },
       "conviction": {
         "accumulation": [
@@ -7752,7 +7752,7 @@
         "d20": 0.91
       },
       "read": {
-        "headline": "Risk-on tape led by tech/semis (SPY +0.95%/1d) \u2014 XLK (+$9.0B/1d) and SMH (+$7.1B/1d) dwarf every other flow, while institutions keep distributing defensives/financials and dip-buying broadens across the beaten-down.",
+        "headline": "Risk-on tape led by tech/semis (SPY +0.95%/1d) — XLK (+$9.0B/1d) and SMH (+$7.1B/1d) dwarf every other flow, while institutions keep distributing defensives/financials and dip-buying broadens across the beaten-down.",
         "points": [
           {
             "t": "Tech & semis are the whole inflow story",
@@ -7764,10 +7764,10 @@
           },
           {
             "t": "Dip-buying broadened across the wreckage",
-            "d": "BUYING THE DIP tags spread to XAR (+$809.1M/5d), XLB (+$279.7M), XRT (+$144.8M), XOP (+$133.8M), XLRE (+$107.7M) and XLV (+$63.1M), plus KRE (+$254.7M) and IGV (+$93.8M) \u2014 accumulation into the sectors that sold off."
+            "d": "BUYING THE DIP tags spread to XAR (+$809.1M/5d), XLB (+$279.7M), XRT (+$144.8M), XOP (+$133.8M), XLRE (+$107.7M) and XLV (+$63.1M), plus KRE (+$254.7M) and IGV (+$93.8M) — accumulation into the sectors that sold off."
           }
         ],
-        "watch": "Energy is the clear laggard \u2014 XLE -1.75%/1d, -10.18%/20d with -$170.5M/1d outflow; XOP -12.23%/20d; OIH -9.57%/5d, -14.62%/20d. Breadth is narrow: with semis/AI carrying the tape, watch whether the SMH/XLK inflow holds \u2014 if it cracks there's little broad participation underneath."
+        "watch": "Energy is the clear laggard — XLE -1.75%/1d, -10.18%/20d with -$170.5M/1d outflow; XOP -12.23%/20d; OIH -9.57%/5d, -14.62%/20d. Breadth is narrow: with semis/AI carrying the tape, watch whether the SMH/XLK inflow holds — if it cracks there's little broad participation underneath."
       },
       "conviction": {
         "accumulation": [
@@ -8340,11 +8340,11 @@
       "date": "2026-06-22",
       "ts": "2026-06-22T14:01:00Z",
       "read": {
-        "headline": "Distribution-led morning tape \u2014 institutions keep selling defensives & financials (IAI a perfect 14/14d Selling into Strength, +$1.5B) while broad dip-buying (XLF +$870.4M/5d, XAR +$809.1M/5d) cushions the beaten-down. Semis stay the lone runaway: SMH +$7.5B/5d (+17.62%/20d).",
+        "headline": "Distribution-led morning tape — institutions keep selling defensives & financials (IAI a perfect 14/14d Selling into Strength, +$1.5B) while broad dip-buying (XLF +$870.4M/5d, XAR +$809.1M/5d) cushions the beaten-down. Semis stay the lone runaway: SMH +$7.5B/5d (+17.62%/20d).",
         "points": [
           {
             "t": "Semis are still the whole inflow story",
-            "d": "SMH led the sub-sector inflows: +1.22%/1d, +7.74%/5d, +17.62%/20d with +$7.5B/5d of measured flow \u2014 dwarfing every other inflow. DRAM (Memory) ran +4.52%/1d, +23.33%/5d, +47.55%/20d on the memory theme. Outside semis/AI, sub-sector flows were modest and mixed."
+            "d": "SMH led the sub-sector inflows: +1.22%/1d, +7.74%/5d, +17.62%/20d with +$7.5B/5d of measured flow — dwarfing every other inflow. DRAM (Memory) ran +4.52%/1d, +23.33%/5d, +47.55%/20d on the memory theme. Outside semis/AI, sub-sector flows were modest and mixed."
           },
           {
             "t": "Sustained distribution in financials & defensives",
@@ -8352,10 +8352,10 @@
           },
           {
             "t": "Dip-buying is broad across the wreckage",
-            "d": "BUYING THE DIP tagged 11 sector cards: XLF (+$870.4M/5d), XAR (+$809.1M), XLB (+$362.2M), XOP (+$277.7M), XRT (+$248.0M), KRE (+$157.5M), XLY (+$105.1M), IGV (+$93.8M), XLRE (+$67.2M), COPX (+$66.7M) and XME (+$60.0M) \u2014 accumulation into the sectors that sold off."
+            "d": "BUYING THE DIP tagged 11 sector cards: XLF (+$870.4M/5d), XAR (+$809.1M), XLB (+$362.2M), XOP (+$277.7M), XRT (+$248.0M), KRE (+$157.5M), XLY (+$105.1M), IGV (+$93.8M), XLRE (+$67.2M), COPX (+$66.7M) and XME (+$60.0M) — accumulation into the sectors that sold off."
           }
         ],
-        "watch": "Energy stays the clear laggard \u2014 XLE -7.26%/5d, -9.74%/20d; XOP -7.52%/5d, -10.40%/20d; OIH -10.89%/5d, -14.28%/20d \u2014 even as all three drew positive 5-day dip-buying flow. With SMH (+$7.5B/5d) dwarfing every other measured inflow, breadth is narrow: watch whether the semis bid holds, because little else is pulling sustained inflow."
+        "watch": "Energy stays the clear laggard — XLE -7.26%/5d, -9.74%/20d; XOP -7.52%/5d, -10.40%/20d; OIH -10.89%/5d, -14.28%/20d — even as all three drew positive 5-day dip-buying flow. With SMH (+$7.5B/5d) dwarfing every other measured inflow, breadth is narrow: watch whether the semis bid holds, because little else is pulling sustained inflow."
       },
       "conviction": {
         "accumulation": [
@@ -8886,6 +8886,461 @@
           "d20": 7.49,
           "signal": null,
           "new": true
+        }
+      ]
+    },
+    {
+      "date": "2026-06-23",
+      "ts": "2026-06-23T20:00:00Z",
+      "regime": "TWO-WAY SECTOR ROTATION",
+      "selling": 24,
+      "total": 41,
+      "benchmark": {
+        "sym": "SPY",
+        "d1": -1.45,
+        "d5": -2.82,
+        "d20": -1.62
+      },
+      "flows": [
+        {
+          "sym": "XLK",
+          "name": "Technology",
+          "tier": "core",
+          "dir": "out",
+          "d1": -4.14,
+          "d5": -3.96,
+          "d20": 2.11,
+          "f1": 0.0,
+          "signal": null
+        },
+        {
+          "sym": "XLF",
+          "name": "Financials",
+          "tier": "core",
+          "dir": "in",
+          "d1": 0.34,
+          "d5": 0.6,
+          "d20": 3.74,
+          "f1": 0.0,
+          "signal": null,
+          "new": true
+        },
+        {
+          "sym": "XLE",
+          "name": "Energy",
+          "tier": "core",
+          "dir": "in",
+          "d1": 0.74,
+          "d5": -1.96,
+          "d20": -8.46,
+          "f1": 0.0,
+          "signal": null,
+          "new": true
+        },
+        {
+          "sym": "XLV",
+          "name": "Healthcare",
+          "tier": "core",
+          "dir": "in",
+          "d1": 1.41,
+          "d5": -0.46,
+          "d20": 1.53,
+          "f1": 0.0,
+          "signal": null,
+          "new": true
+        },
+        {
+          "sym": "XLY",
+          "name": "Consumer Discretionary",
+          "tier": "core",
+          "dir": "out",
+          "d1": -1.03,
+          "d5": -4.06,
+          "d20": -4.55,
+          "f1": 0.0,
+          "signal": null
+        },
+        {
+          "sym": "XLP",
+          "name": "Consumer Staples",
+          "tier": "core",
+          "dir": "in",
+          "d1": 1.87,
+          "d5": -2.06,
+          "d20": -1.27,
+          "f1": 0.0,
+          "signal": null,
+          "new": true
+        },
+        {
+          "sym": "XLI",
+          "name": "Industrials",
+          "tier": "core",
+          "dir": "out",
+          "d1": -2.01,
+          "d5": -0.3,
+          "d20": 3.71,
+          "f1": 0.0,
+          "signal": null
+        },
+        {
+          "sym": "XLU",
+          "name": "Utilities",
+          "tier": "core",
+          "dir": "in",
+          "d1": 0.78,
+          "d5": 0.74,
+          "d20": -0.62,
+          "f1": 0.0,
+          "signal": null,
+          "new": true
+        },
+        {
+          "sym": "XLB",
+          "name": "Materials",
+          "tier": "core",
+          "dir": "out",
+          "d1": -1.45,
+          "d5": -3.1,
+          "d20": 1.15,
+          "f1": 0.0,
+          "signal": null
+        },
+        {
+          "sym": "XLRE",
+          "name": "Real Estate",
+          "tier": "core",
+          "dir": "in",
+          "d1": 1.41,
+          "d5": -0.78,
+          "d20": 0.18,
+          "signal": null,
+          "new": true
+        },
+        {
+          "sym": "XLC",
+          "name": "Communications",
+          "tier": "core",
+          "dir": "in",
+          "d1": 0.38,
+          "d5": -4.39,
+          "d20": -7.09,
+          "signal": null,
+          "new": true
+        },
+        {
+          "sym": "XBI",
+          "name": "Biotech",
+          "tier": "core",
+          "dir": "in",
+          "d1": 0.8,
+          "d5": 7.79,
+          "d20": 11.67,
+          "signal": null
+        },
+        {
+          "sym": "XME",
+          "name": "Metals & Mining",
+          "tier": "core",
+          "dir": "out",
+          "d1": -3.75,
+          "d5": -8.07,
+          "d20": -5.27,
+          "f1": 0.0,
+          "signal": null
+        },
+        {
+          "sym": "XAR",
+          "name": "Aerospace & Defense",
+          "tier": "core",
+          "dir": "out",
+          "d1": -0.92,
+          "d5": -2.64,
+          "d20": 1.53,
+          "signal": null
+        },
+        {
+          "sym": "XHB",
+          "name": "Homebuilders",
+          "tier": "core",
+          "dir": "out",
+          "d1": -0.85,
+          "d5": -0.12,
+          "d20": 8.19,
+          "signal": null
+        },
+        {
+          "sym": "XOP",
+          "name": "Oil & Gas Exploration",
+          "tier": "core",
+          "dir": "in",
+          "d1": 0.09,
+          "d5": -2.1,
+          "d20": -9.83,
+          "f1": 0.0,
+          "signal": null,
+          "new": true
+        },
+        {
+          "sym": "XRT",
+          "name": "Retail",
+          "tier": "core",
+          "dir": "in",
+          "d1": 0.32,
+          "d5": -1.9,
+          "d20": 3.93,
+          "f1": 0.0,
+          "signal": null,
+          "new": true
+        },
+        {
+          "sym": "XTN",
+          "name": "Transportation",
+          "tier": "core",
+          "dir": "out",
+          "d1": -0.31,
+          "d5": -2.83,
+          "d20": 6.79,
+          "signal": null
+        },
+        {
+          "sym": "XHE",
+          "name": "Healthcare Equipment",
+          "tier": "core",
+          "dir": "in",
+          "d1": 1.19,
+          "d5": -0.93,
+          "d20": 0.26,
+          "signal": null,
+          "new": true
+        },
+        {
+          "sym": "SMH",
+          "name": "Semiconductors",
+          "tier": "sub",
+          "dir": "out",
+          "d1": -7.01,
+          "d5": -3.87,
+          "d20": 7.93,
+          "f1": 0.0,
+          "signal": null
+        },
+        {
+          "sym": "IGV",
+          "name": "Software",
+          "tier": "sub",
+          "dir": "in",
+          "d1": 0.01,
+          "d5": -5.78,
+          "d20": -7.12,
+          "f1": 0.0,
+          "signal": null,
+          "new": true
+        },
+        {
+          "sym": "IAI",
+          "name": "Broker-Dealers",
+          "tier": "sub",
+          "dir": "out",
+          "d1": -0.65,
+          "d5": -0.5,
+          "d20": 3.11,
+          "signal": null
+        },
+        {
+          "sym": "KBE",
+          "name": "Banking",
+          "tier": "sub",
+          "dir": "in",
+          "d1": 1.33,
+          "d5": 1.13,
+          "d20": 5.19,
+          "signal": null,
+          "new": true
+        },
+        {
+          "sym": "KRE",
+          "name": "Regional Banking",
+          "tier": "sub",
+          "dir": "in",
+          "d1": 1.57,
+          "d5": 1.23,
+          "d20": 5.41,
+          "signal": null,
+          "new": true
+        },
+        {
+          "sym": "OIH",
+          "name": "Oil Services",
+          "tier": "sub",
+          "dir": "out",
+          "d1": -1.13,
+          "d5": -7.42,
+          "d20": -13.39,
+          "signal": null
+        },
+        {
+          "sym": "COPX",
+          "name": "Copper Miners",
+          "tier": "sub",
+          "dir": "out",
+          "d1": -6.37,
+          "d5": -11.5,
+          "d20": -4.64,
+          "signal": null
+        },
+        {
+          "sym": "GDX",
+          "name": "Gold Miners",
+          "tier": "sub",
+          "dir": "out",
+          "d1": -4.64,
+          "d5": -8.92,
+          "d20": -8.66,
+          "signal": null
+        },
+        {
+          "sym": "SLX",
+          "name": "Steel",
+          "tier": "sub",
+          "dir": "out",
+          "d1": -2.86,
+          "d5": -8.37,
+          "d20": -4.58,
+          "signal": null
+        },
+        {
+          "sym": "REMX",
+          "name": "Rare Earth & Crit. Min.",
+          "tier": "sub",
+          "dir": "out",
+          "d1": -5.62,
+          "d5": -5.23,
+          "d20": -5.16,
+          "signal": null
+        },
+        {
+          "sym": "URA",
+          "name": "Uranium",
+          "tier": "sub",
+          "dir": "out",
+          "d1": -2.61,
+          "d5": -5.16,
+          "d20": -6.9,
+          "signal": null
+        },
+        {
+          "sym": "LIT",
+          "name": "Lithium & Battery",
+          "tier": "sub",
+          "dir": "out",
+          "d1": -5.01,
+          "d5": -6.72,
+          "d20": -8.03,
+          "signal": null
+        },
+        {
+          "sym": "HACK",
+          "name": "Cybersecurity",
+          "tier": "sub",
+          "dir": "in",
+          "d1": 1.24,
+          "d5": -1.46,
+          "d20": 1.17,
+          "signal": null,
+          "new": true
+        },
+        {
+          "sym": "WCLD",
+          "name": "Cloud Computing",
+          "tier": "sub",
+          "dir": "in",
+          "d1": 1.21,
+          "d5": -5.06,
+          "d20": -3.05,
+          "signal": null,
+          "new": true
+        },
+        {
+          "sym": "BOTZ",
+          "name": "Robotics & AI",
+          "tier": "sub",
+          "dir": "out",
+          "d1": -4.41,
+          "d5": -4.21,
+          "d20": -9.06,
+          "signal": null
+        },
+        {
+          "sym": "DRAM",
+          "name": "Memory",
+          "tier": "sub",
+          "dir": "out",
+          "d1": -14.25,
+          "d5": -2.6,
+          "d20": 31.05,
+          "signal": null
+        },
+        {
+          "sym": "PBW",
+          "name": "Clean Energy",
+          "tier": "sub",
+          "dir": "out",
+          "d1": -5.58,
+          "d5": -4.7,
+          "d20": -9.51,
+          "f1": 0.0,
+          "signal": null
+        },
+        {
+          "sym": "ICLN",
+          "name": "Clean Energy (iShares)",
+          "tier": "sub",
+          "dir": "out",
+          "d1": -4.44,
+          "d5": -1.71,
+          "d20": -7.76,
+          "signal": null
+        },
+        {
+          "sym": "TAN",
+          "name": "Solar",
+          "tier": "sub",
+          "dir": "out",
+          "d1": -4.17,
+          "d5": -6.6,
+          "d20": -11.21,
+          "signal": null
+        },
+        {
+          "sym": "JETS",
+          "name": "Airlines",
+          "tier": "sub",
+          "dir": "in",
+          "d1": 0.65,
+          "d5": 2.36,
+          "d20": 14.93,
+          "signal": null
+        },
+        {
+          "sym": "MSOS",
+          "name": "Cannabis",
+          "tier": "sub",
+          "dir": "out",
+          "d1": -3.85,
+          "d5": -8.91,
+          "d20": 1.58,
+          "signal": null
+        },
+        {
+          "sym": "BITO",
+          "name": "Bitcoin Futures",
+          "tier": "sub",
+          "dir": "out",
+          "d1": -3.31,
+          "d5": -6.41,
+          "d20": -18.16,
+          "signal": null
         }
       ]
     }
