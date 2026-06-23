@@ -122,6 +122,7 @@
     [hidden] { display: none !important; }
     .back-btn { margin-bottom: 16px; cursor: pointer; }
     .rot-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); font-weight: 400; letter-spacing: .04em; }
+    .rot-intro { font-size: 13px; line-height: 1.6; color: #cdd6e2; margin: 0 4px 16px; max-width: 680px; }
     .rot-empty {
       grid-column: 1 / -1;
       text-align: center;
@@ -156,28 +157,6 @@
     .trend-svg .tg-axis { fill: var(--muted); font-size: 11px; font-family: 'IBM Plex Mono', monospace; }
     .trend-svg .tg-grid { stroke: var(--line); stroke-width: 1; }
     .trend-svg .tg-zero { stroke: var(--line2); stroke-width: 1; stroke-dasharray: 3 3; }
-    .trend-svg .cum-line { filter: drop-shadow(0 1px 3px rgba(0,0,0,.4)); }
-    .cum-cap { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); margin-bottom: 10px; letter-spacing: .02em; }
-
-    /* flow bubble map — the hero "where the money moved" infographic */
-    .bubble-wrap { position: relative; container-type: inline-size; margin: 0 4px 18px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
-      background: radial-gradient(130% 100% at 50% -12%, rgba(86,168,255,.05), transparent 60%), var(--panel); }
-    .bub-empty { padding: 46px 22px; text-align: center; color: var(--muted); font-size: 13px; line-height: 1.6; }
-    .bub-axis { position: absolute; top: 9px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .04em; z-index: 3; opacity: .92; }
-    .bub-axis.out { left: 14px; color: var(--fear2); } .bub-axis.in { right: 14px; color: var(--greed2); }
-    .bub { position: absolute; aspect-ratio: 1; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; color: #fff; cursor: help; line-height: 1; overflow: hidden;
-      background: radial-gradient(circle at 36% 30%, rgba(var(--c1),.97), rgba(var(--c2),var(--op)));
-      transform: scale(1); animation: bubPop .5s cubic-bezier(.34,1.45,.5,1) var(--delay) backwards;
-      transition: transform .14s ease, box-shadow .14s ease; }
-    .bub.in  { box-shadow: 0 0 16px rgba(47,214,115,.30), inset 0 1.5px 2px rgba(255,255,255,.32); }
-    .bub.out { box-shadow: 0 0 16px rgba(255,77,77,.28), inset 0 1.5px 2px rgba(255,255,255,.26); }
-    .bub:hover { transform: scale(1.08); z-index: 6; }
-    .bub-sym { font-family: 'Chakra Petch', sans-serif; font-weight: 700; text-shadow: 0 1px 3px rgba(0,0,0,.55); }
-    .bub-val { font-family: 'IBM Plex Mono', monospace; font-weight: 600; opacity: .95; text-shadow: 0 1px 2px rgba(0,0,0,.55); margin-top: .12em; }
-    .bub-sig { position: absolute; top: 7%; font-size: clamp(8px, 2.2cqw, 15px); line-height: 1; filter: drop-shadow(0 1px 1px rgba(0,0,0,.5)); }
-    @keyframes bubPop { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-    @media (prefers-reduced-motion: reduce) { .bub { animation: none; } }
     /* money in / out columns */
     .rot-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 8px; }
     @media (max-width: 720px) { .rot-cols { grid-template-columns: 1fr; } }
@@ -245,6 +224,57 @@
     @keyframes chgPop { from { transform: translateY(-4px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     @media (prefers-reduced-motion: reduce) { .kpi .k-chg { animation: none; } }
     .kpi .k-sub { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); margin-top: 5px; }
+    /* ── net-flow diverging bar chart (the hero) ── */
+    .flow-chart { border: 1px solid var(--line); border-radius: 12px; background: var(--panel); padding: 11px 16px 14px; margin-bottom: 16px; }
+    .flow-axis { display: grid; grid-template-columns: 46px 1fr 94px 26px; gap: 10px; align-items: center; padding-bottom: 9px; margin-bottom: 5px; border-bottom: 1px dashed var(--line); }
+    .fa-track { grid-column: 2; display: flex; justify-content: space-between; align-items: center; font-family: 'IBM Plex Mono', monospace; font-size: 11px; }
+    .fa-out { color: var(--fear2); } .fa-in { color: var(--greed2); } .fa-zero { color: var(--line2); font-weight: 700; }
+    .flow-row { display: grid; grid-template-columns: 46px 1fr 94px 20px 26px; align-items: center; gap: 10px; height: 21px; font-family: 'IBM Plex Mono', monospace; cursor: help; }
+    .fb-sym { font-size: 12px; font-weight: 700; color: var(--txt); cursor: help; text-decoration: underline dotted rgba(125,139,160,.45); text-underline-offset: 3px; }
+    .fb-track { position: relative; height: 13px; }
+    .fb-track::before { content: ""; position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px; background: var(--line2); }
+    .fb-bar { position: absolute; top: 0; height: 13px; border-radius: 2px; transform-origin: var(--grow-from, left center); animation: barGrow .55s cubic-bezier(.22,.61,.36,1) both; }
+    .fb-bar.pos { background: linear-gradient(90deg, rgba(47,214,115,.45), var(--greed)); box-shadow: 0 0 8px rgba(47,214,115,.22); }
+    .fb-bar.neg { background: linear-gradient(270deg, rgba(255,77,77,.45), var(--fear)); box-shadow: 0 0 8px rgba(255,77,77,.22); }
+    .fb-val { font-size: 12px; font-weight: 600; text-align: right; }
+    .fb-val.pos { color: var(--greed); } .fb-val.neg { color: var(--fear); }
+    /* hot rows = smart-money signal or a big flow swing: bar flares after it lands */
+    .fb-bar.hot.pos { animation: barGrow .55s cubic-bezier(.22,.61,.36,1) both, flarePos 1.1s ease-out var(--flare-at, .6s) 1; }
+    .fb-bar.hot.neg { animation: barGrow .55s cubic-bezier(.22,.61,.36,1) both, flareNeg 1.1s ease-out var(--flare-at, .6s) 1; }
+    .flow-row.hot .fb-sym { color: var(--txt); font-weight: 800; }
+    .fb-delta { font-size: 10px; text-align: center; color: var(--muted); }
+    .fb-delta.up { color: var(--greed); } .fb-delta.dn { color: var(--fear); }
+    .fb-delta.up, .fb-delta.dn { animation: deltaPop .5s ease both; animation-delay: .4s; }
+    /* big swing arrows get larger + a heartbeat pulse so the eye lands there */
+    .fb-delta.big { font-size: 13px; font-weight: 700; }
+    .fb-delta.big.up { text-shadow: 0 0 9px rgba(47,214,115,.7); }
+    .fb-delta.big.dn { text-shadow: 0 0 9px rgba(255,77,77,.7); }
+    .fb-delta.big.up, .fb-delta.big.dn { animation: deltaPop .5s ease both, deltaBeat 1.6s ease-in-out var(--beat-at, 1s) 2; }
+    @keyframes barGrow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+    @keyframes deltaPop {
+      0%   { transform: translateY(var(--pop-from, -3px)) scale(.4); opacity: 0; }
+      60%  { transform: translateY(0) scale(1.25); opacity: 1; }
+      100% { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    @keyframes deltaBeat { 0%,100% { transform: scale(1); } 45% { transform: scale(1.45); } }
+    @keyframes flarePos {
+      0%   { box-shadow: 0 0 8px rgba(47,214,115,.22); }
+      35%  { box-shadow: 0 0 22px 3px rgba(47,214,115,.85); }
+      100% { box-shadow: 0 0 8px rgba(47,214,115,.22); }
+    }
+    @keyframes flareNeg {
+      0%   { box-shadow: 0 0 8px rgba(255,77,77,.22); }
+      35%  { box-shadow: 0 0 22px 3px rgba(255,77,77,.9); }
+      100% { box-shadow: 0 0 8px rgba(255,77,77,.22); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .fb-bar, .fb-bar.hot.pos, .fb-bar.hot.neg, .fb-delta.up, .fb-delta.dn,
+      .fb-delta.big.up, .fb-delta.big.dn { animation: none; }
+    }
+    .fb-sig { font-size: 12px; text-align: center; }
+    .fb-sig .fb-new { font-style: normal; font-size: 7.5px; color: #56a8ff; border: 1px solid rgba(86,168,255,.4); border-radius: 3px; padding: 0 2px; margin-left: 3px; vertical-align: 1px; }
+    .flow-foot { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); text-align: center; margin-top: 11px; padding-top: 9px; border-top: 1px dashed var(--line); }
+    .rot-timeline-note { margin-bottom: 16px; }
     .stamp {
       text-align: right;
       font-family: 'IBM Plex Mono', monospace;
@@ -406,6 +436,34 @@
     .pip { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
     /* Power Hour — optional indicator card placed inside the gauge card */
     .ph-slot { width: 100%; max-width: 340px; margin-top: 14px; }
+    /* Analyst Read — narrative panel on the rotation view */
+    .rot-read {
+      border: 1px solid var(--line); border-left: 3px solid #56a8ff;
+      background: linear-gradient(180deg, rgba(86,168,255,.06), var(--panel2));
+      border-radius: 12px; padding: 15px 18px; margin-bottom: 24px;
+    }
+    .rd-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: #56a8ff; margin-bottom: 8px; }
+    .rd-thesis { font-family: 'Chakra Petch', sans-serif; font-weight: 700; font-size: 16px; line-height: 1.3; margin-bottom: 12px; }
+    .rd-points { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .rd-points li { font-size: 12px; line-height: 1.55; color: #cdd6e2; padding-left: 17px; position: relative; }
+    .rd-points li::before { content: "▸"; position: absolute; left: 0; color: #56a8ff; }
+    .rd-points li b { color: var(--txt); }
+    .rd-watch { margin-top: 13px; padding-top: 12px; border-top: 1px dashed var(--line); font-size: 11px; color: var(--muted); line-height: 1.5; }
+    .rd-watch b { color: var(--amber); }
+    /* "How to read this" — collapsible flow-vs-price explainer */
+    .rot-help { border: 1px solid var(--line); border-radius: 11px; background: var(--panel); margin-bottom: 20px; }
+    .rot-help summary { cursor: pointer; padding: 11px 15px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #cdd6e2; list-style: none; display: flex; align-items: center; gap: 8px; }
+    .rot-help summary::-webkit-details-marker { display: none; }
+    .rot-help summary b { color: #56a8ff; }
+    .rot-help .rh-ico { font-size: 13px; }
+    .rot-help .rh-tap { margin-left: auto; font-size: 10px; color: var(--muted); letter-spacing: .03em; }
+    .rot-help[open] .rh-tap { display: none; }
+    .rot-help .rh-body { padding: 3px 16px 15px; border-top: 1px solid var(--line); }
+    .rot-help .rh-body p { font-size: 12px; line-height: 1.6; color: #cdd6e2; margin-top: 11px; }
+    .rot-help .rh-body p b { color: var(--txt); }
+    .rot-help .rh-caveat { color: var(--muted); font-style: italic; border-top: 1px dashed var(--line); padding-top: 11px; }
+    .rh-dot { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 7px; vertical-align: 1px; }
+    .rh-dot.pos { background: var(--greed); } .rh-dot.neg { background: var(--fear); }
     /* point-of-use callout (e.g. distribution-into-strength under Held Up) */
     .rot-note {
       display: flex; gap: 10px; align-items: flex-start;
@@ -1021,30 +1079,46 @@
     <!-- 1 ─ headline verdict -->
     <div id="rotRegime"></div>
 
+    <!-- 1b ─ how to read this (static explainer, collapsed by default) -->
+    <details class="rot-help">
+      <summary><span class="rh-ico">ℹ️</span> How to read this — <b>flow leads, price lags</b><span class="rh-tap">tap to expand</span></summary>
+      <div class="rh-body">
+        <p><b>Price ≠ flow.</b> Price is set by whoever is most <i>urgent</i> right now; flow is the net dollars institutions <i>positioned</i> over the last 5 sessions. They can point opposite ways — and that gap is the signal.</p>
+        <p><span class="rh-dot pos"></span><b>Money in while price falls = 💰 buying the dip.</b> Institutions absorb panic selling cheaply. Their bids support but don't lift the price yet — the move comes <i>later</i>, once sellers exhaust. Flow leads, price follows.</p>
+        <p><span class="rh-dot neg"></span><b>Money out while price rises = ⚠️ selling into strength.</b> Smart money unloads into momentum buyers. The tape looks fine, but the support has already left — so a sector "holding up" is a <i>warning</i>, not comfort.</p>
+        <p class="rh-caveat">It's a thesis, not a law: if the flow flips (e.g. semis' inflow turns negative), the divergence has resolved — that's the moment to watch for.</p>
+      </div>
+    </details>
+
     <!-- 2 ─ at-a-glance KPI cards (the three numbers that matter) -->
     <div class="rot-kpis" id="rotKpis"></div>
 
-    <!-- 3 ─ HERO: where the money moved — bubble map, each circle sized by dollars of net flow -->
+    <!-- 2b ─ analyst read (the story behind the numbers) -->
+    <div id="rotRead"></div>
+
+    <!-- 3 ─ HERO: where the money moved — this week's net flow + the 4-week trend -->
     <div class="sec-label">Where the Money Moved · <span id="rotFlowDate" style="color:var(--muted);font-weight:400"></span></div>
-    <div class="bubble-wrap" id="rotBubbles"></div>
+    <div class="rot-intro">Net institutional flow by sector, past 5 sessions. Bars grow <b style="color:var(--greed)">right</b> when money rotates <b>in</b>, <b style="color:var(--fear)">left</b> when it rotates <b>out</b> — length is the dollar size of the flow. 💰 buying the dip · ⚠️ selling into strength.</div>
+    <div class="flow-chart" id="rotFlow"></div>
 
-    <!-- 4 ─ money flow, week by week — cumulative net-flow lines -->
-    <div class="sec-label">Money Flow · Week by Week <span style="color:var(--muted);font-weight:400">— running net total per sector</span></div>
-    <div id="rotCum"></div>
+    <!-- 3b ─ top-movers 4-week trend (replaces the old per-sector heatmap; appears once ≥2 readings exist) -->
+    <div id="rotTrendWrap" hidden>
+      <div class="sec-label sec-label--inset">Top Movers · <span style="color:var(--muted);font-weight:400">how the biggest flows have tracked, session by session</span></div>
+      <div class="trend-chart" id="rotTrend"></div>
+    </div>
+    <div id="rotTrendNote" class="rot-timeline-note"></div>
 
-    <!-- 5 ─ conviction -->
+    <!-- 4 ─ conviction -->
     <div class="sec-label">14-Day Conviction · <span style="color:var(--muted);font-weight:400">is the move sustained?</span></div>
     <div class="rot-cols">
       <div class="rot-col"><div class="rot-col-h rc-buy">🟢 Accumulating · Buying the Dip</div><div id="rotAcc"></div></div>
       <div class="rot-col"><div class="rot-col-h rc-sell">🔴 Distributing · Selling into Strength</div><div id="rotDist"></div></div>
     </div>
 
-    <!-- 6 ─ held up (only shown when the feed provides it) -->
-    <div id="rotHoldSec">
-      <div class="sec-label">Held Up During the Sell-off</div>
-      <div class="rot-tiles" id="rotHold"></div>
-      <div id="rotHoldNote"></div>
-    </div>
+    <!-- 5 ─ held up -->
+    <div class="sec-label">Held Up During the Sell-off</div>
+    <div class="rot-tiles" id="rotHold"></div>
+    <div id="rotHoldNote"></div>
 
   </div>
 
@@ -1593,6 +1667,24 @@ function fmtFlow(m) {
   if (a >= 1)    return s + "$" + (a < 10 ? a.toFixed(1) : Math.round(a)) + "M";
   return s + "$" + (a * 1000).toFixed(1) + "K";
 }
+// roll each flow number from its prior-day value up to today's, easing out
+function animateFlowNums() {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  document.querySelectorAll("#rotFlow .fb-val[data-to]").forEach(el => {
+    const from = +el.dataset.from, to = +el.dataset.to;
+    if (!isFinite(from) || !isFinite(to) || from === to) return;
+    const dur = 700, t0 = performance.now() + (+el.dataset.delay || 0) * 1000;
+    const step = now => {
+      const p = Math.max(0, Math.min(1, (now - t0) / dur));
+      const e = 1 - Math.pow(1 - p, 3);                 // easeOutCubic
+      el.textContent = fmtFlow(from + (to - from) * e);
+      if (p < 1) requestAnimationFrame(step);
+      else el.textContent = fmtFlow(to);
+    };
+    el.textContent = fmtFlow(from);
+    requestAnimationFrame(step);
+  });
+}
 function rpct(v) { return v == null ? "" : (v >= 0 ? "+" : "−") + Math.abs(v).toFixed(2) + "%"; }
 function rcls(v) { return v >= 0 ? "pos" : "neg"; }
 function shortDate(d) {
@@ -1685,8 +1777,88 @@ function renderRotation(data) {
   }
   document.getElementById("rotKpis").innerHTML = kpis;
 
-  // ── 2b. HERO: where the money moved — bubble map (each circle sized by $ of net flow) ──
-  renderBubbles(withFlow, prevF5Map, latest);
+  // ── 2b. analyst read (the story behind the numbers) ──
+  const rd = latest.read;
+  document.getElementById("rotRead").innerHTML = rd ? (
+    `<div class="rot-read"><div class="rd-eyebrow">📋 The Rotation Read</div>` +
+    `<div class="rd-thesis">${rd.headline}</div>` +
+    (rd.points && rd.points.length ? `<ul class="rd-points">${rd.points.map(p => `<li><b>${p.t}.</b> ${p.d}</li>`).join("")}</ul>` : "") +
+    (rd.watch ? `<div class="rd-watch"><b>Watch next:</b> ${rd.watch}</div>` : "") +
+    `</div>`
+  ) : "";
+
+  // ── 3. HERO: net-flow diverging bar chart — or price-move fallback while bootstrapping ──
+  const TOPN = 18;
+  if (bootstrapping) {
+    document.getElementById("rotFlowDate").textContent = shortDate(latest.date) + " close · 1-day price move";
+    const byPrice = latest.flows
+      .filter(f => f.d1 != null && isFinite(f.d1))
+      .sort((a, b) => Math.abs(b.d1) - Math.abs(a.d1))
+      .slice(0, TOPN)
+      .sort((a, b) => b.d1 - a.d1);
+    const maxD1 = Math.max(...byPrice.map(f => Math.abs(f.d1)), 1);
+    document.getElementById("rotFlow").innerHTML =
+      `<div class="flow-foot" style="margin-bottom:.6rem">⏳ Net-flow data bootstrapping — showing 1-day price moves until the bot collects ~5 days of shares-outstanding history.</div>` +
+      `<div class="flow-axis"><span></span><div class="fa-track">` +
+      `<span class="fa-out">← selling off</span><span class="fa-zero">0</span><span class="fa-in">rallying →</span></div></div>` +
+      byPrice.map((f, i) => {
+        const pos = f.d1 >= 0;
+        const w = (Math.abs(f.d1) / maxD1 * 50).toFixed(1);
+        const dly = (i * 0.03).toFixed(2);
+        const bar = pos
+          ? `<div class="fb-bar pos" style="left:50%;width:${w}%;--grow-from:left center;animation-delay:${dly}s"></div>`
+          : `<div class="fb-bar neg" style="right:50%;width:${w}%;--grow-from:right center;animation-delay:${dly}s"></div>`;
+        return `<div class="flow-row" data-tip="${f.name} · 1D ${rpct(f.d1)} · 5D ${rpct(f.d5)}">` +
+               `<span class="fb-sym">${f.sym}</span>` +
+               `<div class="fb-track">${bar}</div>` +
+               `<span class="fb-val ${pos ? "pos" : "neg"}">${rpct(f.d1)}</span>` +
+               `<span class="fb-delta"></span>` +
+               `<span class="fb-sig"></span></div>`;
+      }).join("");
+  } else {
+    document.getElementById("rotFlowDate").textContent = shortDate(latest.date) + " close · 5-day net flow";
+    const ranked = withFlow.slice()
+      .sort((a, b) => Math.abs(b.f5) - Math.abs(a.f5))   // pick the biggest movers
+      .slice(0, TOPN)
+      .sort((a, b) => b.f5 - a.f5);                       // then signed order for the diverging look
+    const maxAbs = Math.max(...ranked.map(f => Math.abs(f.f5)), 1);
+    // what "matters": a smart-money signal, or a flow ≥60% of the day's biggest mover
+    const isHot = f => !!f.signal || Math.abs(f.f5) >= 0.6 * maxAbs;
+    // size delta-arrow emphasis against the biggest day-over-day swing on the board
+    const maxDelta = Math.max(...ranked.map(f => {
+      const p = prevF5Map.has(f.sym) ? prevF5Map.get(f.sym) : null;
+      return p != null && f.f5 != null ? Math.abs(f.f5 - p) : 0;
+    }), 1);
+    document.getElementById("rotFlow").innerHTML =
+      `<div class="flow-axis"><span></span><div class="fa-track">` +
+      `<span class="fa-out">← rotating out</span><span class="fa-zero">0</span><span class="fa-in">rotating in →</span></div></div>` +
+      ranked.map((f, i) => {
+        const pos = f.f5 >= 0;
+        const w = (Math.abs(f.f5) / maxAbs * 50).toFixed(1);
+        const dly = (i * 0.03).toFixed(2);
+        const hot = isHot(f);
+        const flareAt = (parseFloat(dly) + 0.55).toFixed(2);   // flare once the bar finishes growing
+        const bar = pos
+          ? `<div class="fb-bar pos${hot ? " hot" : ""}" style="left:50%;width:${w}%;--grow-from:left center;animation-delay:${dly}s;--flare-at:${flareAt}s"></div>`
+          : `<div class="fb-bar neg${hot ? " hot" : ""}" style="right:50%;width:${w}%;--grow-from:right center;animation-delay:${dly}s;--flare-at:${flareAt}s"></div>`;
+        const pf5 = prevF5Map.has(f.sym) ? prevF5Map.get(f.sym) : null;
+        const delta = (pf5 != null && f.f5 != null) ? f.f5 - pf5 : null;
+        const dCls = delta === null ? "" : delta > 0 ? "up" : delta < 0 ? "dn" : "";
+        const big = delta !== null && Math.abs(delta) >= 0.5 * maxDelta;
+        const dArrow = delta === null ? "" : delta > 0 ? "▲" : delta < 0 ? "▼" : "–";
+        const popFrom = delta > 0 ? "3px" : "-3px";
+        const beatAt = (0.4 + i * 0.03 + 0.5).toFixed(2);
+        const prevTip = pf5 != null ? ` · prev ${fmtFlow(pf5)}` : "";
+        return `<div class="flow-row${hot ? " hot" : ""}" data-tip="${f.name} · 5D ${fmtFlow(f.f5)} · 1D ${rpct(f.d1)}${prevTip}">` +
+               `<span class="fb-sym">${f.sym}</span>` +
+               `<div class="fb-track">${bar}</div>` +
+               `<span class="fb-val ${pos ? "pos" : "neg"}" data-from="${pf5 != null ? pf5 : 0}" data-to="${f.f5}" data-delay="${dly}">${fmtFlow(f.f5)}</span>` +
+               `<span class="fb-delta ${dCls}${big ? " big" : ""}" style="--pop-from:${popFrom};animation-delay:${(0.4 + i * 0.03).toFixed(2)}s;--beat-at:${beatAt}s" title="${delta !== null ? (delta >= 0 ? "+" : "") + fmtFlow(delta) + " vs prev" : ""}">${dArrow}</span>` +
+               `<span class="fb-sig">${sigIcon(f.signal)}${f.new ? '<i class="fb-new">N</i>' : ""}</span></div>`;
+      }).join("") +
+      (withFlow.length > TOPN ? `<div class="flow-foot">Showing the ${TOPN} largest of ${withFlow.length} measured sector flows.</div>` : "");
+    animateFlowNums();
+  }
 
   // ── 4. 14-day conviction ──
   const convRow = (c, color) =>
@@ -1697,130 +1869,73 @@ function renderRotation(data) {
   document.getElementById("rotAcc").innerHTML  = cv.accumulation.map(c => convRow(c, "var(--greed)")).join("");
   document.getElementById("rotDist").innerHTML = cv.distribution.map(c => convRow(c, "var(--fear)")).join("");
 
-  // ── 4. money flow, week by week — cumulative net-flow lines ──
-  renderCumFlow(snaps);
-
-  // ── 5. held up during the sell-off (only when the feed provides it) ──
-  const hold = latest.holding_up || [];
-  document.getElementById("rotHoldSec").hidden = hold.length === 0;
-  document.getElementById("rotHold").innerHTML = hold
+  // ── 5. held up during the sell-off (+ optional "distribution into strength" note) ──
+  document.getElementById("rotHold").innerHTML = (latest.holding_up || [])
     .map(h => `<div class="rot-tile" data-tip="${h.name} · held ${rpct(h.chg)} during the sell-off"><b>${h.sym}</b><span>${rpct(h.chg)}</span></div>`).join("");
   document.getElementById("rotHoldNote").innerHTML = latest.holdNote
     ? `<div class="rot-note"><span class="rn-ico">⚠️</span><p>${latest.holdNote}</p></div>` : "";
+
+  // ── 3b. top-movers 4-week trend — only meaningful once ≥2 readings exist ──
+  if (snaps.length >= 2) {
+    document.getElementById("rotTrendWrap").hidden = false;
+    document.getElementById("rotTrendNote").innerHTML = "";
+    renderTrend(snaps);
+  } else {
+    document.getElementById("rotTrendWrap").hidden = true;
+    document.getElementById("rotTrendNote").innerHTML =
+      `<div class="rot-empty">📈 4-week net-flow trend<br><span>Charts here automatically once a second reading is added — one point per week.</span></div>`;
+  }
 }
 
-// HERO — flow bubble map. Each ETF is a circle; AREA ∝ |5-day net dollar flow|,
-// colour = direction (green in / red out, deeper = bigger). Inflows gravitate
-// right, outflows left, packed into two clouds so "where the money moved" reads
-// at a glance. Bubbles are HTML (not SVG) so they reuse the page's [data-tip]
-// tooltips and scale type with container-query units.
-function renderBubbles(withFlow, prevF5Map, latest) {
-  const wrap = document.getElementById("rotBubbles");
-  const dateEl = document.getElementById("rotFlowDate");
-  if (dateEl) dateEl.textContent = shortDate(latest.date) + " · 5-day net flow, sized by $";
+// Top-movers trend — a compact multi-line chart of 5-day net flow over the last
+// 4 readings for the biggest CURRENT movers. Replaces the old per-sector heatmap:
+// instead of one row per sector (40+ rows that never fit), it plots only the
+// sectors that matter and shows the DIRECTION of the rotation over time. Lines
+// rise above the zero baseline when money is flowing in, drop below when out.
+function renderTrend(snaps) {
+  const TREND_MAX = 10;                                       // show up to the last 10 sessions
+  const recent = snaps.slice(-TREND_MAX);
+  const latest = recent[recent.length - 1];
+  const hasF5  = f => f.f5 != null && isFinite(f.f5);
 
-  if (!withFlow.length) {
-    wrap.style.aspectRatio = "";
-    wrap.innerHTML = `<div class="bub-empty">⏳ Net-flow data is bootstrapping — the bot needs ~5 sessions of shares-outstanding history before dollar flows appear here.</div>`;
-    return;
-  }
-
-  const SIDE_MAX = 11;                                          // biggest movers each side
-  const ins  = withFlow.filter(f => f.f5 > 0).sort((a, b) => b.f5 - a.f5).slice(0, SIDE_MAX);
-  const outs = withFlow.filter(f => f.f5 < 0).sort((a, b) => a.f5 - b.f5).slice(0, SIDE_MAX);
-  const maxAbs = Math.max(...withFlow.map(f => Math.abs(f.f5)), 1);
-  const RMIN = 15, RMAX = 62;
-  const radius = f => RMIN + (RMAX - RMIN) * Math.sqrt(Math.abs(f.f5) / maxAbs);   // area ∝ |flow|
-
-  // greedy spiral packing around a centre — tight, deterministic, no overlap
-  function pack(items, cx, cy) {
-    const placed = [];
-    items.forEach(it => {
-      it.r = radius(it);
-      if (!placed.length) { it.x = cx; it.y = cy; placed.push(it); return; }
-      for (let a = 1; a < 5000; a++) {
-        const ang = a * 0.35, rad = 3.2 * Math.sqrt(a);
-        const x = cx + rad * Math.cos(ang), y = cy + rad * Math.sin(ang);
-        if (placed.every(p => Math.hypot(x - p.x, y - p.y) >= it.r + p.r + 3)) { it.x = x; it.y = y; placed.push(it); return; }
-      }
-      it.x = cx; it.y = cy; placed.push(it);
-    });
-    return placed;
-  }
-  const SEP = RMAX * 2.7;                                        // gap between the in/out clouds
-  const packed = [...pack(outs, -SEP, 0), ...pack(ins, SEP, 0)];
-
-  // fit the packed bounding box to a 100-wide isotropic coordinate box (+ gutters)
-  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
-  packed.forEach(p => { minX = Math.min(minX, p.x - p.r); maxX = Math.max(maxX, p.x + p.r);
-                        minY = Math.min(minY, p.y - p.r); maxY = Math.max(maxY, p.y + p.r); });
-  const bw = (maxX - minX) || 1, bh = (maxY - minY) || 1;
-  const PAD = 4, TOPGUT = 7, BW = 100;
-  const scale = (BW - 2 * PAD) / bw, BH = bh * scale + 2 * PAD + TOPGUT;
-  const fx = x => (x - minX) * scale + PAD, fy = y => (y - minY) * scale + PAD + TOPGUT;
-
-  const bub = packed.map((f, i) => {
-    const x = fx(f.x), y = fy(f.y), r = f.r * scale;
-    const pos = f.f5 > 0, mag = Math.abs(f.f5) / maxAbs;
-    const c1 = pos ? "94,233,153" : "255,120,120";
-    const c2 = pos ? "26,150,82"  : "176,40,40";
-    const op = (0.55 + 0.4 * mag).toFixed(2);
-    const showVal = r > 9;
-    const fsSym = (r * 0.46).toFixed(2), fsVal = (r * 0.30).toFixed(2);
-    const prev = prevF5Map.has(f.sym) ? prevF5Map.get(f.sym) : null;
-    const tip = `${f.name} · 5D ${fmtFlow(f.f5)} · 1D ${rpct(f.d1)}` +
-                (f.signal ? ` · ${sigIcon(f.signal)} ${f.signal.toLowerCase()}` : "") +
-                (f.new ? " · NEW" : "") + (prev != null ? ` · prev ${fmtFlow(prev)}` : "");
-    return `<div class="bub ${pos ? "in" : "out"}" data-tip="${tip}" ` +
-           `style="left:${((x - r) / BW * 100).toFixed(2)}%;top:${((y - r) / BH * 100).toFixed(2)}%;width:${(2 * r / BW * 100).toFixed(2)}%;` +
-           `--c1:${c1};--c2:${c2};--op:${op};--delay:${(0.04 * i).toFixed(2)}s">` +
-           (f.signal ? `<span class="bub-sig">${sigIcon(f.signal)}</span>` : "") +
-           `<span class="bub-sym" style="font-size:clamp(6px,${fsSym}cqw,26px)">${f.sym}</span>` +
-           (showVal ? `<span class="bub-val" style="font-size:clamp(5px,${fsVal}cqw,17px)">${fmtFlow(f.f5)}</span>` : "") +
-           `</div>`;
-  }).join("");
-
-  wrap.style.aspectRatio = `${BW} / ${BH.toFixed(1)}`;
-  wrap.innerHTML =
-    `<span class="bub-axis out">← rotating out</span><span class="bub-axis in">rotating in →</span>${bub}`;
-}
-
-// WEEK-BY-WEEK — cumulative net-flow lines. Snapshots are grouped into ISO weeks
-// (the last reading in each week represents it); per sector we plot the RUNNING
-// TOTAL of weekly net flow, so a line that keeps climbing = persistent
-// accumulation, one that keeps falling = persistent distribution.
-function renderCumFlow(snaps) {
-  const host = document.getElementById("rotCum");
-  const weekKey = d => { const t = new Date(d + "T00:00:00Z"); t.setUTCDate(t.getUTCDate() - ((t.getUTCDay() + 6) % 7)); return t.toISOString().slice(0, 10); };
-  const byWeek = new Map();
-  snaps.forEach(s => { const k = weekKey(s.date); const e = byWeek.get(k); if (!e || s.date > e.date) byWeek.set(k, s); });
-  const weeks = [...byWeek.values()].sort((a, b) => a.date < b.date ? -1 : 1);
-
-  if (weeks.length < 2) {
-    host.innerHTML = `<div class="rot-empty">📈 Week-by-week money flow<br><span>Fills in as more weekly readings arrive — one point per week.</span></div>`;
-    return;
-  }
-
-  // cumulative net flow per sector across the weeks (carry forward; absent week adds 0)
-  const meta = new Map();
-  weeks.forEach(w => (w.flows || []).forEach(f => { if (f.f5 != null) meta.set(f.sym, f.name); }));
-  const lastFlows = weeks[weeks.length - 1].flows || [];
-  const series = [...meta.keys()].map(sym => {
-    let cum = 0;
-    const pts = weeks.map(w => { const f = (w.flows || []).find(x => x.sym === sym); if (f && f.f5 != null) cum += f.f5; return cum; });
-    return { sym, name: meta.get(sym), signal: (lastFlows.find(x => x.sym === sym) || {}).signal, pts, last: cum };
-  }).sort((a, b) => Math.abs(b.last) - Math.abs(a.last)).slice(0, 7);
+  // pick the biggest current movers (both inflow and outflow)
+  const movers = latest.flows.filter(hasF5)
+    .sort((a, b) => Math.abs(b.f5) - Math.abs(a.f5))
+    .slice(0, 7);
+  if (!movers.length) { document.getElementById("rotTrend").innerHTML = ""; return; }
 
   const PAL = ["#2fd673", "#56a8ff", "#ffc83d", "#ff7a45", "#c77dff", "#37e0c4", "#ff6fa5"];
-  series.forEach((s, i) => s.color = PAL[i % PAL.length]);
+  const series = movers.map((m, i) => {
+    const pts  = recent.map(s => { const f = s.flows.find(x => x.sym === m.sym); return f && hasF5(f) ? f.f5 : null; });
+    const last = [...pts].reverse().find(v => v != null);
+    return { sym: m.sym, name: m.name, color: PAL[i % PAL.length], signal: m.signal, pts, last };
+  });
 
-  const vals = series.flatMap(s => s.pts);
+  // symmetric y-range around zero (flows go both ways)
+  const vals   = series.flatMap(s => s.pts).filter(v => v != null);
   const maxAbs = Math.max(...vals.map(Math.abs), 1);
-  const W = 620, H = 230, padL = 60, padR = 16, padT = 16, padB = 30, n = weeks.length;
-  const X = i => padL + (n === 1 ? 0 : i / (n - 1)) * (W - padL - padR);
+
+  // geometry, in viewBox units (the SVG scales to its container width)
+  const W = 620, H = 230, padL = 56, padR = 14, padT = 14, padB = 28;
+  const n = recent.length;
+
+  // Space x-positions by actual trading-day calendar, skipping weekends,
+  // so a Mon–Fri gap (skipping Sat/Sun) renders as 1 step, not 3.
+  function tradingDaysBetween(d0, d1) {
+    // count Mon–Fri days from d0 up to (not including) d1
+    let count = 0, cur = new Date(d0);
+    while (cur < d1) { const dow = cur.getUTCDay(); if (dow !== 0 && dow !== 6) count++; cur.setUTCDate(cur.getUTCDate() + 1); }
+    return count;
+  }
+  const dates  = recent.map(s => new Date(s.date + "T00:00:00Z"));
+  const d0     = dates[0], dN = dates[n - 1];
+  const total  = tradingDaysBetween(d0, dN) || 1;          // total trading days in range
+  const tpos   = dates.map(d => tradingDaysBetween(d0, d)); // trading-day index of each point
+  const X      = i => padL + (tpos[i] / total) * (W - padL - padR);
   const Y = v => padT + (1 - (v + maxAbs) / (2 * maxAbs)) * (H - padT - padB);
   const z = Y(0);
 
+  // gridlines + y-axis labels (+max / 0 / −max)
   const grid =
     `<line class="tg-grid" x1="${padL}" y1="${Y(maxAbs)}" x2="${W - padR}" y2="${Y(maxAbs)}"/>` +
     `<line class="tg-zero" x1="${padL}" y1="${z}" x2="${W - padR}" y2="${z}"/>` +
@@ -1828,27 +1943,55 @@ function renderCumFlow(snaps) {
     `<text class="tg-axis" x="${padL - 8}" y="${Y(maxAbs) + 4}" text-anchor="end">${fmtFlow(maxAbs)}</text>` +
     `<text class="tg-axis" x="${padL - 8}" y="${z + 4}" text-anchor="end">0</text>` +
     `<text class="tg-axis" x="${padL - 8}" y="${Y(-maxAbs) + 4}" text-anchor="end">${fmtFlow(-maxAbs)}</text>`;
-  const xlab = weeks.map((w, i) =>
-    `<text class="tg-axis" x="${X(i)}" y="${H - 9}" text-anchor="${i === 0 ? "start" : i === n - 1 ? "end" : "middle"}">${shortDate(w.date)}</text>`).join("");
-  const lines = series.map(s => {
-    const path = s.pts.map((v, i) => `${X(i).toFixed(1)},${Y(v).toFixed(1)}`).join(" ");
-    const dots = s.pts.map((v, i) => `<circle cx="${X(i).toFixed(1)}" cy="${Y(v).toFixed(1)}" r="2.7" fill="${s.color}"/>`).join("");
-    return `<polyline class="cum-line" points="${path}" fill="none" stroke="${s.color}" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>${dots}`;
+
+  // x-axis date labels — pick evenly spaced ticks that land cleanly on the
+  // last point and never crowd the right edge (the old "every 2nd + always
+  // last" rule double-labelled the end, e.g. Jun 12 right next to Jun 15).
+  const targetTicks = 6;
+  const span = n - 1;
+  let step = Math.max(1, Math.round(span / (targetTicks - 1)));
+  // nudge toward a step that divides the span evenly, so ticks stay equally
+  // spaced AND the final tick lands exactly on the last point
+  for (const cand of [step, step + 1, step - 1, step + 2]) {
+    if (cand >= 1 && span % cand === 0) { step = cand; break; }
+  }
+  const labelIdx = new Set();
+  for (let i = 0; i < n; i += step) labelIdx.add(i);
+  labelIdx.add(n - 1);
+  const ordered = [...labelIdx].sort((a, b) => a - b);
+  // drop the 2nd-to-last tick if it sits too close to the final one
+  if (ordered.length >= 2 && (ordered[ordered.length - 1] - ordered[ordered.length - 2]) < step * 0.6) {
+    labelIdx.delete(ordered[ordered.length - 2]);
+  }
+  const xlab = recent.map((s, i) => {
+    if (!labelIdx.has(i)) return "";
+    return `<text class="tg-axis" x="${X(i)}" y="${H - 8}" text-anchor="${i === 0 ? "start" : i === n - 1 ? "end" : "middle"}">${shortDate(s.date)}</text>`;
   }).join("");
+
+  // one polyline + dots per series (gaps connect across any missing week)
+  const lines = series.map(s => {
+    const pres = s.pts.map((v, i) => v == null ? null : [X(i), Y(v)]).filter(Boolean);
+    const path = pres.map(p => `${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(" ");
+    const dots = pres.map(p => `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2.6" fill="${s.color}"/>`).join("");
+    return `<polyline points="${path}" fill="none" stroke="${s.color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>${dots}`;
+  }).join("");
+
   const svg =
     `<svg class="trend-svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" role="img" ` +
-    `aria-label="Cumulative weekly net flow by sector">${grid}${xlab}${lines}</svg>`;
+    `aria-label="Top-mover 5-day net flow over the last ${n} readings">${grid}${xlab}${lines}</svg>`;
+
+  // legend: colour · symbol · latest flow · signal icon
   const legend = `<div class="trend-legend">` + series.map(s =>
-    `<span class="tl-item" data-tip="${s.name} · running total ${fmtFlow(s.last)}"><i style="background:${s.color}"></i>${s.sym} ` +
+    `<span class="tl-item" data-tip="${s.name}"><i style="background:${s.color}"></i>${s.sym} ` +
     `<b style="color:${s.color}">${fmtFlow(s.last)}</b>${sigIcon(s.signal)}</span>`
   ).join("") + `</div>`;
 
-  host.innerHTML = `<div class="trend-chart"><div class="cum-cap">Running total of weekly net flow · in = above the line, out = below · one point per week</div>${svg}${legend}</div>`;
+  document.getElementById("rotTrend").innerHTML = legend + svg;
 }
 
 function renderRotationEmpty(msg) {
   document.getElementById("rotRegime").innerHTML = `<div class="rot-empty">📡 ${msg}<br><span>Add a reading to data/rotation_history.json and it renders here.</span></div>`;
-  ["rotKpis","rotBubbles","rotCum","rotAcc","rotDist","rotHold","rotHoldNote"].forEach(id => { const e = document.getElementById(id); if (e) e.innerHTML = ""; });
+  ["rotKpis","rotRead","rotFlow","rotAcc","rotDist","rotHold","rotHoldNote","rotTrend"].forEach(id => { const e = document.getElementById(id); if (e) e.innerHTML = ""; });
 }
 let rotationLoaded = false;
 function loadRotation() {
