@@ -1,6 +1,6 @@
 {
- "_schema": "sector_heatmap_history v1 \u2014 daily heat-map readings of sector cap-weighted moves ('sector score'). Two feed variants share this store: the Rotation Radar Bot's 'SECTOR HEAT MAP' (universe = all stocks, R3000 + S&P 500) and, from 2026-06-11, the Market Vitals Bot's 'S&P 500 HEAT MAP' (universe = S&P 500). One snapshot per post. 'date' = trading session covered; 'scan' = feed scan label (e.g. EOD). 'market' = whole-universe cap-weighted move (percent). 'sectors' = each sector's cap-weighted move (percent), ordered best\u2192worst exactly as the feed lists them. 'universe' and 'source' record the variant (present from 2026-06-11). The per-stock heat-map tiles are an image only and are NOT transcribed here.",
- "_rules": "Only confirmed feed numbers. Append-only \u2014 never edit or delete a committed snapshot's values. Never invent or carry-forward. Copy every percentage exactly as shown (no rounding). Sector names are kept as the feed displays them (labels differ slightly between the two variants \u2014 keep verbatim). The ETF net-flow store lives in rotation_history.json and is preserved unchanged.",
+ "_schema": "sector_heatmap_history v1 — daily heat-map readings of sector cap-weighted moves ('sector score'). Two feed variants share this store: the Rotation Radar Bot's 'SECTOR HEAT MAP' (universe = all stocks, R3000 + S&P 500) and, from 2026-06-11, the Market Vitals Bot's 'S&P 500 HEAT MAP' (universe = S&P 500). One snapshot per post. 'date' = trading session covered; 'scan' = feed scan label (e.g. EOD). 'market' = whole-universe cap-weighted move (percent). 'sectors' = each sector's cap-weighted move (percent), ordered best→worst exactly as the feed lists them. 'universe' and 'source' record the variant (present from 2026-06-11). The per-stock heat-map tiles are an image only and are NOT transcribed here.",
+ "_rules": "Only confirmed feed numbers. Append-only — never edit or delete a committed snapshot's values. Never invent or carry-forward. Copy every percentage exactly as shown (no rounding). Sector names are kept as the feed displays them (labels differ slightly between the two variants — keep verbatim). The ETF net-flow store lives in rotation_history.json and is preserved unchanged.",
  "history": [
   {
    "date": "2026-06-10",
@@ -635,6 +635,59 @@
     {
      "name": "Communication Services",
      "move": -3.77
+    }
+   ]
+  },
+  {
+   "date": "2026-06-23",
+   "scan": "EOD",
+   "source": "Rotation Radar",
+   "universe": "R3000 + S&P 500",
+   "market": -1.22,
+   "sectors": [
+    {
+     "name": "Consumer Defensive",
+     "move": 1.79
+    },
+    {
+     "name": "Real Estate",
+     "move": 1.34
+    },
+    {
+     "name": "Healthcare",
+     "move": 1.31
+    },
+    {
+     "name": "Utilities",
+     "move": 0.71
+    },
+    {
+     "name": "Energy",
+     "move": 0.6
+    },
+    {
+     "name": "Financial Services",
+     "move": 0.35
+    },
+    {
+     "name": "Communication Services",
+     "move": -0.26
+    },
+    {
+     "name": "Consumer Cyclical",
+     "move": -0.98
+    },
+    {
+     "name": "Industrials",
+     "move": -2.07
+    },
+    {
+     "name": "Basic Materials",
+     "move": -2.36
+    },
+    {
+     "name": "Technology",
+     "move": -3.32
     }
    ]
   }
