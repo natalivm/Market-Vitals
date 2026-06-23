@@ -1147,7 +1147,7 @@ const SCAN = {
   ghostLabel: "Jun 23 open",
   composite:  { prev: 66, ghost: 46, cur: 62 },  // cur: gauge # not in feed; CONSTRUCTIVE/+2 → 62 (~4/step: +3=66, +2=62, 0=54, −2=46). 19:02 was +3/66; Jun 23 open was CAUTIOUS/−2/46 — held most of the intraday rebound, eases one notch into the close.
   ribbonMain: 'VIX <b style="color:var(--greed)">{{vix}}</b> CALM · Put/Call <b style="color:var(--fear)">{{putcall}}</b> EXTREME FEAR · Tide <b style="color:var(--fear)">{{tide}}</b> BEARISH FLOW',
-  momentum:   { tag: "STRONG BULLISH", score: "+3", was: "51–58%" },
+  momentum:   { tag: "LEANING BULLISH", score: "+1", was: "50–59%" },
   powerHour: {
     show:   true,
     tag:    "NEUTRAL",
@@ -1215,9 +1215,9 @@ const concentration = [
 ];
 
 const bars = [
-  { label:"% > 12 SMA", prev:52.0, cur:51.0, tag:"BULLISH" },
-  { label:"% > 20 SMA", prev:55.3, cur:54.0, tag:"BULLISH" },
-  { label:"% > 50 SMA", prev:58.7, cur:58.3, tag:"BULLISH" },
+  { label:"% > 12 SMA", prev:51.0, cur:49.9, tag:"CAUTIOUS" },
+  { label:"% > 20 SMA", prev:54.0, cur:53.3, tag:"BULLISH" },
+  { label:"% > 50 SMA", prev:58.3, cur:58.5, tag:"BULLISH" },
 ];
 
 const plays = {
@@ -1227,9 +1227,9 @@ const plays = {
     moves:[["▲","Omen still CLEAR + VIX {{vix}} CALM: the morning's risk signals stayed unwound."],["▼","Put/Call {{putcall}} EXTREME FEAR + Tide {{tide}}: hedging and outflows intensified into the close."],["≈","Score CONSTRUCTIVE (+2): held the rebound, eased a notch from the +3/+4 midday."]]
   },
   bull: {
-    e:"🐂", label:"Recovery stuck — 5 green, Momentum STRONG BULLISH, base intact",
-    text:"<b>The intraday repair held into the close: {{green}} of {{total}} green, McClellan positive at {{mcclellan}}, VIX {{vix}} CALM and the Hindenburg Omen still CLEAR.</b> Momentum Pulse stayed STRONG BULLISH (+3) with all three SMAs bullish, MOVE still CALM at {{move}} and the long-term base HEALTHY at {{dma200}}. And EXTREME FEAR in Put/Call ({{putcall}}) is the classic contrarian tell — &gt;1.2 hedging has often marked short-term fear bottoms.",
-    moves:[["▲","{{green}} of {{total}} green held into the close + Momentum STRONG BULLISH (+3)."],["▲","Omen CLEAR + VIX {{vix}} CALM: no fresh risk signals all session."],["▲","Put/Call {{putcall}} EXTREME FEAR: a contrarian fear extreme, often a bottoming tell."]]
+    e:"🐂", label:"Recovery held — 5 green and the long-term base intact",
+    text:"<b>The intraday repair held into the close: {{green}} of {{total}} green, McClellan positive at {{mcclellan}}, VIX {{vix}} CALM and the Hindenburg Omen still CLEAR.</b> Momentum Pulse eased to LEANING BULLISH (+1) — the 20- and 50-day SMAs still bullish, though the 12-day slipped to CAUTIOUS — with MOVE still CALM at {{move}} and the long-term base HEALTHY at {{dma200}}. And EXTREME FEAR in Put/Call ({{putcall}}) is the classic contrarian tell — &gt;1.2 hedging has often marked short-term fear bottoms.",
+    moves:[["▲","{{green}} of {{total}} green held into the close; long-term base HEALTHY at {{dma200}}."],["▲","Omen CLEAR + VIX {{vix}} CALM: no fresh risk signals all session."],["▲","Put/Call {{putcall}} EXTREME FEAR: a contrarian fear extreme, often a bottoming tell."]]
   },
   bear: {
     e:"🐻", label:"Flow kept bleeding — Tide at the day's lows, Put/Call extreme, MOVE waking up",
