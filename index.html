@@ -436,24 +436,9 @@
     .pip { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
     /* Power Hour — optional indicator card placed inside the gauge card */
     .ph-slot { width: 100%; max-width: 340px; margin-top: 14px; }
-    /* Closing Hour Pulse — institutional closing-hour flow, folded under Power Hour */
-    .chp { width: 100%; max-width: 340px; margin-top: 10px; border: 1px solid var(--line); border-radius: 11px; background: var(--panel); padding: 10px 13px; font-family: 'IBM Plex Mono', monospace; }
-    .chp-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
-    .chp-lbl { font-size: 10px; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
-    .chp-score { font-size: 13px; font-weight: 700; white-space: nowrap; }
-    .chp-score i { font-style: normal; font-weight: 400; font-size: 10px; color: var(--muted); }
-    .chp-score.red { color: var(--fear); } .chp-score.green { color: var(--greed); } .chp-score.amber { color: var(--amber); }
-    .chp-bar { position: relative; height: 8px; border-radius: 4px; background: var(--bg2); margin: 9px 0 8px; }
-    .chp-zero { position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px; background: var(--line2); }
-    .chp-fill { position: absolute; top: 0; height: 8px; border-radius: 4px; }
-    .chp-fill.red { background: linear-gradient(270deg, rgba(255,77,77,.5), var(--fear)); }
-    .chp-fill.green { background: linear-gradient(90deg, rgba(47,214,115,.5), var(--greed)); }
-    .chp-fill.amber { background: var(--amber); }
-    .chp-closes { font-size: 10px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
-    .chp-closes span { display: inline-flex; gap: 3px; }
-    .chp-dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+    /* last-5 closing-hour direction dots (Closing Hour view KPI) */
+    .chp-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
     .chp-dot.red { background: var(--fear); } .chp-dot.green { background: var(--greed); }
-    .chp-note { font-size: 10.5px; line-height: 1.45; color: #cdd6e2; margin-top: 7px; }
     /* Analyst Read — narrative panel on the rotation view */
     .rot-read {
       border: 1px solid var(--line); border-left: 3px solid #56a8ff;
@@ -985,6 +970,9 @@
         <button class="guide-btn" id="rotationBtn" type="button">
           <span class="gb-ico">🧭</span> Rotation
         </button>
+        <button class="guide-btn" id="closingBtn" type="button">
+          <span class="gb-ico">🕔</span> Closing Hour
+        </button>
       </div>
     </div>
     <div class="stamp">
@@ -1140,6 +1128,24 @@
 
   </div>
 
+  <div id="view-closinghour" hidden>
+    <button class="guide-btn back-btn" id="backBtnCH" type="button"><span class="gb-ico">←</span> Market Vitals</button>
+
+    <!-- 1 ─ headline: institutional closing-hour flow score + divergence -->
+    <div id="chRegime"></div>
+
+    <!-- 2 ─ at-a-glance: flow · price · last-5 closes -->
+    <div class="rot-kpis" id="chKpis"></div>
+
+    <!-- 3 ─ daily flow score over time (builds forward — the 90-session feed chart is image-only) -->
+    <div class="sec-label">Closing-Hour Flow · <span id="chDate" style="color:var(--muted);font-weight:400"></span></div>
+    <div id="chChart"></div>
+
+    <!-- 4 ─ the read -->
+    <div class="sec-label">The Read</div>
+    <div id="chNarrative"></div>
+  </div>
+
   <div id="indPopover"></div>
 
   <footer id="footer"></footer>
@@ -1171,16 +1177,6 @@ const SCAN = {
     tag:    "NEUTRAL",
     state:  "amber",
     detail: "SPY −0.04% last hr · 1.59× vol · 40% of day",
-    // Closing Hour Pulse — institutional flow direction in the final hour (3–4pm ET),
-    // scored −100…+100. Contextual only; ZERO effect on the gauge. Folded into this card.
-    flow: {
-      asof:   "Jun 23 close",
-      score:  -18,
-      tag:    "SELLING",
-      state:  "red",
-      closes: ["red", "red", "green", "green", "red"],
-      note:   "Institutions selling the close into a sideways tape (SPY −0.8% / 10d) — hidden distribution, risk building.",
-    },
   },
   doomClock: {
     show:          true,
@@ -1556,23 +1552,7 @@ renderCards(concentration, "concGrid", false);
 if (SCAN.powerHour && SCAN.powerHour.show) {
   const ph = SCAN.powerHour;
   renderCards([{ name: "Power Hour", text: true, val: ph.tag, tag: ph.tag, s: ph.state, note: ph.detail }], "powerHourSlot", false);
-  const phSlot = document.getElementById("powerHourSlot");
-  // Closing Hour Pulse — institutional closing-hour flow, folded under the Power Hour card
-  if (ph.flow) {
-    const f = ph.flow, pos = f.score >= 0;
-    const w = (Math.abs(f.score) / 100 * 50).toFixed(1);     // half-width bar; 0 sits at centre
-    const dots = (f.closes || []).map(c => `<i class="chp-dot ${c}"></i>`).join("");
-    phSlot.insertAdjacentHTML("beforeend",
-      `<div class="chp">` +
-        `<div class="chp-head"><span class="chp-lbl">Closing-hour flow${f.asof ? ` · ${f.asof}` : ""}</span>` +
-        `<span class="chp-score ${f.state}">${f.tag} ${f.score > 0 ? "+" : ""}${f.score}<i>/100</i></span></div>` +
-        `<div class="chp-bar"><span class="chp-zero"></span>` +
-        `<div class="chp-fill ${f.state}" style="${pos ? "left:50%" : "right:50%"};width:${w}%"></div></div>` +
-        (dots ? `<div class="chp-closes">Last 5 <span>${dots}</span></div>` : "") +
-        (f.note ? `<div class="chp-note">⚠️ ${f.note}</div>` : "") +
-      `</div>`);
-  }
-  phSlot.hidden = false;
+  document.getElementById("powerHourSlot").hidden = false;
 }
 
 /* ── CYCLE PEAK DOOM CLOCK (weekly countdown-style gauge) ── */
@@ -2047,22 +2027,97 @@ function loadRotation() {
     .catch(() => renderRotationEmpty("Rotation data loads on the live site (needs a server, not file://)."));
 }
 
+// Closing Hour Pulse — its own hash-routed view (#closinghour), rendered from
+// data/closing_hour_history.json. The feed's 90-session cumulative chart is an
+// image we can't transcribe, so the flow-score chart here builds forward.
+let closingLoaded = false;
+function loadClosingHour() {
+  if (closingLoaded) return;
+  closingLoaded = true;
+  fetch("data/closing_hour_history.json")
+    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(renderClosingHour)
+    .catch(() => renderClosingHourEmpty("Closing Hour data loads on the live site (needs a server, not file://)."));
+}
+function renderClosingHour(data) {
+  const snaps = (data.history || []).slice().sort((a, b) => a.date < b.date ? -1 : 1);
+  if (!snaps.length) return renderClosingHourEmpty("No Closing Hour Pulse readings yet.");
+  const L = snaps[snaps.length - 1];
+  const st = L.score > 0 ? "green" : L.score < 0 ? "red" : "amber";
+  const col = st === "red" ? "var(--fear)" : st === "green" ? "var(--greed)" : "var(--amber)";
+  const sgn = n => (n > 0 ? "+" : "") + n;
+  document.getElementById("chRegime").innerHTML =
+    `<div class="rot-regime ${L.score > 0 ? "up" : ""}">` +
+      `<span class="rr-head">CLOSING HOUR PULSE</span>` +
+      `<span class="rr-breadth" style="color:${col}">${L.flow} ${sgn(L.score)}/100</span>` +
+      (L.divergence ? `<span class="rr-bench">⚠️ ${L.divergence}</span>` : "") +
+    `</div>`;
+  const dots = (L.closes || []).map(c => `<i class="chp-dot ${c}"></i>`).join("");
+  const kpi = (lbl, val, tone, sub) => `<div class="kpi kpi-${tone}"><div class="k-lbl">${lbl}</div><div class="k-val ${tone}">${val}</div><div class="k-sub">${sub}</div></div>`;
+  document.getElementById("chKpis").innerHTML =
+    kpi("Institutional flow", `${L.flow} ${sgn(L.score)}`, st === "green" ? "pos" : "neg", "final-hour direction · −100…+100") +
+    kpi("Price · 10-day", L.spy10d != null ? `${sgn(L.spy10d)}%` : "—", (L.spy10d || 0) >= 0 ? "pos" : "neg", `SPY · ${L.price_state || ""}`) +
+    `<div class="kpi"><div class="k-lbl">Last 5 closes</div><div class="k-val" style="display:flex;gap:6px;align-items:center;margin-top:10px">${dots || "—"}</div><div class="k-sub">newest at right · green = buying</div></div>`;
+  const dl = document.getElementById("chDate"); if (dl) dl.textContent = shortDate(L.date) + " close · daily flow score";
+  renderChScore(snaps);
+  document.getElementById("chNarrative").innerHTML = L.narrative
+    ? `<div class="rot-read"><div class="rd-eyebrow">📋 The Closing-Hour Read</div><div class="rd-thesis" style="font-weight:400;font-size:13.5px;line-height:1.65">${L.narrative}</div></div>`
+    : "";
+}
+function renderChScore(snaps) {
+  const host = document.getElementById("chChart");
+  if (snaps.length < 2) {
+    host.innerHTML = `<div class="rot-empty">📈 Closing-hour flow score<br><span>Builds forward — one point per session. The feed's 90-session chart is an image, so this fills in from today onward.</span></div>`;
+    return;
+  }
+  const recent = snaps.slice(-30), n = recent.length;
+  const W = 620, H = 210, padL = 46, padR = 14, padT = 14, padB = 28;
+  const X = i => padL + (n === 1 ? 0 : i / (n - 1)) * (W - padL - padR);
+  const Y = v => padT + (1 - (v + 100) / 200) * (H - padT - padB);
+  const z = Y(0);
+  const grid =
+    `<line class="tg-grid" x1="${padL}" y1="${Y(100)}" x2="${W - padR}" y2="${Y(100)}"/>` +
+    `<line class="tg-zero" x1="${padL}" y1="${z}" x2="${W - padR}" y2="${z}"/>` +
+    `<line class="tg-grid" x1="${padL}" y1="${Y(-100)}" x2="${W - padR}" y2="${Y(-100)}"/>` +
+    `<text class="tg-axis" x="${padL - 8}" y="${Y(100) + 4}" text-anchor="end">+100</text>` +
+    `<text class="tg-axis" x="${padL - 8}" y="${z + 4}" text-anchor="end">0</text>` +
+    `<text class="tg-axis" x="${padL - 8}" y="${Y(-100) + 4}" text-anchor="end">−100</text>`;
+  const xlab = recent.map((s, i) => (i === 0 || i === n - 1 || i === Math.floor((n - 1) / 2))
+    ? `<text class="tg-axis" x="${X(i)}" y="${H - 8}" text-anchor="${i === 0 ? "start" : i === n - 1 ? "end" : "middle"}">${shortDate(s.date)}</text>` : "").join("");
+  let segs = "";
+  for (let i = 1; i < n; i++) {
+    const col = recent[i].score >= 0 ? "var(--greed)" : "var(--fear)";
+    segs += `<line x1="${X(i - 1).toFixed(1)}" y1="${Y(recent[i - 1].score).toFixed(1)}" x2="${X(i).toFixed(1)}" y2="${Y(recent[i].score).toFixed(1)}" stroke="${col}" stroke-width="2.4" stroke-linecap="round"/>`;
+  }
+  const dotsvg = recent.map((s, i) => `<circle cx="${X(i).toFixed(1)}" cy="${Y(s.score).toFixed(1)}" r="2.7" fill="${s.score >= 0 ? "var(--greed)" : "var(--fear)"}"/>`).join("");
+  host.innerHTML = `<div class="trend-chart"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:9px">Daily closing-hour flow score · green = buying, red = selling · −100…+100</div>` +
+    `<svg class="trend-svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Closing-hour flow score over time">${grid}${xlab}${segs}${dotsvg}</svg></div>`;
+}
+function renderClosingHourEmpty(msg) {
+  document.getElementById("chRegime").innerHTML = `<div class="rot-empty">📡 ${msg}<br><span>Add a reading to data/closing_hour_history.json and it renders here.</span></div>`;
+  ["chKpis", "chChart", "chNarrative"].forEach(id => { const e = document.getElementById(id); if (e) e.innerHTML = ""; });
+}
+
 /* ── VIEW SWITCH (same tab, hash-routed) ── */
+const VIEWS = { vitals: "view-vitals", rotation: "view-rotation", closinghour: "view-closinghour" };
 function showView(name) {
-  const rot = name === "rotation";
-  document.getElementById("view-vitals").hidden = rot;
-  document.getElementById("view-rotation").hidden = !rot;
+  if (!VIEWS[name]) name = "vitals";
+  for (const [n, id] of Object.entries(VIEWS)) { const e = document.getElementById(id); if (e) e.hidden = n !== name; }
+  const onSub = name !== "vitals";
   const stamp = document.querySelector(".stamp");
-  if (stamp) stamp.style.display = rot ? "none" : "";
-  document.getElementById("rotationBtn").style.display = rot ? "none" : "";
-  if (rot) loadRotation();
+  if (stamp) stamp.style.display = onSub ? "none" : "";
+  ["rotationBtn", "closingBtn"].forEach(id => { const b = document.getElementById(id); if (b) b.style.display = onSub ? "none" : ""; });
+  if (name === "rotation") loadRotation();
+  if (name === "closinghour") loadClosingHour();
   if (typeof closePopover === "function") closePopover();
   window.scrollTo(0, 0);
 }
 document.getElementById("rotationBtn").addEventListener("click", () => { location.hash = "rotation"; });
-document.getElementById("backBtn").addEventListener("click", () => { location.hash = ""; });
-window.addEventListener("hashchange", () => showView(location.hash === "#rotation" ? "rotation" : "vitals"));
-if (location.hash === "#rotation") showView("rotation");
+{ const cb = document.getElementById("closingBtn"); if (cb) cb.addEventListener("click", () => { location.hash = "closinghour"; }); }
+document.querySelectorAll(".back-btn").forEach(b => b.addEventListener("click", () => { location.hash = ""; }));
+const routeFromHash = () => showView(location.hash === "#rotation" ? "rotation" : location.hash === "#closinghour" ? "closinghour" : "vitals");
+window.addEventListener("hashchange", routeFromHash);
+routeFromHash();
 
 /* ── ORCHESTRATE ── */
 function runAll() {
