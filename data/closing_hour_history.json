@@ -9,9 +9,33 @@
    "flow": "SELLING",
    "price_state": "sideways",
    "spy10d": -0.8,
-   "closes": ["red", "red", "green", "green", "red"],
+   "closes": [
+    "red",
+    "red",
+    "green",
+    "green",
+    "red"
+   ],
    "divergence": "Institutions selling the close into a sideways tape — hidden distribution, risk building.",
    "narrative": "Institutional flow turned sharply negative into the close at −18, with institutions distributing into a market that's made essentially no progress over ten days. This divergence between selling pressure and sideways price action is textbook distribution — institutions moving size without moving the market, which typically precedes either a breakdown or a flush lower before any sustained move higher. Watch support levels on any gap down tomorrow; accumulation doesn't follow this pattern."
+  },
+  {
+   "date": "2026-06-24",
+   "ts": "2026-06-24T20:30:00Z",
+   "score": -9,
+   "flow": "BALANCED",
+   "price_state": "sideways",
+   "spy10d": -0.5,
+   "closes": [
+    "red",
+    "green",
+    "green",
+    "red",
+    "green"
+   ],
+   "aligned": true,
+   "divergence": "Flow and price aligned — close is confirming.",
+   "narrative": "Institutional flow turned balanced into the close at -9/100, showing no meaningful directional conviction from large players in the final hour. SPY's sideways 10-day performance at -0.5% aligns with this lack of momentum, confirming institutions aren't pushing aggressively in either direction. Expect consolidation to continue until we see flow shift materially away from neutral."
   }
  ]
 }
