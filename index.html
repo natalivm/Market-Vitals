@@ -436,6 +436,9 @@
     .pip { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
     /* Power Hour — optional indicator card placed inside the gauge card */
     .ph-slot { width: 100%; max-width: 340px; margin-top: 14px; }
+    /* last-5 closing-hour direction dots (Closing Hour view KPI) */
+    .chp-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .chp-dot.red { background: var(--fear); } .chp-dot.green { background: var(--greed); }
     /* Analyst Read — narrative panel on the rotation view */
     .rot-read {
       border: 1px solid var(--line); border-left: 3px solid #56a8ff;
@@ -967,6 +970,9 @@
         <button class="guide-btn" id="rotationBtn" type="button">
           <span class="gb-ico">🧭</span> Rotation
         </button>
+        <button class="guide-btn" id="closingBtn" type="button">
+          <span class="gb-ico">🕔</span> Closing Hour
+        </button>
       </div>
     </div>
     <div class="stamp">
@@ -1122,6 +1128,24 @@
 
   </div>
 
+  <div id="view-closinghour" hidden>
+    <button class="guide-btn back-btn" id="backBtnCH" type="button"><span class="gb-ico">←</span> Market Vitals</button>
+
+    <!-- 1 ─ headline: institutional closing-hour flow score + divergence -->
+    <div id="chRegime"></div>
+
+    <!-- 2 ─ at-a-glance: flow · price · last-5 closes -->
+    <div class="rot-kpis" id="chKpis"></div>
+
+    <!-- 3 ─ daily flow score over time (builds forward — the 90-session feed chart is image-only) -->
+    <div class="sec-label">Closing-Hour Flow · <span id="chDate" style="color:var(--muted);font-weight:400"></span></div>
+    <div id="chChart"></div>
+
+    <!-- 4 ─ the read -->
+    <div class="sec-label">The Read</div>
+    <div id="chNarrative"></div>
+  </div>
+
   <div id="indPopover"></div>
 
   <footer id="footer"></footer>
@@ -1138,21 +1162,21 @@
    Plus: composite, compositePrev, ghostComposite, date, utc, kyiv …
    ════════════════════════════════════════════════════════════════════ */
 const SCAN = {
-  date:       "2026-06-23",
-  utc:        "20:11 UTC",
-  kyiv:       "11:11 PM Kyiv",
-  ribbon:     "AT THE CLOSE",
-  scanName:   "closing scan",
-  prevLabel:  "19:02 UTC",
-  ghostLabel: "Jun 23 open",
-  composite:  { prev: 66, ghost: 46, cur: 62 },  // cur: gauge # not in feed; CONSTRUCTIVE/+2 → 62 (~4/step: +3=66, +2=62, 0=54, −2=46). 19:02 was +3/66; Jun 23 open was CAUTIOUS/−2/46 — held most of the intraday rebound, eases one notch into the close.
-  ribbonMain: 'VIX <b style="color:var(--greed)">{{vix}}</b> CALM · Put/Call <b style="color:var(--fear)">{{putcall}}</b> EXTREME FEAR · Tide <b style="color:var(--fear)">{{tide}}</b> BEARISH FLOW',
-  momentum:   { tag: "LEANING BULLISH", score: "+1", was: "50–59%" },
+  date:       "2026-06-24",
+  utc:        "13:02 UTC",
+  kyiv:       "4:02 PM Kyiv",
+  ribbon:     "PRE-MARKET",
+  scanName:   "pre-market scan",
+  prevLabel:  "Jun 23 close",
+  ghostLabel: "Jun 23 close",
+  composite:  { prev: 62, ghost: 62, cur: 70 },  // cur: gauge # not in feed; CONSTRUCTIVE/+4 → 70 (~4/step: +4=70, +2=62, 0=54). Jun 23 closed CONSTRUCTIVE/+2/62 → needle ticks up as Put/Call resets to NEUTRAL.
+  ribbonMain: 'VIX <b style="color:var(--greed)">{{vix}}</b> CALM · Put/Call <b style="color:var(--greed)">{{putcall}}</b> back NEUTRAL · Tide <b style="color:var(--fear)">{{tide}}</b> BEARISH FLOW',
+  momentum:   { tag: "LEANING BULLISH", score: "+1", was: "50–58%" },
   powerHour: {
     show:   true,
     tag:    "NEUTRAL",
     state:  "amber",
-    detail: "SPY −0.04% last hr · 1.54× vol · 39% of day",
+    detail: "SPY −0.04% last hr · 1.59× vol · 40% of day",
   },
   doomClock: {
     show:          true,
@@ -1181,22 +1205,22 @@ const GHOST_AT       = SCAN.composite.ghost;
 const COMPOSITE      = SCAN.composite.cur;
 
 const indicators = [
-  { name:"VIX", prevNum:19.63, curNum:19.26, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Eased to {{vix}} from {{vix_prev}} — CALM into the close, holding well below the 20+ spike that opened the day. The volatility scare never came back; equity vol finished the session quiet." },
-  { name:"MOVE", prevNum:65.39, curNum:70.01, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Ticked up to {{move}} from {{move_prev}} — the first real move off the flatline, though still firmly CALM. Bond volatility is stirring a little into the close; worth watching, not yet a stress signal." },
-  { name:"McClellan", prevNum:6.53, curNum:4.61, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"RISING", tag:"RISING", prevS:"green", s:"green",
-    note:"Eased to {{mcclellan}} from +6.53 — still positive (green) and tagged RISING, though breadth softened into the close. Above zero keeps the Omen dormant, but the momentum behind the rebound is fading." },
+  { name:"VIX", prevNum:19.26, curNum:18.97, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
+    note:"Eased to {{vix}} from {{vix_prev}} — CALM into the new session, holding a sub-19 handle. The Jun 23 open's volatility scare is a distant memory; equity vol is quiet pre-market." },
+  { name:"MOVE", prevNum:70.01, curNum:65.39, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
+    note:"Settled back to {{move}} from {{move_prev}} — yesterday's brief tick-up reversed; bond volatility is flat and firmly CALM again. No spillover from the equity wobble." },
+  { name:"McClellan", prevNum:4.61, curNum:4.79, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"RISING", tag:"RISING", prevS:"green", s:"green",
+    note:"Ticked up to {{mcclellan}} from +4.61 — still positive (green) and RISING. Breadth holds above zero, keeping the Hindenburg Omen dormant." },
   { name:"Hindenburg", text:true, prevVal:"CLEAR", val:"CLEAR", prevTag:"CLEAR", tag:"CLEAR", prevS:"green", s:"green",
-    note:"Still CLEAR at the close — the morning's 3-in-30-day Omen cluster stayed dormant all session. With McClellan positive, new highs and lows aren't both elevated; no fresh signal." },
-  { name:"% > 200 DMA", prevNum:60.2, curNum:60.0, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
-    note:"Flat at {{dma200}} — the long-term base held the low-60s all day, HEALTHY. The steadiest green on the board through a volatile session." },
-  { name:"Put/Call", prevNum:1.23, curNum:1.25, fmt:{dec:2}, prevTag:"EXTREME FEAR", tag:"EXTREME FEAR", prevS:"red", s:"red",
-    note:"Climbed to {{putcall}} from {{putcall_prev}} — above 1.2 and tagged EXTREME FEAR (red), the most stretched hedging read of the day. A red on the board, but >1.2 has historically marked contrarian fear extremes." },
-  { name:"SMFI", prevNum:41291, curNum:41395, fmt:{dec:0, comma:true}, prevTag:"RECOVERING", tag:"RECOVERING", prevS:"amber", s:"amber",
-    note:"Up again to {{smfi}} from {{smfi_prev}} — a third straight gain off the morning's distribution low. Smart-money flow keeps firming, though the feed leaves it uncolored, so it holds neutral (amber)." },
-  { name:"Market Tide", prevNum:-972, curNum:-1051, fmt:{dec:0, pre:"$", suf:"M", comma:true}, tokFmt:{dec:0, pre:"$", suf:"M", comma:true, plus:true}, prevTag:"BEARISH FLOW", tag:"BEARISH FLOW", prevS:"red", s:"red",
-    note:"Deepened to {{tide}} BEARISH FLOW — the day's most negative premium flow, leaking past −$1B. The clearest tell that the green board rests on a calm VIX, not on buyers stepping in." },
+    note:"CLEAR — the Omen has stayed dormant since the Jun 23 cluster cleared. With McClellan positive, new highs and lows aren't both elevated; no signal." },
+  { name:"% > 200 DMA", prevNum:60.0, curNum:60.1, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
+    note:"Steady at {{dma200}} — the long-term base holds the low-60s, HEALTHY. The quiet anchor under the tape." },
+  { name:"Put/Call", prevNum:1.25, curNum:0.97, fmt:{dec:2}, prevTag:"EXTREME FEAR", tag:"NEUTRAL", prevS:"red", s:"green",
+    note:"Dropped to {{putcall}} from {{putcall_prev}} — back below 1.0 and tagged NEUTRAL (green). Yesterday's EXTREME FEAR hedging has fully unwound; the single biggest improvement on the board this read." },
+  { name:"SMFI", prevNum:41395, curNum:41498, fmt:{dec:0, comma:true}, prevTag:"RECOVERING", tag:"RECOVERING", prevS:"amber", s:"amber",
+    note:"Up again to {{smfi}} from {{smfi_prev}} — a fourth straight gain. Smart-money flow keeps firming, though the feed still leaves it uncolored, so it holds neutral (amber)." },
+  { name:"Market Tide", prevNum:-1051, curNum:-1051, fmt:{dec:0, pre:"$", suf:"M", comma:true}, tokFmt:{dec:0, pre:"$", suf:"M", comma:true, plus:true}, prevTag:"BEARISH FLOW", tag:"BEARISH FLOW", prevS:"red", s:"red",
+    note:"Unchanged at {{tide}} BEARISH FLOW — still pinned past −$1B and the lone red on the board. Premium flow hasn't recovered even as Put/Call and VIX eased; the one gauge yet to confirm the green." },
 ];
 
 const concentration = [
@@ -1215,26 +1239,26 @@ const concentration = [
 ];
 
 const bars = [
-  { label:"% > 12 SMA", prev:51.0, cur:49.9, tag:"CAUTIOUS" },
-  { label:"% > 20 SMA", prev:54.0, cur:53.3, tag:"BULLISH" },
-  { label:"% > 50 SMA", prev:58.3, cur:58.5, tag:"BULLISH" },
+  { label:"% > 12 SMA", prev:49.9, cur:49.6, tag:"CAUTIOUS" },
+  { label:"% > 20 SMA", prev:53.3, cur:53.0, tag:"BULLISH" },
+  { label:"% > 50 SMA", prev:58.5, cur:58.4, tag:"BULLISH" },
 ];
 
 const plays = {
   zen: {
-    e:"😇", label:"Held the recovery into the close — but hedging hit an extreme",
-    text:"{{green}} of {{total}} green at the close and the Bot reads CONSTRUCTIVE (+2), holding most of the intraday rebound from the CAUTIOUS (−2) open. VIX stayed CALM at {{vix}}, McClellan positive at {{mcclellan}}, the Hindenburg Omen CLEAR and %>200DMA HEALTHY at {{dma200}}. The drags hardened, though: Put/Call pushed to {{putcall}} EXTREME FEAR, Market Tide deepened to {{tide}} BEARISH FLOW, and MOVE ticked up to {{move}}.",
-    moves:[["▲","Omen still CLEAR + VIX {{vix}} CALM: the morning's risk signals stayed unwound."],["▼","Put/Call {{putcall}} EXTREME FEAR + Tide {{tide}}: hedging and outflows intensified into the close."],["≈","Score CONSTRUCTIVE (+2): held the rebound, eased a notch from the +3/+4 midday."]]
+    e:"😇", label:"Sentiment reset — Put/Call back to neutral, 6 of 8 green pre-market",
+    text:"{{green}} of {{total}} green and the Bot opens CONSTRUCTIVE (+4) — the strongest read since the rebound began. Yesterday's EXTREME FEAR has unwound: Put/Call fell to {{putcall}} NEUTRAL, VIX is CALM at {{vix}}, MOVE settled back to {{move}}, McClellan stays positive at {{mcclellan}} and the Hindenburg Omen is CLEAR. The lone holdout is Market Tide, still {{tide}} BEARISH FLOW.",
+    moves:[["▲","Put/Call {{putcall}} back to NEUTRAL: yesterday's EXTREME FEAR hedging unwound."],["▲","{{green}} of {{total}} green + VIX {{vix}} CALM: the cleanest board in days."],["▼","Market Tide {{tide}} BEARISH FLOW: premium flow still negative — the one red."]]
   },
   bull: {
-    e:"🐂", label:"Recovery held — 5 green and the long-term base intact",
-    text:"<b>The intraday repair held into the close: {{green}} of {{total}} green, McClellan positive at {{mcclellan}}, VIX {{vix}} CALM and the Hindenburg Omen still CLEAR.</b> Momentum Pulse eased to LEANING BULLISH (+1) — the 20- and 50-day SMAs still bullish, though the 12-day slipped to CAUTIOUS — with MOVE still CALM at {{move}} and the long-term base HEALTHY at {{dma200}}. And EXTREME FEAR in Put/Call ({{putcall}}) is the classic contrarian tell — &gt;1.2 hedging has often marked short-term fear bottoms.",
-    moves:[["▲","{{green}} of {{total}} green held into the close; long-term base HEALTHY at {{dma200}}."],["▲","Omen CLEAR + VIX {{vix}} CALM: no fresh risk signals all session."],["▲","Put/Call {{putcall}} EXTREME FEAR: a contrarian fear extreme, often a bottoming tell."]]
+    e:"🐂", label:"Cleanest board in days — 6 green, fear reset, base healthy",
+    text:"<b>Six of eight green to open: VIX {{vix}} CALM, McClellan positive at {{mcclellan}}, Hindenburg CLEAR, %>200DMA HEALTHY at {{dma200}} and Put/Call reset to {{putcall}} NEUTRAL.</b> The EXTREME FEAR that capped yesterday's tape is gone and MOVE settled back to {{move}} — the brief bond-vol stir faded. Momentum Pulse holds LEANING BULLISH (+1) with the 20- and 50-day SMAs bullish. The risk backdrop is the calmest it's been since the Omen scare.",
+    moves:[["▲","{{green}} of {{total}} green: VIX CALM, Omen CLEAR, base HEALTHY at {{dma200}}."],["▲","Put/Call {{putcall}} NEUTRAL + MOVE {{move}} CALM: fear and bond vol both reset."],["▲","Composite CONSTRUCTIVE (+4): up from +2 at yesterday's close."]]
   },
   bear: {
-    e:"🐻", label:"Flow kept bleeding — Tide at the day's lows, Put/Call extreme, MOVE waking up",
-    text:"<b>Under a green-looking board the money kept leaving: Market Tide sank to {{tide}} BEARISH FLOW — the day's most negative — and Put/Call hit {{putcall}} EXTREME FEAR.</b> MOVE ticked up to {{move}} (bond vol stirring for the first time) and breadth softened into the close (McClellan {{mcclellan}}, down from +6.53). The composite slipped CONSTRUCTIVE (+3 → +2); the calm rests on a quiet VIX, not on buyers — and today's rotation tape was a tech-led sell-off (XLK −$9.3B 1-day outflow).",
-    moves:[["▼","Market Tide {{tide}} BEARISH FLOW: net premium flow at the day's lows, past −$1B."],["▼","Put/Call {{putcall}} EXTREME FEAR + MOVE {{move}} ticking up: hedging extreme, bond vol stirring."],["▼","Score eased CONSTRUCTIVE (+3 → +2): the rebound lost a little steam into the close."]]
+    e:"🐻", label:"Flow hasn't joined — Tide still −$1.05B, breadth momentum soft",
+    text:"<b>For all the green, the money still isn't flowing in: Market Tide is pinned at {{tide}} BEARISH FLOW — unchanged from yesterday's close and the day's lone red.</b> Momentum Pulse is only LEANING BULLISH (+1) with the 12-day SMA at 49.6% (CAUTIOUS), and yesterday's rotation tape was a tech-led sell-off (XLK −$9.3B). A calm VIX and a reset Put/Call lift the score, but premium flow and breadth momentum haven't confirmed — the green rests on the absence of fear more than the presence of buyers.",
+    moves:[["▼","Market Tide {{tide}} BEARISH FLOW: net premium flow still negative, unchanged."],["▼","Momentum LEANING BULLISH (+1): 12-day SMA 49.6% CAUTIOUS — breadth momentum soft."],["≈","Score +4 on a fear reset, not on inflows — Tide hasn't confirmed."]]
   },
 };
 
@@ -2003,22 +2027,97 @@ function loadRotation() {
     .catch(() => renderRotationEmpty("Rotation data loads on the live site (needs a server, not file://)."));
 }
 
+// Closing Hour Pulse — its own hash-routed view (#closinghour), rendered from
+// data/closing_hour_history.json. The feed's 90-session cumulative chart is an
+// image we can't transcribe, so the flow-score chart here builds forward.
+let closingLoaded = false;
+function loadClosingHour() {
+  if (closingLoaded) return;
+  closingLoaded = true;
+  fetch("data/closing_hour_history.json")
+    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(renderClosingHour)
+    .catch(() => renderClosingHourEmpty("Closing Hour data loads on the live site (needs a server, not file://)."));
+}
+function renderClosingHour(data) {
+  const snaps = (data.history || []).slice().sort((a, b) => a.date < b.date ? -1 : 1);
+  if (!snaps.length) return renderClosingHourEmpty("No Closing Hour Pulse readings yet.");
+  const L = snaps[snaps.length - 1];
+  const st = L.score > 0 ? "green" : L.score < 0 ? "red" : "amber";
+  const col = st === "red" ? "var(--fear)" : st === "green" ? "var(--greed)" : "var(--amber)";
+  const sgn = n => (n > 0 ? "+" : "") + n;
+  document.getElementById("chRegime").innerHTML =
+    `<div class="rot-regime ${L.score > 0 ? "up" : ""}">` +
+      `<span class="rr-head">CLOSING HOUR PULSE</span>` +
+      `<span class="rr-breadth" style="color:${col}">${L.flow} ${sgn(L.score)}/100</span>` +
+      (L.divergence ? `<span class="rr-bench">⚠️ ${L.divergence}</span>` : "") +
+    `</div>`;
+  const dots = (L.closes || []).map(c => `<i class="chp-dot ${c}"></i>`).join("");
+  const kpi = (lbl, val, tone, sub) => `<div class="kpi kpi-${tone}"><div class="k-lbl">${lbl}</div><div class="k-val ${tone}">${val}</div><div class="k-sub">${sub}</div></div>`;
+  document.getElementById("chKpis").innerHTML =
+    kpi("Institutional flow", `${L.flow} ${sgn(L.score)}`, st === "green" ? "pos" : "neg", "final-hour direction · −100…+100") +
+    kpi("Price · 10-day", L.spy10d != null ? `${sgn(L.spy10d)}%` : "—", (L.spy10d || 0) >= 0 ? "pos" : "neg", `SPY · ${L.price_state || ""}`) +
+    `<div class="kpi"><div class="k-lbl">Last 5 closes</div><div class="k-val" style="display:flex;gap:6px;align-items:center;margin-top:10px">${dots || "—"}</div><div class="k-sub">newest at right · green = buying</div></div>`;
+  const dl = document.getElementById("chDate"); if (dl) dl.textContent = shortDate(L.date) + " close · daily flow score";
+  renderChScore(snaps);
+  document.getElementById("chNarrative").innerHTML = L.narrative
+    ? `<div class="rot-read"><div class="rd-eyebrow">📋 The Closing-Hour Read</div><div class="rd-thesis" style="font-weight:400;font-size:13.5px;line-height:1.65">${L.narrative}</div></div>`
+    : "";
+}
+function renderChScore(snaps) {
+  const host = document.getElementById("chChart");
+  if (snaps.length < 2) {
+    host.innerHTML = `<div class="rot-empty">📈 Closing-hour flow score<br><span>Builds forward — one point per session. The feed's 90-session chart is an image, so this fills in from today onward.</span></div>`;
+    return;
+  }
+  const recent = snaps.slice(-30), n = recent.length;
+  const W = 620, H = 210, padL = 46, padR = 14, padT = 14, padB = 28;
+  const X = i => padL + (n === 1 ? 0 : i / (n - 1)) * (W - padL - padR);
+  const Y = v => padT + (1 - (v + 100) / 200) * (H - padT - padB);
+  const z = Y(0);
+  const grid =
+    `<line class="tg-grid" x1="${padL}" y1="${Y(100)}" x2="${W - padR}" y2="${Y(100)}"/>` +
+    `<line class="tg-zero" x1="${padL}" y1="${z}" x2="${W - padR}" y2="${z}"/>` +
+    `<line class="tg-grid" x1="${padL}" y1="${Y(-100)}" x2="${W - padR}" y2="${Y(-100)}"/>` +
+    `<text class="tg-axis" x="${padL - 8}" y="${Y(100) + 4}" text-anchor="end">+100</text>` +
+    `<text class="tg-axis" x="${padL - 8}" y="${z + 4}" text-anchor="end">0</text>` +
+    `<text class="tg-axis" x="${padL - 8}" y="${Y(-100) + 4}" text-anchor="end">−100</text>`;
+  const xlab = recent.map((s, i) => (i === 0 || i === n - 1 || i === Math.floor((n - 1) / 2))
+    ? `<text class="tg-axis" x="${X(i)}" y="${H - 8}" text-anchor="${i === 0 ? "start" : i === n - 1 ? "end" : "middle"}">${shortDate(s.date)}</text>` : "").join("");
+  let segs = "";
+  for (let i = 1; i < n; i++) {
+    const col = recent[i].score >= 0 ? "var(--greed)" : "var(--fear)";
+    segs += `<line x1="${X(i - 1).toFixed(1)}" y1="${Y(recent[i - 1].score).toFixed(1)}" x2="${X(i).toFixed(1)}" y2="${Y(recent[i].score).toFixed(1)}" stroke="${col}" stroke-width="2.4" stroke-linecap="round"/>`;
+  }
+  const dotsvg = recent.map((s, i) => `<circle cx="${X(i).toFixed(1)}" cy="${Y(s.score).toFixed(1)}" r="2.7" fill="${s.score >= 0 ? "var(--greed)" : "var(--fear)"}"/>`).join("");
+  host.innerHTML = `<div class="trend-chart"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:9px">Daily closing-hour flow score · green = buying, red = selling · −100…+100</div>` +
+    `<svg class="trend-svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Closing-hour flow score over time">${grid}${xlab}${segs}${dotsvg}</svg></div>`;
+}
+function renderClosingHourEmpty(msg) {
+  document.getElementById("chRegime").innerHTML = `<div class="rot-empty">📡 ${msg}<br><span>Add a reading to data/closing_hour_history.json and it renders here.</span></div>`;
+  ["chKpis", "chChart", "chNarrative"].forEach(id => { const e = document.getElementById(id); if (e) e.innerHTML = ""; });
+}
+
 /* ── VIEW SWITCH (same tab, hash-routed) ── */
+const VIEWS = { vitals: "view-vitals", rotation: "view-rotation", closinghour: "view-closinghour" };
 function showView(name) {
-  const rot = name === "rotation";
-  document.getElementById("view-vitals").hidden = rot;
-  document.getElementById("view-rotation").hidden = !rot;
+  if (!VIEWS[name]) name = "vitals";
+  for (const [n, id] of Object.entries(VIEWS)) { const e = document.getElementById(id); if (e) e.hidden = n !== name; }
+  const onSub = name !== "vitals";
   const stamp = document.querySelector(".stamp");
-  if (stamp) stamp.style.display = rot ? "none" : "";
-  document.getElementById("rotationBtn").style.display = rot ? "none" : "";
-  if (rot) loadRotation();
+  if (stamp) stamp.style.display = onSub ? "none" : "";
+  ["rotationBtn", "closingBtn"].forEach(id => { const b = document.getElementById(id); if (b) b.style.display = onSub ? "none" : ""; });
+  if (name === "rotation") loadRotation();
+  if (name === "closinghour") loadClosingHour();
   if (typeof closePopover === "function") closePopover();
   window.scrollTo(0, 0);
 }
 document.getElementById("rotationBtn").addEventListener("click", () => { location.hash = "rotation"; });
-document.getElementById("backBtn").addEventListener("click", () => { location.hash = ""; });
-window.addEventListener("hashchange", () => showView(location.hash === "#rotation" ? "rotation" : "vitals"));
-if (location.hash === "#rotation") showView("rotation");
+{ const cb = document.getElementById("closingBtn"); if (cb) cb.addEventListener("click", () => { location.hash = "closinghour"; }); }
+document.querySelectorAll(".back-btn").forEach(b => b.addEventListener("click", () => { location.hash = ""; }));
+const routeFromHash = () => showView(location.hash === "#rotation" ? "rotation" : location.hash === "#closinghour" ? "closinghour" : "vitals");
+window.addEventListener("hashchange", routeFromHash);
+routeFromHash();
 
 /* ── ORCHESTRATE ── */
 function runAll() {

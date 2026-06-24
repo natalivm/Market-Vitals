@@ -1,0 +1,17 @@
+{
+ "_schema": "closing_hour_history v1 — daily Closing Hour Pulse readings (S&P 500 institutional closing-hour flow, 3–4pm ET, volume-weighted, scored −100…+100). One snapshot per Bot post. 'date' = session covered; 'ts' = post time (UTC). 'score' = headline flow score (−100 max selling … +100 max buying); 'flow' = SELLING/BUYING/NEUTRAL label; 'price_state' = the feed's price read (e.g. sideways/up/down); 'spy10d' = SPY % over the trailing 10 sessions; 'closes' = last-5 daily closing-hour directions, newest LAST ('green' up / 'red' down); 'divergence' = the one-line flow-vs-price call; 'narrative' = the post's paragraph verbatim. NOTE: the feed's 90-session cumulative chart + SPY overlay + bias subchart are an IMAGE and are NOT transcribed — this store builds its own forward daily-score history from here.",
+ "_rules": "Only confirmed feed numbers. Append-only — never edit or delete a committed snapshot. Never invent or carry-forward; if a field wasn't shown, omit it.",
+ "history": [
+  {
+   "date": "2026-06-23",
+   "ts": "2026-06-23T20:30:00Z",
+   "score": -18,
+   "flow": "SELLING",
+   "price_state": "sideways",
+   "spy10d": -0.8,
+   "closes": ["red", "red", "green", "green", "red"],
+   "divergence": "Institutions selling the close into a sideways tape — hidden distribution, risk building.",
+   "narrative": "Institutional flow turned sharply negative into the close at −18, with institutions distributing into a market that's made essentially no progress over ten days. This divergence between selling pressure and sideways price action is textbook distribution — institutions moving size without moving the market, which typically precedes either a breakdown or a flush lower before any sustained move higher. Watch support levels on any gap down tomorrow; accumulation doesn't follow this pattern."
+  }
+ ]
+}
