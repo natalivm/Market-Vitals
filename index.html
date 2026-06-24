@@ -340,6 +340,31 @@
     }
     .replay:hover, .replay:active { border-color: var(--greed); color: var(--greed); }
 
+    /* ── CLOSING HOUR one-liner (taps through to #closinghour) — pre-market-ribbon family ── */
+    .ch-line {
+      display: flex; align-items: center; gap: 11px; flex-wrap: wrap;
+      width: 100%; text-align: left; cursor: pointer;
+      font-family: 'IBM Plex Mono', monospace; color: #cdd6e2;
+      background: linear-gradient(110deg, rgba(255,77,77,.13), rgba(255,77,77,.03) 70%, transparent);
+      border: 1px solid rgba(255,77,77,.30);
+      border-radius: 13px; padding: 11px 16px; margin: 0 0 18px;
+      transition: border-color .18s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .ch-line:hover { border-color: rgba(255,77,77,.55); }
+    .ch-line.green { background: linear-gradient(110deg, rgba(47,214,115,.13), rgba(47,214,115,.03) 70%, transparent); border-color: rgba(47,214,115,.30); }
+    .ch-line.green:hover { border-color: rgba(47,214,115,.55); }
+    .ch-line.amber { background: linear-gradient(110deg, rgba(255,200,61,.13), rgba(255,200,61,.03) 70%, transparent); border-color: rgba(255,200,61,.30); }
+    .ch-line.amber:hover { border-color: rgba(255,200,61,.55); }
+    .ch-ico { font-size: 17px; }
+    .ch-tag { font-family: 'Chakra Petch', sans-serif; letter-spacing: .08em; font-size: 11.5px; text-transform: uppercase; color: var(--muted); }
+    .ch-score { font-family: 'Chakra Petch', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: .03em; white-space: nowrap; }
+    .ch-score.red { color: var(--fear); } .ch-score.green { color: var(--greed); } .ch-score.amber { color: var(--amber); }
+    .ch-msg { font-size: 12px; color: #cdd6e2; flex: 1 1 220px; min-width: 0; }
+    .ch-go { margin-left: auto; font-family: 'Chakra Petch', sans-serif; font-size: 11px; letter-spacing: .06em; color: var(--muted); white-space: nowrap; }
+    .ch-line:hover .ch-go { color: var(--txt); }
+    @media (max-width: 560px) { .ch-go { display: none; } .ch-msg { flex-basis: 100%; } }
+
     /* ── HERO ── */
     .hero {
       display: grid;
@@ -1054,6 +1079,11 @@
     </div>
     <div id="bars"></div>
   </div>
+
+  <!-- CLOSING HOUR PULSE — one-liner summary of the latest reading; taps through
+       to the full #closinghour view. Renders from data/closing_hour_history.json
+       (latest entry); stays hidden if there's no data / on file://. -->
+  <button class="ch-line" id="chLine" type="button" hidden></button>
 
   <!-- CYCLE PEAK DOOM CLOCK — weekly cycle-top gauge (countdown style), at the
        bottom of the page. Renders from SCAN.doomClock; set show:false to hide. -->
@@ -2030,15 +2060,44 @@ function loadRotation() {
 // Closing Hour Pulse — its own hash-routed view (#closinghour), rendered from
 // data/closing_hour_history.json. The feed's 90-session cumulative chart is an
 // image we can't transcribe, so the flow-score chart here builds forward.
+let closingDataPromise = null;            // shared so the one-liner and the full view fetch once
+function getClosingData() {
+  if (!closingDataPromise) {
+    closingDataPromise = fetch("data/closing_hour_history.json")
+      .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
+  }
+  return closingDataPromise;
+}
 let closingLoaded = false;
 function loadClosingHour() {
   if (closingLoaded) return;
   closingLoaded = true;
-  fetch("data/closing_hour_history.json")
-    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+  getClosingData()
     .then(renderClosingHour)
     .catch(() => renderClosingHourEmpty("Closing Hour data loads on the live site (needs a server, not file://)."));
 }
+// Compact one-liner on the main board (above the doom clock) — latest reading only.
+function renderClosingLine() {
+  const el = document.getElementById("chLine");
+  if (!el) return;
+  getClosingData().then(data => {
+    const snaps = (data.history || []).slice().sort((a, b) => a.date < b.date ? -1 : 1);
+    if (!snaps.length) return;
+    const L = snaps[snaps.length - 1];
+    const st = L.score > 0 ? "green" : L.score < 0 ? "red" : "amber";
+    const sgn = n => (n > 0 ? "+" : "") + n;
+    el.className = "ch-line " + st;
+    el.innerHTML =
+      `<span class="ch-ico">🕔</span>` +
+      `<span class="ch-tag">Closing Hour · ${shortDate(L.date)}</span>` +
+      `<span class="ch-score ${st}">${L.flow} ${sgn(L.score)}/100</span>` +
+      `<span class="ch-msg">${L.divergence || L.price_state || ""}</span>` +
+      `<span class="ch-go">Full view →</span>`;
+    el.hidden = false;
+  }).catch(() => {});   // silently stay hidden on file:// / fetch failure
+}
+document.getElementById("chLine")?.addEventListener("click", () => { location.hash = "closinghour"; });
+renderClosingLine();
 function renderClosingHour(data) {
   const snaps = (data.history || []).slice().sort((a, b) => a.date < b.date ? -1 : 1);
   if (!snaps.length) return renderClosingHourEmpty("No Closing Hour Pulse readings yet.");
