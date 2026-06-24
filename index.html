@@ -2077,6 +2077,16 @@ function loadClosingHour() {
     .catch(() => renderClosingHourEmpty("Closing Hour data loads on the live site (needs a server, not file://)."));
 }
 // Compact one-liner on the main board (above the doom clock) — latest reading only.
+// State from the feed's flow LABEL — BALANCED/NEUTRAL reads amber even when the
+// score is slightly +/- (e.g. -9 = Balanced), matching the feed's own dots.
+// Falls back to score sign if no label.
+function chTone(L) {
+  const f = (L.flow || "").toUpperCase();
+  if (f.includes("BUY")) return "green";
+  if (f.includes("SELL")) return "red";
+  if (f.includes("BALANCED") || f.includes("NEUTRAL") || f.includes("MIXED")) return "amber";
+  return L.score > 0 ? "green" : L.score < 0 ? "red" : "amber";
+}
 function renderClosingLine() {
   const el = document.getElementById("chLine");
   if (!el) return;
@@ -2084,14 +2094,15 @@ function renderClosingLine() {
     const snaps = (data.history || []).slice().sort((a, b) => a.date < b.date ? -1 : 1);
     if (!snaps.length) return;
     const L = snaps[snaps.length - 1];
-    const st = L.score > 0 ? "green" : L.score < 0 ? "red" : "amber";
+    const st = chTone(L);
     const sgn = n => (n > 0 ? "+" : "") + n;
+    const icon = L.aligned ? "✅ " : (L.divergence ? "⚠️ " : "");
     el.className = "ch-line " + st;
     el.innerHTML =
       `<span class="ch-ico">🕔</span>` +
       `<span class="ch-tag">Closing Hour · ${shortDate(L.date)}</span>` +
       `<span class="ch-score ${st}">${L.flow} ${sgn(L.score)}/100</span>` +
-      `<span class="ch-msg">${L.divergence || L.price_state || ""}</span>` +
+      `<span class="ch-msg">${icon}${L.divergence || L.price_state || ""}</span>` +
       `<span class="ch-go">Full view →</span>`;
     el.hidden = false;
   }).catch(() => {});   // silently stay hidden on file:// / fetch failure
@@ -2102,19 +2113,20 @@ function renderClosingHour(data) {
   const snaps = (data.history || []).slice().sort((a, b) => a.date < b.date ? -1 : 1);
   if (!snaps.length) return renderClosingHourEmpty("No Closing Hour Pulse readings yet.");
   const L = snaps[snaps.length - 1];
-  const st = L.score > 0 ? "green" : L.score < 0 ? "red" : "amber";
+  const st = chTone(L);
   const col = st === "red" ? "var(--fear)" : st === "green" ? "var(--greed)" : "var(--amber)";
   const sgn = n => (n > 0 ? "+" : "") + n;
   document.getElementById("chRegime").innerHTML =
-    `<div class="rot-regime ${L.score > 0 ? "up" : ""}">` +
+    `<div class="rot-regime ${st === "green" ? "up" : ""}">` +
       `<span class="rr-head">CLOSING HOUR PULSE</span>` +
       `<span class="rr-breadth" style="color:${col}">${L.flow} ${sgn(L.score)}/100</span>` +
-      (L.divergence ? `<span class="rr-bench">⚠️ ${L.divergence}</span>` : "") +
+      (L.divergence ? `<span class="rr-bench">${L.aligned ? "✅" : "⚠️"} ${L.divergence}</span>` : "") +
     `</div>`;
   const dots = (L.closes || []).map(c => `<i class="chp-dot ${c}"></i>`).join("");
   const kpi = (lbl, val, tone, sub) => `<div class="kpi kpi-${tone}"><div class="k-lbl">${lbl}</div><div class="k-val ${tone}">${val}</div><div class="k-sub">${sub}</div></div>`;
+  const flowTone = st === "green" ? "pos" : st === "red" ? "neg" : "";
   document.getElementById("chKpis").innerHTML =
-    kpi("Institutional flow", `${L.flow} ${sgn(L.score)}`, st === "green" ? "pos" : "neg", "final-hour direction · −100…+100") +
+    kpi("Institutional flow", `${L.flow} ${sgn(L.score)}`, flowTone, "final-hour direction · −100…+100") +
     kpi("Price · 10-day", L.spy10d != null ? `${sgn(L.spy10d)}%` : "—", (L.spy10d || 0) >= 0 ? "pos" : "neg", `SPY · ${L.price_state || ""}`) +
     `<div class="kpi"><div class="k-lbl">Last 5 closes</div><div class="k-val" style="display:flex;gap:6px;align-items:center;margin-top:10px">${dots || "—"}</div><div class="k-sub">newest at right · green = buying</div></div>`;
   const dl = document.getElementById("chDate"); if (dl) dl.textContent = shortDate(L.date) + " close · daily flow score";
