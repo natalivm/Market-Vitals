@@ -1,0 +1,16 @@
+{
+ "_schema": "macro_history v1 — Macro Monitor Bot feed (scheduled US data releases). One snapshot per Bot post (a day's releases). 'date' = release day; 'ts' = post time (UTC). Each release: 'name' (full), 'short' (chip label), 'importance' (HIGH/MED/LOW), 'actual', 'forecast', 'dir' (above/below/in line vs forecast), 'tone' (good/bad/neutral = market read of the surprise, taken straight from the feed's dot colour — e.g. GDP above = good/green, GDP Price/inflation above = bad/red, jobless claims below = good/green), 'src' (agency).",
+ "_rules": "Only confirmed feed numbers. Append-only — never edit or delete a committed snapshot. 'tone' is transcribed from the feed's coloured dot, not derived. Contextual only: the Macro Monitor has ZERO effect on the Market Vitals gauge or composite.",
+ "history": [
+  {
+   "date": "2026-06-25",
+   "ts": "2026-06-25T13:00:00Z",
+   "releases": [
+    {"name": "Core PCE Price Index m/m", "short": "Core PCE", "importance": "HIGH", "actual": "+0.3%", "forecast": "0.3%", "dir": "in line", "tone": "neutral", "src": "BEA"},
+    {"name": "Final GDP q/q", "short": "GDP", "importance": "HIGH", "actual": "+2.1%", "forecast": "1.6%", "dir": "above", "tone": "good", "src": "BEA"},
+    {"name": "Final GDP Price Index q/q", "short": "GDP Price", "importance": "MED", "actual": "+3.6%", "forecast": "3.5%", "dir": "above", "tone": "bad", "src": "BEA"},
+    {"name": "Unemployment Claims", "short": "Claims", "importance": "MED", "actual": "215K", "forecast": "225K", "dir": "below", "tone": "good", "src": "DOL"}
+   ]
+  }
+ ]
+}
