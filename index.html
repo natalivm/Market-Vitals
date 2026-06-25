@@ -365,25 +365,6 @@
     .ch-line:hover .ch-go { color: var(--txt); }
     @media (max-width: 560px) { .ch-go { display: none; } .ch-msg { flex-basis: 100%; } }
 
-    /* ── MACRO MONITOR one-liner (scheduled data releases) — informational, above the doom clock ── */
-    .macro-line {
-      display: flex; align-items: center; gap: 10px; flex-wrap: wrap; width: 100%;
-      font-family: 'IBM Plex Mono', monospace; color: #cdd6e2;
-      background: linear-gradient(110deg, rgba(120,140,170,.13), rgba(120,140,170,.03) 70%, transparent);
-      border: 1px solid var(--line2);
-      border-radius: 13px; padding: 11px 16px; margin: 0 0 18px;
-    }
-    .macro-ico { font-size: 16px; }
-    .macro-tag { font-family: 'Chakra Petch', sans-serif; letter-spacing: .08em; font-size: 11.5px; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
-    .macro-chips { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; }
-    .macro-chip { font-size: 11.5px; white-space: nowrap; display: inline-flex; align-items: center; gap: 5px; }
-    .macro-chip .mc-name { color: var(--muted); }
-    .macro-chip b { font-family: 'Chakra Petch', sans-serif; font-weight: 700; letter-spacing: .02em; }
-    .macro-chip .mc-arrow { font-size: 10px; }
-    .macro-chip.good b, .macro-chip.good .mc-arrow { color: var(--greed); }
-    .macro-chip.bad b, .macro-chip.bad .mc-arrow { color: var(--fear); }
-    .macro-chip.neutral b { color: #cdd6e2; } .macro-chip.neutral .mc-arrow { color: var(--muted); }
-
     /* ── HERO ── */
     .hero {
       display: grid;
@@ -1104,11 +1085,6 @@
        (latest entry); stays hidden if there's no data / on file://. -->
   <button class="ch-line" id="chLine" type="button" hidden></button>
 
-  <!-- MACRO MONITOR — one-liner of the day's scheduled data releases (beat/miss
-       tones from the feed). Renders from data/macro_history.json (latest entry);
-       hidden if there's no data / on file://. Contextual only — no gauge effect. -->
-  <div class="macro-line" id="macroLine" hidden></div>
-
   <!-- CYCLE PEAK DOOM CLOCK — weekly cycle-top gauge (countdown style), at the
        bottom of the page. Renders from SCAN.doomClock; set show:false to hide. -->
   <div class="card doom-card" id="doomCard" hidden>
@@ -1266,7 +1242,7 @@ const indicators = [
   { name:"McClellan", prevNum:19.11, curNum:35.47, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"RISING", tag:"RISING", prevS:"green", s:"green",
     note:"Surged to {{mcclellan}} from +19.11 this morning — a strong breadth thrust, well into positive territory and RISING. The standout move of the scan; keeps the Hindenburg Omen firmly dormant." },
   { name:"Hindenburg", text:true, prevVal:"CLEAR", val:"CLEAR", prevTag:"CLEAR", tag:"CLEAR", prevS:"green", s:"green",
-    note:"CLEAR — the daily read shows no active Omen, and the McClellan thrust pushes breadth further from a trigger. (A separate 30-day study flags a 7-omen cluster as longer-run context — see notes.)" },
+    note:"CLEAR — the daily read shows no active Omen, and the McClellan thrust pushes breadth further from a trigger. With McClellan strongly positive, new highs and lows aren't both elevated; no signal." },
   { name:"% > 200 DMA", prevNum:62.4, curNum:63.7, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
     note:"Firmed to {{dma200}} from 62.4% — the long-term base pushed up with the breadth thrust, HEALTHY. The quiet anchor under the tape." },
   { name:"Put/Call", prevNum:1.02, curNum:1.10, fmt:{dec:2}, prevTag:"BEARISH", tag:"BEARISH", prevS:"amber", s:"amber",
@@ -2133,33 +2109,6 @@ function renderClosingLine() {
 }
 document.getElementById("chLine")?.addEventListener("click", () => { location.hash = "closinghour"; });
 renderClosingLine();
-// Macro Monitor one-liner — latest day's releases, beat/miss tones from the feed.
-function renderMacroLine() {
-  const el = document.getElementById("macroLine");
-  if (!el) return;
-  fetch("data/macro_history.json")
-    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
-    .then(data => {
-      const snaps = (data.history || []).slice().sort((a, b) => a.date < b.date ? -1 : 1);
-      if (!snaps.length) return;
-      const L = snaps[snaps.length - 1];
-      const arrow = { above: "▲", below: "▼", "in line": "—" };
-      const chips = (L.releases || []).map(r => {
-        const tone = r.tone === "good" ? "good" : r.tone === "bad" ? "bad" : "neutral";
-        const title = `${r.name}: ${r.actual} vs ${r.forecast} forecast — ${r.dir}${r.src ? " · " + r.src : ""}`;
-        return `<span class="macro-chip ${tone}" title="${title}">` +
-          `<span class="mc-name">${r.short || r.name}</span> <b>${r.actual}</b>` +
-          `<span class="mc-arrow">${arrow[r.dir] || ""}</span></span>`;
-      }).join("");
-      el.innerHTML =
-        `<span class="macro-ico">🏛️</span>` +
-        `<span class="macro-tag">Macro · ${shortDate(L.date)}</span>` +
-        `<span class="macro-chips">${chips}</span>`;
-      el.hidden = false;
-    })
-    .catch(() => {});   // silently stay hidden on file:// / fetch failure
-}
-renderMacroLine();
 function renderClosingHour(data) {
   const snaps = (data.history || []).slice().sort((a, b) => a.date < b.date ? -1 : 1);
   if (!snaps.length) return renderClosingHourEmpty("No Closing Hour Pulse readings yet.");
