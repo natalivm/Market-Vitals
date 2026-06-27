@@ -89,28 +89,39 @@ continues in parallel and is unchanged.
 
 ## Schema — `sector_relative_strength_history.json`
 
-**SECTOR RELATIVE STRENGTH — DAILY** from the **Rotation Radar Bot**. Each line
-is a sector/group's **% change vs the prior day's close** (an intraday
-relative-strength tape) — distinct from the cap-weighted "sector score" in
-`sector_heatmap_history.json`. The list mixes GICS sectors with breadth/style
-proxies (IWM, SMH, XLK) and is ordered best→worst as the feed lists them.
+**SECTOR RELATIVE STRENGTH** from the **Rotation Radar Bot** — comes in a
+**DAILY** variant (% change vs the prior day's close, an intraday tape) and a
+**WEEKLY** variant (% change vs the prior *week's* close, `scan: "WEEKLY · Week
+of <Mon>"`, dated to the week-ending Friday). Distinct from the cap-weighted
+"sector score" in `sector_heatmap_history.json`. The list mixes GICS sectors
+with breadth/style proxies (IWM, SMH, XLK) and is ordered best→worst as the feed
+lists them. From the **2026-06-22 weekly** the feed widened the set to include
+sub-sector leads outside the 11 GICS — **XBI** (Biotech), **KRE** (Regional
+Banking), **XHB** (Homebuilders), **XOP** (Oil & Gas Exploration) — and added an
+**equal-weight RSP** benchmark alongside SPY.
 
 | Field             | Meaning                                                       | Example      |
 |-------------------|---------------------------------------------------------------|--------------|
-| `date`            | Trading session the reading covers, ISO date                  | `2026-06-16` |
-| `scan`            | Feed's scan label                                             | `DAILY`      |
+| `date`            | Session (daily) or week-ending Friday (weekly), ISO date      | `2026-06-16` |
+| `scan`            | Feed's scan label                                             | `DAILY` / `WEEKLY · Week of Jun 22` |
 | `ts`              | Post time (ISO-8601 UTC) if shown, else `null` — never guess  | `null`       |
 | `source`          | Feed variant                                                  | `Rotation Radar` |
 | `benchmark`       | The SPY reference line `{sym, move}`                          | `{"sym":"SPY","move":-0.66}` |
+| `benchmark_ew`    | Equal-weight reference line `{sym, move}` (RSP), weekly variant; omit if not shown | `{"sym":"RSP","move":1.0}` |
 | `sectors[]`       | Per-line readings, ordered best→worst as the feed lists them  | —            |
 | `sectors[].name`  | Group label as the feed displays it                           | `Financials` |
 | `sectors[].sym`   | ETF/proxy ticker                                              | `XLF`        |
 | `sectors[].move`  | % change vs prior close                                       | `1.51`       |
 | `sectors[].s`     | Feed dot color: `green` (leading) / `gray` (mid-pack) / `red` (lagging) | `green` |
+| `sectors[].src`   | `"chart"` when the value came from a chart end-label, not the text list (rounded ~0.1%); omit when from the text list | `chart` |
 
 > Confirmed feed numbers only; append-only; copy percentages exactly. Record
 > `ts: null` when the post shows no UTC timestamp. The chart image itself is not
-> transcribed beyond the listed values.
+> transcribed beyond labelled values — a line shown only as a **gray, unlabelled**
+> series (e.g. XHB/XOP in the Jun-22 weekly) carries **no number, so omit it**
+> rather than reading a value off the curve. When a value is taken from a chart
+> **end-label** because the text list didn't include that name, tag the row
+> `src: "chart"` so the mixed precision is visible.
 
 ## Schema — `moc_imbalance_history.json`
 

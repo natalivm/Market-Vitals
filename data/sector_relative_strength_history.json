@@ -1,6 +1,6 @@
 {
-  "_schema": "sector_relative_strength_history v1 \u2014 daily SECTOR RELATIVE STRENGTH readings from the Rotation Radar Bot. Each sector/group line is its % change vs the prior day's close (intraday relative-strength tape, NOT the cap-weighted 'sector score' in sector_heatmap_history.json). Unlike the heat map, this list mixes GICS sectors with breadth/style proxies (IWM small caps, SMH semis, XLK tech) and is ordered best\u2192worst as the feed lists them. 'benchmark' is the SPY line. 's' is the feed's dot color: green=outperform/leading, gray=mid-pack, red=underperform/lagging. Append one object per reading; confirmed feed numbers only.",
-  "_rules": "Only confirmed Rotation Radar Bot feed numbers. Append-only; never edit or delete committed rows. Copy percentages exactly. Record ts=null when the post shows no UTC timestamp \u2014 never guess one. Omit a line the feed didn't show rather than back-filling.",
+  "_schema": "sector_relative_strength_history v1 — daily SECTOR RELATIVE STRENGTH readings from the Rotation Radar Bot. Each sector/group line is its % change vs the prior day's close (intraday relative-strength tape, NOT the cap-weighted 'sector score' in sector_heatmap_history.json). Unlike the heat map, this list mixes GICS sectors with breadth/style proxies (IWM small caps, SMH semis, XLK tech) and is ordered best→worst as the feed lists them. 'benchmark' is the SPY line. 's' is the feed's dot color: green=outperform/leading, gray=mid-pack, red=underperform/lagging. Append one object per reading; confirmed feed numbers only.",
+  "_rules": "Only confirmed Rotation Radar Bot feed numbers. Append-only; never edit or delete committed rows. Copy percentages exactly. Record ts=null when the post shows no UTC timestamp — never guess one. Omit a line the feed didn't show rather than back-filling.",
   "history": [
     {
       "date": "2026-06-16",
@@ -268,6 +268,114 @@
           "name": "Comm Services",
           "sym": "XLC",
           "move": -2.63,
+          "s": "red"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-26",
+      "scan": "WEEKLY · Week of Jun 22",
+      "ts": null,
+      "source": "Rotation Radar",
+      "benchmark": {
+        "sym": "SPY",
+        "move": -2.17
+      },
+      "benchmark_ew": {
+        "sym": "RSP",
+        "move": 1.0
+      },
+      "sectors": [
+        {
+          "name": "Biotech",
+          "sym": "XBI",
+          "move": 10.1,
+          "s": "green",
+          "src": "chart"
+        },
+        {
+          "name": "Healthcare",
+          "sym": "XLV",
+          "move": 7.37,
+          "s": "green"
+        },
+        {
+          "name": "Regional Banking",
+          "sym": "KRE",
+          "move": 4.9,
+          "s": "green",
+          "src": "chart"
+        },
+        {
+          "name": "Utilities",
+          "sym": "XLU",
+          "move": 3.22,
+          "s": "green"
+        },
+        {
+          "name": "Real Estate",
+          "sym": "XLRE",
+          "move": 3.15,
+          "s": "green"
+        },
+        {
+          "name": "Cons Staples",
+          "sym": "XLP",
+          "move": 1.69,
+          "s": "green"
+        },
+        {
+          "name": "Small Caps",
+          "sym": "IWM",
+          "move": 0.9,
+          "s": "green"
+        },
+        {
+          "name": "Industrials",
+          "sym": "XLI",
+          "move": 0.17,
+          "s": "green"
+        },
+        {
+          "name": "Energy",
+          "sym": "XLE",
+          "move": 0.09,
+          "s": "gray"
+        },
+        {
+          "name": "Financials",
+          "sym": "XLF",
+          "move": -0.02,
+          "s": "gray"
+        },
+        {
+          "name": "Materials",
+          "sym": "XLB",
+          "move": -0.6,
+          "s": "red"
+        },
+        {
+          "name": "Cons Discretionary",
+          "sym": "XLY",
+          "move": -2.04,
+          "s": "red"
+        },
+        {
+          "name": "Comm Services",
+          "sym": "XLC",
+          "move": -2.93,
+          "s": "red"
+        },
+        {
+          "name": "Technology",
+          "sym": "XLK",
+          "move": -5.59,
+          "s": "red"
+        },
+        {
+          "name": "Semiconductors",
+          "sym": "SMH",
+          "move": -7.67,
           "s": "red"
         }
       ]
