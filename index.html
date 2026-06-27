@@ -1159,17 +1159,17 @@ const SCAN = {
     clock:         "9:07",        // analog dial position; midnight = cycle peak
     minToMidnight: 173,
     risk:          28,            // Cycle Peak Risk %
-    riskChangeWk:  -4,            // ▼ negative = risk eased this week
+    riskChangeWk:  -5,            // ▼ negative = risk eased this week
     phase:         "EARLY / MID CYCLE",
-    weeksLogged:   "4/4",
-    asof:          "2026-06-12 22:30 UTC",
+    note:          "4wk composite 30% · building",
+    asof:          "2026-06-26 22:31 UTC",
     cats: [
       { name: "Rotation",       score: "1/6", s: "green" },
-      { name: "Breadth",        score: "1/4", s: "green" },
-      { name: "Volatility",     score: "0/4", s: "green" },
+      { name: "Breadth",        score: "2/4", s: "amber" },
+      { name: "Volatility",     score: "0/6", s: "green" },
       { name: "Rates & Credit", score: "0/4", s: "green" },
       { name: "Macro",          score: "2/8", s: "green" },
-      { name: "Sentiment",      score: "2/6", s: "amber" },
+      { name: "Sentiment",      score: "1/2", s: "amber" },
       { name: "Valuation",      score: "4/4", s: "red"   },
     ],
   },
@@ -1570,7 +1570,7 @@ function buildDoomClock() {
   byId("doomCats").innerHTML = dc.cats.map(c =>
     `<span class="doom-cat dc-${c.s}">${c.name} <b>${c.score}</b></span>`).join("");
   byId("doomAsof").textContent =
-    (dc.weeksLogged ? dc.weeksLogged + " wks logged · " : "") + (dc.asof || "");
+    ((dc.note || dc.weeksLogged) ? (dc.note || dc.weeksLogged + " wks logged") + " · " : "") + (dc.asof || "");
 }
 function resetDoomClock() {
   const dc = SCAN.doomClock;
