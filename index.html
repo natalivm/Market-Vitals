@@ -1193,17 +1193,17 @@
    ════════════════════════════════════════════════════════════════════ */
 const SCAN = {
   date:       "2026-06-29",
-  utc:        "13:02 UTC",
-  kyiv:       "4:02 PM Kyiv",
-  ribbon:     "PRE-MARKET SCAN",
-  scanName:   "pre-market scan",
-  prevLabel:  "Jun 26 close",
-  ghostLabel: "Jun 26 close",
-  composite:  { prev: 58, ghost: 58, cur: 58 },  // cur: gauge # not in feed; MIXED/+1 → 58 (54 + 4·N: +1=58, +2=62, +3=66, +4=70). Opened the week MIXED (+1), unchanged from Friday's +1 close. VIX calm but Put/Call spiked to ⚠️ EXTREME 1.44 (panic fear); Tide still −$212M BEARISH FLOW and SMFI still DISTRIBUTION. Breadth/vol fine; 5 of 8 green.
-  ribbonMain: 'VIX <b style="color:var(--greed)">{{vix}}</b> CALM · Put/Call <b style="color:var(--fear)">{{putcall}}</b> EXTREME FEAR · Tide <b style="color:var(--fear)">{{tide}}</b> BEARISH FLOW',
-  momentum:   { tag: "STRONG BULLISH", score: "+3", was: "64–65%" },
+  utc:        "19:02 UTC",
+  kyiv:       "10:02 PM Kyiv",
+  ribbon:     "LATE SESSION",
+  scanName:   "late-session scan",
+  prevLabel:  "8:02 PM scan",
+  ghostLabel: "8:02 PM scan",
+  composite:  { prev: 66, ghost: 66, cur: 66 },  // cur: gauge # not in feed; CONSTRUCTIVE/+3 → 66 (54 + 4·N: +1=58, +2=62, +3=66, +4=70). Held CONSTRUCTIVE (+3) into the late session — up from the +1 pre-market open. VIX firmed to 17.61 CALM, Put/Call unwound from the 1.44 panic back to 1.11 BEARISH, Market Tide flipped to +$358M BULLISH FLOW. SMFI still DISTRIBUTION. 6 of 8 green.
+  ribbonMain: 'VIX <b style="color:var(--greed)">{{vix}}</b> CALM · Put/Call <b style="color:var(--amber)">{{putcall}}</b> BEARISH · Tide <b style="color:var(--greed)">{{tide}}</b> BULLISH FLOW',
+  momentum:   { tag: "STRONG BULLISH", score: "+3", was: "62–63%" },
   powerHour: {
-    show:   true,                  // posted in the 13:02 pre-market scan — final-hour tape read
+    show:   false,                 // not posted in the 15:02 / 17:02 / 19:02 scans — card hidden
     tag:    "DISTRIBUTION",
     state:  "red",
     detail: "SPY −0.35% last hr · 1.12× vol · 32% of day — late-day selling on rising volume; smart-money distribution.",
@@ -1235,22 +1235,22 @@ const GHOST_AT       = SCAN.composite.ghost;
 const COMPOSITE      = SCAN.composite.cur;
 
 const indicators = [
-  { name:"VIX", prevNum:18.35, curNum:18.36, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Essentially flat at {{vix}} from {{vix_prev}} over the weekend gap — firmly CALM (green). The Bot's tagline names it the calm side of 'VIX calm but Put/Call elevated fear'." },
-  { name:"MOVE", prevNum:67.10, curNum:66.79, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Eased to {{move}} from 67.10 — bond volatility ticked lower and stays firmly CALM. No stress out of rates." },
-  { name:"McClellan", prevNum:36.01, curNum:36.64, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"RISING", tag:"RISING", prevS:"green", s:"green",
-    note:"Edged up to {{mcclellan}} from 36.01 — breadth held positive through the weekend and the feed keeps it RISING. Comfortably positive, keeping the Hindenburg Omen dormant." },
+  { name:"VIX", prevNum:17.92, curNum:17.61, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
+    note:"Eased to {{vix}} from {{vix_prev}} — its calmest read of the day, firmly CALM (green). The Bot's tagline names it the calm side of 'VIX calm but Put/Call elevated fear'." },
+  { name:"MOVE", prevNum:66.79, curNum:66.79, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
+    note:"Unchanged at {{move}} all session — bond volatility flat and firmly CALM. No stress out of rates." },
+  { name:"McClellan", prevNum:13.47, curNum:19.02, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"FALLING", tag:"FALLING", prevS:"green", s:"green",
+    note:"Ticked back up to {{mcclellan}} from 13.47 at 8:02 PM, but the feed tags it FALLING — off the day's high of 21.95 at mid-session. Still comfortably positive, keeping the Hindenburg Omen dormant." },
   { name:"Hindenburg", text:true, prevVal:"CLEAR", val:"CLEAR", prevTag:"CLEAR", tag:"CLEAR", prevS:"green", s:"green",
-    note:"CLEAR — no active Omen. With McClellan firmly positive, new highs and lows aren't both elevated; no divergence signal." },
-  { name:"% > 200 DMA", prevNum:64.1, curNum:64.0, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
-    note:"Essentially flat at {{dma200}} from 64.1% — still HEALTHY and the quiet structural anchor. The long-term base is holding well above the danger zone." },
-  { name:"Put/Call", prevNum:1.30, curNum:1.44, fmt:{dec:2}, prevTag:"EXTREME FEAR", tag:"EXTREME FEAR", prevS:"red", s:"red",
-    note:"Jumped to {{putcall}} from {{putcall_prev}} — well above 1.2 and the feed's ⚠️ EXTREME callout (panic fear). Put volume is overwhelming calls; per the Bot, extreme bearish positioning is historically a contrarian buy signal, but it's the day's headline fear read." },
-  { name:"SMFI", prevNum:39733, curNum:39535, fmt:{dec:0, comma:true}, prevTag:"DISTRIBUTION", tag:"DISTRIBUTION", prevS:"amber", s:"amber",
+    note:"CLEAR — no active Omen. With McClellan still positive, new highs and lows aren't both elevated; no divergence signal." },
+  { name:"% > 200 DMA", prevNum:62.2, curNum:62.2, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
+    note:"Flat at {{dma200}} from 62.2% — still HEALTHY and the quiet structural anchor. The long-term base is holding well above the danger zone." },
+  { name:"Put/Call", prevNum:1.12, curNum:1.11, fmt:{dec:2}, prevTag:"BEARISH", tag:"BEARISH", prevS:"amber", s:"amber",
+    note:"Eased to {{putcall}} from {{putcall_prev}} — well down from the morning's 1.44 panic-fear spike, so the feed softens it from EXTREME FEAR to BEARISH (amber). Puts still outweigh calls, but the extreme has unwound." },
+  { name:"SMFI", prevNum:39203, curNum:39011, fmt:{dec:0, comma:true}, prevTag:"DISTRIBUTION", tag:"DISTRIBUTION", prevS:"amber", s:"amber",
     note:"Slipped again to {{smfi}} from {{smfi_prev}} — still tagged INSTITUTIONAL DISTRIBUTION (amber): SMFI declining while the market is rising. Smart money selling into retail strength, the divergence that has preceded major tops." },
-  { name:"Market Tide", prevNum:-209, curNum:-212, fmt:{dec:0, pre:"$", suf:"M", comma:true, plus:true}, tokFmt:{dec:0, pre:"$", suf:"M", comma:true, plus:true}, prevTag:"BEARISH FLOW", tag:"BEARISH FLOW", prevS:"red", s:"red",
-    note:"Edged deeper to {{tide}} from −$209M — net flow stays negative, so the feed keeps it BEARISH FLOW (red). Institutional flow remains against the breadth." },
+  { name:"Market Tide", prevNum:235, curNum:358, fmt:{dec:0, pre:"$", suf:"M", comma:true, plus:true}, tokFmt:{dec:0, pre:"$", suf:"M", comma:true, plus:true}, prevTag:"BULLISH FLOW", tag:"BULLISH FLOW", prevS:"green", s:"green",
+    note:"Strengthened to {{tide}} from +$235M — net flow turned firmly positive through the afternoon, so the feed keeps it BULLISH FLOW (green). Institutional flow swung back in line with the breadth." },
 ];
 
 const concentration = [
@@ -1269,26 +1269,26 @@ const concentration = [
 ];
 
 const bars = [
-  { label:"% > 12 SMA", prev:65.4, cur:65.3, tag:"STRONG" },
-  { label:"% > 20 SMA", prev:64.7, cur:64.5, tag:"BULLISH" },
-  { label:"% > 50 SMA", prev:64.3, cur:64.2, tag:"BULLISH" },
+  { label:"% > 12 SMA", prev:61.9, cur:61.7, tag:"BULLISH" },
+  { label:"% > 20 SMA", prev:62.8, cur:63.7, tag:"BULLISH" },
+  { label:"% > 50 SMA", prev:63.4, cur:63.4, tag:"BULLISH" },
 ];
 
 const plays = {
   zen: {
-    e:"😇", label:"Opened MIXED (+1) — vol calm but Put/Call panic and flow still bearish",
-    text:"{{green}} of {{total}} green, and the Bot opens the week MIXED (+1), unchanged from Friday's +1 close. VIX {{vix}} and MOVE {{move}} stay CALM, McClellan {{mcclellan}} RISING, Hindenburg CLEAR, base HEALTHY at {{dma200}}. But Put/Call {{putcall}} EXTREME FEAR (the ⚠️ EXTREME callout), Power Hour {{power}} ({{power_detail}}), Tide {{tide}} BEARISH FLOW and SMFI {{smfi}} DISTRIBUTION all weigh on the read.",
-    moves:[["▼","Put/Call {{putcall}} EXTREME FEAR: ⚠️ panic fear, puts overwhelming calls."],["▼","Tide {{tide}} BEARISH FLOW: net flow stays negative."],["▼","SMFI {{smfi}} DISTRIBUTION: smart money still selling into strength."]]
+    e:"😇", label:"Held CONSTRUCTIVE (+3) into the late session — flow flipped bullish",
+    text:"{{green}} of {{total}} green, and the Bot holds CONSTRUCTIVE (+3) into the late session — up from the +1 pre-market open. VIX {{vix}} and MOVE {{move}} stay CALM, McClellan still positive at {{mcclellan}}, Hindenburg CLEAR, base HEALTHY at {{dma200}} and Market Tide flipped to {{tide}} BULLISH FLOW. The only cautions: Put/Call {{putcall}} BEARISH and SMFI {{smfi}} DISTRIBUTION.",
+    moves:[["▲","Tide {{tide}} BULLISH FLOW: flow swung firmly positive."],["▲","VIX {{vix}} CALM: vol eased to its calmest read of the day."],["▼","SMFI {{smfi}} DISTRIBUTION: smart money still selling into strength."]]
   },
   bull: {
-    e:"🐂", label:"Five green to open — vol calm, breadth healthy, base steady at 64.0%",
-    text:"<b>Five of eight green into the open: VIX {{vix}} and MOVE {{move}} CALM, McClellan positive at {{mcclellan}} RISING, Hindenburg CLEAR and the base steady at HEALTHY {{dma200}}.</b> Momentum Pulse holds STRONG BULLISH (+3), all three SMAs green with %>12-SMA STRONG at 65.3%. Per the Bot, Put/Call {{putcall}} EXTREME FEAR is historically a contrarian buy signal.",
-    moves:[["▲","Momentum STRONG BULLISH (+3): %>12-SMA STRONG, all three green."],["▲","VIX {{vix}} + MOVE {{move}} CALM: volatility quiet on both equity and rates."],["▲","Breadth firm: McClellan {{mcclellan}} RISING, base HEALTHY {{dma200}}."]]
+    e:"🐂", label:"Six green into the late session — Tide +$358M, vol calm, breadth healthy",
+    text:"<b>Six of eight green into the late session: VIX {{vix}} and MOVE {{move}} CALM, McClellan positive at {{mcclellan}}, Hindenburg CLEAR, base HEALTHY at {{dma200}} and Market Tide {{tide}} BULLISH FLOW — flow back in line with breadth.</b> Momentum Pulse holds STRONG BULLISH (+3), all three SMAs green. Put/Call has unwound from the morning's 1.44 panic to {{putcall}} BEARISH.",
+    moves:[["▲","Tide {{tide}} BULLISH FLOW: net flow strengthened to +$358M."],["▲","Momentum STRONG BULLISH (+3): all three SMAs green."],["▲","Put/Call {{putcall}}: extreme-fear spike unwound back to BEARISH."]]
   },
   bear: {
-    e:"🐻", label:"Put/Call spikes to 1.44 panic fear — flow −$212M, smart money distributing",
-    text:"<b>Put/Call spiked to {{putcall}} — the feed's ⚠️ EXTREME callout (panic fear) — as Market Tide edged deeper to {{tide}} BEARISH FLOW (red), Power Hour reads {{power}} ({{power_detail}}) and SMFI fell again to {{smfi}} (INSTITUTIONAL DISTRIBUTION).</b> The composite holds MIXED (+1). Breadth and vol still look fine, but panic-level fear positioning, deep negative flow and smart-money distribution into strength are the cautions — the divergence that has preceded major tops.",
-    moves:[["▼","Put/Call {{putcall}} EXTREME FEAR: ⚠️ panic fear, puts overwhelming calls."],["▼","Tide {{tide}} BEARISH FLOW: edged deeper to −$212M."],["▼","Power Hour {{power}} + SMFI {{smfi}}: distribution, smart money selling strength."]]
+    e:"🐻", label:"Smart money still distributing — SMFI 39,011, McClellan tagged falling",
+    text:"<b>The cautions are the divergences underneath: SMFI fell again to {{smfi}} (INSTITUTIONAL DISTRIBUTION) and McClellan, though positive at {{mcclellan}}, is tagged FALLING — off the day's high.</b> Put/Call {{putcall}} stays BEARISH (amber). The composite holds CONSTRUCTIVE (+3) and flow turned bullish, but smart money keeps distributing into retail strength — the divergence that has preceded major tops.",
+    moves:[["▼","SMFI {{smfi}} DISTRIBUTION: smart money selling into strength."],["▼","McClellan {{mcclellan}} FALLING: breadth momentum off the day's high."],["▼","Put/Call {{putcall}} BEARISH: puts still outweigh calls."]]
   },
 };
 
