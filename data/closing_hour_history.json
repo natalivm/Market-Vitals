@@ -54,6 +54,24 @@
       "aligned": true,
       "divergence": "Flow and price aligned — close is confirming.",
       "narrative": "Institutional selling pressure intensified into the close with a flow score of -19, marking notably negative positioning in the final hour. This alignment with SPY's 10-day decline of -1.2% confirms the downtrend is intact and institutions remain committed to reducing exposure rather than defending levels. The consistency between flow and price suggests this weakness has conviction behind it."
+    },
+    {
+      "date": "2026-06-29",
+      "ts": "2026-06-29T20:30:00Z",
+      "score": -10,
+      "flow": "BALANCED",
+      "price_state": "sideways",
+      "spy10d": -0.1,
+      "closes": [
+        "red",
+        "green",
+        "red",
+        "red",
+        "green"
+      ],
+      "aligned": true,
+      "divergence": "Flow and price aligned — close is confirming.",
+      "narrative": "Institutional flow turned balanced in the closing hour with a -10 score, which aligns with SPY's essentially flat 10-day performance. The agreement between neutral flow and sideways price action suggests the market is genuinely range-bound rather than being held up or down by directional conviction. Watch for conviction to return from either direction to confirm a breakout from this consolidation."
     }
   ]
 }
