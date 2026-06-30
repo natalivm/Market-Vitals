@@ -72,6 +72,24 @@
       "aligned": true,
       "divergence": "Flow and price aligned — close is confirming.",
       "narrative": "Institutional flow turned balanced in the closing hour with a -10 score, which aligns with SPY's essentially flat 10-day performance. The agreement between neutral flow and sideways price action suggests the market is genuinely range-bound rather than being held up or down by directional conviction. Watch for conviction to return from either direction to confirm a breakout from this consolidation."
+    },
+    {
+      "date": "2026-06-30",
+      "ts": "2026-06-30T20:30:00Z",
+      "score": -16,
+      "flow": "BALANCED",
+      "price_state": "down",
+      "spy10d": -1.1,
+      "closes": [
+        "green",
+        "red",
+        "red",
+        "green",
+        "red"
+      ],
+      "aligned": true,
+      "divergence": "Flow and price aligned — close is confirming.",
+      "narrative": "Institutional flow turned balanced at close with a -16 score, showing neither conviction buying nor selling into the final hour. This alignment with SPY's 1.1% loss over ten days suggests the market is consolidating rather than attracting fresh institutional demand on weakness, which typically precedes either capitulation selling or stabilization. Without aggressive institutional accumulation at these levels, the path of least resistance remains down until we see flow turn positive on a price dip."
     }
   ]
 }
