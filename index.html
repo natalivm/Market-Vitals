@@ -1193,17 +1193,17 @@
    ════════════════════════════════════════════════════════════════════ */
 const SCAN = {
   date:       "2026-06-30",
-  utc:        "15:02 UTC",
-  kyiv:       "6:02 PM Kyiv",
-  ribbon:     "MID-SESSION",
-  scanName:   "mid-session scan",
-  prevLabel:  "4:02 PM scan",
-  ghostLabel: "4:02 PM scan",
-  composite:  { prev: 66, ghost: 66, cur: 70 },  // cur: gauge # not in feed; CONSTRUCTIVE/+4 → 70 (54 + 4·N: +1=58, +2=62, +3=66, +4=70). Strengthened to CONSTRUCTIVE (+4) at mid-session from the +3 pre-market open — Put/Call collapsed from 1.42 EXTREME FEAR all the way to 0.87 NEUTRAL (green), lifting the green-count to 7 of 8. VIX 17.01 CALM, Tide +$105M BULLISH FLOW. SMFI still the lone DISTRIBUTION caution.
+  utc:        "19:02 UTC",
+  kyiv:       "10:02 PM Kyiv",
+  ribbon:     "LATE SESSION",
+  scanName:   "late-session scan",
+  prevLabel:  "6:02 PM scan",
+  ghostLabel: "6:02 PM scan",
+  composite:  { prev: 70, ghost: 70, cur: 70 },  // cur: gauge # not in feed; CONSTRUCTIVE/+4 → 70 (54 + 4·N: +1=58, +2=62, +3=66, +4=70). Held CONSTRUCTIVE (+4) into the late session, unchanged from the +4 mid-session read. VIX firmed to 16.63 CALM, Market Tide strengthened to +$466M BULLISH FLOW, Put/Call steady at 0.98 NEUTRAL. SMFI still the lone DISTRIBUTION caution. 7 of 8 green.
   ribbonMain: 'VIX <b style="color:var(--greed)">{{vix}}</b> CALM · SMFI <b style="color:var(--amber)">{{smfi}}</b> DISTRIBUTION · Tide <b style="color:var(--greed)">{{tide}}</b> BULLISH FLOW',
-  momentum:   { tag: "STRONG BULLISH", score: "+3", was: "63–65%" },
+  momentum:   { tag: "STRONG BULLISH", score: "+3", was: "58–62%" },
   powerHour: {
-    show:   false,                 // not posted in the 15:02 mid-session scan — card hidden
+    show:   false,                 // not posted in the 19:02 late-session scan — card hidden
     tag:    "NEUTRAL",
     state:  "amber",
     detail: "SPY +0.02% last hr · 0.93× vol · 30% of day — flat tape on light volume; no clear distribution or accumulation.",
@@ -1235,22 +1235,22 @@ const GHOST_AT       = SCAN.composite.ghost;
 const COMPOSITE      = SCAN.composite.cur;
 
 const indicators = [
-  { name:"VIX", prevNum:17.59, curNum:17.01, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Eased to {{vix}} from {{vix_prev}} — drifting lower and firmly CALM (green), the calm side of the Bot's 'VIX calm but SMFI smart money distributing'." },
+  { name:"VIX", prevNum:17.01, curNum:16.63, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
+    note:"Eased further to {{vix}} from {{vix_prev}} — its calmest read of the day, firmly CALM (green), the calm side of the Bot's 'VIX calm but SMFI smart money distributing'." },
   { name:"MOVE", prevNum:66.79, curNum:66.79, fmt:{dec:2}, prevTag:"CALM", tag:"CALM", prevS:"green", s:"green",
-    note:"Unchanged at {{move}} — bond volatility flat and firmly CALM. No stress out of rates." },
-  { name:"McClellan", prevNum:23.77, curNum:4.69, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"FALLING", tag:"FALLING", prevS:"green", s:"green",
-    note:"Dropped to {{mcclellan}} from 23.77 — breadth momentum cooled sharply and the feed keeps it FALLING, though still positive. Barely above zero now, but enough to keep the Hindenburg Omen dormant." },
+    note:"Unchanged at {{move}} all session — bond volatility flat and firmly CALM. No stress out of rates." },
+  { name:"McClellan", prevNum:4.69, curNum:10.56, fmt:{dec:2}, tokFmt:{dec:2, plus:true}, prevTag:"FALLING", tag:"FALLING", prevS:"green", s:"green",
+    note:"Ticked back up to {{mcclellan}} from 4.69, but the feed still tags it FALLING. Comfortably positive, keeping the Hindenburg Omen dormant." },
   { name:"Hindenburg", text:true, prevVal:"CLEAR", val:"CLEAR", prevTag:"CLEAR", tag:"CLEAR", prevS:"green", s:"green",
     note:"CLEAR — no active Omen. With McClellan still positive, new highs and lows aren't both elevated; no divergence signal." },
-  { name:"% > 200 DMA", prevNum:62.2, curNum:61.7, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
-    note:"Eased to {{dma200}} from 62.2% — still HEALTHY and the quiet structural anchor, holding well above the danger zone." },
-  { name:"Put/Call", prevNum:1.42, curNum:0.87, fmt:{dec:2}, prevTag:"EXTREME FEAR", tag:"NEUTRAL", prevS:"red", s:"green",
-    note:"Collapsed to {{putcall}} from {{putcall_prev}} — all the way down from the pre-market 1.42 panic spike to NEUTRAL (green). The extreme-fear positioning fully unwound; puts and calls now roughly balanced." },
-  { name:"SMFI", prevNum:38357, curNum:38320, fmt:{dec:0, comma:true}, prevTag:"DISTRIBUTION", tag:"DISTRIBUTION", prevS:"amber", s:"amber",
-    note:"Slipped again to {{smfi}} from {{smfi_prev}} — still tagged INSTITUTIONAL DISTRIBUTION (amber) and now the Bot's headline divergence: SMFI declining while the market is rising. Smart money selling into retail strength, the divergence that has preceded major tops." },
-  { name:"Market Tide", prevNum:430, curNum:105, fmt:{dec:0, pre:"$", suf:"M", comma:true, plus:true}, tokFmt:{dec:0, pre:"$", suf:"M", comma:true, plus:true}, prevTag:"BULLISH FLOW", tag:"BULLISH FLOW", prevS:"green", s:"green",
-    note:"Eased to {{tide}} from +$430M — net flow stays positive but lighter, so the feed keeps it BULLISH FLOW (green). Institutional flow still leans in line with the breadth." },
+  { name:"% > 200 DMA", prevNum:61.7, curNum:61.3, fmt:{dec:1, suf:"%"}, prevTag:"HEALTHY", tag:"HEALTHY", prevS:"green", s:"green",
+    note:"Eased to {{dma200}} from 61.7% — still HEALTHY and the quiet structural anchor, holding well above the danger zone." },
+  { name:"Put/Call", prevNum:0.87, curNum:0.98, fmt:{dec:2}, prevTag:"NEUTRAL", tag:"NEUTRAL", prevS:"green", s:"green",
+    note:"Edged up to {{putcall}} from {{putcall_prev}} — still NEUTRAL (green) and a world away from the morning's 1.42 panic spike. Puts and calls roughly balanced." },
+  { name:"SMFI", prevNum:38320, curNum:38232, fmt:{dec:0, comma:true}, prevTag:"DISTRIBUTION", tag:"DISTRIBUTION", prevS:"amber", s:"amber",
+    note:"Slipped again to {{smfi}} from {{smfi_prev}} — still tagged INSTITUTIONAL DISTRIBUTION (amber) and the Bot's headline divergence: SMFI declining while the market is rising. Smart money selling into retail strength, the divergence that has preceded major tops." },
+  { name:"Market Tide", prevNum:105, curNum:466, fmt:{dec:0, pre:"$", suf:"M", comma:true, plus:true}, tokFmt:{dec:0, pre:"$", suf:"M", comma:true, plus:true}, prevTag:"BULLISH FLOW", tag:"BULLISH FLOW", prevS:"green", s:"green",
+    note:"Strengthened to {{tide}} from +$105M — net flow built back up through the afternoon, so the feed keeps it BULLISH FLOW (green). Institutional flow firmly in line with the breadth." },
 ];
 
 const concentration = [
@@ -1269,26 +1269,26 @@ const concentration = [
 ];
 
 const bars = [
-  { label:"% > 12 SMA", prev:63.0, cur:58.5, tag:"BULLISH" },
-  { label:"% > 20 SMA", prev:64.7, cur:60.2, tag:"BULLISH" },
-  { label:"% > 50 SMA", prev:64.5, cur:61.5, tag:"BULLISH" },
+  { label:"% > 12 SMA", prev:58.5, cur:60.2, tag:"BULLISH" },
+  { label:"% > 20 SMA", prev:60.2, cur:61.3, tag:"BULLISH" },
+  { label:"% > 50 SMA", prev:61.5, cur:62.6, tag:"BULLISH" },
 ];
 
 const plays = {
   zen: {
-    e:"😇", label:"Strengthened to CONSTRUCTIVE (+4) — Put/Call unwound to neutral",
-    text:"{{green}} of {{total}} green, and the Bot lifts to CONSTRUCTIVE (+4) at mid-session from the +3 open. VIX {{vix}} and MOVE {{move}} stay CALM, McClellan still positive at {{mcclellan}}, Hindenburg CLEAR, base HEALTHY at {{dma200}}, Tide {{tide}} BULLISH FLOW and Put/Call {{putcall}} eased all the way to NEUTRAL. SMFI {{smfi}} DISTRIBUTION is the lone caution.",
-    moves:[["▲","Put/Call {{putcall}} NEUTRAL: panic-fear spike fully unwound."],["▲","Tide {{tide}} BULLISH FLOW: net flow stays positive."],["▼","SMFI {{smfi}} DISTRIBUTION: smart money still selling into strength."]]
+    e:"😇", label:"Held CONSTRUCTIVE (+4) into the late session — flow strengthening, vol calm",
+    text:"{{green}} of {{total}} green, and the Bot holds CONSTRUCTIVE (+4) into the late session, unchanged from the +4 mid-session read. VIX {{vix}} and MOVE {{move}} stay CALM, McClellan still positive at {{mcclellan}}, Hindenburg CLEAR, base HEALTHY at {{dma200}}, Put/Call {{putcall}} NEUTRAL and Market Tide strengthened to {{tide}} BULLISH FLOW. SMFI {{smfi}} DISTRIBUTION is the lone caution.",
+    moves:[["▲","Tide {{tide}} BULLISH FLOW: flow built back to +$466M."],["▲","VIX {{vix}} CALM: vol eased to its calmest read of the day."],["▼","SMFI {{smfi}} DISTRIBUTION: smart money still selling into strength."]]
   },
   bull: {
-    e:"🐂", label:"Seven green at mid-session — Put/Call neutral, vol calm, base healthy",
-    text:"<b>Seven of eight green at mid-session: VIX {{vix}} and MOVE {{move}} CALM, McClellan positive at {{mcclellan}}, Hindenburg CLEAR, base HEALTHY at {{dma200}}, Put/Call {{putcall}} NEUTRAL and Market Tide {{tide}} BULLISH FLOW.</b> The pre-market panic-fear in Put/Call has fully unwound. Momentum Pulse holds STRONG BULLISH (+3), all three SMAs green.",
-    moves:[["▲","Put/Call {{putcall}} NEUTRAL: extreme fear unwound, dot flips green."],["▲","Tide {{tide}} BULLISH FLOW + base HEALTHY {{dma200}}: flow and breadth aligned."],["▲","VIX {{vix}} CALM: vol drifted to its calmest read."]]
+    e:"🐂", label:"Seven green into the late session — Tide +$466M, vol calm, base healthy",
+    text:"<b>Seven of eight green into the late session: VIX {{vix}} and MOVE {{move}} CALM, McClellan positive at {{mcclellan}}, Hindenburg CLEAR, base HEALTHY at {{dma200}}, Put/Call {{putcall}} NEUTRAL and Market Tide {{tide}} BULLISH FLOW — flow rebuilt all afternoon.</b> Momentum Pulse holds STRONG BULLISH (+3), all three SMAs green and firming.",
+    moves:[["▲","Tide {{tide}} BULLISH FLOW: net flow strengthened to +$466M."],["▲","Momentum STRONG BULLISH (+3): all three SMAs green and firming."],["▲","VIX {{vix}} CALM: vol eased to its calmest of the day."]]
   },
   bear: {
-    e:"🐻", label:"Smart money still distributing — SMFI 38,320, McClellan fading, Tide thinning",
-    text:"<b>The lone caution is the smart-money divergence the Bot now headlines: SMFI slipped again to {{smfi}} (INSTITUTIONAL DISTRIBUTION) — 'VIX calm but SMFI smart money distributing.'</b> Underneath, McClellan faded to {{mcclellan}} (still tagged FALLING) and Market Tide thinned to {{tide}} from +$430M. The composite firmed to CONSTRUCTIVE (+4), but smart money keeps selling into retail strength — the divergence that has preceded major tops.",
-    moves:[["▼","SMFI {{smfi}} DISTRIBUTION: the Bot's headline divergence."],["▼","McClellan {{mcclellan}} FALLING: breadth momentum cooled sharply from 23.77."],["▼","Tide {{tide}}: flow still bullish but thinned from +$430M."]]
+    e:"🐻", label:"Smart money still distributing — SMFI 38,232, McClellan tagged falling",
+    text:"<b>The lone caution stays the smart-money divergence the Bot headlines: SMFI slipped again to {{smfi}} (INSTITUTIONAL DISTRIBUTION) — 'VIX calm but SMFI smart money distributing.'</b> McClellan, though up to {{mcclellan}}, is still tagged FALLING. The composite held CONSTRUCTIVE (+4) with flow firmly bullish, but smart money keeps selling into retail strength — the divergence that has preceded major tops.",
+    moves:[["▼","SMFI {{smfi}} DISTRIBUTION: the Bot's headline divergence, slipping again."],["▼","McClellan {{mcclellan}} FALLING: breadth momentum still tagged falling."],["▼","%>200DMA {{dma200}}: base eased again — breadth grinding lower beneath the +4."]]
   },
 };
 
