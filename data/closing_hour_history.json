@@ -90,6 +90,23 @@
       "aligned": true,
       "divergence": "Flow and price aligned — close is confirming.",
       "narrative": "Institutional flow turned balanced at close with a -16 score, showing neither conviction buying nor selling into the final hour. This alignment with SPY's 1.1% loss over ten days suggests the market is consolidating rather than attracting fresh institutional demand on weakness, which typically precedes either capitulation selling or stabilization. Without aggressive institutional accumulation at these levels, the path of least resistance remains down until we see flow turn positive on a price dip."
+    },
+    {
+      "date": "2026-07-01",
+      "ts": "2026-07-01T20:30:00Z",
+      "score": -19,
+      "flow": "SELLING",
+      "price_state": "sideways",
+      "spy10d": -0.6,
+      "closes": [
+        "red",
+        "red",
+        "green",
+        "red",
+        "red"
+      ],
+      "divergence": "Institutions selling the close into a sideways tape — hidden distribution, risk building.",
+      "narrative": "Institutions dumped into the close with a -19 flow score while SPY printed sideways over ten days, creating a clean divergence signal. This is textbook distribution—smart money exiting positions on no conviction move, which typically precedes either a sharp retest lower or a washout before fresh demand. Watch for volume confirmation on any bounce tomorrow; weak volume up suggests the selling pressure has more room to run."
     }
   ]
 }
