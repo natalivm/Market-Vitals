@@ -743,6 +743,161 @@
           "move": -1.68
         }
       ]
+    },
+    {
+      "date": "2026-07-01",
+      "scan": "EOD",
+      "source": "Market Vitals",
+      "universe": "S&P 500",
+      "market": -0.09,
+      "sectors": [
+        {
+          "name": "Communication Services",
+          "move": 2.86
+        },
+        {
+          "name": "Financial Services",
+          "move": 2.36
+        },
+        {
+          "name": "Consumer Cyclical",
+          "move": 0.85
+        },
+        {
+          "name": "Healthcare",
+          "move": 0.53
+        },
+        {
+          "name": "Basic Materials",
+          "move": 0.4
+        },
+        {
+          "name": "Real Estate",
+          "move": 0.31
+        },
+        {
+          "name": "Energy",
+          "move": -0.52
+        },
+        {
+          "name": "Consumer Defensive",
+          "move": -0.64
+        },
+        {
+          "name": "Industrials",
+          "move": -1.18
+        },
+        {
+          "name": "Utilities",
+          "move": -1.32
+        },
+        {
+          "name": "Technology",
+          "move": -1.62
+        }
+      ]
+    },
+    {
+      "date": "2026-07-01",
+      "scan": "EOD",
+      "source": "Market Vitals",
+      "universe": "NASDAQ-100",
+      "market": -0.34,
+      "sectors": [
+        {
+          "name": "Communication Services",
+          "move": 3.17
+        },
+        {
+          "name": "Basic Materials",
+          "move": 2.82
+        },
+        {
+          "name": "Financial Services",
+          "move": 2.06
+        },
+        {
+          "name": "Consumer Cyclical",
+          "move": 1.29
+        },
+        {
+          "name": "Industrials",
+          "move": 0.83
+        },
+        {
+          "name": "Healthcare",
+          "move": 0.39
+        },
+        {
+          "name": "Consumer Defensive",
+          "move": -1.44
+        },
+        {
+          "name": "Technology",
+          "move": -1.69
+        },
+        {
+          "name": "Utilities",
+          "move": -2.25
+        },
+        {
+          "name": "Energy",
+          "move": -2.62
+        }
+      ]
+    },
+    {
+      "date": "2026-07-01",
+      "scan": "EOD",
+      "source": "Market Vitals",
+      "universe": "Russell 2000",
+      "market": 0.96,
+      "sectors": [
+        {
+          "name": "Technology",
+          "move": 5.46
+        },
+        {
+          "name": "Consumer Defensive",
+          "move": 1.95
+        },
+        {
+          "name": "Financial Services",
+          "move": 1.61
+        },
+        {
+          "name": "Communication Services",
+          "move": 0.96
+        },
+        {
+          "name": "Real Estate",
+          "move": 0.32
+        },
+        {
+          "name": "Healthcare",
+          "move": 0.15
+        },
+        {
+          "name": "Industrials",
+          "move": -0.33
+        },
+        {
+          "name": "Consumer Cyclical",
+          "move": -0.66
+        },
+        {
+          "name": "Utilities",
+          "move": -0.91
+        },
+        {
+          "name": "Energy",
+          "move": -1.17
+        },
+        {
+          "name": "Basic Materials",
+          "move": -1.45
+        }
+      ]
     }
   ]
 }
