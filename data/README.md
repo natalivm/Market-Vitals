@@ -33,9 +33,17 @@ divergences that precede a crash or recovery).
 | `pct_above_20sma`   | % of stocks above 20-day SMA                         | `60.2`           |
 | `pct_above_50sma`   | % of stocks above 50-day SMA                         | `54.6`           |
 | `power_hour`        | Final-hour tape read (`distribution`/`accumulation`/blank if not in feed) | `distribution` |
+| `gex`               | Options dealer gamma-exposure regime (`accelerant`/`suppressant`/blank if not in feed) | `accelerant` |
 
 > `power_hour` was added when the feed introduced it (2026-06-05 20:11 UTC).
 > Earlier rows leave it blank — never back-fill a guess.
+
+> `gex` was added when the feed introduced it (2026-07-02 13:02 UTC). It records
+> the options dealers' net gamma regime: `accelerant` (dealers short gamma —
+> hedging amplifies moves) or `suppressant` (dealers long gamma — hedging
+> dampens moves). Contextual only, like `power_hour` — NOT a core gauge
+> indicator and not in the "X of 8 green" count. Earlier rows leave it blank —
+> never back-fill a guess.
 
 Sector rotation has its own store: **`rotation_history.json`** (see its
 `_schema`/`_rules` keys). Same discipline — confirmed feed numbers only,
