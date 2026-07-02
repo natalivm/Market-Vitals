@@ -107,6 +107,24 @@
       ],
       "divergence": "Institutions selling the close into a sideways tape — hidden distribution, risk building.",
       "narrative": "Institutions dumped into the close with a -19 flow score while SPY printed sideways over ten days, creating a clean divergence signal. This is textbook distribution—smart money exiting positions on no conviction move, which typically precedes either a sharp retest lower or a washout before fresh demand. Watch for volume confirmation on any bounce tomorrow; weak volume up suggests the selling pressure has more room to run."
+    },
+    {
+      "date": "2026-07-02",
+      "ts": "2026-07-02T20:30:00Z",
+      "score": -10,
+      "flow": "BALANCED",
+      "price_state": "sideways",
+      "spy10d": 0.5,
+      "closes": [
+        "red",
+        "green",
+        "red",
+        "red",
+        "green"
+      ],
+      "aligned": true,
+      "divergence": "Flow and price aligned — close is confirming.",
+      "narrative": "Institutional flow closed balanced at -10/100, reflecting minimal conviction either direction into close. SPY's +0.5% ten-day move confirms this alignment—we're in a holding pattern with institutions neither accumulating nor distributing at scale. Expect continued range-bound consolidation until flow reads break above neutral territory or volume patterns shift."
     }
   ]
 }
