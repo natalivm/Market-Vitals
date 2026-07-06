@@ -13289,6 +13289,475 @@
           "signal": null
         }
       ]
+    },
+    {
+      "date": "2026-07-06",
+      "ts": "2026-07-06T20:00:00Z",
+      "regime": "BROAD MARKET RALLY",
+      "selling": 13,
+      "total": 41,
+      "benchmark": {
+        "sym": "SPY",
+        "d1": 0.87,
+        "d5": 3.06,
+        "d20": -0.77
+      },
+      "flows": [
+        {
+          "sym": "XLK",
+          "name": "Technology",
+          "tier": "core",
+          "dir": "in",
+          "d1": 1.65,
+          "d5": 1.36,
+          "d20": -4.97,
+          "f1": 0.0,
+          "f5": 0.0,
+          "signal": null,
+          "new": true
+        },
+        {
+          "sym": "XLF",
+          "name": "Financials",
+          "tier": "core",
+          "dir": "in",
+          "d1": 0.93,
+          "d5": 4.8,
+          "d20": 7.57,
+          "f1": 0.0,
+          "f5": 0.0,
+          "signal": null
+        },
+        {
+          "sym": "XLE",
+          "name": "Energy",
+          "tier": "core",
+          "dir": "out",
+          "d1": -0.17,
+          "d5": -1.32,
+          "d20": -9.57,
+          "f1": 0.0,
+          "f5": 0.0,
+          "signal": null
+        },
+        {
+          "sym": "XLV",
+          "name": "Healthcare",
+          "tier": "core",
+          "dir": "out",
+          "d1": -1.09,
+          "d5": 1.01,
+          "d20": 6.5,
+          "f1": 0.0,
+          "f5": 0.0,
+          "signal": null
+        },
+        {
+          "sym": "XLY",
+          "name": "Consumer Discretionary",
+          "tier": "core",
+          "dir": "in",
+          "d1": 0.76,
+          "d5": 3.18,
+          "d20": 0.64,
+          "f1": 0.0,
+          "f5": 0.0,
+          "signal": null,
+          "new": true
+        },
+        {
+          "sym": "XLP",
+          "name": "Consumer Staples",
+          "tier": "core",
+          "dir": "out",
+          "d1": -1.05,
+          "d5": -0.72,
+          "d20": 2.51,
+          "f1": 0.0,
+          "f5": 0.0,
+          "signal": null
+        },
+        {
+          "sym": "XLI",
+          "name": "Industrials",
+          "tier": "core",
+          "dir": "in",
+          "d1": 0.9,
+          "d5": 2.41,
+          "d20": 5.34,
+          "f1": 0.0,
+          "f5": 0.0,
+          "signal": null
+        },
+        {
+          "sym": "XLU",
+          "name": "Utilities",
+          "tier": "core",
+          "dir": "out",
+          "d1": -1.01,
+          "d5": -1.95,
+          "d20": 3.1,
+          "f1": 0.0,
+          "f5": 0.0,
+          "signal": null
+        },
+        {
+          "sym": "XLB",
+          "name": "Materials",
+          "tier": "core",
+          "dir": "out",
+          "d1": -0.06,
+          "d5": 0.74,
+          "d20": 0.7,
+          "f1": 0.0,
+          "f5": 0.0,
+          "signal": null
+        },
+        {
+          "sym": "XLRE",
+          "name": "Real Estate",
+          "tier": "core",
+          "dir": "out",
+          "d1": -0.87,
+          "d5": -2.1,
+          "d20": -0.25,
+          "signal": null
+        },
+        {
+          "sym": "XLC",
+          "name": "Communications",
+          "tier": "core",
+          "dir": "in",
+          "d1": 0.56,
+          "d5": 3.8,
+          "d20": -2.56,
+          "signal": null,
+          "new": true
+        },
+        {
+          "sym": "XBI",
+          "name": "Biotech",
+          "tier": "core",
+          "dir": "in",
+          "d1": 0.22,
+          "d5": 3.49,
+          "d20": 20.53,
+          "signal": null
+        },
+        {
+          "sym": "XME",
+          "name": "Metals & Mining",
+          "tier": "core",
+          "dir": "in",
+          "d1": 0.9,
+          "d5": -1.79,
+          "d20": -17.54,
+          "f1": 0.0,
+          "f5": 0.0,
+          "signal": null
+        },
+        {
+          "sym": "XAR",
+          "name": "Aerospace & Defense",
+          "tier": "core",
+          "dir": "in",
+          "d1": 0.75,
+          "d5": 5.71,
+          "d20": 3.32,
+          "signal": null
+        },
+        {
+          "sym": "XHB",
+          "name": "Homebuilders",
+          "tier": "core",
+          "dir": "out",
+          "d1": -1.13,
+          "d5": -3.76,
+          "d20": 6.27,
+          "signal": null
+        },
+        {
+          "sym": "XOP",
+          "name": "Oil & Gas Exploration",
+          "tier": "core",
+          "dir": "out",
+          "d1": -0.44,
+          "d5": -0.47,
+          "d20": -9.98,
+          "f1": 0.0,
+          "f5": 0.0,
+          "signal": null
+        },
+        {
+          "sym": "XRT",
+          "name": "Retail",
+          "tier": "core",
+          "dir": "out",
+          "d1": -0.5,
+          "d5": -1.24,
+          "d20": 4.9,
+          "f1": 0.0,
+          "f5": 0.0,
+          "signal": null
+        },
+        {
+          "sym": "XTN",
+          "name": "Transportation",
+          "tier": "core",
+          "dir": "out",
+          "d1": -0.12,
+          "d5": -0.16,
+          "d20": 3.12,
+          "signal": null
+        },
+        {
+          "sym": "XHE",
+          "name": "Healthcare Equipment",
+          "tier": "core",
+          "dir": "in",
+          "d1": 1.24,
+          "d5": 3.06,
+          "d20": 9.37,
+          "signal": null
+        },
+        {
+          "sym": "SMH",
+          "name": "Semiconductors",
+          "tier": "sub",
+          "dir": "in",
+          "d1": 2.03,
+          "d5": -1.2,
+          "d20": -3.7,
+          "f1": 0.0,
+          "f5": 0.0,
+          "signal": null,
+          "new": true
+        },
+        {
+          "sym": "IGV",
+          "name": "Software",
+          "tier": "sub",
+          "dir": "in",
+          "d1": 1.3,
+          "d5": 7.47,
+          "d20": -5.27,
+          "f1": 0.0,
+          "f5": 0.0,
+          "signal": null
+        },
+        {
+          "sym": "IAI",
+          "name": "Broker-Dealers",
+          "tier": "sub",
+          "dir": "in",
+          "d1": 2.73,
+          "d5": 7.68,
+          "d20": 2.87,
+          "signal": null
+        },
+        {
+          "sym": "KBE",
+          "name": "Banking",
+          "tier": "sub",
+          "dir": "in",
+          "d1": 0.85,
+          "d5": 1.14,
+          "d20": 8.23,
+          "signal": null,
+          "new": true
+        },
+        {
+          "sym": "KRE",
+          "name": "Regional Banking",
+          "tier": "sub",
+          "dir": "in",
+          "d1": 0.72,
+          "d5": 0.52,
+          "d20": 7.97,
+          "signal": null,
+          "new": true
+        },
+        {
+          "sym": "OIH",
+          "name": "Oil Services",
+          "tier": "sub",
+          "dir": "in",
+          "d1": 0.07,
+          "d5": -4.18,
+          "d20": -18.02,
+          "signal": null,
+          "new": true
+        },
+        {
+          "sym": "COPX",
+          "name": "Copper Miners",
+          "tier": "sub",
+          "dir": "in",
+          "d1": 2.39,
+          "d5": 3.02,
+          "d20": -13.01,
+          "signal": null
+        },
+        {
+          "sym": "GDX",
+          "name": "Gold Miners",
+          "tier": "sub",
+          "dir": "in",
+          "d1": 0.4,
+          "d5": 2.26,
+          "d20": -8.87,
+          "signal": null
+        },
+        {
+          "sym": "SLX",
+          "name": "Steel",
+          "tier": "sub",
+          "dir": "in",
+          "d1": 1.98,
+          "d5": 1.0,
+          "d20": -10.41,
+          "signal": null
+        },
+        {
+          "sym": "REMX",
+          "name": "Rare Earth & Crit. Min.",
+          "tier": "sub",
+          "dir": "out",
+          "d1": -1.59,
+          "d5": -1.38,
+          "d20": -12.02,
+          "signal": null
+        },
+        {
+          "sym": "URA",
+          "name": "Uranium",
+          "tier": "sub",
+          "dir": "in",
+          "d1": 1.5,
+          "d5": 0.67,
+          "d20": -12.73,
+          "signal": null
+        },
+        {
+          "sym": "LIT",
+          "name": "Lithium & Battery",
+          "tier": "sub",
+          "dir": "out",
+          "d1": -0.47,
+          "d5": 0.32,
+          "d20": -8.54,
+          "signal": null
+        },
+        {
+          "sym": "HACK",
+          "name": "Cybersecurity",
+          "tier": "sub",
+          "dir": "in",
+          "d1": 3.08,
+          "d5": 11.78,
+          "d20": 9.03,
+          "signal": null,
+          "new": true
+        },
+        {
+          "sym": "WCLD",
+          "name": "Cloud Computing",
+          "tier": "sub",
+          "dir": "in",
+          "d1": 1.79,
+          "d5": 11.1,
+          "d20": 2.96,
+          "signal": null
+        },
+        {
+          "sym": "BOTZ",
+          "name": "Robotics & AI",
+          "tier": "sub",
+          "dir": "in",
+          "d1": 2.3,
+          "d5": 6.22,
+          "d20": -4.57,
+          "signal": null,
+          "new": true
+        },
+        {
+          "sym": "DRAM",
+          "name": "Memory",
+          "tier": "sub",
+          "dir": "in",
+          "d1": 6.81,
+          "d5": -9.91,
+          "d20": -1.43,
+          "signal": null,
+          "new": true
+        },
+        {
+          "sym": "PBW",
+          "name": "Clean Energy",
+          "tier": "sub",
+          "dir": "in",
+          "d1": 2.57,
+          "d5": 1.82,
+          "d20": -17.94,
+          "f1": 0.0,
+          "f5": 0.0,
+          "signal": null,
+          "new": true
+        },
+        {
+          "sym": "ICLN",
+          "name": "Clean Energy (iShares)",
+          "tier": "sub",
+          "dir": "in",
+          "d1": 2.29,
+          "d5": 3.18,
+          "d20": -12.9,
+          "signal": null,
+          "new": true
+        },
+        {
+          "sym": "TAN",
+          "name": "Solar",
+          "tier": "sub",
+          "dir": "in",
+          "d1": 2.17,
+          "d5": 1.21,
+          "d20": -18.31,
+          "signal": null,
+          "new": true
+        },
+        {
+          "sym": "JETS",
+          "name": "Airlines",
+          "tier": "sub",
+          "dir": "in",
+          "d1": 0.42,
+          "d5": 0.18,
+          "d20": 19.07,
+          "signal": null,
+          "new": true
+        },
+        {
+          "sym": "MSOS",
+          "name": "Cannabis",
+          "tier": "sub",
+          "dir": "out",
+          "d1": -7.16,
+          "d5": -3.2,
+          "d20": -10.98,
+          "signal": null
+        },
+        {
+          "sym": "BITO",
+          "name": "Bitcoin Futures",
+          "tier": "sub",
+          "dir": "in",
+          "d1": 3.6,
+          "d5": 6.4,
+          "d20": -0.12,
+          "signal": null
+        }
+      ]
     }
   ]
 }
