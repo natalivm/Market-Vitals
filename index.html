@@ -15,7 +15,7 @@
   --surface-2:#1E1636;
   --line:#2C2246;
   --ink:#EDE9F6;
-  --muted:#9B93B0;
+  --muted:#E9E5F3;
   --demand:#3DDC97;
   --demand-dim:rgba(61,220,151,.12);
   --supply:#FF5C6A;
@@ -40,7 +40,7 @@ p{color:var(--muted);max-width:68ch}
 p strong{color:var(--ink)}
 p+p{margin-top:14px}
 a{color:var(--violet)}
-.lead{font-size:19px;line-height:1.55;color:#DAD5E8;max-width:none;background:linear-gradient(180deg,var(--violet-dim),var(--surface) 62%);border:1px solid var(--line);border-left:3px solid var(--violet);border-radius:0 14px 14px 0;padding:22px 26px 24px;margin-top:8px}
+.lead{font-size:19px;line-height:1.55;color:#F2EFFA;max-width:none;background:linear-gradient(180deg,var(--violet-dim),var(--surface) 62%);border:1px solid var(--line);border-left:3px solid var(--violet);border-radius:0 14px 14px 0;padding:22px 26px 24px;margin-top:8px}
 .lead strong{color:#fff}
 .lead em{color:var(--amber);font-style:normal}
 
@@ -529,14 +529,14 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
       <line x1="185" y1="55" x2="185" y2="120" stroke="#3DDC97" stroke-width="2"/>
       <rect x="173" y="62" width="24" height="52" fill="#3DDC97" rx="2"/>
       <text x="205" y="90" font-family="JetBrains Mono" font-size="9.5" fill="#3DDC97">impulse</text>
-      <text x="30" y="240" font-family="JetBrains Mono" font-size="10" fill="#9B93B0">wick spears in, body closes back out → orders fired</text>
+      <text x="30" y="240" font-family="JetBrains Mono" font-size="10" fill="#CFC9DE">wick spears in, body closes back out → orders fired</text>
       <!-- RIGHT: filled, break -->
       <text x="360" y="46" font-family="JetBrains Mono" font-size="12" fill="#FF5C6A">FILLED — price slices through</text>
-      <line x1="360" y1="150" x2="630" y2="150" stroke="#9B93B0" stroke-dasharray="5 5" opacity=".7"/>
-      <text x="364" y="168" font-family="JetBrains Mono" font-size="10" fill="#9B93B0">old demand</text>
+      <line x1="360" y1="150" x2="630" y2="150" stroke="#CFC9DE" stroke-dasharray="5 5" opacity=".7"/>
+      <text x="364" y="168" font-family="JetBrains Mono" font-size="10" fill="#CFC9DE">old demand</text>
       <line x1="490" y1="108" x2="490" y2="212" stroke="#FF5C6A" stroke-width="2"/>
       <rect x="478" y="116" width="24" height="86" fill="#FF5C6A" rx="2"/>
-      <text x="360" y="240" font-family="JetBrains Mono" font-size="10" fill="#9B93B0">big body closes clean through, no wick → zone consumed</text>
+      <text x="360" y="240" font-family="JetBrains Mono" font-size="10" fill="#CFC9DE">big body closes clean through, no wick → zone consumed</text>
     </svg>
     <figcaption>Left: price dips into demand, gets rejected (long lower wick) and impulses away — the leftover buy orders executed, so they were <b class="g">still there</b>. Right: an impulse candle closes straight through with no rejection — the orders are <b class="r">gone</b> and the level flips.</figcaption>
   </figure>
@@ -910,10 +910,10 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
       <text x="34" y="290" font-family="JetBrains Mono" font-size="10" fill="#3DDC97">real demand 170–177 (buy signals fired)</text>
       <text x="34" y="52" font-family="JetBrains Mono" font-size="10" fill="#FF5C6A">supply 207.98–231.83 (sell signals fired)</text>
       <!-- price axis -->
-      <text x="612" y="96" font-family="JetBrains Mono" font-size="9" fill="#9B93B0">220</text>
-      <text x="612" y="178" font-family="JetBrains Mono" font-size="9" fill="#9B93B0">200</text>
-      <text x="612" y="261" font-family="JetBrains Mono" font-size="9" fill="#9B93B0">180</text>
-      <text x="612" y="343" font-family="JetBrains Mono" font-size="9" fill="#9B93B0">160</text>
+      <text x="612" y="96" font-family="JetBrains Mono" font-size="9" fill="#CFC9DE">220</text>
+      <text x="612" y="178" font-family="JetBrains Mono" font-size="9" fill="#CFC9DE">200</text>
+      <text x="612" y="261" font-family="JetBrains Mono" font-size="9" fill="#CFC9DE">180</text>
+      <text x="612" y="343" font-family="JetBrains Mono" font-size="9" fill="#CFC9DE">160</text>
     </svg>
     <figcaption>The volume profile is the tell. <b class="a">190 is a thin, low-volume pocket</b> — a drawn line, not a shelf; price glides through it. The real high-volume support is the <b class="a">POC around 180–185</b> and the <b class="g">170–177 demand</b>; the real ceiling is the <b class="r">207.98–231.83 supply</b> a "breakout" must fight.</figcaption>
   </figure>
@@ -954,9 +954,9 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
 
   <figure>
     <svg viewBox="0 0 660 250" width="100%" role="img" aria-label="Dealer gamma by strike">
-      <text x="150" y="20" font-family="JetBrains Mono" font-size="11" fill="#9B93B0" text-anchor="middle">◄ PUT GAMMA</text>
-      <text x="330" y="20" font-family="JetBrains Mono" font-size="11" fill="#9B93B0" text-anchor="middle">STRIKE</text>
-      <text x="510" y="20" font-family="JetBrains Mono" font-size="11" fill="#9B93B0" text-anchor="middle">CALL GAMMA ►</text>
+      <text x="150" y="20" font-family="JetBrains Mono" font-size="11" fill="#CFC9DE" text-anchor="middle">◄ PUT GAMMA</text>
+      <text x="330" y="20" font-family="JetBrains Mono" font-size="11" fill="#CFC9DE" text-anchor="middle">STRIKE</text>
+      <text x="510" y="20" font-family="JetBrains Mono" font-size="11" fill="#CFC9DE" text-anchor="middle">CALL GAMMA ►</text>
       <!-- 210 -->
       <rect x="240" y="34" width="60" height="22" fill="rgba(255,92,106,.55)" rx="2"/>
       <rect x="360" y="34" width="92" height="22" fill="rgba(61,220,151,.6)" rx="2"/>
@@ -1160,7 +1160,7 @@ function renderChart(){
   // x-axis month ticks
   const months=[['Jul ’25',0],['Sep',8],['Nov',15],['Jan ’26',24],['Mar',32],['May',40],['Jul',51]];
   s+=`<line x1="${C.xPad}" y1="${C.yBot+2}" x2="${C.xEnd}" y2="${C.yBot+2}" stroke="#2C2246"/>`;
-  months.forEach(([m,i])=>{s+=`<text x="${x(i).toFixed(1)}" y="${C.yBot+20}" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#9B93B0">${m}</text>`;});
+  months.forEach(([m,i])=>{s+=`<text x="${x(i).toFixed(1)}" y="${C.yBot+20}" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#CFC9DE">${m}</text>`;});
   document.getElementById('nvdaChart').innerHTML=s;
   document.querySelectorAll('#nvdaChart .clvl').forEach(g=>g.addEventListener('click',()=>selectLevel(g.dataset.id)));
 }
