@@ -309,7 +309,7 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
       <p class="sub">A fund can't buy a $2B position with one click — it's forced to build it over weeks. That process leaves recognizable marks: <strong>impulse, balance, demand and supply zones</strong>. Learn to read them on a live NVDA example — with an interactive level map, a full trade autopsy, and an expected-value calculator that shows why a "good-looking" trade was a losing one.</p>
       <div class="tagrow">
         <span class="tag hot">NVDA · $202.81</span>
-        <span class="tag warn">Supply 207.98–231.83</span>
+        <span class="tag warn">Supply 207–231.83</span>
         <span class="tag">Demand 170–177</span>
         <span class="tag">as of Jul 17 2026</span>
       </div>
@@ -325,7 +325,7 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
         </defs>
         <path d="M10 265 L410 265" stroke="#2C2246" stroke-width="1"/>
         <path d="M10 60 L410 60" stroke="#FF5C6A" stroke-width="1" stroke-dasharray="5 5" opacity=".7"/>
-        <text x="14" y="52" font-family="JetBrains Mono" font-size="10" fill="#FF5C6A">supply · 207.98–231.83</text>
+        <text x="14" y="52" font-family="JetBrains Mono" font-size="10" fill="#FF5C6A">supply · 207–231.83</text>
         <path d="M10 230 L410 230" stroke="#3DDC97" stroke-width="1" stroke-dasharray="5 5" opacity=".7"/>
         <text x="14" y="248" font-family="JetBrains Mono" font-size="10" fill="#3DDC97">demand · 170–177</text>
         <g>
@@ -468,7 +468,7 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
     </div>
     <div class="card supply">
       <h4 class="r">Supply zone · how to draw it</h4>
-      <p>The distribution range under the highs: long upper wicks, heavy red candles, price failing to hold above. On NVDA that's <span class="price r">207.98–231.83</span> — the red box on your monthly markup. Sellers hit 207.98 repeatedly.</p>
+      <p>The distribution range under the highs: long upper wicks, heavy red candles, price failing to hold above. On NVDA that's <span class="price r">207–231.83</span> — the red box on your monthly markup. Price keeps getting sold at the lower edge — the last two 4h candles just rolled over from ~206 (206.23 high → 202.64 close).</p>
     </div>
   </div>
 
@@ -503,7 +503,7 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
   <div class="grid2">
     <div class="card supply">
       <h4 class="r">Defining the retested top</h4>
-      <p>Find the origin of an impulse <em>down</em>, a cluster of long upper wicks (distribution), or two highs at the same price (a double top). Mark it. It's confirmed the moment price returns and is rejected again. On NVDA: <span class="price r">207.98</span> was hit and rejected two days running; the <span class="price">212.5</span> double top is a retest by definition; <span class="price r">231.83</span> is the outer distribution top under the ATH.</p>
+      <p>Find the origin of an impulse <em>down</em>, a cluster of long upper wicks (distribution), or two highs at the same price (a double top). Mark it. It's confirmed the moment price returns and is rejected again. On NVDA: <span class="price r">206–208</span> band keeps rejecting price (4h pivot 207.28, 15m 207.67); the <span class="price">212.5</span> double top is a retest by definition; <span class="price r">231.83</span> is the outer distribution top under the ATH.</p>
     </div>
     <div class="card demand">
       <h4 class="g">Defining the retested bottom</h4>
@@ -661,7 +661,7 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
     <div class="tf">
       <div class="lbl">4-hour<small>IS THERE A SETUP? (where the trade was placed)</small></div>
       <div>
-        <p>Swing structure for the entry. NVDA: the local uptrend broke under <span class="price r">207.98</span> into lower highs. Price 202.64 sits <strong>right on the 4h Bollinger mid-band (201.95)</strong>, below the 9- and 50-EMA (207.15 / 204.26). Mid-range chop, no base above a level, no pullback into demand.</p>
+        <p>Swing structure for the entry. NVDA: the local uptrend broke under <span class="price r">207</span> into lower highs. Price 202.64 sits <strong>right on the 4h Bollinger mid-band (201.95)</strong>, below the 9- and 50-EMA (207.15 / 204.26). Mid-range chop, no base above a level, no pullback into demand.</p>
         <p class="verdict r">✗ AGAINST the long — no setup, mid-range</p>
       </div>
     </div>
@@ -693,7 +693,7 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
 
   <div class="callout">
     <div class="t">Verdict of the pass</div>
-    <p>Only the monthly favors the long. The two execution timeframes (4h + 15m) are both against it, the weekly is undecided, and <strong>none offers a setup</strong>. That doesn't mean "NVDA is bad" — it means <strong>"not now, and not from this price."</strong> 202.6 hangs mid-air between 197.84 and 207.98: no zone, no confirmation, no edge. The most expensive skill in trading is the ability to not enter.</p>
+    <p>Only the monthly favors the long. The two execution timeframes (4h + 15m) are both against it, the weekly is undecided, and <strong>none offers a setup</strong>. That doesn't mean "NVDA is bad" — it means <strong>"not now, and not from this price."</strong> 202.6 hangs mid-air between 197.84 and 207: no zone, no confirmation, no edge. The most expensive skill in trading is the ability to not enter.</p>
   </div>
 </section>
 
@@ -729,7 +729,7 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
       <div class="scen">
         <div class="card demand">
           <h4 class="g">Scenario A · The reclaim</h4>
-          <span class="trigger">Daily close &gt; 207.98 on impulse + volume</span>
+          <span class="trigger">Daily close &gt; 207 on impulse + volume</span>
           <p>The seller who defended the level got absorbed; the double top is invalidated above 212.5. Targets <span class="price">215.73 → 231.83</span>, stop below the reclaim candle. Later, but with a clean invalidation.</p>
         </div>
         <div class="card demand">
@@ -763,17 +763,17 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
   <div class="autopsy">
     <div class="flaw"><div>
       <h4>Entry from no-man's land<span class="sev">LOCATION</span></h4>
-      <p>202.58 sits mid-range between 197.84 and 207.98 — right on the 4h Bollinger mid-band (201.95). No demand zone, no reclaimed level, no unfilled orders working for you. "The R/R box fit nicely here" is not a reason to be at a price. From mid-range, longs and shorts have roughly equal odds — spread and randomness win.</p>
-      <p class="fix">FIX → enter only FROM a zone (200–201, 197.84, 170–177) or ON a reclaim (207.98)</p>
+      <p>202.58 sits mid-range between 197.84 and 207 — right on the 4h Bollinger mid-band (201.95). No demand zone, no reclaimed level, no unfilled orders working for you. "The R/R box fit nicely here" is not a reason to be at a price. From mid-range, longs and shorts have roughly equal odds — spread and randomness win.</p>
+      <p class="fix">FIX → enter only FROM a zone (200–201, 197.84, 170–177) or ON a reclaim (207)</p>
     </div></div>
     <div class="flaw"><div>
       <h4>The target is inside the supply zone<span class="sev">TARGET</span></h4>
-      <p>210.55 lives inside 207.98–231.83 — and to reach it, price must first chew through 207.98, defended two days running. Your profit target requires the hardest fight on the chart to be won <em>before</em> you get paid. The realistic reachable target from 202.58 was ~207.5 — which shrinks true R/R from 1.79 to about 1.0.</p>
+      <p>210.55 lives inside 207–231.83 — and to reach it, price must first chew through the 206–208 supply band where price keeps getting sold. Your profit target requires the hardest fight on the chart to be won <em>before</em> you get paid. The realistic reachable target from 202.58 was ~207.5 — which shrinks true R/R from 1.79 to about 1.0.</p>
       <p class="fix">FIX → targets stop BEFORE the first opposing zone, never inside it</p>
     </div></div>
     <div class="flaw"><div>
       <h4>Long against a broken 4-hour structure<span class="sev">SETUP</span></h4>
-      <p>The 4h uptrend was already gone — it broke under 207.98 into lower highs, no higher low held, no base formed. This wasn't a pullback entry in a trend; it was a bet that a broken structure repairs itself immediately, the lowest-probability version of any long.</p>
+      <p>The 4h uptrend was already gone — it broke under 207 into lower highs, no higher low held, no base formed. This wasn't a pullback entry in a trend; it was a bet that a broken structure repairs itself immediately, the lowest-probability version of any long.</p>
       <p class="fix">FIX → no setup on the trade's own timeframe = no trade, regardless of how good the level map looks</p>
     </div></div>
     <div class="flaw"><div>
@@ -815,7 +815,7 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
 
   <div class="callout good">
     <div class="t">The honest summary</div>
-    <p>This wasn't a "stupid" trade — it was a <strong>well-organized trade in the wrong place at the wrong time</strong>. Risk management was present; context reading wasn't. The same ticket becomes a good trade with one change: move the entry to a level where institutions already showed their hand — a reclaimed 207.98, or an absorbed 200–201 — and let the same R/R discipline do its job from a spot where probability is on your side.</p>
+    <p>This wasn't a "stupid" trade — it was a <strong>well-organized trade in the wrong place at the wrong time</strong>. Risk management was present; context reading wasn't. The same ticket becomes a good trade with one change: move the entry to a level where institutions already showed their hand — a reclaimed 207, or an absorbed 200–201 — and let the same R/R discipline do its job from a spot where probability is on your side.</p>
   </div>
 </section>
 
@@ -823,18 +823,18 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
 <section id="fix" class="reveal">
   <div class="eyebrow">08 · The fix</div>
   <h2>The same discipline, done right</h2>
-  <p>The losing ticket wasn't unsalvageable — it was in the <strong>wrong place</strong>. Our theory says the same thing every time: <strong>don't predict that buyers will show up — wait until they do, at a level you mapped in advance.</strong> On NVDA right now, the highest-probability long that respects every rule is <strong class="g">the reclaim</strong>: the trade only exists once the seller at 207.98 is beaten.</p>
+  <p>The losing ticket wasn't unsalvageable — it was in the <strong>wrong place</strong>. Our theory says the same thing every time: <strong>don't predict that buyers will show up — wait until they do, at a level you mapped in advance.</strong> On NVDA right now, the highest-probability long that respects every rule is <strong class="g">the reclaim</strong>: the trade only exists once the seller at 207 is beaten.</p>
 
   <div class="trigger-line">
-    <span>◆</span><span><b>The trigger (no trigger = no trade):</b> a 4-hour close back <b>above 207.98</b> on a wide impulse candle with above-average volume. That reclaim proves the two-day seller was absorbed and invalidates the double top. Until it prints, this trade does not exist — you wait.</span>
+    <span>◆</span><span><b>The trigger (no trigger = no trade):</b> a 4-hour close back <b>above 207</b> on a wide impulse candle with above-average volume. That reclaim proves the two-day seller was absorbed and invalidates the double top. Until it prints, this trade does not exist — you wait.</span>
   </div>
 
   <div class="trade-ticket good">
     <div class="tt">The trade ticket · NVDA long · 4-hour · THE RECLAIM (built from our theory)</div>
     <div class="row"><span>Direction</span><span class="g">LONG · with the monthly + weekly uptrend</span></div>
-    <div class="row"><span>Setup</span><span>reclaim of 207.98 (former neckline → support)</span></div>
+    <div class="row"><span>Setup</span><span>reclaim of 207 (former neckline → support)</span></div>
     <div class="row"><span>Entry</span><span>~208.60 &nbsp;(on the confirmed reclaim, not before)</span></div>
-    <div class="row"><span>Stop</span><span class="r">205.20 &nbsp;(−1.63% · below the reclaim candle, back under 207.98 + room)</span></div>
+    <div class="row"><span>Stop</span><span class="r">205.20 &nbsp;(−1.63% · below the reclaim candle, back under 207 + room)</span></div>
     <div class="row"><span>Target 1</span><span class="g">215.73 &nbsp;(+3.42% · inner supply — bank partial)</span></div>
     <div class="row"><span>Target 2 (runner)</span><span class="g">231.83 &nbsp;(top of supply · trail the stop)</span></div>
     <div class="row"><span>Risk / Reward (to T1)</span><span class="a">2.1</span></div>
@@ -852,12 +852,12 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
   <div class="compare">
     <table>
       <tr><th>Dimension</th><th class="badcol">The losing trade</th><th class="fixcol">The trade done right</th></tr>
-      <tr><td>Location</td><td class="bad">202.58 — mid-range, no orders</td><td class="good">on the 207.98 reclaim — a real level</td></tr>
+      <tr><td>Location</td><td class="bad">202.58 — mid-range, no orders</td><td class="good">on the 207 reclaim — a real level</td></tr>
       <tr><td>Target</td><td class="bad">210.55 — inside intact supply</td><td class="good">215.73 partial, only after supply is broken</td></tr>
       <tr><td>Setup</td><td class="bad">against a broken 4h structure</td><td class="good">continuation of a reclaimed trend</td></tr>
       <tr><td>Timing (15m)</td><td class="bad">pointing down into your entry</td><td class="good">flipped bullish on the reclaim</td></tr>
       <tr><td>Stop</td><td class="bad">198.12 — on the obvious range low</td><td class="good">205.20 — where the thesis is truly wrong</td></tr>
-      <tr><td>Trigger</td><td class="bad">none — a prediction</td><td class="good">impulse + volume close &gt; 207.98</td></tr>
+      <tr><td>Trigger</td><td class="bad">none — a prediction</td><td class="good">impulse + volume close &gt; 207</td></tr>
       <tr><td>Expected value</td><td class="bad">≈ −0.05% / trade</td><td class="good">≈ +1.15% / trade</td></tr>
     </table>
   </div>
@@ -876,7 +876,7 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
 
   <h3>What the chart actually shows</h3>
   <ul class="keys">
-    <li><b>Structure:</b> the daily already put in a <b>lower high</b> under the 207.98–231.83 supply and is chopping mid-range — the uptrend is broken, not "intact." Ascending trendlines are drawn over that break.</li>
+    <li><b>Structure:</b> the daily already put in a <b>lower high</b> under the 207–231.83 supply and is chopping mid-range — the uptrend is broken, not "intact." Ascending trendlines are drawn over that break.</li>
     <li><b>Volume profile (VPVR):</b> the fattest node — the <b>point of control</b> — sits around <b>180–185</b>, not 190. Volume through ~190–202 is <b>thin</b>. Price falls fast through thin nodes; it rests at fat ones.</li>
     <li><b>The tool's own signals:</b> <span class="r">sell-triangles fired near 209 and 230</span> (distribution into supply); <span class="g">buy-triangles fired near 170 and 178</span> — i.e. the demand that actually worked is <em>below</em>, not at 190.</li>
     <li><b>Momentum &amp; RSI:</b> mid-range, no oversold-at-a-level reversal. Nothing is confirming a bounce — the case is a prediction, not a reaction.</li>
@@ -908,14 +908,14 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
       <line x1="30" y1="216" x2="600" y2="216" stroke="#8B5CF6" stroke-dasharray="5 4"/><text x="34" y="212" font-family="JetBrains Mono" font-size="10" fill="#8B5CF6">retail "190 support" — low-volume pocket</text>
       <text x="34" y="240" font-family="JetBrains Mono" font-size="10" fill="#F2B441">POC ~183 — where orders actually sit</text>
       <text x="34" y="290" font-family="JetBrains Mono" font-size="10" fill="#3DDC97">real demand 170–177 (buy signals fired)</text>
-      <text x="34" y="52" font-family="JetBrains Mono" font-size="10" fill="#FF5C6A">supply 207.98–231.83 (sell signals fired)</text>
+      <text x="34" y="52" font-family="JetBrains Mono" font-size="10" fill="#FF5C6A">supply 207–231.83 (sell signals fired)</text>
       <!-- price axis -->
       <text x="612" y="96" font-family="JetBrains Mono" font-size="9" fill="#CFC9DE">220</text>
       <text x="612" y="178" font-family="JetBrains Mono" font-size="9" fill="#CFC9DE">200</text>
       <text x="612" y="261" font-family="JetBrains Mono" font-size="9" fill="#CFC9DE">180</text>
       <text x="612" y="343" font-family="JetBrains Mono" font-size="9" fill="#CFC9DE">160</text>
     </svg>
-    <figcaption>The volume profile is the tell. <b class="a">190 is a thin, low-volume pocket</b> — a drawn line, not a shelf; price glides through it. The real high-volume support is the <b class="a">POC around 180–185</b> and the <b class="g">170–177 demand</b>; the real ceiling is the <b class="r">207.98–231.83 supply</b> a "breakout" must fight.</figcaption>
+    <figcaption>The volume profile is the tell. <b class="a">190 is a thin, low-volume pocket</b> — a drawn line, not a shelf; price glides through it. The real high-volume support is the <b class="a">POC around 180–185</b> and the <b class="g">170–177 demand</b>; the real ceiling is the <b class="r">207–231.83 supply</b> a "breakout" must fight.</figcaption>
   </figure>
 
   <h3>Where the case goes wrong</h3>
@@ -923,7 +923,7 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
     <table>
       <tr><th>Dimension</th><th class="badcol">Retail says</th><th class="fixcol">Institutional flow says</th></tr>
       <tr><td>The "support"</td><td class="bad">"190 is support — it bounces here"</td><td class="good">190 is a low-volume pocket; the shelf is the POC 180–185, demand 170–177</td></tr>
-      <tr><td>Breakout thesis</td><td class="bad">"above the range → new highs"</td><td class="good">207.98–231.83 supply overhead; sell-signals already fired at 209 &amp; 230</td></tr>
+      <tr><td>Breakout thesis</td><td class="bad">"above the range → new highs"</td><td class="good">207–231.83 supply overhead; sell-signals already fired at 209 &amp; 230</td></tr>
       <tr><td>Trend</td><td class="bad">"ascending trendlines = uptrend"</td><td class="good">daily made a lower high — structure broke; lines are narrative, HH/HL is fact</td></tr>
       <tr><td>Current price</td><td class="bad">"202 is fine, we're holding"</td><td class="good">202 is no-man's-land mid-range — the autopsy trap again</td></tr>
       <tr><td>The reason to act</td><td class="bad">"the line is my reason"</td><td class="good">a line with no reaction is a hypothesis; we trade the reaction</td></tr>
@@ -988,7 +988,7 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
 
   <h3>Where it confirms the price map</h3>
   <ul class="keys g">
-    <li><b>Same ceiling.</b> Call wall $210 + heaviest call gamma above spot sit right on our <b>207.98 supply edge</b> — a breakout must beat price-structure supply <em>and</em> the dealer wall.</li>
+    <li><b>Same ceiling.</b> Call wall $210 + heaviest call gamma above spot sit right on our <b>207 supply edge</b> — a breakout must beat price-structure supply <em>and</em> the dealer wall.</li>
     <li><b>Capped upside in the flow.</b> Net call selling (51% sold); <b>195C sold $433K</b> and <b>205C sold $123K</b> = overwriting the 195–210 band. Distribution under supply.</li>
     <li><b>Defended downside, two tiers.</b> Put wall / max pain / peak put gamma at <b>$200</b>; <b>160P sold $249K</b> = confidence the 170–177 demand won't break.</li>
     <li><b>Regime says wait.</b> Positive gamma → pin / mean-revert = range-bound chop, no trend. That is our verdict: no edge mid-range, not now.</li>
@@ -1001,7 +1001,7 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
 
   <div class="callout good">
     <div class="t">Verdict</div>
-    <p>Yes — it supports the theory, as <strong>confluence + regime</strong>, not a new thesis. Same ceiling (~207.98–210), same defended support (200 tactically, 170–177 structurally), same conclusion: <strong>range-bound, wait for the break.</strong> The flow itself is mixed — net call selling vs +$6.8M premium — i.e. low conviction, which also says wait. It does <em>not</em> rescue the breakout case: dealers pinning near 200–210 is not a launch.</p>
+    <p>Yes — it supports the theory, as <strong>confluence + regime</strong>, not a new thesis. Same ceiling (~207–210), same defended support (200 tactically, 170–177 structurally), same conclusion: <strong>range-bound, wait for the break.</strong> The flow itself is mixed — net call selling vs +$6.8M premium — i.e. low conviction, which also says wait. It does <em>not</em> rescue the breakout case: dealers pinning near 200–210 is not a launch.</p>
   </div>
 </section>
 
@@ -1047,20 +1047,20 @@ const NVDA = {
   bb: { up: 229.01, mid: 197.10, lo: 165.18 },
   chart: { yMin: 112, yMax: 238, xPad: 60, xEnd: 902, yTop: 30, yBot: 452 },
   zones: [
-    { kind:'supply', lo:207.98, hi:231.83 },
+    { kind:'supply', lo:207, hi:231.83 },
     { kind:'demand', lo:170,    hi:177    },
   ],
   levels: [
     { id:'l231', px:231.83, disp:'231.83', kind:'sup', conf:true,  name:'Top of supply · ATH zone',
-      detail:'Where the impulse up finally exhausted — long upper wicks on the weekly = aggressive distribution. While price is below, the whole 207.98–231.83 range is a ceiling. A break-and-hold above opens price discovery with no levels overhead.' },
+      detail:'Where the impulse up finally exhausted — long upper wicks on the weekly = aggressive distribution. While price is below, the whole 207–231.83 range is a ceiling. A break-and-hold above opens price discovery with no levels overhead.' },
     { id:'l215', px:215.73, disp:'215.73', kind:'sup', conf:true,  name:'Inner supply level',
-      detail:'The interim target if 207.98 is reclaimed, and a logical place to take partial profit — the first serious offer inside the supply zone.' },
+      detail:'The interim target if 207 is reclaimed, and a logical place to take partial profit — the first serious offer inside the supply zone.' },
     { id:'l212', px:212.50, disp:'212.5 ×2', kind:'sup', conf:false, name:'15m double top',
-      detail:'Two peaks at ~212.3–212.5, neckline 206.5–207.5 (which contains 207.98 — the same weekly level under a microscope). Neckline break + consolidation below it and the 200 EMA = confirmation; measured move ~$6 → target 200.5–201.5. Invalidation: a hold back above 212.5. From the 15m timeframe — not visible on the weekly markup.' },
-    { id:'l207', px:207.98, disp:'207.98', kind:'sup', conf:true,  name:"Active seller's level",
-      detail:'The single most important level right now. Sellers hit it two days running — present and defending. It is also the broken double-top neckline: former support turned resistance. A reclaim with an impulse candle on volume is the first condition for the bullish scenario.' },
+      detail:'Two peaks at ~212.3–212.5, neckline 206.5–207.5 (which contains 207 — the same weekly level under a microscope). Neckline break + consolidation below it and the 200 EMA = confirmation; measured move ~$6 → target 200.5–201.5. Invalidation: a hold back above 212.5. From the 15m timeframe — not visible on the weekly markup.' },
+    { id:'l207', px:207, disp:'207', kind:'sup', conf:true,  name:"Near-term supply · balance 206–208",
+      detail:'The near-term ceiling — a supply / balance band at roughly <b>206–208</b> where price keeps getting sold. Your marks: 4h pivot 207.28, 15m 207.67; the latest proof is the last two 4h candles rolling over from ~206 (206.23 high, 202.64 close). It is the lower edge of the weekly supply zone and the broken double-top neckline. A 4h close back above ~208 on an impulse candle + volume is the first condition for the bullish scenario.' },
     { id:'lnow', px:202.81, disp:'202.81', kind:'now', conf:true,  name:'Current price · no-man’s-land',
-      detail:'Halfway between 197.84 and 207.98. No unfilled orders here, no structure — entering from this price is trading without an edge in either direction. The best position here is observation.' },
+      detail:'Halfway between 197.84 and 207. No unfilled orders here, no structure — entering from this price is trading without an edge in either direction. The best position here is observation.' },
     { id:'l200', px:200.50, disp:'200–201', kind:'neu', conf:false, name:'Double-top measured target',
       detail:'The $6 move off the neckline is nearly complete. Watch the reaction: absorption of selling + an impulse up = the first early long signal (aggressive). An impulse straight through it = the road to 197.84, then 185.61.' },
     { id:'l197', px:197.84, disp:'197.84', kind:'neu', conf:true,  name:'Range low · balance floor',
@@ -1247,7 +1247,7 @@ function drawBreak(){
   let s=`<line x1="20" y1="232" x2="620" y2="232" stroke="#2C2246"/>`;
   // real level lines
   s+=`<line x1="30" y1="70" x2="620" y2="70" stroke="#FF5C6A" stroke-dasharray="5 5" opacity=".6"/>`;
-  s+=`<text x="34" y="64" font-family="JetBrains Mono" font-size="11" fill="#FF5C6A">207.98 · supply — a new HH fails here</text>`;
+  s+=`<text x="34" y="64" font-family="JetBrains Mono" font-size="11" fill="#FF5C6A">207 · supply — a new HH fails here</text>`;
   s+=`<line x1="30" y1="150" x2="620" y2="150" stroke="#F2B441" stroke-dasharray="5 5" opacity=".6"/>`;
   s+=`<text x="360" y="144" font-family="JetBrains Mono" font-size="11" fill="#F2B441">197.84 · last HL — the line that must hold</text>`;
   // structure: uptrend into the top (green), then fail + break (red)
@@ -1255,13 +1255,13 @@ function drawBreak(){
   s+=trendPoly('300,70 380,120 460,80 540,178 610,202','#FF5C6A');
   s+=dot(110,110,'#3DDC97','HH',98,98);
   s+=dot(185,150,'#F2B441','last HL',150,172);
-  s+=dot(300,70,'#3DDC97','HH · tags 207.98',300,60);
+  s+=dot(300,70,'#3DDC97','HH · tags 207',300,60);
   s+=`<text x="290" y="52" font-family="JetBrains Mono" font-size="13" fill="#FF5C6A">▽</text>`;
   s+=dot(460,80,'#FF5C6A','lower high — no new HH',430,68);
   s+=dot(540,178,'#FF5C6A','breaks 197.84',505,200);
-  s+=`<text x="26" y="32" font-family="JetBrains Mono" font-size="13" fill="#FF5C6A">THE NVDA BREAK — fails 207.98, then loses 197.84</text>`;
+  s+=`<text x="26" y="32" font-family="JetBrains Mono" font-size="13" fill="#FF5C6A">THE NVDA BREAK — fails 207, then loses 197.84</text>`;
   document.getElementById('trendFig').innerHTML=s;
-  document.getElementById('trendCap').innerHTML='On the NVDA daily, price <b>failed to make a new high above the 207.98 supply</b>, then <b>lost the last higher low at 197.84</b> — both conditions met, so the local uptrend is broken. That is why a long here needs a <b class="g">reclaim above 207.98</b> or a fresh reaction at a level below (197.84 → 185.61 → 170–177) — not a mid-range bet.';
+  document.getElementById('trendCap').innerHTML='On the NVDA daily, price <b>failed to make a new high above the 207 supply</b>, then <b>lost the last higher low at 197.84</b> — both conditions met, so the local uptrend is broken. That is why a long here needs a <b class="g">reclaim above 207</b> or a fresh reaction at a level below (197.84 → 185.61 → 170–177) — not a mid-range bet.';
 }
 document.getElementById('segUp').addEventListener('click',function(){segPick(this,['segUp','segDown','segBreak']);drawUp();});
 document.getElementById('segDown').addEventListener('click',function(){segPick(this,['segUp','segDown','segBreak']);drawDown();});
@@ -1288,8 +1288,8 @@ document.getElementById('evRange').addEventListener('input',updateEV);
 const CHECKS=[
   {s:'pass',t:'Is the higher-timeframe trend on your side?',p:'Monthly + weekly in an uptrend, price above the primary demand zone.',q:'NVDA now: yes — above 170–177, HH/HL intact',b:'FOR'},
   {s:'fail',t:'Do the timeframes agree?',p:'The execution timeframe must confirm the weekly. Conflict = wait, not "average the opinions."',q:'NVDA now: no — 4h & 15m both against, weekly undecided',b:'AGAINST'},
-  {s:'fail',t:'Is price IN a zone, not BETWEEN zones?',p:'Entries only from a demand zone or on a level reclaim. Mid-range is no-man’s land.',q:'NVDA now: 202.81 — between 197.84 and 207.98',b:'AGAINST'},
-  {s:'wait',t:'Did the level confirm?',p:'Absorption + impulse candle + volume. A level without a reaction is a hypothesis.',q:'NVDA now: waiting at 200–201 or a 207.98 reclaim',b:'WAIT'},
+  {s:'fail',t:'Is price IN a zone, not BETWEEN zones?',p:'Entries only from a demand zone or on a level reclaim. Mid-range is no-man’s land.',q:'NVDA now: 202.81 — between 197.84 and 207',b:'AGAINST'},
+  {s:'wait',t:'Did the level confirm?',p:'Absorption + impulse candle + volume. A level without a reaction is a hypothesis.',q:'NVDA now: waiting at 200–201 or a 207 reclaim',b:'WAIT'},
   {s:'fail',t:'Is the path to the target clean?',p:'The target must not sit inside opposing supply, or the R/R is fictional.',q:'The 203→210.55 setup: target inside supply',b:'AGAINST'},
   {s:'wait',t:'Is invalidation defined BEFORE entry?',p:'A specific price where the thesis is dead. Size is derived from the stop, never the reverse.',q:'Rule: stop first, then size, then entry',b:'RULE'},
   {s:'wait',t:'Broader market context & catalysts?',p:'QQQ/SMH structure, the macro calendar (FOMC, CPI), earnings date.',q:'Check the calendar before every swing',b:'CHECK'},
