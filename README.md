@@ -26,9 +26,10 @@ See [`CLAUDE.md`](CLAUDE.md) for the data-accuracy and editing rules.
 
 ## Tech
 
-One self-contained `index.html` — HTML, CSS and vanilla JS, no build step and no
-JS/CSS libraries (Google Fonts is the only external request, with graceful
-system-font fallback). Deployed to GitHub Pages from `main` via
+Two self-contained pages — `index.html` (the concepts / theory) and `nvda.html`
+(the full NVDA case study, linked from the nav) — each HTML, CSS and vanilla JS,
+no build step and no JS/CSS libraries (Google Fonts is the only external request,
+with graceful system-font fallback). Deployed to GitHub Pages from `main` via
 `.github/workflows/deploy.yml`.
 
 ## Run locally

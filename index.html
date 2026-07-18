@@ -84,6 +84,8 @@ nav a{color:var(--muted);text-decoration:none;font-size:14.5px;white-space:nowra
 nav a:hover,nav a:focus-visible{color:var(--ink)}
 nav a.active{color:var(--ink);border-bottom-color:var(--violet)}
 nav a:focus-visible{outline:2px solid var(--violet);outline-offset:2px;border-radius:4px}
+nav a.navcta{color:var(--demand);border:1px solid rgba(61,220,151,.45);border-radius:100px;padding:6px 15px}
+nav a.navcta:hover{background:var(--demand-dim);color:var(--demand)}
 
 /* ---------- hero ---------- */
 .hero{padding:104px 0 88px;border-top:none;position:relative;overflow:hidden}
@@ -297,27 +299,21 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
 }
 @keyframes pulse{0%,100%{opacity:.35}50%{opacity:1}}
 .pulse{animation:pulse 2.4s ease-in-out infinite}
+.herocta{display:inline-block;font-family:var(--mono);font-size:15px;background:var(--demand);color:#0B0812;font-weight:600;padding:14px 28px;border-radius:100px;text-decoration:none;margin-top:6px}
+.herocta:hover{filter:brightness(1.08)}
+.backcta{display:inline-block;font-family:var(--mono);font-size:14px;color:var(--demand);text-decoration:none;margin-top:8px}
 </style>
 </head>
 <body>
 
 <div id="progress"></div>
 
+
 <nav>
   <div class="wrap">
     <div class="logo">FLOW<span>/</span>MONEY TRAIL</div>
     <div class="links">
-      <a href="#flow">Institutions</a>
-      <a href="#candles">Impulse vs Balance</a>
-      <a href="#zones">Zones</a>
-      <a href="#trend">Trend</a>
-      <a href="#timeframes">Timeframes</a>
-      <a href="#nvda">NVDA Case</a>
-      <a href="#autopsy">Trade Autopsy</a>
-      <a href="#fix">The Fix</a>
-      <a href="#retail">Retail Trap</a>
-      <a href="#options">Options Flow</a>
-      <a href="#checklist">Checklist</a>
+      <a href="nvda.html" class="navcta">NVDA Case Study &#8594;</a>
     </div>
   </div>
 </nav>
@@ -390,7 +386,6 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
 
 <main class="wrap">
 
-<!-- =============== 1. INSTITUTIONAL FLOW =============== -->
 <section id="flow" class="reveal">
   <div class="eyebrow">01 · Foundation</div>
   <h2>What institutional money flow actually is</h2>
@@ -418,7 +413,6 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
   </div>
 </section>
 
-<!-- =============== 2. IMPULSE VS BALANCE =============== -->
 <section id="candles" class="reveal">
   <div class="eyebrow">02 · Candle language</div>
   <h2>Impulse vs Balance — two phases that always alternate</h2>
@@ -476,7 +470,6 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
   </div>
 </section>
 
-<!-- =============== 3. ZONES =============== -->
 <section id="zones" class="reveal">
   <div class="eyebrow">03 · The level map</div>
   <h2>Demand and supply zones: where unfilled orders live</h2>
@@ -637,6 +630,19 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
     <p>Buying "because price came down to a level." A level without <strong>reaction</strong> is just a price from the past. We need confirmation: absorption of selling + an impulse candle off the zone. Without that, the level is a hypothesis, not a signal.</p>
   </div>
 
+  <h3>What if no one else buys? The handoff</h3>
+  <p>Once the bank has finished filling, <strong>the zone's fuel is spent.</strong> For price to keep rising it has to be <strong>handed off to new buyers</strong> — momentum traders, breakout buyers, other funds, short-covering. If that fresh demand shows up, price runs and the zone "worked." If it doesn't, price can't hold, rolls over, and the zone <strong>fails and flips to supply</strong> — the same bank often starts <em>distributing</em> its inventory to whoever's left (accumulate low → mark up → sell high).</p>
+  <p><strong>So yes — sometimes you are simply wrong that more demand exists, and the trade loses.</strong> That is not a flaw in the method; it is the premise. You can never know for certain more buyers are coming — which is exactly why the whole approach is built the way it is:</p>
+  <ul class="keys">
+    <li><b>Trade the reaction, not the prediction.</b> The rejection wick + impulse + volume <em>is</em> the new demand arriving in real time. No reaction = no proof = no entry = no loss. You don't bet buyers will come; you wait until you see them.</li>
+    <li><b>The stop sits just past the distal edge.</b> If the handoff never comes, you're out for a small, pre-defined loss — you found out cheaply.</li>
+    <li><b>Expectancy carries you.</b> You'll be wrong a real fraction of the time; positive R/R means the winners pay for the losers. Being wrong is budgeted, not fatal.</li>
+  </ul>
+  <div class="callout warn">
+    <div class="t">The hard truth</div>
+    <p>No setup removes the risk of being wrong — only setups that make being wrong <strong>cheap</strong> and being right <strong>big</strong>. "The bank was done and no one else showed up" is just a normal losing trade: take the small stop and move to the next mapped level.</p>
+  </div>
+
   <h3>So how do we catch the move — if we can't be sure?</h3>
   <p class="lead">You just named the whole game. In balance, buy and sell orders are matched and price rotates. The instant one side is left with <strong>unfilled orders</strong> — more buyers than sellers — price impulses that way. But <strong>nobody knows in advance which way balance breaks.</strong> So we don't try to be right. We enter where <strong>being wrong is cheap</strong>: at the edge of the zone, stop just beyond it, target the far side. Small risk, big reward.</p>
 
@@ -671,11 +677,10 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
 
   <div class="callout good">
     <div class="t">The point</div>
-    <p>Being right isn't the goal — <strong>positive expectancy</strong> is. Tight R/R at a level is what lets a trader who's wrong half the time still make money. (Play with the exact math in the <a href="#autopsy">autopsy's EV calculator</a>.)</p>
+    <p>Being right isn't the goal — <strong>positive expectancy</strong> is. Tight R/R at a level is what lets a trader who's wrong half the time still make money. (Play with the exact math in the <a href="nvda.html#autopsy">autopsy's EV calculator</a>.)</p>
   </div>
 </section>
 
-<!-- =============== 4. TREND =============== -->
 <section id="trend" class="reveal">
   <div class="eyebrow">04 · Structure</div>
   <h2>Uptrend, downtrend, and the moment the uptrend "isn't there anymore"</h2>
@@ -704,7 +709,6 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
   </div>
 </section>
 
-<!-- =============== 5. TIMEFRAMES =============== -->
 <section id="timeframes" class="reveal">
   <div class="eyebrow">05 · Timeframe hierarchy</div>
   <h2>Which timeframes to check before going long — and in what order</h2>
@@ -764,341 +768,11 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
   </div>
 </section>
 
-<!-- =============== 6. NVDA CASE =============== -->
-<section id="nvda" class="reveal">
-  <div class="eyebrow">06 · Case study</div>
-  <h2>NVDA: the interactive level map</h2>
-  <p class="lead">Every horizontal level below is transcribed from your marked-up Yahoo Finance charts (weekly + monthly, close of Jul 17 2026). <strong>Click a level</strong> — in the ladder or on the chart — to see the institutional logic behind it. Candle geometry is a schematic of the visible weekly structure; the <em>levels</em> are real.</p>
-
-  <div class="case">
-    <aside class="ladder" aria-label="NVDA level ladder">
-      <div class="lt">NVDA · Level Ladder</div>
-      <div id="ladderList"></div>
-    </aside>
-
-    <div class="chart-panel">
-      <div class="chart-wrap">
-        <div class="chart-head">
-          <div class="ttl"><b>NVDA</b> · weekly · Jul 2025 → Jul 2026 · <b>202.81</b></div>
-          <div class="chart-toggles">
-            <label><input type="checkbox" id="tglZones" checked> Zones</label>
-            <label><input type="checkbox" id="tglBB"> Bollinger (21,2)</label>
-            <label><input type="checkbox" id="tglLevels" checked> Levels</label>
-          </div>
-        </div>
-        <svg id="nvdaChart" viewBox="0 0 1000 500" role="img" aria-label="NVDA weekly schematic chart with marked levels"></svg>
-        <div class="chart-cap">Schematic weekly candles over real marked levels. Weekly Bollinger (21,2): upper 229.01 · mid 197.10 · lower 165.18. Last weekly candle O 208.54 · H 213.81 · L 197.97 · C 202.81.</div>
-      </div>
-
-      <div class="lvl-detail" id="lvlDetail" aria-live="polite"></div>
-
-      <h3>Two valid long scenarios</h3>
-      <div class="scen">
-        <div class="card demand">
-          <h4 class="g">Scenario A · The reclaim</h4>
-          <span class="trigger">Daily close &gt; 207 on impulse + volume</span>
-          <p>The seller who defended the level got absorbed; the double top is invalidated above 212.5. Targets <span class="price">215.73 → 231.83</span>, stop below the reclaim candle. Later, but with a clean invalidation.</p>
-        </div>
-        <div class="card demand">
-          <h4 class="g">Scenario B · The buy-back from below</h4>
-          <span class="trigger">Absorption at 200–201 / 197.84 + impulse up</span>
-          <p>The double-top target completes, the seller exhausts, the buyer shows up at a level — aggressive entry, tighter stop under the level. If 197.84 also goes, the next conversation is at <span class="price">185.61</span> or the <span class="price g">170–177</span> zone.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- =============== 7. TRADE AUTOPSY =============== -->
-<section id="autopsy" class="reveal">
-  <div class="eyebrow">07 · The autopsy</div>
-  <h2>Why this trade was bad — a full post-mortem</h2>
-  <p>This is the actual ticket from your TradingView 4-hour markup. On paper it looks disciplined: defined stop, defined target, positive risk/reward. That's exactly why it's a useful lesson — <strong>every number is fine, and almost every decision behind the numbers is wrong.</strong></p>
-
-  <div class="spec bad">
-    <div class="spec-side">The losing trade</div>
-    <div class="spec-eyebrow">Trade ticket · NVDA long · 4-hour · your markup</div>
-    <h3 class="spec-title">The <mark>losing</mark> trade</h3>
-    <div class="spec-rows">
-      <div class="spec-row"><span class="k g">LONG</span><span class="d"><b>Direction</b> — a long, into a broken structure</span></div>
-      <div class="spec-row"><span class="k">202.58</span><span class="d"><b>Entry</b> — mid-range no-man's-land, no level under it</span></div>
-      <div class="spec-row"><span class="k r">198.12</span><span class="d"><b>Stop</b> — −2.20% (−$4.46 · risk $750), sitting right on the 197.84 range low</span></div>
-      <div class="spec-row"><span class="k g">210.55</span><span class="d"><b>Target</b> — +3.93% (+$7.97 · reward $1,446.75), but inside the 207–231.83 supply</span></div>
-      <div class="spec-row"><span class="k">56</span><span class="d"><b>Size</b> — shares</span></div>
-      <div class="spec-row hot"><span class="k">1.79</span><span class="d"><b>Risk / reward</b> — looks disciplined on paper…</span></div>
-      <div class="spec-row"><span class="k r">✗</span><span class="d"><b>Actually</b> — a coin flip with worse odds</span></div>
-    </div>
-  </div>
-
-  <div class="autopsy">
-    <div class="flaw"><div>
-      <h4>Entry from no-man's land<span class="sev">LOCATION</span></h4>
-      <p>202.58 sits mid-range between 197.84 and 207 — right on the 4h Bollinger mid-band (201.95). No demand zone, no reclaimed level, no unfilled orders working for you. "The R/R box fit nicely here" is not a reason to be at a price. From mid-range, longs and shorts have roughly equal odds — spread and randomness win.</p>
-      <p class="fix">FIX → enter only FROM a zone (200–201, 197.84, 170–177) or ON a reclaim (207)</p>
-    </div></div>
-    <div class="flaw"><div>
-      <h4>The target is inside the supply zone<span class="sev">TARGET</span></h4>
-      <p>210.55 lives inside 207–231.83 — and to reach it, price must first chew through the 206–208 supply band where price keeps getting sold. Your profit target requires the hardest fight on the chart to be won <em>before</em> you get paid. The realistic reachable target from 202.58 was ~207.5 — which shrinks true R/R from 1.79 to about 1.0.</p>
-      <p class="fix">FIX → targets stop BEFORE the first opposing zone, never inside it</p>
-    </div></div>
-    <div class="flaw"><div>
-      <h4>Long against a broken 4-hour structure<span class="sev">SETUP</span></h4>
-      <p>The 4h uptrend was already gone — it broke under 207 into lower highs, no higher low held, no base formed. This wasn't a pullback entry in a trend; it was a bet that a broken structure repairs itself immediately, the lowest-probability version of any long.</p>
-      <p class="fix">FIX → no setup on the trade's own timeframe = no trade, regardless of how good the level map looks</p>
-    </div></div>
-    <div class="flaw"><div>
-      <h4>The 15m flow pointed the other way<span class="sev">TIMING</span></h4>
-      <p>A confirmed double top with a measured target of 200.5–201.5 — <em>below your entry</em> — was active on the timing timeframe. You went long while the most recent footprint (breakdown, hold under the neckline and 200 EMA) said "sellers in control." The market owed you a trip through your stop before it owed you the target.</p>
-      <p class="fix">FIX → the 15m picks the moment; it must agree with the direction, or you wait</p>
-    </div></div>
-    <div class="flaw"><div>
-      <h4>The stop sits where stops get harvested<span class="sev">STOP</span></h4>
-      <p>198.12 is basically <em>on</em> 197.84 — the range low everyone can see. If price tests it, wicks below to grab liquidity, and <em>then</em> bounces (the classic sequence), you get stopped at the worst tick and watch the trade work without you. A stop belongs where the thesis is wrong, not where the crowd's orders cluster.</p>
-      <p class="fix">FIX → stop BELOW the level + wick room (under 197), and size adjusts to the wider stop</p>
-    </div></div>
-    <div class="flaw"><div>
-      <h4>No trigger — prediction instead of reaction<span class="sev">CONFIRMATION</span></h4>
-      <p>No impulse candle off a level, no absorption, no reclaim — nothing the market <em>did</em> to earn the entry. Institutional-flow trading is the opposite discipline: let them show up first, pay a slightly worse price, and take a far better probability.</p>
-      <p class="fix">FIX → no reaction at a level = no entry; being early is just being wrong with extra steps</p>
-    </div></div>
-  </div>
-
-  <div class="ev">
-    <h4>R/R without probability is decoration — try it</h4>
-    <p class="lead">The ticket's numbers are fixed: risk <span class="r">−2.20%</span>, reward <span class="g">+3.93%</span>, R/R <span class="a">1.79</span>. What decides the outcome is the one number the box can't draw: the probability of actually reaching the target. Drag it.</p>
-    <div class="ev-grid">
-      <div class="ev-slider">
-        <label>Probability of hitting target <b id="evP">35%</b></label>
-        <input type="range" id="evRange" min="0" max="100" value="35" step="1" aria-label="Win probability">
-        <div class="ev-marks"><span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span></div>
-        <div class="ev-be">Break-even needs ≈ 35.9% just to stop losing money — before commissions.</div>
-        <div class="ev-be" style="color:var(--muted)">With a defended supply level in the way, a broken daily trend and a bearish 15m pattern, a realistic estimate here was ~35%.</div>
-      </div>
-      <div class="ev-out">
-        <div class="evnum" id="evNum">−0.05%</div>
-        <div class="evlab">expected value / trade</div>
-        <div class="evmsg" id="evMsg"></div>
-      </div>
-    </div>
-    <div class="ev-formula">EV = p × (+3.93%) − (1 − p) × (2.20%)<br>the ruler draws the R/R; context sets the probability</div>
-  </div>
-
-  <div class="callout good">
-    <div class="t">The honest summary</div>
-    <p>This wasn't a "stupid" trade — it was a <strong>well-organized trade in the wrong place at the wrong time</strong>. Risk management was present; context reading wasn't. The same ticket becomes a good trade with one change: move the entry to a level where institutions already showed their hand — a reclaimed 207, or an absorbed 200–201 — and let the same R/R discipline do its job from a spot where probability is on your side.</p>
-  </div>
-</section>
-
-<!-- =============== 8. THE FIX — THE TRADE DONE RIGHT =============== -->
-<section id="fix" class="reveal">
-  <div class="eyebrow">08 · The fix</div>
-  <h2>The same discipline, done right</h2>
-  <p>The losing ticket wasn't unsalvageable — it was in the <strong>wrong place</strong>. Our theory says the same thing every time: <strong>don't predict that buyers will show up — wait until they do, at a level you mapped in advance.</strong> On NVDA right now, the highest-probability long that respects every rule is <strong class="g">the reclaim</strong>: the trade only exists once the seller at 207 is beaten.</p>
-
-  <div class="trigger-line">
-    <span>◆</span><span><b>The trigger (no trigger = no trade):</b> a 4-hour close back <b>above 207</b> on a wide impulse candle with above-average volume. That reclaim proves the 206–208 supply was absorbed and invalidates the double top. Until it prints, this trade does not exist — you wait.</span>
-  </div>
-
-  <div class="spec">
-    <div class="spec-side">The reclaim</div>
-    <div class="spec-eyebrow">Trade ticket · NVDA long · 4-hour · built from our theory</div>
-    <h3 class="spec-title">The <mark>reclaim</mark></h3>
-    <div class="spec-rows">
-      <div class="spec-row"><span class="k g">LONG</span><span class="d"><b>Direction</b> — with the monthly + weekly uptrend</span></div>
-      <div class="spec-row"><span class="k">207</span><span class="d"><b>Setup</b> — reclaim of the 207 neckline (former resistance → support)</span></div>
-      <div class="spec-row"><span class="k">208.60</span><span class="d"><b>Entry</b> — on the confirmed reclaim, not before</span></div>
-      <div class="spec-row"><span class="k r">205.20</span><span class="d"><b>Stop</b> — −1.63%, below the reclaim candle (back under 207 + room)</span></div>
-      <div class="spec-row"><span class="k g">215.73</span><span class="d"><b>Target 1</b> — +3.42%, inner supply (bank partial)</span></div>
-      <div class="spec-row"><span class="k g">231.83</span><span class="d"><b>Target 2</b> — runner, top of supply (trail the stop)</span></div>
-      <div class="spec-row hot"><span class="k">2.1</span><span class="d"><b>Risk / reward to T1</b> — small risk, far target</span></div>
-      <div class="spec-row"><span class="k g">✓</span><span class="d"><b>Why it works</b> — a reaction at a real level, trend-aligned</span></div>
-    </div>
-  </div>
-
-  <p style="margin-top:22px">Notice the nominal R/R (2.1) barely beats the losing ticket's 1.79 — that was never the point. What changes is the <strong>probability</strong> behind the number. You're entering on a confirmed reaction at a defended level, in the direction of the higher-timeframe trend, with the execution timeframes now <em>agreeing</em> (a reclaim means the 4h and 15m have flipped bullish). At a realistic ~55% hit-rate:</p>
-
-  <div class="callout good">
-    <div class="t">Expected value, flipped</div>
-    <p><span class="price">EV = 0.55 × (+3.42%) − 0.45 × (1.63%) = <b class="g">+1.15% per trade</b></span> — positive, the mirror image of the losing ticket's −0.05%. Same trader, same risk discipline; only the <strong>location and the trigger</strong> changed.</p>
-  </div>
-
-  <h3>Every flaw of the bad trade, corrected</h3>
-  <div class="compare">
-    <table>
-      <tr><th>Dimension</th><th class="badcol">The losing trade</th><th class="fixcol">The trade done right</th></tr>
-      <tr><td>Location</td><td class="bad">202.58 — mid-range, no orders</td><td class="good">on the 207 reclaim — a real level</td></tr>
-      <tr><td>Target</td><td class="bad">210.55 — inside intact supply</td><td class="good">215.73 partial, only after supply is broken</td></tr>
-      <tr><td>Setup</td><td class="bad">against a broken 4h structure</td><td class="good">continuation of a reclaimed trend</td></tr>
-      <tr><td>Timing (15m)</td><td class="bad">pointing down into your entry</td><td class="good">flipped bullish on the reclaim</td></tr>
-      <tr><td>Stop</td><td class="bad">198.12 — on the obvious range low</td><td class="good">205.20 — where the thesis is truly wrong</td></tr>
-      <tr><td>Trigger</td><td class="bad">none — a prediction</td><td class="good">impulse + volume close &gt; 207</td></tr>
-      <tr><td>Expected value</td><td class="bad">≈ −0.05% / trade</td><td class="good">≈ +1.15% / trade</td></tr>
-    </table>
-  </div>
-
-  <div class="callout">
-    <div class="t">The A+ alternative — patience pays more</div>
-    <p>The reclaim is the <em>tactical</em> long. The <strong>highest-quality</strong> trade on the whole map isn't available today: a pullback into the <span class="price g">170–177</span> demand zone — the impulse origin, already retested and held, with the monthly/weekly trend behind it. Smaller nominal R/R chasing, far bigger edge. Most of the time the correct institutional-flow answer is simply <strong>"not yet"</strong> — you wait for price to come to your level, not the other way around.</p>
-  </div>
-</section>
-
-<!-- =============== 9. RETAIL TRAP — READING vs DRAWING =============== -->
-<section id="retail" class="reveal">
-  <div class="eyebrow">09 · Reading vs drawing</div>
-  <h2>Where the retail "support line" case breaks</h2>
-  <p class="lead">Here's how most retail traders reason about this exact chart: <em>"draw a line at 190 — it's support, so it bounces; and as long as we hold the range, we break out to new highs."</em> It feels rigorous. But it <strong>inverts our whole method</strong>: it reads <strong>drawn lines</strong> instead of <strong>liquidity</strong>, and builds a story to fit a bias that's already bullish. The volume profile on the right side of the chart quietly refutes it.</p>
-
-  <h3>What the chart actually shows</h3>
-  <ul class="keys">
-    <li><b>Structure:</b> the daily already put in a <b>lower high</b> under the 207–231.83 supply and is chopping mid-range — the uptrend is broken, not "intact." Ascending trendlines are drawn over that break.</li>
-    <li><b>Volume profile (VPVR):</b> the fattest node — the <b>point of control</b> — sits around <b>180–185</b>, not 190. Volume through ~190–202 is <b>thin</b>. Price falls fast through thin nodes; it rests at fat ones.</li>
-    <li><b>The tool's own signals:</b> <span class="r">sell-triangles fired near 209 and 230</span> (distribution into supply); <span class="g">buy-triangles fired near 170 and 178</span> — i.e. the demand that actually worked is <em>below</em>, not at 190.</li>
-    <li><b>Momentum &amp; RSI:</b> mid-range, no oversold-at-a-level reversal. Nothing is confirming a bounce — the case is a prediction, not a reaction.</li>
-  </ul>
-
-  <figure>
-    <svg viewBox="0 0 660 380" width="100%" role="img" aria-label="Volume profile showing 190 is a low-volume pocket, POC at 180-185">
-      <!-- supply / demand bands -->
-      <rect x="30" y="43" width="530" height="99" fill="rgba(255,92,106,.08)"/>
-      <rect x="30" y="270" width="530" height="29" fill="rgba(61,220,151,.1)"/>
-      <!-- profile bars (baseline right at x=560) -->
-      <rect x="490" y="36"  width="70"  height="13" fill="rgba(255,92,106,.55)" rx="1.5"/>
-      <rect x="522" y="65"  width="38"  height="13" fill="rgba(255,92,106,.5)" rx="1.5"/>
-      <rect x="532" y="106" width="28"  height="13" fill="rgba(255,92,106,.45)" rx="1.5"/>
-      <rect x="512" y="135" width="48"  height="13" fill="rgba(255,92,106,.5)" rx="1.5"/>
-      <rect x="536" y="160" width="24"  height="13" fill="rgba(155,147,176,.5)" rx="1.5"/>
-      <rect x="530" y="181" width="30"  height="13" fill="rgba(155,147,176,.5)" rx="1.5"/>
-      <rect x="534" y="201" width="26"  height="13" fill="rgba(155,147,176,.55)" rx="1.5"/>
-      <rect x="536" y="218" width="24"  height="13" fill="rgba(155,147,176,.55)" rx="1.5"/>
-      <rect x="472" y="230" width="88"  height="13" fill="rgba(242,180,65,.55)" rx="1.5"/>
-      <rect x="440" y="244" width="120" height="13" fill="#F2B441" rx="1.5"/>
-      <rect x="458" y="257" width="102" height="13" fill="rgba(242,180,65,.55)" rx="1.5"/>
-      <rect x="478" y="273" width="82"  height="13" fill="rgba(61,220,151,.5)" rx="1.5"/>
-      <rect x="494" y="286" width="66"  height="13" fill="rgba(61,220,151,.5)" rx="1.5"/>
-      <rect x="474" y="298" width="86"  height="13" fill="rgba(61,220,151,.55)" rx="1.5"/>
-      <rect x="524" y="315" width="36"  height="13" fill="rgba(61,220,151,.4)" rx="1.5"/>
-      <!-- key lines -->
-      <line x1="30" y1="163" x2="600" y2="163" stroke="#EDE9F6" stroke-dasharray="1 4"/><text x="602" y="167" font-family="JetBrains Mono" font-size="10" fill="#EDE9F6">202.81 now</text>
-      <line x1="30" y1="216" x2="600" y2="216" stroke="#8B5CF6" stroke-dasharray="5 4"/><text x="34" y="212" font-family="JetBrains Mono" font-size="10" fill="#8B5CF6">retail "190 support" — low-volume pocket</text>
-      <text x="34" y="240" font-family="JetBrains Mono" font-size="10" fill="#F2B441">POC ~183 — where orders actually sit</text>
-      <text x="34" y="290" font-family="JetBrains Mono" font-size="10" fill="#3DDC97">real demand 170–177 (buy signals fired)</text>
-      <text x="34" y="52" font-family="JetBrains Mono" font-size="10" fill="#FF5C6A">supply 207–231.83 (sell signals fired)</text>
-      <!-- price axis -->
-      <text x="612" y="96" font-family="JetBrains Mono" font-size="9" fill="#CFC9DE">220</text>
-      <text x="612" y="178" font-family="JetBrains Mono" font-size="9" fill="#CFC9DE">200</text>
-      <text x="612" y="261" font-family="JetBrains Mono" font-size="9" fill="#CFC9DE">180</text>
-      <text x="612" y="343" font-family="JetBrains Mono" font-size="9" fill="#CFC9DE">160</text>
-    </svg>
-    <figcaption>The volume profile is the tell. <b class="a">190 is a thin, low-volume pocket</b> — a drawn line, not a shelf; price glides through it. The real high-volume support is the <b class="a">POC around 180–185</b> and the <b class="g">170–177 demand</b>; the real ceiling is the <b class="r">207–231.83 supply</b> a "breakout" must fight.</figcaption>
-  </figure>
-
-  <h3>Where the case goes wrong</h3>
-  <div class="compare">
-    <table>
-      <tr><th>Dimension</th><th class="badcol">Retail says</th><th class="fixcol">Institutional flow says</th></tr>
-      <tr><td>The "support"</td><td class="bad">"190 is support — it bounces here"</td><td class="good">190 is a low-volume pocket; the shelf is the POC 180–185, demand 170–177</td></tr>
-      <tr><td>Breakout thesis</td><td class="bad">"above the range → new highs"</td><td class="good">207–231.83 supply overhead; sell-signals already fired at 209 &amp; 230</td></tr>
-      <tr><td>Trend</td><td class="bad">"ascending trendlines = uptrend"</td><td class="good">daily made a lower high — structure broke; lines are narrative, HH/HL is fact</td></tr>
-      <tr><td>Current price</td><td class="bad">"202 is fine, we're holding"</td><td class="good">202 is no-man's-land mid-range — the autopsy trap again</td></tr>
-      <tr><td>The reason to act</td><td class="bad">"the line is my reason"</td><td class="good">a line with no reaction is a hypothesis; we trade the reaction</td></tr>
-    </table>
-  </div>
-
-  <div class="callout warn">
-    <div class="t">The one root error</div>
-    <p>It's all a single mistake wearing five hats: <strong>a story built to justify a bias.</strong> Retail draws the line first and finds reasons it should hold; flow finds where the orders <em>are</em> (the profile, the retested zones) and waits for price to react there. Lines are free and infinite — you can draw one that says anything. Liquidity is fixed: it sits at the fat part of the profile and at zones that already produced a reaction. Trade the liquidity, not the line.</p>
-  </div>
-</section>
-
-<!-- =============== 10. OPTIONS / DEALER GAMMA — CONFLUENCE =============== -->
-<section id="options" class="reveal">
-  <div class="eyebrow">10 · Confluence</div>
-  <h2>Does the options flow back the thesis?</h2>
-  <p class="lead">A second, independent dataset — <strong>options positioning &amp; dealer gamma</strong> — should either confirm or challenge the price map. Here it <strong>mostly confirms</strong>: the same ceiling, the same defended downside, the same "range / wait" verdict. One caveat matters: a dealer <em>wall</em> is not a demand <em>zone</em>.</p>
-
-  <div class="statrow">
-    <div class="s"><div class="k">Spot</div><div class="v">$202.81</div></div>
-    <div class="s"><div class="k">Call wall</div><div class="v" style="color:var(--demand)">$210</div></div>
-    <div class="s"><div class="k">Put wall</div><div class="v" style="color:var(--supply)">$200</div></div>
-    <div class="s"><div class="k">Max pain</div><div class="v" style="color:var(--violet)">$200</div></div>
-    <div class="s"><div class="k">IV rank</div><div class="v">45</div></div>
-    <div class="s"><div class="k">Exp. move</div><div class="v">±$23.9</div></div>
-  </div>
-  <p style="font-family:var(--mono);font-size:13.5px;margin-top:12px">Positioning snapshot · 1:30 PM ET · 17 Jul · positive-gamma (pin / mean-revert) regime.</p>
-
-  <figure>
-    <svg viewBox="0 0 660 250" width="100%" role="img" aria-label="Dealer gamma by strike">
-      <text x="150" y="20" font-family="JetBrains Mono" font-size="11" fill="#CFC9DE" text-anchor="middle">◄ PUT GAMMA</text>
-      <text x="330" y="20" font-family="JetBrains Mono" font-size="11" fill="#CFC9DE" text-anchor="middle">STRIKE</text>
-      <text x="510" y="20" font-family="JetBrains Mono" font-size="11" fill="#CFC9DE" text-anchor="middle">CALL GAMMA ►</text>
-      <!-- 210 -->
-      <rect x="240" y="34" width="60" height="22" fill="rgba(255,92,106,.55)" rx="2"/>
-      <rect x="360" y="34" width="92" height="22" fill="rgba(61,220,151,.6)" rx="2"/>
-      <text x="458" y="49" font-family="JetBrains Mono" font-size="11" fill="#3DDC97">460k</text>
-      <text x="330" y="49" font-family="JetBrains Mono" font-size="13" fill="#EDE9F6" text-anchor="middle">210</text>
-      <!-- 205 -->
-      <rect x="230" y="84" width="70" height="22" fill="rgba(255,92,106,.55)" rx="2"/>
-      <text x="224" y="99" font-family="JetBrains Mono" font-size="11" fill="#FF5C6A" text-anchor="end">351k</text>
-      <rect x="360" y="84" width="69" height="22" fill="rgba(61,220,151,.6)" rx="2"/>
-      <text x="435" y="99" font-family="JetBrains Mono" font-size="11" fill="#3DDC97">344k</text>
-      <text x="330" y="99" font-family="JetBrains Mono" font-size="13" fill="#EDE9F6" text-anchor="middle">205</text>
-      <!-- spot -->
-      <line x1="40" y1="122" x2="620" y2="122" stroke="#EDE9F6" stroke-dasharray="1 4" opacity=".8"/>
-      <text x="44" y="118" font-family="JetBrains Mono" font-size="11" fill="#EDE9F6">spot 202.81</text>
-      <!-- 200 (max pain) -->
-      <rect x="121" y="139" width="179" height="22" fill="rgba(255,92,106,.85)" stroke="#fff" rx="2"/>
-      <text x="115" y="154" font-family="JetBrains Mono" font-size="11" fill="#FF5C6A" text-anchor="end">893k</text>
-      <rect x="360" y="139" width="220" height="22" fill="rgba(61,220,151,.9)" stroke="#fff" rx="2"/>
-      <text x="586" y="154" font-family="JetBrains Mono" font-size="11" fill="#3DDC97">1099k</text>
-      <text x="330" y="154" font-family="JetBrains Mono" font-size="13" fill="#8B5CF6" text-anchor="middle" font-weight="600">200◆</text>
-      <!-- 195 -->
-      <rect x="216" y="194" width="84" height="22" fill="rgba(255,92,106,.55)" rx="2"/>
-      <text x="210" y="209" font-family="JetBrains Mono" font-size="11" fill="#FF5C6A" text-anchor="end">418k</text>
-      <rect x="360" y="194" width="60" height="22" fill="rgba(61,220,151,.6)" rx="2"/>
-      <text x="330" y="209" font-family="JetBrains Mono" font-size="13" fill="#EDE9F6" text-anchor="middle">195</text>
-    </svg>
-    <figcaption>Dealer gamma by strike. The heaviest call gamma actually sits at $200 — <b>below spot</b>, so it can't cap price; the effective ceiling is the <b class="g">$210 call wall</b>, and the <b class="r">$200 put wall</b> / max pain anchors the downside. Numbers shown where the tool labelled them.</figcaption>
-  </figure>
-
-  <h3>Where it confirms the price map</h3>
-  <ul class="keys g">
-    <li><b>Same ceiling.</b> Call wall $210 + heaviest call gamma above spot sit right on our <b>207 supply edge</b> — a breakout must beat price-structure supply <em>and</em> the dealer wall.</li>
-    <li><b>Capped upside in the flow.</b> Net call selling (51% sold); <b>195C sold $433K</b> and <b>205C sold $123K</b> = overwriting the 195–210 band. Distribution under supply.</li>
-    <li><b>Defended downside, two tiers.</b> Put wall / max pain / peak put gamma at <b>$200</b>; <b>160P sold $249K</b> = confidence the 170–177 demand won't break.</li>
-    <li><b>Regime says wait.</b> Positive gamma → pin / mean-revert = range-bound chop, no trend. That is our verdict: no edge mid-range, not now.</li>
-  </ul>
-
-  <div class="callout warn">
-    <div class="t">The caveat — a wall is not a zone</div>
-    <p>A demand/supply <strong>zone</strong> is resting institutional orders: structural, and it persists. A dealer <strong>gamma wall / pin</strong> is a hedging artifact that <strong>expires</strong> (Aug 21 OPEX) and can flip. Use walls for <strong>timing and confluence</strong>, zones for the <strong>thesis</strong>. When gamma flips negative — price loses $200, or after OPEX — the pin breaks and moves amplify. That's exactly when our reclaim/breakdown triggers finally get their impulse.</p>
-  </div>
-
-  <div class="callout good">
-    <div class="t">Verdict</div>
-    <p>Yes — it supports the theory, as <strong>confluence + regime</strong>, not a new thesis. Same ceiling (~207–210), same defended support (200 tactically, 170–177 structurally), same conclusion: <strong>range-bound, wait for the break.</strong> The flow itself is mixed — net call selling vs +$6.8M premium — i.e. low conviction, which also says wait. It does <em>not</em> rescue the breakout case: dealers pinning near 200–210 is not a launch.</p>
-  </div>
-</section>
-
-<!-- =============== 11. CHECKLIST =============== -->
-<section id="checklist" class="reveal">
-  <div class="eyebrow">11 · Before the trade</div>
-  <h2>Checklist: what to know before choosing NVDA (or any ticker) for a long</h2>
-
-  <div class="score">
-    <div class="sh">
-      <span class="st">NVDA readiness — right now</span>
-      <span class="sv" id="scoreVal"></span>
-    </div>
-    <div class="score-bar" id="scoreBar"></div>
-    <div class="score-verdict" id="scoreVerdict"></div>
-  </div>
-
-  <div class="check" id="checkList"></div>
-
-  <div class="callout good">
-    <div class="t">The core lesson</div>
-    <p>Institutional-flow trading is not guessing direction. It's <strong>waiting for big money to show its hand at a level you mapped in advance</strong> — and joining it with defined risk. Everything else is noise.</p>
-  </div>
+<section class="reveal" style="text-align:center">
+  <div class="eyebrow" style="justify-content:center">Apply it</div>
+  <h2>See the theory on a live chart</h2>
+  <p style="margin:0 auto 26px">Every idea here &mdash; impulse &amp; balance, zones, the retest, tight-R/R entries &mdash; mapped onto a real NVDA setup: an interactive level map, a losing-trade autopsy, the same trade done right, the retail trap, and the options-flow confluence.</p>
+  <a class="herocta" href="nvda.html">Open the NVDA case study &#8594;</a>
 </section>
 
 </main>
@@ -1111,158 +785,6 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
 </footer>
 
 <script>
-/* ══════════════════════════ DATA ══════════════════════════
-   All prices below are transcribed from the user's marked-up NVDA
-   charts (Yahoo Finance weekly + monthly, close of 2026-07-17).
-   Candle geometry is a schematic of the visible weekly structure;
-   the horizontal levels and the Bollinger values are real. */
-const NVDA = {
-  price: 202.81,
-  bb: { up: 229.01, mid: 197.10, lo: 165.18 },
-  chart: { yMin: 112, yMax: 238, xPad: 60, xEnd: 902, yTop: 30, yBot: 452 },
-  zones: [
-    { kind:'supply', lo:207, hi:231.83 },
-    { kind:'demand', lo:170,    hi:177    },
-  ],
-  levels: [
-    { id:'l231', px:231.83, disp:'231.83', kind:'sup', conf:true,  name:'Top of supply · ATH zone',
-      detail:'Where the impulse up finally exhausted — long upper wicks on the weekly = aggressive distribution. While price is below, the whole 207–231.83 range is a ceiling. A break-and-hold above opens price discovery with no levels overhead.' },
-    { id:'l215', px:215.73, disp:'215.73', kind:'sup', conf:true,  name:'Inner supply level',
-      detail:'The interim target if 207 is reclaimed, and a logical place to take partial profit — the first serious offer inside the supply zone.' },
-    { id:'l212', px:212.50, disp:'212.5 ×2', kind:'sup', conf:false, name:'15m double top',
-      detail:'Two peaks at ~212.3–212.5, neckline 206.5–207.5 (which contains 207 — the same weekly level under a microscope). Neckline break + consolidation below it and the 200 EMA = confirmation; measured move ~$6 → target 200.5–201.5. Invalidation: a hold back above 212.5. From the 15m timeframe — not visible on the weekly markup.' },
-    { id:'l207', px:207, disp:'207', kind:'sup', conf:true,  name:"Near-term supply · balance 206–208",
-      detail:'The near-term ceiling — a supply / balance band at roughly <b>206–208</b> where price keeps getting sold. Your marks: 4h pivot 207.28, 15m 207.67; the latest proof is the last two 4h candles rolling over from ~206 (206.23 high, 202.64 close). It is the lower edge of the weekly supply zone and the broken double-top neckline. A 4h close back above ~208 on an impulse candle + volume is the first condition for the bullish scenario.' },
-    { id:'lnow', px:202.81, disp:'202.81', kind:'now', conf:true,  name:'Current price · no-man’s-land',
-      detail:'Halfway between 197.84 and 207. No unfilled orders here, no structure — entering from this price is trading without an edge in either direction. The best position here is observation.' },
-    { id:'l200', px:200.50, disp:'200–201', kind:'neu', conf:false, name:'Double-top measured target',
-      detail:'The $6 move off the neckline is nearly complete. Watch the reaction: absorption of selling + an impulse up = the first early long signal (aggressive). An impulse straight through it = the road to 197.84, then 185.61.' },
-    { id:'l197', px:197.84, disp:'197.84', kind:'neu', conf:true,  name:'Range low · balance floor',
-      detail:'Lower boundary of the current balance (the weekly Bollinger mid-band sits right here at 197.10). Holding it preserves the "balance under supply" structure — potential re-accumulation. Losing it turns balance into distribution, target 185.61.' },
-    { id:'l185', px:185.61, disp:'185.61', kind:'neu', conf:true,  name:'Weekly 50 EMA',
-      detail:'Dynamic trend support (confirmed on the weekly MACross). Historically in NVDA uptrends, a pullback to the weekly 50 EMA is the classic swing-long accumulation point — if there is a reaction.' },
-    { id:'l170', px:173.50, disp:'170–177', kind:'dem', conf:true,  name:'Primary demand zone',
-      detail:'The base the impulse trend launched from — drawn as the green box on your monthly markup. Tested in March–April and held: the buyer’s unfilled orders are confirmed. The highest-quality long zone on the whole map — impulse origin, repeated defense, and higher-timeframe trend all align.' },
-    { id:'l158', px:158.18, disp:'158.18', kind:'dem', conf:false, name:'Secondary demand',
-      detail:'Only relevant if 170 fails. Price here would mean the weekly structure is seriously damaged — smaller size, stricter confirmation. Not marked on the weekly/monthly shots.' },
-    { id:'l143', px:143.20, disp:'143.20', kind:'dem', conf:false, name:'Deep demand',
-      detail:'The full-AI-complex-repricing scenario. A technically valid zone, but by then context matters more than the level. Not marked on the weekly/monthly shots.' },
-    { id:'l123', px:123.06, disp:'123.06', kind:'neu', conf:true,  name:'Weekly 200 EMA',
-      detail:'The last line of the long-term trend (confirmed on the weekly MACross). Touches of this line in past NVDA cycles were generational entries — but they only got hit in moments of panic.' },
-  ],
-};
-
-/* deterministic schematic weekly closes, Jul 2025 → Jul 2026 (~52 wk) */
-const CLOSES = [128,133,131,138,142,140,147,151,155,152,158,162,159,165,168,164,
-  158,151,149,156,160,157,162,159,161,158,163,166,164,169,167,172,
-  178,186,191,197,203,209,218,226,231,224,215,208,213,206,211,203,209,205,207,202.81];
-
-function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
-function buildCandles(){
-  const rng=mulberry32(20260717);
-  const out=CLOSES.map((c,i)=>{
-    const o=i===0?c-4:CLOSES[i-1];
-    const hi=Math.max(o,c),lo=Math.min(o,c);
-    const rangeIsDist=(i>=40&&i<=44); // distribution near ATH: bigger upper wicks
-    const up=(hi-lo)*0.35+rng()*(rangeIsDist?7:3);
-    const dn=(hi-lo)*0.35+rng()*3;
-    return [o,hi+up,lo-dn,c];
-  });
-  out[out.length-1]=[208.54,213.81,197.97,202.81]; // real last weekly candle
-  return out;
-}
-const CANDLES=buildCandles();
-
-/* ══════════════════════════ NVDA CHART ══════════════════════════ */
-const C=NVDA.chart;
-const KIND_COLOR={sup:'var(--supply)',dem:'var(--demand)',neu:'var(--amber)',now:'var(--ink)'};
-const KIND_HEX={sup:'#FF5C6A',dem:'#3DDC97',neu:'#F2B441',now:'#EDE9F6'};
-const y=p=>C.yBot-(p-C.yMin)/(C.yMax-C.yMin)*(C.yBot-C.yTop);
-const x=i=>C.xPad+i*((C.xEnd-C.xPad)/(CANDLES.length-1));
-const clampY=p=>Math.max(C.yTop,Math.min(C.yBot,y(p)));
-
-let show={zones:true,bb:false,levels:true};
-let activeLevel='l207';
-
-function renderChart(){
-  const w=(C.xEnd-C.xPad)/(CANDLES.length-1)*0.62;
-  let s='';
-  // zone bands
-  if(show.zones){
-    NVDA.zones.forEach(z=>{
-      const fill=z.kind==='supply'?'rgba(255,92,106,.12)':'rgba(61,220,151,.12)';
-      const stroke=z.kind==='supply'?'rgba(255,92,106,.35)':'rgba(61,220,151,.35)';
-      s+=`<rect x="${C.xPad}" y="${y(z.hi).toFixed(1)}" width="${(C.xEnd-C.xPad).toFixed(1)}" height="${(y(z.lo)-y(z.hi)).toFixed(1)}" fill="${fill}" stroke="${stroke}" stroke-dasharray="3 3"/>`;
-    });
-  }
-  // bollinger context
-  if(show.bb){
-    [['up',NVDA.bb.up],['mid',NVDA.bb.mid],['lo',NVDA.bb.lo]].forEach(([k,v])=>{
-      s+=`<line x1="${C.xPad}" y1="${y(v).toFixed(1)}" x2="${C.xEnd}" y2="${y(v).toFixed(1)}" stroke="#8B5CF6" stroke-width="1" stroke-dasharray="2 4" opacity=".7"/>`;
-      s+=`<text x="${C.xPad+4}" y="${(y(v)-4).toFixed(1)}" font-family="JetBrains Mono" font-size="9" fill="#8B5CF6">BB ${k} ${v}</text>`;
-    });
-  }
-  // candles
-  CANDLES.forEach((c,i)=>{
-    const[o,h,l,cl]=c, cx=x(i), up=cl>=o;
-    const col=up?'#3DDC97':'#FF5C6A';
-    const bodyTop=y(Math.max(o,cl)), bodyH=Math.max(1.4,Math.abs(y(o)-y(cl)));
-    s+=`<line x1="${cx.toFixed(1)}" y1="${y(h).toFixed(1)}" x2="${cx.toFixed(1)}" y2="${y(l).toFixed(1)}" stroke="${col}" stroke-width="1.1" opacity=".9"/>`;
-    s+=`<rect x="${(cx-w/2).toFixed(1)}" y="${bodyTop.toFixed(1)}" width="${w.toFixed(1)}" height="${bodyH.toFixed(1)}" fill="${col}" rx="1" opacity=".92"/>`;
-  });
-  // levels
-  if(show.levels){
-    NVDA.levels.forEach(L=>{
-      if(L.id==='lnow') return; // drawn separately
-      const yy=clampY(L.px), off=y(L.px)<C.yTop||y(L.px)>C.yBot;
-      const hi=L.id===activeLevel;
-      const col=KIND_HEX[L.kind];
-      s+=`<g class="clvl" data-id="${L.id}" style="cursor:pointer">`;
-      s+=`<line x1="${C.xPad}" y1="${yy.toFixed(1)}" x2="${C.xEnd}" y2="${yy.toFixed(1)}" stroke="${col}" stroke-width="${hi?2.4:1}" stroke-dasharray="${off?'2 3':'6 5'}" opacity="${hi?1:.55}"/>`;
-      s+=`<rect x="${C.xEnd+4}" y="${(yy-9).toFixed(1)}" width="72" height="18" rx="4" fill="${col}" opacity="${hi?1:.85}"/>`;
-      s+=`<text x="${C.xEnd+40}" y="${(yy+4).toFixed(1)}" text-anchor="middle" font-family="JetBrains Mono" font-size="10" font-weight="600" fill="#0B0812">${L.disp}</text>`;
-      if(hi){s+=`<circle cx="${(C.xEnd-6)}" cy="${yy.toFixed(1)}" r="3.5" fill="${col}"/>`;}
-      s+=`</g>`;
-    });
-  }
-  // current price marker
-  const yn=y(NVDA.price);
-  s+=`<line x1="${C.xPad}" y1="${yn.toFixed(1)}" x2="${C.xEnd}" y2="${yn.toFixed(1)}" stroke="#EDE9F6" stroke-width="1.3" stroke-dasharray="1 4"/>`;
-  s+=`<rect x="${C.xEnd+4}" y="${(yn-9).toFixed(1)}" width="72" height="18" rx="4" fill="#EDE9F6"/>`;
-  s+=`<text x="${C.xEnd+40}" y="${(yn+4).toFixed(1)}" text-anchor="middle" font-family="JetBrains Mono" font-size="10" font-weight="600" fill="#0B0812">${NVDA.price}</text>`;
-  s+=`<circle cx="${x(CANDLES.length-1).toFixed(1)}" cy="${yn.toFixed(1)}" r="4" fill="#EDE9F6"/>`;
-  // x-axis month ticks
-  const months=[['Jul ’25',0],['Sep',8],['Nov',15],['Jan ’26',24],['Mar',32],['May',40],['Jul',51]];
-  s+=`<line x1="${C.xPad}" y1="${C.yBot+2}" x2="${C.xEnd}" y2="${C.yBot+2}" stroke="#2C2246"/>`;
-  months.forEach(([m,i])=>{s+=`<text x="${x(i).toFixed(1)}" y="${C.yBot+20}" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#CFC9DE">${m}</text>`;});
-  document.getElementById('nvdaChart').innerHTML=s;
-  document.querySelectorAll('#nvdaChart .clvl').forEach(g=>g.addEventListener('click',()=>selectLevel(g.dataset.id)));
-}
-
-function renderLadder(){
-  const kmap={sup:'sup',dem:'dem',neu:'neu',now:'now'};
-  let s='';
-  NVDA.levels.forEach(L=>{
-    const zt=(L.disp.length>6)?' zt':'';
-    s+=`<button class="lvl ${kmap[L.kind]}" data-id="${L.id}">`+
-       `<span class="px${zt}">${L.disp}</span> ${L.name}`+
-       (L.conf?'':'<span class="unc">low-TF</span>')+
-       `</button>`;
-  });
-  document.getElementById('ladderList').innerHTML=s;
-  document.querySelectorAll('#ladderList .lvl').forEach(b=>b.addEventListener('click',()=>selectLevel(b.dataset.id)));
-}
-
-function selectLevel(id){
-  activeLevel=id;
-  const L=NVDA.levels.find(l=>l.id===id);
-  document.querySelectorAll('#ladderList .lvl').forEach(b=>b.classList.toggle('active',b.dataset.id===id));
-  const col=KIND_COLOR[L.kind];
-  document.getElementById('lvlDetail').innerHTML=
-    `<div class="dhead"><span class="dpx" style="background:${col}">${L.disp}</span><b>${L.name}</b>${L.conf?'':' <span class="unc">lower-timeframe — not on the weekly/monthly markup</span>'}</div>${L.detail}`;
-  renderChart();
-}
-
 /* ══════════════════════════ IMPULSE / BALANCE FIGURE ══════════════════════════ */
 function drawImpulse(){
   const g='#3DDC97';
@@ -1342,63 +864,17 @@ document.getElementById('segDown').addEventListener('click',function(){segPick(t
 document.getElementById('segBreak').addEventListener('click',function(){segPick(this,['segUp','segDown','segBreak']);drawBreak();});
 function segPick(el,ids){ids.forEach(id=>{const b=document.getElementById(id);b.classList.toggle('on',b===el);b.setAttribute('aria-selected',b===el?'true':'false');});}
 
-/* ══════════════════════════ EV CALCULATOR ══════════════════════════ */
-const REWARD=3.93, RISK=2.20;
-function updateEV(){
-  const p=+document.getElementById('evRange').value/100;
-  const ev=p*REWARD-(1-p)*RISK;
-  document.getElementById('evP').textContent=Math.round(p*100)+'%';
-  const num=document.getElementById('evNum');
-  num.textContent=(ev>=0?'+':'')+ev.toFixed(2)+'%';
-  num.style.color=ev>=0?'var(--demand)':'var(--supply)';
-  const msg=document.getElementById('evMsg');
-  if(ev<0){msg.innerHTML='<span class="r">Negative edge — this trade loses money over many repetitions, before commissions.</span>';}
-  else if(p<0.45){msg.innerHTML='<span class="a">Barely positive — a thin edge the spread can erase.</span>';}
-  else{msg.innerHTML='<span class="g">Real edge — this is the same ticket, taken from a spot where context favors you.</span>';}
-}
-document.getElementById('evRange').addEventListener('input',updateEV);
-
-/* ══════════════════════════ CHECKLIST SCORECARD ══════════════════════════ */
-const CHECKS=[
-  {s:'pass',t:'Is the higher-timeframe trend on your side?',p:'Monthly + weekly in an uptrend, price above the primary demand zone.',q:'NVDA now: yes — above 170–177, HH/HL intact',b:'FOR'},
-  {s:'fail',t:'Do the timeframes agree?',p:'The execution timeframe must confirm the weekly. Conflict = wait, not "average the opinions."',q:'NVDA now: no — 4h & 15m both against, weekly undecided',b:'AGAINST'},
-  {s:'fail',t:'Is price IN a zone, not BETWEEN zones?',p:'Entries only from a demand zone or on a level reclaim. Mid-range is no-man’s land.',q:'NVDA now: 202.81 — between 197.84 and 207',b:'AGAINST'},
-  {s:'wait',t:'Did the level confirm?',p:'Absorption + impulse candle + volume. A level without a reaction is a hypothesis.',q:'NVDA now: waiting at 200–201 or a 207 reclaim',b:'WAIT'},
-  {s:'fail',t:'Is the path to the target clean?',p:'The target must not sit inside opposing supply, or the R/R is fictional.',q:'The 203→210.55 setup: target inside supply',b:'AGAINST'},
-  {s:'wait',t:'Is invalidation defined BEFORE entry?',p:'A specific price where the thesis is dead. Size is derived from the stop, never the reverse.',q:'Rule: stop first, then size, then entry',b:'RULE'},
-  {s:'wait',t:'Broader market context & catalysts?',p:'QQQ/SMH structure, the macro calendar (FOMC, CPI), earnings date.',q:'Check the calendar before every swing',b:'CHECK'},
-];
-function renderChecklist(){
-  let s='';
-  const ico={pass:'✓',fail:'✗',wait:'◐'};
-  CHECKS.forEach(c=>{
-    s+=`<div class="chk ${c.s}"><div class="ico">${ico[c.s]}</div><div><h4>${c.t}</h4><p>${c.p}</p><p class="q">${c.q}</p></div><span class="badge">${c.b}</span></div>`;
-  });
-  document.getElementById('checkList').innerHTML=s;
-  const pass=CHECKS.filter(c=>c.s==='pass').length;
-  const fail=CHECKS.filter(c=>c.s==='fail').length;
-  const wait=CHECKS.filter(c=>c.s==='wait').length;
-  const n=CHECKS.length;
-  document.getElementById('scoreVal').textContent=`${pass} pass · ${wait} wait · ${fail} fail`;
-  document.getElementById('scoreBar').innerHTML=
-    `<i style="width:${pass/n*100}%;background:var(--demand)"></i>`+
-    `<i style="width:${wait/n*100}%;background:var(--amber)"></i>`+
-    `<i style="width:${fail/n*100}%;background:var(--supply)"></i>`;
-  document.getElementById('scoreVerdict').innerHTML=
-    `<span class="r">Verdict: only ${pass} of ${n} conditions met — this is a "not now, not from this price" chart, not a trade.</span>`;
-}
-
 /* ══════════════════════════ NAV / PROGRESS / REVEAL ══════════════════════════ */
 const prog=document.getElementById('progress');
 const navLinks=[...document.querySelectorAll('nav a')];
-const secs=navLinks.map(a=>document.querySelector(a.getAttribute('href')));
+const secs=navLinks.map(a=>{const h=a.getAttribute('href');return h&&h.charAt(0)==='#'?document.querySelector(h):null;});
 function onScroll(){
   const h=document.documentElement;
   const max=h.scrollHeight-h.clientHeight;
   prog.style.width=(max>0?(h.scrollTop/max*100):0)+'%';
   let cur=0;
   secs.forEach((sec,i)=>{if(sec&&sec.getBoundingClientRect().top<=120)cur=i;});
-  navLinks.forEach((a,i)=>a.classList.toggle('active',i===cur));
+  navLinks.forEach((a,i)=>{if((a.getAttribute('href')||'').charAt(0)==='#')a.classList.toggle('active',i===cur);});
 }
 window.addEventListener('scroll',onScroll,{passive:true});
 
@@ -1407,18 +883,9 @@ const io=new IntersectionObserver(entries=>{
 },{threshold:.06});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-/* ══════════════════════════ INIT ══════════════════════════ */
-document.getElementById('tglZones').addEventListener('change',e=>{show.zones=e.target.checked;renderChart();});
-document.getElementById('tglBB').addEventListener('change',e=>{show.bb=e.target.checked;renderChart();});
-document.getElementById('tglLevels').addEventListener('change',e=>{show.levels=e.target.checked;renderChart();});
-
-renderLadder();
-renderChart();
-selectLevel('l207');
+/* init */
 drawImpulse();
 drawUp();
-updateEV();
-renderChecklist();
 onScroll();
 </script>
 </body>
