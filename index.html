@@ -493,6 +493,52 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
     </div>
   </div>
 
+  <h3>How to draw the box — exactly</h3>
+  <p>A zone is a <strong>rectangle, not a line</strong>, because institutions fill across a <em>range</em> of prices, not one tick. The box marks the band where the unfilled orders sit — price reacts <em>somewhere inside it</em>. You draw it from two edges: the <strong>proximal</strong> (near) edge you watch for the first touch, and the <strong>distal</strong> (far) edge that invalidates the zone.</p>
+
+  <figure>
+    <svg viewBox="0 0 640 300" width="100%" role="img" aria-label="Anatomy of a demand zone box">
+      <line x1="40" y1="272" x2="615" y2="272" stroke="#2C2246"/>
+      <rect x="52" y="196" width="560" height="48" fill="rgba(61,220,151,.12)" stroke="rgba(61,220,151,.45)"/>
+      <line x1="52" y1="196" x2="612" y2="196" stroke="#3DDC97" stroke-dasharray="5 5" opacity=".8"/>
+      <text x="56" y="190" font-family="JetBrains Mono" font-size="11" fill="#3DDC97">PROXIMAL · first touch → entry watch</text>
+      <line x1="52" y1="244" x2="612" y2="244" stroke="#F2B441" stroke-dasharray="5 5" opacity=".8"/>
+      <text x="56" y="259" font-family="JetBrains Mono" font-size="11" fill="#F2B441">DISTAL · beyond here = invalidation</text>
+      <!-- base candles -->
+      <line x1="90" y1="198" x2="90" y2="246" stroke="#3DDC97" stroke-width="2"/><rect x="80" y="208" width="20" height="24" fill="#3DDC97" rx="2"/>
+      <line x1="114" y1="200" x2="114" y2="244" stroke="#FF5C6A" stroke-width="2"/><rect x="104" y="212" width="20" height="24" fill="#FF5C6A" rx="2"/>
+      <line x1="138" y1="199" x2="138" y2="245" stroke="#3DDC97" stroke-width="2"/><rect x="128" y="206" width="20" height="24" fill="#3DDC97" rx="2"/>
+      <text x="78" y="290" font-family="JetBrains Mono" font-size="10.5" fill="#CFC9DE">the base it left from</text>
+      <!-- impulse -->
+      <line x1="176" y1="60" x2="176" y2="200" stroke="#3DDC97" stroke-width="2"/><rect x="164" y="72" width="24" height="124" fill="#3DDC97" rx="2"/>
+      <text x="198" y="92" font-family="JetBrains Mono" font-size="11" fill="#3DDC97">IMPULSE — strong departure = orders fired</text>
+      <!-- return + reaction -->
+      <line x1="474" y1="205" x2="474" y2="258" stroke="#FF5C6A" stroke-width="2"/><rect x="464" y="210" width="20" height="40" fill="#FF5C6A" rx="2"/>
+      <line x1="502" y1="150" x2="502" y2="240" stroke="#3DDC97" stroke-width="2"/><rect x="492" y="158" width="20" height="74" fill="#3DDC97" rx="2"/>
+      <text x="430" y="142" font-family="JetBrains Mono" font-size="11" fill="#EDE9F6">return → reaction (bounce)</text>
+      <text x="40" y="32" font-family="JetBrains Mono" font-size="13" fill="#3DDC97">DEMAND ZONE — how the box is drawn</text>
+    </svg>
+    <figcaption>Find the impulse, mark the base it left from, then draw the two edges. The <b class="g">proximal</b> edge is where price first re-enters (entry watch); the <b class="a">distal</b> edge is where the thesis dies (stop goes just beyond it). Supply is the exact mirror — a base before an impulse <em>down</em>, distal at the high wick.</figcaption>
+  </figure>
+
+  <ul class="keys g">
+    <li><b>1 · Find the impulse.</b> A strong, wide-range departure — the proof big orders were there. No impulse, no zone.</li>
+    <li><b>2 · Mark the base it left from.</b> The last balance / small candle(s) right before the move: for demand the last down-candle before the rally, for supply the last up-candle before the drop.</li>
+    <li><b>3 · Proximal edge (near).</b> The body edge of that base — the price the move began from. Your first-touch / entry-watch line.</li>
+    <li><b>4 · Distal edge (far).</b> The extreme wick of the base. Beyond it the zone is wrong — the stop goes just past it, never inside the box.</li>
+    <li><b>5 · Extend right &amp; rank it.</b> Freshest (untested) + strongest departure + higher-timeframe-aligned = best. Each retest weakens it.</li>
+  </ul>
+
+  <div class="callout">
+    <div class="t">Wick or body?</div>
+    <p>Two conventions: <strong>wick-to-wick</strong> (the full range of the base) gives a bigger, safer zone but a wider stop; <strong>body-to-wick</strong> (proximal at the body, distal at the wick) gives tighter entries but can be missed. Pick one and stay consistent.</p>
+  </div>
+
+  <div class="callout good">
+    <div class="t">On the chart you shared</div>
+    <p>Same recipe: the <span class="price r">red supply box ≈15.6–18.40</span> is the base a drop launched from — distal at the 18.40 wick high, proximal ≈15.6 where the move began — and price is now testing its <em>lower</em> edge. The <span class="price g">green demand box ≈9–12</span> is a base an up-move left behind. In both, price reacts <em>inside the band</em>, not at one line.</p>
+  </div>
+
   <h3>The retested top and the retested bottom — how we define them</h3>
   <p>A level is not the first touch — it's the <strong>retest</strong>. The first time price reacts at a high or low, you only have a <em>hypothesis</em> that big orders are there. You get proof when price <strong>returns and does the same thing again</strong>. That return is the retest, and it's what turns a random swing point into a tradable level.</p>
 
