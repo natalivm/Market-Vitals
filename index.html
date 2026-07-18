@@ -200,6 +200,27 @@ figcaption{font-family:var(--mono);font-size:14px;color:var(--muted);margin-top:
 @media(max-width:620px){.trade-ticket{padding:20px}.trade-ticket .row{grid-template-columns:1fr;gap:3px}}
 .trade-ticket.good{border-color:rgba(61,220,151,.45);background:linear-gradient(180deg,var(--demand-dim),var(--surface-2) 55%)}
 .trade-ticket.good .tt{color:var(--demand)}
+/* level-map / spec card (image-2 style) */
+.spec{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:30px 30px 26px 56px;margin-top:34px;overflow:hidden}
+.spec::before{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:46px 46px;opacity:.08;pointer-events:none}
+.spec>*{position:relative}
+.spec-side{position:absolute;left:14px;top:0;bottom:0;display:flex;align-items:center;justify-content:center;writing-mode:vertical-rl;transform:rotate(180deg);font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+.spec-eyebrow{display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--demand);border:1px solid rgba(61,220,151,.4);border-radius:100px;padding:7px 14px;margin-bottom:20px}
+.spec.bad .spec-eyebrow{color:var(--supply);border-color:rgba(255,92,106,.4)}
+.spec-title{font-family:var(--display);font-weight:800;font-size:clamp(26px,3.6vw,38px);line-height:1.05;margin-bottom:24px;letter-spacing:-.01em;color:#fff}
+.spec-title mark{background:var(--amber);color:#0B0812;padding:0 12px;border-radius:6px}
+.spec.bad .spec-title mark{background:var(--supply);color:#0B0812}
+.spec-rows{display:flex;flex-direction:column;gap:8px}
+.spec-row{display:grid;grid-template-columns:128px 1fr;gap:22px;align-items:center;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:15px 20px}
+.spec-row .k{font-family:var(--mono);font-weight:600;font-size:20px;line-height:1}
+.spec-row .d{font-size:16px;color:var(--ink)}
+.spec-row .d b{color:#fff;font-weight:600}
+.spec-row.hot{background:var(--amber);border-color:var(--amber)}
+.spec-row.hot .k,.spec-row.hot .d,.spec-row.hot .d b{color:#0B0812}
+.spec-note{border-left:3px solid var(--amber);background:var(--surface-2);border-radius:0 12px 12px 0;padding:18px 22px;margin-top:20px;font-size:16px;color:var(--ink)}
+.spec.bad .spec-note{border-left-color:var(--supply)}
+.spec-note b{color:#fff}
+@media(max-width:640px){.spec{padding:22px}.spec-side{display:none}.spec-row{grid-template-columns:1fr;gap:5px}.spec-row .k{font-size:18px}}
 .trigger-line{font-family:var(--mono);font-size:14.5px;color:var(--demand);background:var(--demand-dim);border-radius:8px;padding:12px 16px;margin-top:24px;display:flex;gap:10px;align-items:flex-start}
 .trigger-line b{color:var(--ink)}
 .compare td.good{color:var(--demand)}
@@ -748,16 +769,19 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
   <h2>Why this trade was bad — a full post-mortem</h2>
   <p>This is the actual ticket from your TradingView 4-hour markup. On paper it looks disciplined: defined stop, defined target, positive risk/reward. That's exactly why it's a useful lesson — <strong>every number is fine, and almost every decision behind the numbers is wrong.</strong></p>
 
-  <div class="trade-ticket">
-    <div class="tt">The trade ticket · NVDA long · 4-hour · from your markup</div>
-    <div class="row"><span>Direction</span><span class="g">LONG</span></div>
-    <div class="row"><span>Entry</span><span>202.58</span></div>
-    <div class="row"><span>Stop</span><span class="r">198.12 &nbsp;(−2.20% · −$4.46 · risk $750)</span></div>
-    <div class="row"><span>Target</span><span class="g">210.55 &nbsp;(+3.93% · +$7.97 · reward $1,446.75)</span></div>
-    <div class="row"><span>Size</span><span>56 shares</span></div>
-    <div class="row"><span>Risk / Reward</span><span class="a">1.79</span></div>
-    <div class="row"><span>Looks like</span><span>a disciplined trade</span></div>
-    <div class="row"><span>Actually is</span><span class="r">a coin flip with worse odds</span></div>
+  <div class="spec bad">
+    <div class="spec-side">The losing trade</div>
+    <div class="spec-eyebrow">Trade ticket · NVDA long · 4-hour · your markup</div>
+    <h3 class="spec-title">The <mark>losing</mark> trade</h3>
+    <div class="spec-rows">
+      <div class="spec-row"><span class="k g">LONG</span><span class="d"><b>Direction</b> — a long, into a broken structure</span></div>
+      <div class="spec-row"><span class="k">202.58</span><span class="d"><b>Entry</b> — mid-range no-man's-land, no level under it</span></div>
+      <div class="spec-row"><span class="k r">198.12</span><span class="d"><b>Stop</b> — −2.20% (−$4.46 · risk $750), sitting right on the 197.84 range low</span></div>
+      <div class="spec-row"><span class="k g">210.55</span><span class="d"><b>Target</b> — +3.93% (+$7.97 · reward $1,446.75), but inside the 207–231.83 supply</span></div>
+      <div class="spec-row"><span class="k">56</span><span class="d"><b>Size</b> — shares</span></div>
+      <div class="spec-row hot"><span class="k">1.79</span><span class="d"><b>Risk / reward</b> — looks disciplined on paper…</span></div>
+      <div class="spec-row"><span class="k r">✗</span><span class="d"><b>Actually</b> — a coin flip with worse odds</span></div>
+    </div>
   </div>
 
   <div class="autopsy">
@@ -826,19 +850,23 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
   <p>The losing ticket wasn't unsalvageable — it was in the <strong>wrong place</strong>. Our theory says the same thing every time: <strong>don't predict that buyers will show up — wait until they do, at a level you mapped in advance.</strong> On NVDA right now, the highest-probability long that respects every rule is <strong class="g">the reclaim</strong>: the trade only exists once the seller at 207 is beaten.</p>
 
   <div class="trigger-line">
-    <span>◆</span><span><b>The trigger (no trigger = no trade):</b> a 4-hour close back <b>above 207</b> on a wide impulse candle with above-average volume. That reclaim proves the two-day seller was absorbed and invalidates the double top. Until it prints, this trade does not exist — you wait.</span>
+    <span>◆</span><span><b>The trigger (no trigger = no trade):</b> a 4-hour close back <b>above 207</b> on a wide impulse candle with above-average volume. That reclaim proves the 206–208 supply was absorbed and invalidates the double top. Until it prints, this trade does not exist — you wait.</span>
   </div>
 
-  <div class="trade-ticket good">
-    <div class="tt">The trade ticket · NVDA long · 4-hour · THE RECLAIM (built from our theory)</div>
-    <div class="row"><span>Direction</span><span class="g">LONG · with the monthly + weekly uptrend</span></div>
-    <div class="row"><span>Setup</span><span>reclaim of 207 (former neckline → support)</span></div>
-    <div class="row"><span>Entry</span><span>~208.60 &nbsp;(on the confirmed reclaim, not before)</span></div>
-    <div class="row"><span>Stop</span><span class="r">205.20 &nbsp;(−1.63% · below the reclaim candle, back under 207 + room)</span></div>
-    <div class="row"><span>Target 1</span><span class="g">215.73 &nbsp;(+3.42% · inner supply — bank partial)</span></div>
-    <div class="row"><span>Target 2 (runner)</span><span class="g">231.83 &nbsp;(top of supply · trail the stop)</span></div>
-    <div class="row"><span>Risk / Reward (to T1)</span><span class="a">2.1</span></div>
-    <div class="row"><span>Why it works</span><span class="g">a reaction at a real level, trend-aligned</span></div>
+  <div class="spec">
+    <div class="spec-side">The reclaim</div>
+    <div class="spec-eyebrow">Trade ticket · NVDA long · 4-hour · built from our theory</div>
+    <h3 class="spec-title">The <mark>reclaim</mark></h3>
+    <div class="spec-rows">
+      <div class="spec-row"><span class="k g">LONG</span><span class="d"><b>Direction</b> — with the monthly + weekly uptrend</span></div>
+      <div class="spec-row"><span class="k">207</span><span class="d"><b>Setup</b> — reclaim of the 207 neckline (former resistance → support)</span></div>
+      <div class="spec-row"><span class="k">208.60</span><span class="d"><b>Entry</b> — on the confirmed reclaim, not before</span></div>
+      <div class="spec-row"><span class="k r">205.20</span><span class="d"><b>Stop</b> — −1.63%, below the reclaim candle (back under 207 + room)</span></div>
+      <div class="spec-row"><span class="k g">215.73</span><span class="d"><b>Target 1</b> — +3.42%, inner supply (bank partial)</span></div>
+      <div class="spec-row"><span class="k g">231.83</span><span class="d"><b>Target 2</b> — runner, top of supply (trail the stop)</span></div>
+      <div class="spec-row hot"><span class="k">2.1</span><span class="d"><b>Risk / reward to T1</b> — small risk, far target</span></div>
+      <div class="spec-row"><span class="k g">✓</span><span class="d"><b>Why it works</b> — a reaction at a real level, trend-aligned</span></div>
+    </div>
   </div>
 
   <p style="margin-top:22px">Notice the nominal R/R (2.1) barely beats the losing ticket's 1.79 — that was never the point. What changes is the <strong>probability</strong> behind the number. You're entering on a confirmed reaction at a defended level, in the direction of the higher-timeframe trend, with the execution timeframes now <em>agreeing</em> (a reclaim means the 4h and 15m have flipped bullish). At a realistic ~55% hit-rate:</p>
