@@ -25,7 +25,11 @@ This is educational content, but the NVDA numbers must stay honest.
 ## Project structure
 
 ```
-index.html          — the entire site (HTML + CSS + vanilla JS, self-contained)
+index.html          — concepts / theory page (institutions, impulse vs balance,
+                      zones, trend, timeframes). Self-contained HTML+CSS+JS.
+nvda.html           — the NVDA case study page (interactive level map, trade
+                      autopsy, the fix, retail trap, options-flow confluence,
+                      checklist). Linked from index's nav.
 CLAUDE.md           — this file
 README.md           — project overview
 .github/workflows/
@@ -36,10 +40,16 @@ README.md           — project overview
 No external JS/CSS libraries. Google Fonts is the only external request; the page
 degrades gracefully to system fonts if it's blocked.
 
+> The `<head>` CSS and the `<nav>` markup are **duplicated** across `index.html`
+> and `nvda.html`. If you change the design system or shared components, update
+> both files. The `.reveal`/scroll-progress/scrollspy JS is shared too; the
+> concept toggles live only in `index.html`, the chart/EV/checklist JS only in
+> `nvda.html`.
+
 ## Editing the NVDA data — read the DATA block only
 
 All case-study data lives in one place: the `const NVDA = {...}` object and the
-`CLOSES` array inside the `<script>` block near the bottom of `index.html`
+`CLOSES` array inside the `<script>` block near the bottom of `nvda.html`
 (look for the `══ DATA ══` banner). Prices, zones, levels, Bollinger values and
 the schematic candle series are all there. The render functions below don't need
 touching for a data update.
