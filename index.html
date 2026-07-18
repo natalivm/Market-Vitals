@@ -284,6 +284,7 @@ footer .brand{font-family:var(--mono);font-size:12px;color:var(--violet);margin-
       <a href="#nvda">NVDA Case</a>
       <a href="#autopsy">Trade Autopsy</a>
       <a href="#fix">The Fix</a>
+      <a href="#retail">Retail Trap</a>
       <a href="#checklist">Checklist</a>
     </div>
   </div>
@@ -856,9 +857,77 @@ footer .brand{font-family:var(--mono);font-size:12px;color:var(--violet);margin-
   </div>
 </section>
 
-<!-- =============== 9. CHECKLIST =============== -->
+<!-- =============== 9. RETAIL TRAP — READING vs DRAWING =============== -->
+<section id="retail" class="reveal">
+  <div class="eyebrow">09 · Reading vs drawing</div>
+  <h2>Where the retail "support line" case breaks</h2>
+  <p class="lead">Here's how most retail traders reason about this exact chart: <em>"draw a line at 190 — it's support, so it bounces; and as long as we hold the range, we break out to new highs."</em> It feels rigorous. But it <strong>inverts our whole method</strong>: it reads <strong>drawn lines</strong> instead of <strong>liquidity</strong>, and builds a story to fit a bias that's already bullish. The volume profile on the right side of the chart quietly refutes it.</p>
+
+  <h3>What the chart actually shows</h3>
+  <ul class="keys">
+    <li><b>Structure:</b> the daily already put in a <b>lower high</b> under the 207.98–231.83 supply and is chopping mid-range — the uptrend is broken, not "intact." Ascending trendlines are drawn over that break.</li>
+    <li><b>Volume profile (VPVR):</b> the fattest node — the <b>point of control</b> — sits around <b>180–185</b>, not 190. Volume through ~190–202 is <b>thin</b>. Price falls fast through thin nodes; it rests at fat ones.</li>
+    <li><b>The tool's own signals:</b> <span class="r">sell-triangles fired near 209 and 230</span> (distribution into supply); <span class="g">buy-triangles fired near 170 and 178</span> — i.e. the demand that actually worked is <em>below</em>, not at 190.</li>
+    <li><b>Momentum &amp; RSI:</b> mid-range, no oversold-at-a-level reversal. Nothing is confirming a bounce — the case is a prediction, not a reaction.</li>
+  </ul>
+
+  <figure>
+    <svg viewBox="0 0 660 380" width="100%" role="img" aria-label="Volume profile showing 190 is a low-volume pocket, POC at 180-185">
+      <!-- supply / demand bands -->
+      <rect x="30" y="43" width="530" height="99" fill="rgba(255,92,106,.08)"/>
+      <rect x="30" y="270" width="530" height="29" fill="rgba(61,220,151,.1)"/>
+      <!-- profile bars (baseline right at x=560) -->
+      <rect x="490" y="36"  width="70"  height="13" fill="rgba(255,92,106,.55)" rx="1.5"/>
+      <rect x="522" y="65"  width="38"  height="13" fill="rgba(255,92,106,.5)" rx="1.5"/>
+      <rect x="532" y="106" width="28"  height="13" fill="rgba(255,92,106,.45)" rx="1.5"/>
+      <rect x="512" y="135" width="48"  height="13" fill="rgba(255,92,106,.5)" rx="1.5"/>
+      <rect x="536" y="160" width="24"  height="13" fill="rgba(155,147,176,.5)" rx="1.5"/>
+      <rect x="530" y="181" width="30"  height="13" fill="rgba(155,147,176,.5)" rx="1.5"/>
+      <rect x="534" y="201" width="26"  height="13" fill="rgba(155,147,176,.55)" rx="1.5"/>
+      <rect x="536" y="218" width="24"  height="13" fill="rgba(155,147,176,.55)" rx="1.5"/>
+      <rect x="472" y="230" width="88"  height="13" fill="rgba(242,180,65,.55)" rx="1.5"/>
+      <rect x="440" y="244" width="120" height="13" fill="#F2B441" rx="1.5"/>
+      <rect x="458" y="257" width="102" height="13" fill="rgba(242,180,65,.55)" rx="1.5"/>
+      <rect x="478" y="273" width="82"  height="13" fill="rgba(61,220,151,.5)" rx="1.5"/>
+      <rect x="494" y="286" width="66"  height="13" fill="rgba(61,220,151,.5)" rx="1.5"/>
+      <rect x="474" y="298" width="86"  height="13" fill="rgba(61,220,151,.55)" rx="1.5"/>
+      <rect x="524" y="315" width="36"  height="13" fill="rgba(61,220,151,.4)" rx="1.5"/>
+      <!-- key lines -->
+      <line x1="30" y1="163" x2="600" y2="163" stroke="#EDE9F6" stroke-dasharray="1 4"/><text x="602" y="167" font-family="JetBrains Mono" font-size="10" fill="#EDE9F6">202.81 now</text>
+      <line x1="30" y1="216" x2="600" y2="216" stroke="#8B5CF6" stroke-dasharray="5 4"/><text x="34" y="212" font-family="JetBrains Mono" font-size="10" fill="#8B5CF6">retail "190 support" — low-volume pocket</text>
+      <text x="34" y="240" font-family="JetBrains Mono" font-size="10" fill="#F2B441">POC ~183 — where orders actually sit</text>
+      <text x="34" y="290" font-family="JetBrains Mono" font-size="10" fill="#3DDC97">real demand 170–177 (buy signals fired)</text>
+      <text x="34" y="52" font-family="JetBrains Mono" font-size="10" fill="#FF5C6A">supply 207.98–231.83 (sell signals fired)</text>
+      <!-- price axis -->
+      <text x="612" y="96" font-family="JetBrains Mono" font-size="9" fill="#9B93B0">220</text>
+      <text x="612" y="178" font-family="JetBrains Mono" font-size="9" fill="#9B93B0">200</text>
+      <text x="612" y="261" font-family="JetBrains Mono" font-size="9" fill="#9B93B0">180</text>
+      <text x="612" y="343" font-family="JetBrains Mono" font-size="9" fill="#9B93B0">160</text>
+    </svg>
+    <figcaption>The volume profile is the tell. <b class="a">190 is a thin, low-volume pocket</b> — a drawn line, not a shelf; price glides through it. The real high-volume support is the <b class="a">POC around 180–185</b> and the <b class="g">170–177 demand</b>; the real ceiling is the <b class="r">207.98–231.83 supply</b> a "breakout" must fight.</figcaption>
+  </figure>
+
+  <h3>Where the case goes wrong</h3>
+  <div class="compare">
+    <table>
+      <tr><th>Dimension</th><th class="badcol">Retail says</th><th class="fixcol">Institutional flow says</th></tr>
+      <tr><td>The "support"</td><td class="bad">"190 is support — it bounces here"</td><td class="good">190 is a low-volume pocket; the shelf is the POC 180–185, demand 170–177</td></tr>
+      <tr><td>Breakout thesis</td><td class="bad">"above the range → new highs"</td><td class="good">207.98–231.83 supply overhead; sell-signals already fired at 209 &amp; 230</td></tr>
+      <tr><td>Trend</td><td class="bad">"ascending trendlines = uptrend"</td><td class="good">daily made a lower high — structure broke; lines are narrative, HH/HL is fact</td></tr>
+      <tr><td>Current price</td><td class="bad">"202 is fine, we're holding"</td><td class="good">202 is no-man's-land mid-range — the autopsy trap again</td></tr>
+      <tr><td>The reason to act</td><td class="bad">"the line is my reason"</td><td class="good">a line with no reaction is a hypothesis; we trade the reaction</td></tr>
+    </table>
+  </div>
+
+  <div class="callout warn">
+    <div class="t">The one root error</div>
+    <p>It's all a single mistake wearing five hats: <strong>a story built to justify a bias.</strong> Retail draws the line first and finds reasons it should hold; flow finds where the orders <em>are</em> (the profile, the retested zones) and waits for price to react there. Lines are free and infinite — you can draw one that says anything. Liquidity is fixed: it sits at the fat part of the profile and at zones that already produced a reaction. Trade the liquidity, not the line.</p>
+  </div>
+</section>
+
+<!-- =============== 10. CHECKLIST =============== -->
 <section id="checklist" class="reveal">
-  <div class="eyebrow">09 · Before the trade</div>
+  <div class="eyebrow">10 · Before the trade</div>
   <h2>Checklist: what to know before choosing NVDA (or any ticker) for a long</h2>
 
   <div class="score">
