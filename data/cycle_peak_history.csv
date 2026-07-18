@@ -1,4 +1,0 @@
-timestamp_utc,clock,phase,cycle_peak_risk_pct,risk_change_wk,weeks_logged,rotation,breadth,volatility,rates_credit,macro,sentiment,valuation,shiller_cape,buffett_ratio_pct,vix,vix3m,vix_ts_ratio,vvix,yield_curve_10y2y,hy_spread_pct,pct_above_200dma,spy_pct_off_high,iwm_vs_spy_3mo,naaim,margin_debt_pct,ipo_s1_30d,ipo_etf_vs_spy,unemployment_pct,sahm_rule,jobless_claims_4wk,housing_months_supply,xlf_vs_spy_lag,copper_gold_3mo
-2026-06-05T22:30:00Z,9:17,MATURING,32,-3,3/4,2/6,0/4,2/4,0/4,2/8,1/6,4/4,41.6,230,21.5,21.8,0.99,102,0.38,2.74,58,-2.9,2.6,87,1.78,255,15.7,4.3,0.10,214750,9.4,6.3,28.8
-2026-06-12T22:30:00Z,9:07,EARLY / MID CYCLE,28,-4,4/4,1/6,1/4,0/4,0/4,2/8,2/6,4/4,41.4,218,17.7,20.5,0.86,94,0.39,2.78,62,-2.3,6.8,79,1.88,238,18.6,4.3,0.10,219000,9.4,2.9,35.0
-2026-06-26T22:31:00Z,9:07,EARLY / MID CYCLE,28,-5,,1/6,2/4,0/6,0/4,2/8,1/2,4/4,40.7,218,18.4,,0.91,89,0.31,2.78,64,-4.0,8.2,,,234,22.5,4.3,0.10,224250,10.3,3.8,21.3
