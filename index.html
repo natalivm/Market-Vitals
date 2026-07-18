@@ -195,8 +195,9 @@ figcaption{font-family:var(--mono);font-size:14px;color:var(--muted);margin-top:
 /* ---------- trade autopsy ---------- */
 .trade-ticket{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:24px 28px;margin-top:34px;font-family:var(--mono)}
 .trade-ticket .tt{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
-.trade-ticket .row{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-top:1px solid var(--line);font-size:16px}
-.trade-ticket .row span:first-child{color:var(--muted)}
+.trade-ticket .row{display:grid;grid-template-columns:190px 1fr;gap:24px;padding:12px 0;border-top:1px solid var(--line);font-size:16px;align-items:baseline}
+.trade-ticket .row span:first-child{color:var(--muted);text-transform:uppercase;font-size:12.5px;letter-spacing:.06em}
+@media(max-width:620px){.trade-ticket{padding:20px}.trade-ticket .row{grid-template-columns:1fr;gap:3px}}
 .trade-ticket.good{border-color:rgba(61,220,151,.45);background:linear-gradient(180deg,var(--demand-dim),var(--surface-2) 55%)}
 .trade-ticket.good .tt{color:var(--demand)}
 .trigger-line{font-family:var(--mono);font-size:14.5px;color:var(--demand);background:var(--demand-dim);border-radius:8px;padding:12px 16px;margin-top:24px;display:flex;gap:10px;align-items:flex-start}
