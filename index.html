@@ -30,7 +30,7 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.58;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased}
 ::selection{background:var(--violet);color:#fff}
 img{max-width:100%}
 
@@ -40,24 +40,33 @@ p{color:var(--muted);max-width:68ch}
 p strong{color:var(--ink)}
 p+p{margin-top:14px}
 a{color:var(--violet)}
-.lead{font-size:17px;color:#C8C2D8}
+.lead{font-size:19px;line-height:1.55;color:#DAD5E8;max-width:none;background:linear-gradient(180deg,var(--violet-dim),var(--surface) 62%);border:1px solid var(--line);border-left:3px solid var(--violet);border-radius:0 14px 14px 0;padding:22px 26px 24px;margin-top:8px}
+.lead strong{color:#fff}
+.lead em{color:var(--amber);font-style:normal}
 
-.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--violet);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.eyebrow{font-family:var(--mono);font-size:13.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--violet);margin-bottom:12px;display:flex;align-items:center;gap:10px}
 .eyebrow::before{content:"";width:26px;height:1px;background:var(--violet)}
 h2{font-family:var(--display);font-weight:600;font-size:clamp(23px,3.2vw,33px);line-height:1.18;margin-bottom:14px;letter-spacing:-.01em}
 h3{font-family:var(--display);font-weight:400;font-size:18px;margin:30px 0 10px;color:var(--ink)}
 
 /* compact key-point list */
 .keys{list-style:none;margin-top:24px;display:grid;gap:8px}
-.keys li{position:relative;font-size:15px;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:13px 16px 13px 40px}
+.keys li{position:relative;font-size:17px;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:13px 16px 13px 40px}
 .keys li::before{content:"▸";color:var(--violet);font-weight:600;position:absolute;left:16px;top:13px}
 .keys li b{color:var(--ink)}
 .keys.g li::before{content:"▲";color:var(--demand)}
 .keys.r li::before{content:"▼";color:var(--supply)}
 
+/* stat tile row */
+.statrow{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:24px}
+.statrow .s{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 10px;text-align:center}
+.statrow .s .k{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.statrow .s .v{font-family:var(--display);font-size:18px;margin-top:7px}
+@media(max-width:900px){.statrow{grid-template-columns:repeat(3,1fr)}}
+
 /* one-line section takeaway */
-.takeaway{margin-top:30px;display:flex;gap:14px;align-items:baseline;border-top:1px dashed var(--line);padding-top:16px;font-size:14px;color:var(--ink)}
-.takeaway b{font-family:var(--mono);color:var(--violet);letter-spacing:.1em;text-transform:uppercase;font-size:10.5px;white-space:nowrap;flex-shrink:0;padding-top:2px}
+.takeaway{margin-top:30px;display:flex;gap:14px;align-items:baseline;border-top:1px dashed var(--line);padding-top:16px;font-size:16px;color:var(--ink)}
+.takeaway b{font-family:var(--mono);color:var(--violet);letter-spacing:.1em;text-transform:uppercase;font-size:12.5px;white-space:nowrap;flex-shrink:0;padding-top:2px}
 .price{font-family:var(--mono);font-weight:600}
 .g{color:var(--demand)}.r{color:var(--supply)}.a{color:var(--amber)}.v{color:var(--violet)}
 
@@ -67,11 +76,11 @@ h3{font-family:var(--display);font-weight:400;font-size:18px;margin:30px 0 10px;
 /* ---------- nav ---------- */
 nav{position:sticky;top:0;z-index:50;background:rgba(11,8,18,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 nav .wrap{display:flex;align-items:center;gap:22px;height:58px}
-.logo{font-family:var(--display);font-weight:800;font-size:13px;letter-spacing:.06em;white-space:nowrap}
+.logo{font-family:var(--display);font-weight:800;font-size:14.5px;letter-spacing:.06em;white-space:nowrap}
 .logo span{color:var(--demand)}
 nav .links{display:flex;gap:18px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
 nav .links::-webkit-scrollbar{display:none}
-nav a{color:var(--muted);text-decoration:none;font-size:13px;white-space:nowrap;padding:6px 2px;border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
+nav a{color:var(--muted);text-decoration:none;font-size:14.5px;white-space:nowrap;padding:6px 2px;border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
 nav a:hover,nav a:focus-visible{color:var(--ink)}
 nav a.active{color:var(--ink);border-bottom-color:var(--violet)}
 nav a:focus-visible{outline:2px solid var(--violet);outline-offset:2px;border-radius:4px}
@@ -84,26 +93,26 @@ nav a:focus-visible{outline:2px solid var(--violet);outline-offset:2px;border-ra
 .hero h1 em{font-style:normal;color:var(--demand)}
 .hero .sub{font-size:18px}
 .hero .tagrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
-.tag{font-family:var(--mono);font-size:12px;padding:7px 13px;border:1px solid var(--line);border-radius:100px;color:var(--muted)}
+.tag{font-family:var(--mono);font-size:13.5px;padding:7px 13px;border:1px solid var(--line);border-radius:100px;color:var(--muted)}
 .tag.hot{border-color:var(--demand);color:var(--demand)}
 .tag.warn{border-color:var(--supply);color:var(--supply)}
 .hero-chart{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 14px 12px}
-.hero-chart .cap{font-family:var(--mono);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;padding:0 8px 8px}
+.hero-chart .cap{font-family:var(--mono);font-size:12.5px;color:var(--muted);display:flex;justify-content:space-between;padding:0 8px 8px}
 
 /* ---------- cards / grids ---------- */
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:34px}
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:26px}
-.card h4{font-family:var(--display);font-weight:400;font-size:15px;margin-bottom:10px}
-.card p{font-size:15px}
+.card h4{font-family:var(--display);font-weight:400;font-size:17px;margin-bottom:10px}
+.card p{font-size:17px}
 .card.demand{border-color:rgba(61,220,151,.35);background:linear-gradient(180deg,var(--demand-dim),var(--surface) 55%)}
 .card.supply{border-color:rgba(255,92,106,.35);background:linear-gradient(180deg,var(--supply-dim),var(--surface) 55%)}
-.knum{font-family:var(--mono);font-size:12px;color:var(--violet);margin-bottom:12px;display:block}
+.knum{font-family:var(--mono);font-size:13.5px;color:var(--violet);margin-bottom:12px;display:block}
 
 /* compare table */
 .compare{margin-top:34px;border:1px solid var(--line);border-radius:14px;overflow-x:auto}
-.compare table{width:100%;border-collapse:collapse;font-size:15px;min-width:520px}
-.compare th{font-family:var(--display);font-weight:400;font-size:14px;text-align:left;padding:16px 20px;background:var(--surface-2)}
+.compare table{width:100%;border-collapse:collapse;font-size:17px;min-width:520px}
+.compare th{font-family:var(--display);font-weight:400;font-size:16px;text-align:left;padding:16px 20px;background:var(--surface-2)}
 .compare th:first-child{width:26%}
 .compare td{padding:14px 20px;border-top:1px solid var(--line);color:var(--muted);vertical-align:top}
 .compare td:first-child{color:var(--ink);font-weight:500}
@@ -114,35 +123,35 @@ nav a:focus-visible{outline:2px solid var(--violet);outline-offset:2px;border-ra
 .callout{margin-top:34px;border-left:3px solid var(--violet);background:var(--surface);border-radius:0 14px 14px 0;padding:22px 26px}
 .callout.warn{border-left-color:var(--supply)}
 .callout.good{border-left-color:var(--demand)}
-.callout .t{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.04em;margin-bottom:8px;text-transform:uppercase}
-.callout p{font-size:15px}
+.callout .t{font-family:var(--display);font-size:14.5px;font-weight:600;letter-spacing:.04em;margin-bottom:8px;text-transform:uppercase}
+.callout p{font-size:17px}
 
 /* svg figures */
 figure{margin-top:34px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px}
-figcaption{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:14px;line-height:1.6}
+figcaption{font-family:var(--mono);font-size:14px;color:var(--muted);margin-top:14px;line-height:1.6}
 .figrow{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:34px}
 .figrow figure{margin-top:0}
 
 /* segmented toggle */
 .seg{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:100px;padding:4px;gap:4px;margin-top:30px}
-.seg button{font-family:var(--mono);font-size:13px;color:var(--muted);background:none;border:none;padding:8px 18px;border-radius:100px;cursor:pointer;transition:all .18s}
+.seg button{font-family:var(--mono);font-size:14.5px;color:var(--muted);background:none;border:none;padding:8px 18px;border-radius:100px;cursor:pointer;transition:all .18s}
 .seg button:hover{color:var(--ink)}
 .seg button.on{background:var(--violet);color:#fff}
 .seg button:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
 
 /* trend explainer */
-.trend-note{margin-top:18px;font-family:var(--mono);font-size:13px;color:var(--muted);min-height:22px}
+.trend-note{margin-top:18px;font-family:var(--mono);font-size:14.5px;color:var(--muted);min-height:22px}
 
 /* ---------- timeframe pyramid ---------- */
 .tf-stack{margin-top:38px;display:flex;flex-direction:column;gap:12px}
 .tf{display:grid;grid-template-columns:130px 1fr;gap:20px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px 24px;transition:border-color .2s}
 .tf:hover{border-color:var(--violet)}
-.tf .lbl{font-family:var(--display);font-weight:600;font-size:15px}
-.tf .lbl small{display:block;font-family:var(--mono);font-weight:400;font-size:10.5px;color:var(--violet);margin-top:6px;letter-spacing:.06em}
-.tf p{font-size:15px}
-.tf .verdict{font-family:var(--mono);font-size:12px;margin-top:8px}
+.tf .lbl{font-family:var(--display);font-weight:600;font-size:17px}
+.tf .lbl small{display:block;font-family:var(--mono);font-weight:400;font-size:12.5px;color:var(--violet);margin-top:6px;letter-spacing:.06em}
+.tf p{font-size:17px}
+.tf .verdict{font-family:var(--mono);font-size:13.5px;margin-top:8px}
 .tf-summary{margin-top:22px;display:flex;gap:8px;flex-wrap:wrap}
-.tf-pill{font-family:var(--mono);font-size:12px;padding:8px 14px;border-radius:8px;border:1px solid var(--line)}
+.tf-pill{font-family:var(--mono);font-size:13.5px;padding:8px 14px;border-radius:8px;border:1px solid var(--line)}
 .tf-pill.for{color:var(--demand);border-color:rgba(61,220,151,.4)}
 .tf-pill.against{color:var(--supply);border-color:rgba(255,92,106,.4)}
 .tf-pill.neu{color:var(--amber);border-color:rgba(242,180,65,.4)}
@@ -150,47 +159,47 @@ figcaption{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:
 /* ---------- NVDA interactive chart + ladder ---------- */
 .case{display:grid;grid-template-columns:300px 1fr;gap:36px;margin-top:40px;align-items:start}
 .ladder{position:sticky;top:78px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 0;max-height:calc(100vh - 100px);overflow-y:auto}
-.ladder .lt{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:0 18px 12px;border-bottom:1px solid var(--line)}
+.ladder .lt{font-family:var(--mono);font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:0 18px 12px;border-bottom:1px solid var(--line)}
 .lvl{display:flex;align-items:center;gap:11px;width:100%;text-align:left;background:none;border:none;border-left:3px solid transparent;padding:10px 18px;cursor:pointer;color:var(--muted);font-family:var(--body);font-size:12.5px;transition:background .15s,color .15s}
 .lvl:hover{background:var(--surface-2);color:var(--ink)}
 .lvl:focus-visible{outline:2px solid var(--violet);outline-offset:-2px}
-.lvl .px{font-family:var(--mono);font-weight:600;font-size:12px;min-width:70px;padding:4px 7px;border-radius:6px;text-align:center;color:#0B0812}
+.lvl .px{font-family:var(--mono);font-weight:600;font-size:13.5px;min-width:70px;padding:4px 7px;border-radius:6px;text-align:center;color:#0B0812}
 .lvl.sup .px{background:var(--supply)}
 .lvl.dem .px{background:var(--demand)}
 .lvl.neu .px{background:var(--amber)}
 .lvl.now .px{background:var(--ink)}
-.lvl .zt{font-size:10px}
+.lvl .zt{font-size:11.5px}
 .lvl.active{border-left-color:var(--violet);background:var(--surface-2);color:var(--ink)}
-.lvl .unc{font-family:var(--mono);font-size:9px;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:1px 4px;margin-left:auto}
+.lvl .unc{font-family:var(--mono);font-size:10.5px;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:1px 4px;margin-left:auto}
 .chart-panel{min-width:0}
 .chart-wrap{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 14px 8px;overflow-x:auto}
 .chart-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding:0 6px 10px}
-.chart-head .ttl{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.chart-head .ttl{font-family:var(--mono);font-size:13.5px;color:var(--muted)}
 .chart-head .ttl b{color:var(--ink)}
-.chart-toggles{display:flex;gap:14px;font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.chart-toggles{display:flex;gap:14px;font-family:var(--mono);font-size:13px;color:var(--muted)}
 .chart-toggles label{display:flex;align-items:center;gap:6px;cursor:pointer}
 .chart-toggles input{accent-color:var(--violet)}
 #nvdaChart{width:100%;min-width:640px;height:auto;display:block}
-.chart-cap{font-family:var(--mono);font-size:11px;color:var(--muted);padding:8px 6px 2px;line-height:1.6}
-.lvl-detail{background:var(--surface-2);border:1px solid var(--violet);border-radius:12px;padding:20px 22px;margin-top:16px;font-size:14.5px;color:var(--muted);min-height:64px}
+.chart-cap{font-family:var(--mono);font-size:13.5px;color:var(--muted);padding:8px 6px 2px;line-height:1.6}
+.lvl-detail{background:var(--surface-2);border:1px solid var(--violet);border-radius:12px;padding:20px 22px;margin-top:16px;font-size:16.5px;color:var(--muted);min-height:64px}
 .lvl-detail b{color:var(--ink)}
 .lvl-detail .dhead{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.lvl-detail .dpx{font-family:var(--mono);font-weight:600;font-size:15px;padding:4px 10px;border-radius:6px;color:#0B0812}
+.lvl-detail .dpx{font-family:var(--mono);font-weight:600;font-size:17px;padding:4px 10px;border-radius:6px;color:#0B0812}
 
 /* scenarios */
 .scen{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:22px}
 .scen .card h4{font-size:16px}
-.scen .trigger{font-family:var(--mono);font-size:13px;padding:10px 14px;border-radius:8px;margin:14px 0;display:inline-block}
+.scen .trigger{font-family:var(--mono);font-size:14.5px;padding:10px 14px;border-radius:8px;margin:14px 0;display:inline-block}
 .scen .demand .trigger{background:var(--demand-dim);color:var(--demand)}
 
 /* ---------- trade autopsy ---------- */
 .trade-ticket{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:24px 28px;margin-top:34px;font-family:var(--mono)}
-.trade-ticket .tt{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
-.trade-ticket .row{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-top:1px solid var(--line);font-size:14px}
+.trade-ticket .tt{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.trade-ticket .row{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-top:1px solid var(--line);font-size:16px}
 .trade-ticket .row span:first-child{color:var(--muted)}
 .trade-ticket.good{border-color:rgba(61,220,151,.45);background:linear-gradient(180deg,var(--demand-dim),var(--surface-2) 55%)}
 .trade-ticket.good .tt{color:var(--demand)}
-.trigger-line{font-family:var(--mono);font-size:13px;color:var(--demand);background:var(--demand-dim);border-radius:8px;padding:12px 16px;margin-top:24px;display:flex;gap:10px;align-items:flex-start}
+.trigger-line{font-family:var(--mono);font-size:14.5px;color:var(--demand);background:var(--demand-dim);border-radius:8px;padding:12px 16px;margin-top:24px;display:flex;gap:10px;align-items:flex-start}
 .trigger-line b{color:var(--ink)}
 .compare td.good{color:var(--demand)}
 .compare td.bad{color:var(--supply)}
@@ -199,55 +208,55 @@ figcaption{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:
 .autopsy{margin-top:34px;display:flex;flex-direction:column;gap:12px;counter-reset:flaw}
 .flaw{display:grid;grid-template-columns:44px 1fr;gap:18px;background:var(--surface);border:1px solid rgba(255,92,106,.3);border-radius:12px;padding:20px 22px}
 .flaw::before{counter-increment:flaw;content:"✗";font-family:var(--display);font-weight:600;color:var(--supply);font-size:18px;padding-top:2px}
-.flaw h4{font-size:15px;font-weight:600;margin-bottom:6px}
-.flaw h4 .sev{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--supply);border:1px solid rgba(255,92,106,.4);border-radius:100px;padding:3px 9px;margin-left:10px;vertical-align:2px}
-.flaw p{font-size:14px}
-.flaw .fix{font-family:var(--mono);font-size:12px;color:var(--demand);margin-top:10px}
+.flaw h4{font-size:17px;font-weight:600;margin-bottom:6px}
+.flaw h4 .sev{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;color:var(--supply);border:1px solid rgba(255,92,106,.4);border-radius:100px;padding:3px 9px;margin-left:10px;vertical-align:2px}
+.flaw p{font-size:16px}
+.flaw .fix{font-family:var(--mono);font-size:13.5px;color:var(--demand);margin-top:10px}
 
 /* EV calculator */
 .ev{margin-top:34px;background:var(--surface);border:1px solid var(--violet);border-radius:14px;padding:28px}
 .ev h4{font-family:var(--display);font-weight:400;font-size:16px;margin-bottom:6px}
-.ev .lead{font-size:14px;margin-bottom:22px}
+.ev .lead{font-size:16px;margin-bottom:22px}
 .ev-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:30px;align-items:center}
-.ev-slider label{font-family:var(--mono);font-size:12px;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:10px}
-.ev-slider label b{color:var(--ink);font-size:15px}
+.ev-slider label{font-family:var(--mono);font-size:13.5px;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:10px}
+.ev-slider label b{color:var(--ink);font-size:17px}
 .ev input[type=range]{width:100%;accent-color:var(--violet);height:6px}
-.ev-marks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:8px}
-.ev-be{font-family:var(--mono);font-size:12px;color:var(--amber);margin-top:16px}
+.ev-marks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-top:8px}
+.ev-be{font-family:var(--mono);font-size:13.5px;color:var(--amber);margin-top:16px}
 .ev-out{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:22px;text-align:center}
 .ev-out .evnum{font-family:var(--display);font-weight:600;font-size:34px;line-height:1}
-.ev-out .evlab{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:10px}
-.ev-out .evmsg{font-family:var(--mono);font-size:12px;margin-top:14px;min-height:32px}
-.ev-formula{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:20px;text-align:center;line-height:1.7}
+.ev-out .evlab{font-family:var(--mono);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:10px}
+.ev-out .evmsg{font-family:var(--mono);font-size:13.5px;margin-top:14px;min-height:32px}
+.ev-formula{font-family:var(--mono);font-size:13.5px;color:var(--muted);margin-top:20px;text-align:center;line-height:1.7}
 
 /* ---------- checklist scorecard ---------- */
 .score{margin-top:34px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px 28px}
 .score .sh{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:10px}
-.score .sh .st{font-family:var(--display);font-size:15px}
-.score .sh .sv{font-family:var(--mono);font-size:13px;color:var(--muted)}
+.score .sh .st{font-family:var(--display);font-size:17px}
+.score .sh .sv{font-family:var(--mono);font-size:14.5px;color:var(--muted)}
 .score-bar{height:10px;border-radius:6px;background:var(--surface-2);margin:16px 0 6px;overflow:hidden;display:flex}
 .score-bar i{display:block;height:100%}
-.score-verdict{font-family:var(--mono);font-size:13px;margin-top:6px}
+.score-verdict{font-family:var(--mono);font-size:14.5px;margin-top:6px}
 .check{margin-top:22px;display:flex;flex-direction:column;gap:12px}
 .chk{display:grid;grid-template-columns:30px 1fr auto;gap:16px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
 .chk .ico{font-family:var(--mono);font-weight:600;font-size:16px;padding-top:1px}
 .chk.pass .ico{color:var(--demand)}
 .chk.fail .ico{color:var(--supply)}
 .chk.wait .ico{color:var(--amber)}
-.chk h4{font-size:15px;font-weight:600;margin-bottom:6px}
-.chk p{font-size:14px}
-.chk .q{font-family:var(--mono);font-size:12px;margin-top:8px}
+.chk h4{font-size:17px;font-weight:600;margin-bottom:6px}
+.chk p{font-size:16px}
+.chk .q{font-family:var(--mono);font-size:13.5px;margin-top:8px}
 .chk.pass .q{color:var(--demand)}
 .chk.fail .q{color:var(--supply)}
 .chk.wait .q{color:var(--amber)}
-.chk .badge{font-family:var(--mono);font-size:10px;letter-spacing:.1em;padding:5px 10px;border-radius:100px;align-self:center;white-space:nowrap}
+.chk .badge{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;padding:5px 10px;border-radius:100px;align-self:center;white-space:nowrap}
 .chk.pass .badge{background:var(--demand-dim);color:var(--demand)}
 .chk.fail .badge{background:var(--supply-dim);color:var(--supply)}
 .chk.wait .badge{background:var(--amber-dim);color:var(--amber)}
 
 footer{border-top:1px solid var(--line);padding:44px 0 60px}
-footer p{font-size:13px;max-width:80ch}
-footer .brand{font-family:var(--mono);font-size:12px;color:var(--violet);margin-bottom:10px}
+footer p{font-size:14.5px;max-width:80ch}
+footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margin-bottom:10px}
 
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
 .reveal.in{opacity:1;transform:none}
@@ -285,6 +294,7 @@ footer .brand{font-family:var(--mono);font-size:12px;color:var(--violet);margin-
       <a href="#autopsy">Trade Autopsy</a>
       <a href="#fix">The Fix</a>
       <a href="#retail">Retail Trap</a>
+      <a href="#options">Options Flow</a>
       <a href="#checklist">Checklist</a>
     </div>
   </div>
@@ -678,7 +688,7 @@ footer .brand{font-family:var(--mono);font-size:12px;color:var(--violet);margin-
       <tr><td>15-minute</td><td>208.84 / 204.72 / 200.59</td><td>205.08 / 206.19 / 205.25</td><td class="r">below all EMAs, sellers</td></tr>
     </table>
   </div>
-  <p style="font-family:var(--mono);font-size:12px;margin-top:12px">Readings transcribed from your Yahoo Finance markups · close of Jul 17 2026.</p>
+  <p style="font-family:var(--mono);font-size:13.5px;margin-top:12px">Readings transcribed from your Yahoo Finance markups · close of Jul 17 2026.</p>
 
   <div class="callout">
     <div class="t">Verdict of the pass</div>
@@ -925,9 +935,78 @@ footer .brand{font-family:var(--mono);font-size:12px;color:var(--violet);margin-
   </div>
 </section>
 
-<!-- =============== 10. CHECKLIST =============== -->
+<!-- =============== 10. OPTIONS / DEALER GAMMA — CONFLUENCE =============== -->
+<section id="options" class="reveal">
+  <div class="eyebrow">10 · Confluence</div>
+  <h2>Does the options flow back the thesis?</h2>
+  <p class="lead">A second, independent dataset — <strong>options positioning &amp; dealer gamma</strong> — should either confirm or challenge the price map. Here it <strong>mostly confirms</strong>: the same ceiling, the same defended downside, the same "range / wait" verdict. One caveat matters: a dealer <em>wall</em> is not a demand <em>zone</em>.</p>
+
+  <div class="statrow">
+    <div class="s"><div class="k">Spot</div><div class="v">$202.81</div></div>
+    <div class="s"><div class="k">Call wall</div><div class="v" style="color:var(--demand)">$210</div></div>
+    <div class="s"><div class="k">Put wall</div><div class="v" style="color:var(--supply)">$200</div></div>
+    <div class="s"><div class="k">Max pain</div><div class="v" style="color:var(--violet)">$200</div></div>
+    <div class="s"><div class="k">IV rank</div><div class="v">45</div></div>
+    <div class="s"><div class="k">Exp. move</div><div class="v">±$23.9</div></div>
+  </div>
+  <p style="font-family:var(--mono);font-size:13.5px;margin-top:12px">Positioning snapshot · 1:30 PM ET · 17 Jul · positive-gamma (pin / mean-revert) regime.</p>
+
+  <figure>
+    <svg viewBox="0 0 660 250" width="100%" role="img" aria-label="Dealer gamma by strike">
+      <text x="150" y="20" font-family="JetBrains Mono" font-size="11" fill="#9B93B0" text-anchor="middle">◄ PUT GAMMA</text>
+      <text x="330" y="20" font-family="JetBrains Mono" font-size="11" fill="#9B93B0" text-anchor="middle">STRIKE</text>
+      <text x="510" y="20" font-family="JetBrains Mono" font-size="11" fill="#9B93B0" text-anchor="middle">CALL GAMMA ►</text>
+      <!-- 210 -->
+      <rect x="240" y="34" width="60" height="22" fill="rgba(255,92,106,.55)" rx="2"/>
+      <rect x="360" y="34" width="92" height="22" fill="rgba(61,220,151,.6)" rx="2"/>
+      <text x="458" y="49" font-family="JetBrains Mono" font-size="11" fill="#3DDC97">460k</text>
+      <text x="330" y="49" font-family="JetBrains Mono" font-size="13" fill="#EDE9F6" text-anchor="middle">210</text>
+      <!-- 205 -->
+      <rect x="230" y="84" width="70" height="22" fill="rgba(255,92,106,.55)" rx="2"/>
+      <text x="224" y="99" font-family="JetBrains Mono" font-size="11" fill="#FF5C6A" text-anchor="end">351k</text>
+      <rect x="360" y="84" width="69" height="22" fill="rgba(61,220,151,.6)" rx="2"/>
+      <text x="435" y="99" font-family="JetBrains Mono" font-size="11" fill="#3DDC97">344k</text>
+      <text x="330" y="99" font-family="JetBrains Mono" font-size="13" fill="#EDE9F6" text-anchor="middle">205</text>
+      <!-- spot -->
+      <line x1="40" y1="122" x2="620" y2="122" stroke="#EDE9F6" stroke-dasharray="1 4" opacity=".8"/>
+      <text x="44" y="118" font-family="JetBrains Mono" font-size="11" fill="#EDE9F6">spot 202.81</text>
+      <!-- 200 (max pain) -->
+      <rect x="121" y="139" width="179" height="22" fill="rgba(255,92,106,.85)" stroke="#fff" rx="2"/>
+      <text x="115" y="154" font-family="JetBrains Mono" font-size="11" fill="#FF5C6A" text-anchor="end">893k</text>
+      <rect x="360" y="139" width="220" height="22" fill="rgba(61,220,151,.9)" stroke="#fff" rx="2"/>
+      <text x="586" y="154" font-family="JetBrains Mono" font-size="11" fill="#3DDC97">1099k</text>
+      <text x="330" y="154" font-family="JetBrains Mono" font-size="13" fill="#8B5CF6" text-anchor="middle" font-weight="600">200◆</text>
+      <!-- 195 -->
+      <rect x="216" y="194" width="84" height="22" fill="rgba(255,92,106,.55)" rx="2"/>
+      <text x="210" y="209" font-family="JetBrains Mono" font-size="11" fill="#FF5C6A" text-anchor="end">418k</text>
+      <rect x="360" y="194" width="60" height="22" fill="rgba(61,220,151,.6)" rx="2"/>
+      <text x="330" y="209" font-family="JetBrains Mono" font-size="13" fill="#EDE9F6" text-anchor="middle">195</text>
+    </svg>
+    <figcaption>Dealer gamma by strike. The heaviest call gamma actually sits at $200 — <b>below spot</b>, so it can't cap price; the effective ceiling is the <b class="g">$210 call wall</b>, and the <b class="r">$200 put wall</b> / max pain anchors the downside. Numbers shown where the tool labelled them.</figcaption>
+  </figure>
+
+  <h3>Where it confirms the price map</h3>
+  <ul class="keys g">
+    <li><b>Same ceiling.</b> Call wall $210 + heaviest call gamma above spot sit right on our <b>207.98 supply edge</b> — a breakout must beat price-structure supply <em>and</em> the dealer wall.</li>
+    <li><b>Capped upside in the flow.</b> Net call selling (51% sold); <b>195C sold $433K</b> and <b>205C sold $123K</b> = overwriting the 195–210 band. Distribution under supply.</li>
+    <li><b>Defended downside, two tiers.</b> Put wall / max pain / peak put gamma at <b>$200</b>; <b>160P sold $249K</b> = confidence the 170–177 demand won't break.</li>
+    <li><b>Regime says wait.</b> Positive gamma → pin / mean-revert = range-bound chop, no trend. That is our verdict: no edge mid-range, not now.</li>
+  </ul>
+
+  <div class="callout warn">
+    <div class="t">The caveat — a wall is not a zone</div>
+    <p>A demand/supply <strong>zone</strong> is resting institutional orders: structural, and it persists. A dealer <strong>gamma wall / pin</strong> is a hedging artifact that <strong>expires</strong> (Aug 21 OPEX) and can flip. Use walls for <strong>timing and confluence</strong>, zones for the <strong>thesis</strong>. When gamma flips negative — price loses $200, or after OPEX — the pin breaks and moves amplify. That's exactly when our reclaim/breakdown triggers finally get their impulse.</p>
+  </div>
+
+  <div class="callout good">
+    <div class="t">Verdict</div>
+    <p>Yes — it supports the theory, as <strong>confluence + regime</strong>, not a new thesis. Same ceiling (~207.98–210), same defended support (200 tactically, 170–177 structurally), same conclusion: <strong>range-bound, wait for the break.</strong> The flow itself is mixed — net call selling vs +$6.8M premium — i.e. low conviction, which also says wait. It does <em>not</em> rescue the breakout case: dealers pinning near 200–210 is not a launch.</p>
+  </div>
+</section>
+
+<!-- =============== 11. CHECKLIST =============== -->
 <section id="checklist" class="reveal">
-  <div class="eyebrow">10 · Before the trade</div>
+  <div class="eyebrow">11 · Before the trade</div>
   <h2>Checklist: what to know before choosing NVDA (or any ticker) for a long</h2>
 
   <div class="score">
@@ -1164,16 +1243,24 @@ function drawDown(){
   document.getElementById('trendCap').innerHTML='The mirror image. Sell rallies into supply, in the direction of the trend. Do not "catch the knife" by buying because it looks cheap.';
 }
 function drawBreak(){
-  let s=`<line x1="20" y1="230" x2="620" y2="230" stroke="#2C2246"/>`;
-  s+=trendPoly('20,200 90,120 150,160 240,80 300,125 380,60','#3DDC97');
-  s+=trendPoly('380,60 440,140 500,112 570,190','#FF5C6A');
-  s+=dot(90,120,'#3DDC97','HH',78,108)+dot(150,160,'#3DDC97','HL',140,182)+dot(240,80,'#3DDC97','HH',228,68)+dot(300,125,'#3DDC97','HL',290,146)+dot(380,60,'#3DDC97','HH',368,48);
-  s+=dot(440,140,'#FF5C6A','lower low',420,160)+dot(500,112,'#FF5C6A','LH',490,100);
-  s+=`<line x1="300" y1="20" x2="300" y2="230" stroke="#F2B441" stroke-dasharray="4 4" opacity=".5"/>`;
-  s+=`<text x="308" y="216" font-family="JetBrains Mono" font-size="10" fill="#F2B441">last HL — the line that must hold</text>`;
-  s+=`<text x="26" y="34" font-family="JetBrains Mono" font-size="12" fill="#FF5C6A">THE BREAK — no new HH, and the last HL is gone</text>`;
+  let s=`<line x1="20" y1="232" x2="620" y2="232" stroke="#2C2246"/>`;
+  // real level lines
+  s+=`<line x1="30" y1="70" x2="620" y2="70" stroke="#FF5C6A" stroke-dasharray="5 5" opacity=".6"/>`;
+  s+=`<text x="34" y="64" font-family="JetBrains Mono" font-size="11" fill="#FF5C6A">207.98 · supply — a new HH fails here</text>`;
+  s+=`<line x1="30" y1="150" x2="620" y2="150" stroke="#F2B441" stroke-dasharray="5 5" opacity=".6"/>`;
+  s+=`<text x="360" y="144" font-family="JetBrains Mono" font-size="11" fill="#F2B441">197.84 · last HL — the line that must hold</text>`;
+  // structure: uptrend into the top (green), then fail + break (red)
+  s+=trendPoly('30,205 110,110 185,150 300,70','#3DDC97');
+  s+=trendPoly('300,70 380,120 460,80 540,178 610,202','#FF5C6A');
+  s+=dot(110,110,'#3DDC97','HH',98,98);
+  s+=dot(185,150,'#F2B441','last HL',150,172);
+  s+=dot(300,70,'#3DDC97','HH · tags 207.98',300,60);
+  s+=`<text x="290" y="52" font-family="JetBrains Mono" font-size="13" fill="#FF5C6A">▽</text>`;
+  s+=dot(460,80,'#FF5C6A','lower high — no new HH',430,68);
+  s+=dot(540,178,'#FF5C6A','breaks 197.84',505,200);
+  s+=`<text x="26" y="32" font-family="JetBrains Mono" font-size="13" fill="#FF5C6A">THE NVDA BREAK — fails 207.98, then loses 197.84</text>`;
   document.getElementById('trendFig').innerHTML=s;
-  document.getElementById('trendCap').innerHTML='A trend break needs BOTH: price fails to make a new HH and takes out the last HL. One alone is not enough. This is exactly what happened on the NVDA daily under 207.98.';
+  document.getElementById('trendCap').innerHTML='On the NVDA daily, price <b>failed to make a new high above the 207.98 supply</b>, then <b>lost the last higher low at 197.84</b> — both conditions met, so the local uptrend is broken. That is why a long here needs a <b class="g">reclaim above 207.98</b> or a fresh reaction at a level below (197.84 → 185.61 → 170–177) — not a mid-range bet.';
 }
 document.getElementById('segUp').addEventListener('click',function(){segPick(this,['segUp','segDown','segBreak']);drawUp();});
 document.getElementById('segDown').addEventListener('click',function(){segPick(this,['segUp','segDown','segBreak']);drawDown();});
