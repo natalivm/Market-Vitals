@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NBIS Case Study — Institutional Money Flow</title>
+<meta name="description" content="Nebius Group (NBIS) institutional money-flow case study: an interactive level map from the weekly, daily and hourly charts, the accumulation-to-distribution read of the parabola, and a trade built for today's price action with entries, stops and targets.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B0812;
+  --surface:#161028;
+  --surface-2:#1E1636;
+  --line:#2C2246;
+  --ink:#EDE9F6;
+  --muted:#E9E5F3;
+  --demand:#3DDC97;
+  --demand-dim:rgba(61,220,151,.12);
+  --supply:#FF5C6A;
+  --supply-dim:rgba(255,92,106,.12);
+  --amber:#F2B441;
+  --amber-dim:rgba(242,180,65,.12);
+  --violet:#8B5CF6;
+  --violet-dim:rgba(139,92,246,.14);
+  --mono:'JetBrains Mono',monospace;
+  --body:'Inter',system-ui,sans-serif;
+  --display:'Unbounded',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased}
+::selection{background:var(--violet);color:#fff}
+img{max-width:100%}
+
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+section{padding:64px 0;border-top:1px solid var(--line)}
+p{color:var(--muted);max-width:68ch}
+p strong{color:var(--ink)}
+p+p{margin-top:14px}
+a{color:var(--violet)}
+.lead{font-size:19px;line-height:1.55;color:#F2EFFA;max-width:none;background:linear-gradient(180deg,var(--violet-dim),var(--surface) 62%);border:1px solid var(--line);border-left:3px solid var(--violet);border-radius:0 14px 14px 0;padding:22px 26px 24px;margin-top:8px}
+.lead strong{color:#fff}
+.lead em{color:var(--amber);font-style:normal}
+
+.eyebrow{font-family:var(--mono);font-size:13.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--violet);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:26px;height:1px;background:var(--violet)}
+h2{font-family:var(--display);font-weight:600;font-size:clamp(23px,3.2vw,33px);line-height:1.18;margin-bottom:14px;letter-spacing:-.01em}
+h3{font-family:var(--display);font-weight:400;font-size:18px;margin:30px 0 10px;color:var(--ink)}
+
+/* compact key-point list */
+.keys{list-style:none;margin-top:24px;display:grid;gap:8px}
+.keys li{position:relative;font-size:17px;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:13px 16px 13px 40px}
+.keys li::before{content:"▸";color:var(--violet);font-weight:600;position:absolute;left:16px;top:13px}
+.keys li b{color:var(--ink)}
+.keys.g li::before{content:"▲";color:var(--demand)}
+.keys.r li::before{content:"▼";color:var(--supply)}
+
+/* stat tile row */
+.statrow{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:24px}
+.statrow .s{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 10px;text-align:center}
+.statrow .s .k{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.statrow .s .v{font-family:var(--display);font-size:18px;margin-top:7px}
+@media(max-width:900px){.statrow{grid-template-columns:repeat(3,1fr)}}
+
+/* one-line section takeaway */
+.takeaway{margin-top:30px;display:flex;gap:14px;align-items:baseline;border-top:1px dashed var(--line);padding-top:16px;font-size:16px;color:var(--ink)}
+.takeaway b{font-family:var(--mono);color:var(--violet);letter-spacing:.1em;text-transform:uppercase;font-size:12.5px;white-space:nowrap;flex-shrink:0;padding-top:2px}
+.price{font-family:var(--mono);font-weight:600}
+.g{color:var(--demand)}.r{color:var(--supply)}.a{color:var(--amber)}.v{color:var(--violet)}
+
+/* ---------- scroll progress ---------- */
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--violet),var(--demand));z-index:100;transition:width .1s linear}
+
+/* ---------- nav ---------- */
+nav{position:sticky;top:0;z-index:50;background:rgba(11,8,18,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:22px;height:58px}
+.logo{font-family:var(--display);font-weight:800;font-size:14.5px;letter-spacing:.06em;white-space:nowrap}
+.logo span{color:var(--demand)}
+nav .links{display:flex;gap:18px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
+nav .links::-webkit-scrollbar{display:none}
+nav a{color:var(--muted);text-decoration:none;font-size:14.5px;white-space:nowrap;padding:6px 2px;border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
+nav a:hover,nav a:focus-visible{color:var(--ink)}
+nav a.active{color:var(--ink);border-bottom-color:var(--violet)}
+nav a:focus-visible{outline:2px solid var(--violet);outline-offset:2px;border-radius:4px}
+nav a.navcta{color:var(--demand);border:1px solid rgba(61,220,151,.45);border-radius:100px;padding:6px 15px}
+nav a.navcta:hover{background:var(--demand-dim);color:var(--demand)}
+
+/* ---------- hero ---------- */
+.hero{padding:104px 0 88px;border-top:none;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(900px 420px at 78% -10%,rgba(139,92,246,.18),transparent 65%);pointer-events:none}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:center}
+.hero h1{font-family:var(--display);font-weight:800;font-size:clamp(30px,4.6vw,52px);line-height:1.12;letter-spacing:-.015em;margin:14px 0 22px}
+.hero h1 em{font-style:normal;color:var(--demand)}
+.hero .sub{font-size:18px}
+.hero .tagrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
+.tag{font-family:var(--mono);font-size:13.5px;padding:7px 13px;border:1px solid var(--line);border-radius:100px;color:var(--muted)}
+.tag.hot{border-color:var(--demand);color:var(--demand)}
+.tag.warn{border-color:var(--supply);color:var(--supply)}
+.hero-chart{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 14px 12px}
+.hero-chart .cap{font-family:var(--mono);font-size:12.5px;color:var(--muted);display:flex;justify-content:space-between;padding:0 8px 8px}
+
+/* ---------- cards / grids ---------- */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:34px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:26px}
+.card h4{font-family:var(--display);font-weight:400;font-size:17px;margin-bottom:10px}
+.card p{font-size:17px}
+.card.demand{border-color:rgba(61,220,151,.35);background:linear-gradient(180deg,var(--demand-dim),var(--surface) 55%)}
+.card.supply{border-color:rgba(255,92,106,.35);background:linear-gradient(180deg,var(--supply-dim),var(--surface) 55%)}
+.knum{font-family:var(--mono);font-size:13.5px;color:var(--violet);margin-bottom:12px;display:block}
+
+/* compare table */
+.compare{margin-top:34px;border:1px solid var(--line);border-radius:14px;overflow-x:auto}
+.compare table{width:100%;border-collapse:collapse;font-size:17px;min-width:520px}
+.compare th{font-family:var(--display);font-weight:400;font-size:16px;text-align:left;padding:16px 20px;background:var(--surface-2)}
+.compare th:first-child{width:26%}
+.compare td{padding:14px 20px;border-top:1px solid var(--line);color:var(--muted);vertical-align:top}
+.compare td:first-child{color:var(--ink);font-weight:500}
+.compare th.imp{color:var(--demand)}
+.compare th.bal{color:var(--amber)}
+
+/* callout */
+.callout{margin-top:34px;border-left:3px solid var(--violet);background:var(--surface);border-radius:0 14px 14px 0;padding:22px 26px}
+.callout.warn{border-left-color:var(--supply)}
+.callout.good{border-left-color:var(--demand)}
+.callout .t{font-family:var(--display);font-size:14.5px;font-weight:600;letter-spacing:.04em;margin-bottom:8px;text-transform:uppercase}
+.callout p{font-size:17px}
+
+/* svg figures */
+figure{margin-top:34px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px}
+figcaption{font-family:var(--mono);font-size:14px;color:var(--muted);margin-top:14px;line-height:1.6}
+.figrow{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:34px}
+.figrow figure{margin-top:0}
+
+/* segmented toggle */
+.seg{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:100px;padding:4px;gap:4px;margin-top:30px}
+.seg button{font-family:var(--mono);font-size:14.5px;color:var(--muted);background:none;border:none;padding:8px 18px;border-radius:100px;cursor:pointer;transition:all .18s}
+.seg button:hover{color:var(--ink)}
+.seg button.on{background:var(--violet);color:#fff}
+.seg button:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+
+/* trend explainer */
+.trend-note{margin-top:18px;font-family:var(--mono);font-size:14.5px;color:var(--muted);min-height:22px}
+
+/* ---------- timeframe pyramid ---------- */
+.tf-stack{margin-top:38px;display:flex;flex-direction:column;gap:12px}
+.tf{display:grid;grid-template-columns:130px 1fr;gap:20px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px 24px;transition:border-color .2s}
+.tf:hover{border-color:var(--violet)}
+.tf .lbl{font-family:var(--display);font-weight:600;font-size:17px}
+.tf .lbl small{display:block;font-family:var(--mono);font-weight:400;font-size:12.5px;color:var(--violet);margin-top:6px;letter-spacing:.06em}
+.tf p{font-size:17px}
+.tf .verdict{font-family:var(--mono);font-size:13.5px;margin-top:8px}
+.tf-summary{margin-top:22px;display:flex;gap:8px;flex-wrap:wrap}
+.tf-pill{font-family:var(--mono);font-size:13.5px;padding:8px 14px;border-radius:8px;border:1px solid var(--line)}
+.tf-pill.for{color:var(--demand);border-color:rgba(61,220,151,.4)}
+.tf-pill.against{color:var(--supply);border-color:rgba(255,92,106,.4)}
+.tf-pill.neu{color:var(--amber);border-color:rgba(242,180,65,.4)}
+
+/* ---------- NVDA interactive chart + ladder ---------- */
+.case{display:grid;grid-template-columns:300px 1fr;gap:36px;margin-top:40px;align-items:start}
+.ladder{position:sticky;top:78px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 0;max-height:calc(100vh - 100px);overflow-y:auto}
+.ladder .lt{font-family:var(--mono);font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:0 18px 12px;border-bottom:1px solid var(--line)}
+.lvl{display:flex;align-items:center;gap:11px;width:100%;text-align:left;background:none;border:none;border-left:3px solid transparent;padding:10px 18px;cursor:pointer;color:var(--muted);font-family:var(--body);font-size:12.5px;transition:background .15s,color .15s}
+.lvl:hover{background:var(--surface-2);color:var(--ink)}
+.lvl:focus-visible{outline:2px solid var(--violet);outline-offset:-2px}
+.lvl .px{font-family:var(--mono);font-weight:600;font-size:13.5px;min-width:70px;padding:4px 7px;border-radius:6px;text-align:center;color:#0B0812}
+.lvl.sup .px{background:var(--supply)}
+.lvl.dem .px{background:var(--demand)}
+.lvl.neu .px{background:var(--amber)}
+.lvl.now .px{background:var(--ink)}
+.lvl .zt{font-size:11.5px}
+.lvl.active{border-left-color:var(--violet);background:var(--surface-2);color:var(--ink)}
+.lvl .unc{font-family:var(--mono);font-size:10.5px;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:1px 4px;margin-left:auto}
+.chart-panel{min-width:0}
+.chart-wrap{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 14px 8px;overflow-x:auto}
+.chart-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding:0 6px 10px}
+.chart-head .ttl{font-family:var(--mono);font-size:13.5px;color:var(--muted)}
+.chart-head .ttl b{color:var(--ink)}
+.chart-toggles{display:flex;gap:14px;font-family:var(--mono);font-size:13px;color:var(--muted)}
+.chart-toggles label{display:flex;align-items:center;gap:6px;cursor:pointer}
+.chart-toggles input{accent-color:var(--violet)}
+#nvdaChart{width:100%;min-width:640px;height:auto;display:block}
+.chart-cap{font-family:var(--mono);font-size:13.5px;color:var(--muted);padding:8px 6px 2px;line-height:1.6}
+.lvl-detail{background:var(--surface-2);border:1px solid var(--violet);border-radius:12px;padding:20px 22px;margin-top:16px;font-size:16.5px;color:var(--muted);min-height:64px}
+.lvl-detail b{color:var(--ink)}
+.lvl-detail .dhead{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.lvl-detail .dpx{font-family:var(--mono);font-weight:600;font-size:17px;padding:4px 10px;border-radius:6px;color:#0B0812}
+
+/* scenarios */
+.scen{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:22px}
+.scen .card h4{font-size:16px}
+.scen .trigger{font-family:var(--mono);font-size:14.5px;padding:10px 14px;border-radius:8px;margin:14px 0;display:inline-block}
+.scen .demand .trigger{background:var(--demand-dim);color:var(--demand)}
+
+/* ---------- trade autopsy ---------- */
+.trade-ticket{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:24px 28px;margin-top:34px;font-family:var(--mono)}
+.trade-ticket .tt{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.trade-ticket .row{display:grid;grid-template-columns:190px 1fr;gap:24px;padding:12px 0;border-top:1px solid var(--line);font-size:16px;align-items:baseline}
+.trade-ticket .row span:first-child{color:var(--muted);text-transform:uppercase;font-size:12.5px;letter-spacing:.06em}
+@media(max-width:620px){.trade-ticket{padding:20px}.trade-ticket .row{grid-template-columns:1fr;gap:3px}}
+.trade-ticket.good{border-color:rgba(61,220,151,.45);background:linear-gradient(180deg,var(--demand-dim),var(--surface-2) 55%)}
+.trade-ticket.good .tt{color:var(--demand)}
+/* level-map / spec card (image-2 style) */
+.spec{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:30px 30px 26px 56px;margin-top:34px;overflow:hidden}
+.spec::before{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:46px 46px;opacity:.08;pointer-events:none}
+.spec>*{position:relative}
+.spec-side{position:absolute;left:14px;top:0;bottom:0;display:flex;align-items:center;justify-content:center;writing-mode:vertical-rl;transform:rotate(180deg);font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+.spec-eyebrow{display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--demand);border:1px solid rgba(61,220,151,.4);border-radius:100px;padding:7px 14px;margin-bottom:20px}
+.spec.bad .spec-eyebrow{color:var(--supply);border-color:rgba(255,92,106,.4)}
+.spec-title{font-family:var(--display);font-weight:800;font-size:clamp(26px,3.6vw,38px);line-height:1.05;margin-bottom:24px;letter-spacing:-.01em;color:#fff}
+.spec-title mark{background:var(--amber);color:#0B0812;padding:0 12px;border-radius:6px}
+.spec.bad .spec-title mark{background:var(--supply);color:#0B0812}
+.spec-rows{display:flex;flex-direction:column;gap:8px}
+.spec-row{display:grid;grid-template-columns:128px 1fr;gap:22px;align-items:center;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:15px 20px}
+.spec-row .k{font-family:var(--mono);font-weight:600;font-size:20px;line-height:1}
+.spec-row .d{font-size:16px;color:var(--ink)}
+.spec-row .d b{color:#fff;font-weight:600}
+.spec-row.hot{background:var(--amber);border-color:var(--amber)}
+.spec-row.hot .k,.spec-row.hot .d,.spec-row.hot .d b{color:#0B0812}
+.spec-note{border-left:3px solid var(--amber);background:var(--surface-2);border-radius:0 12px 12px 0;padding:18px 22px;margin-top:20px;font-size:16px;color:var(--ink)}
+.spec.bad .spec-note{border-left-color:var(--supply)}
+.spec-note b{color:#fff}
+@media(max-width:640px){.spec{padding:22px}.spec-side{display:none}.spec-row{grid-template-columns:1fr;gap:5px}.spec-row .k{font-size:18px}}
+.trigger-line{font-family:var(--mono);font-size:14.5px;color:var(--demand);background:var(--demand-dim);border-radius:8px;padding:12px 16px;margin-top:24px;display:flex;gap:10px;align-items:flex-start}
+.trigger-line b{color:var(--ink)}
+.compare td.good{color:var(--demand)}
+.compare td.bad{color:var(--supply)}
+.compare th.fixcol{color:var(--demand)}
+.compare th.badcol{color:var(--supply)}
+.autopsy{margin-top:34px;display:flex;flex-direction:column;gap:12px;counter-reset:flaw}
+.flaw{display:grid;grid-template-columns:44px 1fr;gap:18px;background:var(--surface);border:1px solid rgba(255,92,106,.3);border-radius:12px;padding:20px 22px}
+.flaw::before{counter-increment:flaw;content:"✗";font-family:var(--display);font-weight:600;color:var(--supply);font-size:18px;padding-top:2px}
+.flaw h4{font-size:17px;font-weight:600;margin-bottom:6px}
+.flaw h4 .sev{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;color:var(--supply);border:1px solid rgba(255,92,106,.4);border-radius:100px;padding:3px 9px;margin-left:10px;vertical-align:2px}
+.flaw p{font-size:16px}
+.flaw .fix{font-family:var(--mono);font-size:13.5px;color:var(--demand);margin-top:10px}
+
+/* EV calculator */
+.ev{margin-top:34px;background:var(--surface);border:1px solid var(--violet);border-radius:14px;padding:28px}
+.ev h4{font-family:var(--display);font-weight:400;font-size:16px;margin-bottom:6px}
+.ev .lead{font-size:16px;margin-bottom:22px}
+.ev-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:30px;align-items:center}
+.ev-slider label{font-family:var(--mono);font-size:13.5px;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:10px}
+.ev-slider label b{color:var(--ink);font-size:17px}
+.ev input[type=range]{width:100%;accent-color:var(--violet);height:6px}
+.ev-marks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-top:8px}
+.ev-be{font-family:var(--mono);font-size:13.5px;color:var(--amber);margin-top:16px}
+.ev-out{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:22px;text-align:center}
+.ev-out .evnum{font-family:var(--display);font-weight:600;font-size:34px;line-height:1}
+.ev-out .evlab{font-family:var(--mono);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:10px}
+.ev-out .evmsg{font-family:var(--mono);font-size:13.5px;margin-top:14px;min-height:32px}
+.ev-formula{font-family:var(--mono);font-size:13.5px;color:var(--muted);margin-top:20px;text-align:center;line-height:1.7}
+
+/* ---------- checklist scorecard ---------- */
+.score{margin-top:34px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px 28px}
+.score .sh{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:10px}
+.score .sh .st{font-family:var(--display);font-size:17px}
+.score .sh .sv{font-family:var(--mono);font-size:14.5px;color:var(--muted)}
+.score-bar{height:10px;border-radius:6px;background:var(--surface-2);margin:16px 0 6px;overflow:hidden;display:flex}
+.score-bar i{display:block;height:100%}
+.score-verdict{font-family:var(--mono);font-size:14.5px;margin-top:6px}
+.check{margin-top:22px;display:flex;flex-direction:column;gap:12px}
+.chk{display:grid;grid-template-columns:30px 1fr auto;gap:16px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+.chk .ico{font-family:var(--mono);font-weight:600;font-size:16px;padding-top:1px}
+.chk.pass .ico{color:var(--demand)}
+.chk.fail .ico{color:var(--supply)}
+.chk.wait .ico{color:var(--amber)}
+.chk h4{font-size:17px;font-weight:600;margin-bottom:6px}
+.chk p{font-size:16px}
+.chk .q{font-family:var(--mono);font-size:13.5px;margin-top:8px}
+.chk.pass .q{color:var(--demand)}
+.chk.fail .q{color:var(--supply)}
+.chk.wait .q{color:var(--amber)}
+.chk .badge{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;padding:5px 10px;border-radius:100px;align-self:center;white-space:nowrap}
+.chk.pass .badge{background:var(--demand-dim);color:var(--demand)}
+.chk.fail .badge{background:var(--supply-dim);color:var(--supply)}
+.chk.wait .badge{background:var(--amber-dim);color:var(--amber)}
+
+footer{border-top:1px solid var(--line);padding:44px 0 60px}
+footer p{font-size:14.5px;max-width:80ch}
+footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margin-bottom:10px}
+
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none;transition:none}
+  .pulse{animation:none!important}
+}
+@media (max-width:900px){
+  .hero .wrap{grid-template-columns:1fr}
+  .grid2,.grid3,.figrow,.scen,.ev-grid{grid-template-columns:1fr}
+  .case{grid-template-columns:1fr}
+  .ladder{position:static;max-height:none}
+  .tf{grid-template-columns:1fr;gap:8px}
+  section{padding:64px 0}
+}
+@keyframes pulse{0%,100%{opacity:.35}50%{opacity:1}}
+.pulse{animation:pulse 2.4s ease-in-out infinite}
+.herocta{display:inline-block;font-family:var(--mono);font-size:15px;background:var(--demand);color:#0B0812;font-weight:600;padding:14px 28px;border-radius:100px;text-decoration:none;margin-top:6px}
+.herocta:hover{filter:brightness(1.08)}
+.backcta{display:inline-block;font-family:var(--mono);font-size:14px;color:var(--demand);text-decoration:none;margin-top:8px}
+</style>
+<body>
+
+<div id="progress"></div>
+
+<nav>
+  <div class="wrap">
+    <div class="logo">FLOW<span>/</span>MONEY TRAIL</div>
+    <div class="links">
+      <a href="cases.html">&#8592; Case Studies</a>
+      <a href="#nbis">Level Map</a>
+      <a href="#read">The Read</a>
+      <a href="#trade">Today&rsquo;s Trade</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" style="padding:104px 0 40px">
+  <div class="wrap" style="display:block">
+    <div class="eyebrow">Case study &middot; NBIS</div>
+    <h1 style="max-width:22ch">NBIS: a parabola that <em>distributed</em>, then flushed.</h1>
+    <p class="sub" style="margin-top:18px">Nebius Group ran the full institutional cycle in front of us &mdash; a long base near 49, a markup to a 353 all-time high, textbook distribution at the top, then a July flush into deep demand. It&rsquo;s now bouncing straight back into the supply it broke. Below: the interactive level map, the money-flow read, and a disciplined trade for today&rsquo;s price action.</p>
+    <div class="tagrow">
+      <span class="tag warn">Supply 199.90&ndash;222.43</span>
+      <span class="tag hot">Demand 155&ndash;166.61</span>
+      <span class="tag">Jul 17 close 177.71</span>
+      <span class="tag">pre-mkt 188.71</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="nbis" class="reveal">
+  <div class="eyebrow">Level map</div>
+  <h2>NBIS: the interactive level map</h2>
+  <p class="lead">Built from your three NBIS timeframes (weekly &middot; daily &middot; hourly, close of Jul 17 2026 + Jul 18 pre-market). The <strong>horizontal levels are real</strong> &mdash; drawn lines, swing highs/lows, the daily Bollinger band and the 9/50/200 EMAs read straight off your charts. Candle geometry in the schematic is <em>illustrative</em>, not real OHLC. <strong>Click any level.</strong></p>
+
+  <div class="case">
+    <aside class="ladder" aria-label="NBIS level ladder">
+      <div class="lt">NBIS &middot; Level Ladder</div>
+      <div id="ladderList"></div>
+    </aside>
+
+    <div class="chart-panel">
+      <div class="chart-wrap">
+        <div class="chart-head">
+          <div class="ttl"><b>NBIS</b> &middot; weekly &middot; schematic &middot; <b>188.71</b></div>
+          <div class="chart-toggles">
+            <label><input type="checkbox" id="tglZones" checked> Zones</label>
+            <label><input type="checkbox" id="tglBB"> Bollinger</label>
+            <label><input type="checkbox" id="tglLevels" checked> Levels</label>
+          </div>
+        </div>
+        <svg id="nvdaChart" viewBox="0 0 1000 500" role="img" aria-label="NBIS schematic chart with marked levels"></svg>
+        <div class="chart-cap">Schematic weekly candles over levels read from your NBIS charts. Drawn lines: 353.14 &middot; 281.61 &middot; 222.43 &middot; 199.90 &middot; 49.39. Daily Bollinger (21,2): upper 297.60 &middot; lower 158.32 (mid = midpoint 227.96). EMAs &mdash; daily 50 &asymp; 211.20 &middot; daily 200 &asymp; 149.12 &middot; hourly 200 &asymp; 206.73. Marker = Jul 18 pre-market 188.71 (Jul 17 close 177.71).</div>
+      </div>
+
+      <div class="lvl-detail" id="lvlDetail" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<section id="read" class="reveal">
+  <div class="eyebrow">The read &middot; money flow</div>
+  <h2>The whole institutional cycle, on one chart</h2>
+  <p class="lead">NBIS didn&rsquo;t just go up and come down &mdash; it walked through every stage of the flow model. Reading those stages is what tells you <strong>where you are</strong> before you place a trade. Right now we&rsquo;re in the bounce off a flush, pushing back into overhead supply.</p>
+
+  <div class="grid2">
+    <div class="card demand">
+      <span class="knum">Stage 1 &middot; Accumulation</span>
+      <h4>The 49 base</h4>
+      <p>The long, quiet shelf near <strong>49.39</strong> is where size was built &mdash; unfilled buy orders stacking with no urgency. Boring by design. That base is the launchpad for everything above it.</p>
+    </div>
+    <div class="card">
+      <span class="knum" style="color:var(--demand)">Stage 2 &middot; Markup</span>
+      <h4>The parabola to 353</h4>
+      <p>Impulse after impulse &mdash; institutions marking price up through 100 &rarr; 199.90 &rarr; 222 &rarr; 281 to the <strong>353.14</strong> all-time high. Every dip got bought; the candles are big-bodied and one-directional. This is trend, not chop.</p>
+    </div>
+    <div class="card supply">
+      <span class="knum" style="color:var(--supply)">Stage 3 &middot; Distribution</span>
+      <h4>The 281&ndash;300 top</h4>
+      <p>Weekly RSI printed <strong>&asymp;86</strong> &mdash; climactic. Big upper wicks and heavy red candles at the highs = smart money <strong>selling into euphoria</strong> while retail chased. Supply overwhelmed demand and the trend rolled.</p>
+    </div>
+    <div class="card demand">
+      <span class="knum">Stage 4 &middot; Flush &rarr; re-accumulation</span>
+      <h4>The July stab to ~155&ndash;158</h4>
+      <p>Price broke 222 and 199.90, then ran stops below the <strong>166</strong> shelf into the <strong>158.32</strong> daily band and toward the rising <strong>149.12</strong> 200-day. Long lower wicks and a sharp V back to 188 = demand stepping in. That&rsquo;s the liquidity grab, then re-accumulation.</p>
+    </div>
+  </div>
+
+  <div class="callout warn" style="margin-top:34px">
+    <div class="t">Where we are right now</div>
+    <p>188.71, <strong>below</strong> the 199.90 broken-support-turned-resistance and the 211.20 fifty-day EMA. This is a <strong>counter-trend bounce inside a broken daily structure</strong> &mdash; buyers reclaimed the flush, but they&rsquo;re walking straight into the supply that caused the drop. Good things happen at levels; nothing good happens chasing price into a wall. The daily trend does not flip up until 199.90 &rarr; 211 is reclaimed and held.</p>
+  </div>
+
+  <div class="takeaway"><b>Takeaway</b> <span>The parabola&rsquo;s higher-timeframe uptrend is intact <em>above 149</em>. Everything between here and 222 is a supply repair job &mdash; trade the levels, not the excitement.</span></div>
+</section>
+
+<section id="trade" class="reveal">
+  <div class="eyebrow">Today&rsquo;s trade &middot; the plan</div>
+  <h2>Building the trade for today&rsquo;s price action</h2>
+  <p class="lead">Price is 188.71, bouncing into resistance. The framework answer is <strong>not</strong> &ldquo;buy the bounce.&rdquo; It&rsquo;s: define the two spots that actually pay &mdash; a reaction at demand, or a confirmed reclaim of supply &mdash; and do nothing in between. Here are the three ways this resolves.</p>
+
+  <div class="scen">
+    <div class="card demand">
+      <h4>A &middot; Buy the pullback, not the wall <span class="tag hot" style="font-size:11px">preferred</span></h4>
+      <p>Let the bounce cool back into the <strong>166&ndash;178</strong> reclaimed shelf (hourly demand / BB-lower 166.61). That&rsquo;s where re-accumulation buyers defend. Long the <em>reaction</em>, not the level itself.</p>
+      <div class="trigger">Trigger: bullish impulse candle off 166&ndash;178 holding &gt; 166 on volume</div>
+      <p style="font-size:15px;color:var(--muted)">Targets 199.90 &rarr; 211.20 &rarr; 222.43. Stop below 163.</p>
+    </div>
+    <div class="card demand">
+      <h4>B &middot; The A+ long &mdash; deep demand</h4>
+      <p>If the bounce fails and 166 breaks, the <strong>155&ndash;158</strong> flush shelf (daily BB-lower 158.32) sitting just above the rising <strong>149.12</strong> 200-day EMA is the highest-quality long on the map &mdash; buying re-accumulation at the trend spine.</p>
+      <div class="trigger">Trigger: reclaim + impulse candle off 155&ndash;158 on volume</div>
+      <p style="font-size:15px;color:var(--muted)">Targets 178 &rarr; 199.90 &rarr; 222. Stop below 149.</p>
+    </div>
+    <div class="card supply">
+      <h4>C &middot; Or wait for the reclaim</h4>
+      <p>The trend-change tell is a <strong>decisive reclaim and hold above 199.90 &rarr; 211.20</strong> (50-day EMA). That flips near-term structure up and opens 222.43 &rarr; 281.61. Chasing before that confirmation is fighting overhead supply.</p>
+      <div class="trigger" style="background:var(--supply-dim);color:var(--supply)">Until then: 188&ndash;199 is no-man&rsquo;s-land &mdash; no edge</div>
+      <p style="font-size:15px;color:var(--muted)">Entry on the retest of 199.90 as support. Stop back below 188.</p>
+    </div>
+    <div class="card">
+      <h4 style="color:var(--supply)">Invalidation &middot; when &ldquo;correction&rdquo; becomes &ldquo;trend change&rdquo;</h4>
+      <p>A decisive <strong>daily close below 149.12</strong> (200-day EMA) breaks the parabola&rsquo;s uptrend structure. Below that, the air pocket down toward the 100 area / the 49 base opens up. That is the line in the sand for every long idea above.</p>
+      <div class="trigger" style="background:var(--supply-dim);color:var(--supply)">Kill switch: daily close &lt; 149.12</div>
+    </div>
+  </div>
+
+  <div class="trade-ticket good">
+    <div class="tt">Trade ticket &middot; preferred plan (pullback long)</div>
+    <div class="row"><span>Instrument</span><span>NBIS &middot; long / swing</span></div>
+    <div class="row"><span>Bias</span><span>Counter-trend bounce &mdash; buy the reaction at demand, not the chase into supply</span></div>
+    <div class="row"><span>Entry zone</span><span class="g">166 &ndash; 178</span> &nbsp;<span style="color:var(--muted)">(reclaimed shelf / hourly BB-lower 166.61)</span></div>
+    <div class="row"><span>Trigger</span><span>Bullish impulse candle holding &gt; 166 on volume</span></div>
+    <div class="row"><span>Stop</span><span class="r">163</span> &nbsp;<span style="color:var(--muted)">(below the 166 shelf)</span></div>
+    <div class="row"><span>Target 1</span><span class="a">199.90</span> &nbsp;<span style="color:var(--muted)">broken support / drawn line</span></div>
+    <div class="row"><span>Target 2</span><span class="a">211.20</span> &nbsp;<span style="color:var(--muted)">50-day EMA</span></div>
+    <div class="row"><span>Target 3</span><span class="a">222.43</span> &nbsp;<span style="color:var(--muted)">supply / BB-mid area</span></div>
+    <div class="row"><span>Stretch</span><span style="color:var(--muted)">281.61 if structure flips fully up</span></div>
+    <div class="row"><span>R : R</span><span>at fill 174 / stop 163 (risk 11): T1 <b class="g">&asymp;2.4R</b> &middot; T2 <b class="g">&asymp;3.4R</b> &middot; T3 <b class="g">&asymp;4.4R</b></span></div>
+    <div class="row"><span>Invalidation</span><span class="r">Daily close &lt; 149.12 (200-day EMA)</span></div>
+  </div>
+
+  <h3 style="margin-top:44px">Should you be long at 188.71 right now? Run the checklist.</h3>
+  <div class="score">
+    <div class="sh">
+      <div class="st">Institutional-flow checklist &middot; NBIS @ 188.71</div>
+      <div class="sv">2 pass &middot; 1 fail &middot; 2 wait</div>
+    </div>
+    <div class="score-bar">
+      <i style="width:40%;background:var(--demand)"></i>
+      <i style="width:40%;background:var(--amber)"></i>
+      <i style="width:20%;background:var(--supply)"></i>
+    </div>
+    <div class="score-verdict" style="color:var(--amber)">Verdict: no trade at 188.71 into the wall &mdash; this is a limit-order plan, not a market-order moment.</div>
+
+    <div class="check">
+      <div class="chk pass">
+        <div class="ico">&#10003;</div>
+        <div>
+          <h4>Higher-timeframe trend</h4>
+          <p>Weekly parabola intact &mdash; price still holds above the rising 149 (200-day) and the long base. The big-picture uptrend has not broken.</p>
+          <div class="q">Extended, but structurally still up.</div>
+        </div>
+        <div class="badge">PASS</div>
+      </div>
+      <div class="chk fail">
+        <div class="ico">&#10007;</div>
+        <div>
+          <h4>Daily structure</h4>
+          <p>Broken. Price is below the 50-day EMA (211.20) and below the 199.90 shelf it lost. Lower highs on the daily until proven otherwise.</p>
+          <div class="q">Corrective, not impulsive &mdash; supply is in control of the daily.</div>
+        </div>
+        <div class="badge">FAIL</div>
+      </div>
+      <div class="chk wait">
+        <div class="ico">&#9210;</div>
+        <div>
+          <h4>Location</h4>
+          <p>Bad. 188.71 is directly under the 199.90 / 211 supply. You&rsquo;d be buying into the wall with the nearest demand ~20 points below.</p>
+          <div class="q">Wrong end of the range to initiate a long.</div>
+        </div>
+        <div class="badge">WAIT</div>
+      </div>
+      <div class="chk pass">
+        <div class="ico">&#10003;</div>
+        <div>
+          <h4>Demand behind the entry</h4>
+          <p>Yes &mdash; for the <em>planned</em> entry. The 155&ndash;166 reclaim shelf and the 149 200-day sit beneath, giving a real floor to lean the stop against.</p>
+          <div class="q">Strong demand structure &mdash; but only if you enter <em>at</em> it.</div>
+        </div>
+        <div class="badge">PASS</div>
+      </div>
+      <div class="chk wait">
+        <div class="ico">&#9210;</div>
+        <div>
+          <h4>Trigger present now?</h4>
+          <p>No. There is no reaction candle at demand and no confirmed reclaim of 199.90/211. Entering here is prediction, not confirmation.</p>
+          <div class="q">Wait for the reaction (166&ndash;178) or the reclaim (&gt;199.90). Patience is the edge.</div>
+        </div>
+        <div class="badge">WAIT</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout good" style="margin-top:30px">
+    <div class="t">The disciplined move</div>
+    <p>Set two alerts, not a market order. <strong class="g">Alert 1 at 178</strong> &mdash; watch for the reaction long into 166&ndash;178. <strong class="v">Alert 2 at 200</strong> &mdash; watch for the reclaim-and-hold that flips structure. If neither fires, there is no trade, and that&rsquo;s a full answer. The flush already happened; you don&rsquo;t have to catch the exact bounce &mdash; you have to catch a <em>confirmed</em> one.</p>
+  </div>
+
+  <p style="margin-top:24px"><a class="backcta" href="cases.html">&#8592; Back to all case studies</a></p>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="brand">FLOW/MONEY TRAIL &middot; educational material</div>
+    <p>Educational content about reading market structure. Not investment advice or a recommendation to buy or sell any security. All NBIS levels and scenarios are teaching examples read from marked-up NBIS weekly / daily / hourly charts as of the 07/17/2026 close and 07/18 pre-market; candle geometry in the schematics is illustrative, not real OHLC. Trading involves risk of capital loss.</p>
+  </div>
+</footer>
+
+<script>
+/* ══════════════════════════ DATA ══════════════════════════ */
+const NBIS = {
+  price: 188.71,                 // Jul 18 pre-market marker (Jul 17 close 177.71)
+  bb: { up: 297.60, mid: 227.96, lo: 158.32 },   // daily Bollinger (21,2); mid = midpoint of the bands
+  chart: { yMin: 30, yMax: 370, xPad: 60, xEnd: 902, yTop: 30, yBot: 452 },
+  zones: [
+    { kind:'supply', lo:199.90, hi:222.43 },   // the immediate overhead wall
+    { kind:'demand', lo:155,    hi:166.61 },   // the reclaim / flush shelf
+  ],
+  levels: [
+    { id:'l353', px:353.14, disp:'353.14', kind:'sup', conf:true, name:'All-time high · June blow-off',
+      detail:'The 353.14 all-time high (June 2026) — the top of the parabola. Fresh price discovery only lives above it; until reclaimed it is the ceiling on the whole move.' },
+    { id:'l297', px:297.60, disp:'297.60', kind:'sup', conf:true, name:'Daily Bollinger upper · distribution',
+      detail:'Daily Bollinger upper (297.60) — the statistical top of the range and the zone where the June distribution played out (climactic weekly RSI ~86, heavy upper wicks). Tags here are stretched extremes, not breakouts.' },
+    { id:'l281', px:281.61, disp:'281.61', kind:'sup', conf:true, name:'Major supply shelf (drawn)',
+      detail:'The 281.61 drawn line — a prior high-consolidation shelf and the last big supply band before the highs. A rally that reclaims 222 has to beat this next.' },
+    { id:'l222', px:222.43, disp:'222.43', kind:'sup', conf:true, name:'Supply / breakdown level (drawn)',
+      detail:'The 222.43 drawn line, right at the daily Bollinger mid (~227.96). Price broke down through here on the way to the flush — it is now overhead supply and the third target for a long.' },
+    { id:'l211', px:211.20, disp:'211.20', kind:'neu', conf:true, name:'50-day EMA · dynamic resistance',
+      detail:'50-day EMA (211.20) — the line the pullback is trading below. A reclaim-and-hold above it is the cleanest signal that the daily structure is turning back up.' },
+    { id:'l206', px:206.73, disp:'206.73', kind:'neu', conf:true, name:'200-hour EMA · near-term overhead',
+      detail:'200-hour EMA (206.73) — the intraday trend line, sloping down and sitting just under the 211 daily 50-EMA. Part of the 199.90–211 supply band the bounce has to clear.' },
+    { id:'l199', px:199.90, disp:'199.90', kind:'sup', conf:true, name:'Broken support → resistance (drawn)',
+      detail:'The 199.90 drawn line — former support that price lost on the breakdown, so it now acts as resistance. This is the first wall the bounce runs into and Target 1 for a demand long. Reclaiming and holding it is the reclaim setup.' },
+    { id:'lnow', px:188.71, disp:'188.71', kind:'now', conf:true, name:'Current price · bounce into supply',
+      detail:'188.71 (Jul 18 pre-market; Jul 17 close 177.71) — a counter-trend bounce sitting directly under the 199.90 / 211 supply. No unfilled orders defend this exact spot, so there is no edge here. The trade is at demand below or on a confirmed reclaim above — not at 188.' },
+    { id:'l178', px:178.49, disp:'178.49', kind:'neu', conf:true, name:'Hourly structure · upper edge of demand',
+      detail:'Hourly structure level (178.49) — the upper edge of the 166–178 reclaimed shelf. The top of the preferred pullback-entry zone: a reaction here that holds 166 is the first long trigger.' },
+    { id:'l166', px:166.61, disp:'166.61', kind:'dem', conf:true, name:'Hourly BB-lower · reclaim shelf',
+      detail:'Hourly Bollinger lower (166.61) — the shelf buyers reclaimed off the flush. This is the heart of the preferred demand entry (166–178) and the level the pullback-long stop leans against.' },
+    { id:'l158', px:158.32, disp:'158.32', kind:'dem', conf:true, name:'Daily BB-lower · flush low (~155–158)',
+      detail:'Daily Bollinger lower (158.32), at the Jul 16–17 flush low (~155–158). Where stops were run and demand first stepped in. A reaction here — reclaim + impulse on volume — is the A+ long, buying re-accumulation just above the 200-day.' },
+    { id:'l149', px:149.12, disp:'149.12', kind:'dem', conf:true, name:'200-day EMA · trend spine / kill switch',
+      detail:'200-day EMA (149.12) — the rising spine of the whole uptrend and the invalidation line. Deep-demand support for the flush plan; a decisive daily close below it turns the correction into a trend change and opens the 100 area.' },
+    { id:'l49', px:49.39, disp:'49.39', kind:'dem', conf:true, name:'Long-term base (drawn)',
+      detail:'The 49.39 drawn line — the 2024–25 accumulation base the entire parabola launched from. Only in play on a full trend failure; a generational-support level, not a working trade level today.' },
+  ],
+};
+// Schematic weekly closes (illustrative geometry, NOT real OHLC). Last = real Jul 17 weekly close 177.71.
+const CLOSES=[22,25,24,28,31,29,34,38,36,42,
+  46,44,52,49,58,55,63,60,68,64,
+  72,80,88,84,96,104,100,110,
+  102,94,90,98,
+  112,128,145,168,190,215,240,268,295,320,340,353,348,
+  330,300,275,
+  235,195,162,177.71];
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function buildCandles(){
+  const rng=mulberry32(20260717);
+  return CLOSES.map((c,i)=>{
+    const o=i===0?c-3:CLOSES[i-1];
+    const hi=Math.max(o,c),lo=Math.min(o,c);
+    const isDist=(i>=44&&i<=48);       // distribution/flush: bigger wicks
+    const up=(hi-lo)*0.35+rng()*(isDist?9:3);
+    const dn=(hi-lo)*0.35+rng()*(isDist?7:3);
+    return [o,hi+up,lo-dn,c];
+  });
+}
+const CANDLES=buildCandles();
+
+/* ══════════════════════════ NBIS CHART ══════════════════════════ */
+const C=NBIS.chart;
+const KIND_COLOR={sup:'var(--supply)',dem:'var(--demand)',neu:'var(--amber)',now:'var(--ink)'};
+const KIND_HEX={sup:'#FF5C6A',dem:'#3DDC97',neu:'#F2B441',now:'#EDE9F6'};
+const y=p=>C.yBot-(p-C.yMin)/(C.yMax-C.yMin)*(C.yBot-C.yTop);
+const x=i=>C.xPad+i*((C.xEnd-C.xPad)/(CANDLES.length-1));
+const clampY=p=>Math.max(C.yTop,Math.min(C.yBot,y(p)));
+
+let show={zones:true,bb:false,levels:true};
+let activeLevel='l166';
+
+function renderChart(){
+  const w=(C.xEnd-C.xPad)/(CANDLES.length-1)*0.62;
+  let s='';
+  if(show.zones){
+    NBIS.zones.forEach(z=>{
+      const fill=z.kind==='supply'?'rgba(255,92,106,.12)':'rgba(61,220,151,.12)';
+      const stroke=z.kind==='supply'?'rgba(255,92,106,.35)':'rgba(61,220,151,.35)';
+      s+=`<rect x="${C.xPad}" y="${y(z.hi).toFixed(1)}" width="${(C.xEnd-C.xPad).toFixed(1)}" height="${(y(z.lo)-y(z.hi)).toFixed(1)}" fill="${fill}" stroke="${stroke}" stroke-dasharray="3 3"/>`;
+    });
+  }
+  if(show.bb){
+    [['up',NBIS.bb.up],['mid',NBIS.bb.mid],['lo',NBIS.bb.lo]].forEach(([k,v])=>{
+      s+=`<line x1="${C.xPad}" y1="${y(v).toFixed(1)}" x2="${C.xEnd}" y2="${y(v).toFixed(1)}" stroke="#8B5CF6" stroke-width="1" stroke-dasharray="2 4" opacity=".7"/>`;
+      s+=`<text x="${C.xPad+4}" y="${(y(v)-4).toFixed(1)}" font-family="JetBrains Mono" font-size="9" fill="#8B5CF6">BB ${k} ${v}</text>`;
+    });
+  }
+  CANDLES.forEach((c,i)=>{
+    const[o,h,l,cl]=c, cx=x(i), up=cl>=o;
+    const col=up?'#3DDC97':'#FF5C6A';
+    const bodyTop=y(Math.max(o,cl)), bodyH=Math.max(1.4,Math.abs(y(o)-y(cl)));
+    s+=`<line x1="${cx.toFixed(1)}" y1="${y(h).toFixed(1)}" x2="${cx.toFixed(1)}" y2="${y(l).toFixed(1)}" stroke="${col}" stroke-width="1.1" opacity=".9"/>`;
+    s+=`<rect x="${(cx-w/2).toFixed(1)}" y="${bodyTop.toFixed(1)}" width="${w.toFixed(1)}" height="${bodyH.toFixed(1)}" fill="${col}" rx="1" opacity=".92"/>`;
+  });
+  if(show.levels){
+    NBIS.levels.forEach(L=>{
+      if(L.id==='lnow') return;
+      const yy=clampY(L.px), off=y(L.px)<C.yTop||y(L.px)>C.yBot;
+      const hi=L.id===activeLevel;
+      const col=KIND_HEX[L.kind];
+      s+=`<g class="clvl" data-id="${L.id}" style="cursor:pointer">`;
+      s+=`<line x1="${C.xPad}" y1="${yy.toFixed(1)}" x2="${C.xEnd}" y2="${yy.toFixed(1)}" stroke="${col}" stroke-width="${hi?2.4:1}" stroke-dasharray="${off?'2 3':'6 5'}" opacity="${hi?1:.55}"/>`;
+      s+=`<rect x="${C.xEnd+4}" y="${(yy-9).toFixed(1)}" width="72" height="18" rx="4" fill="${col}" opacity="${hi?1:.85}"/>`;
+      s+=`<text x="${C.xEnd+40}" y="${(yy+4).toFixed(1)}" text-anchor="middle" font-family="JetBrains Mono" font-size="10" font-weight="600" fill="#0B0812">${L.disp}</text>`;
+      if(hi){s+=`<circle cx="${(C.xEnd-6)}" cy="${yy.toFixed(1)}" r="3.5" fill="${col}"/>`;}
+      s+=`</g>`;
+    });
+  }
+  const yn=y(NBIS.price);
+  s+=`<line x1="${C.xPad}" y1="${yn.toFixed(1)}" x2="${C.xEnd}" y2="${yn.toFixed(1)}" stroke="#EDE9F6" stroke-width="1.3" stroke-dasharray="1 4"/>`;
+  s+=`<rect x="${C.xEnd+4}" y="${(yn-9).toFixed(1)}" width="72" height="18" rx="4" fill="#EDE9F6"/>`;
+  s+=`<text x="${C.xEnd+40}" y="${(yn+4).toFixed(1)}" text-anchor="middle" font-family="JetBrains Mono" font-size="10" font-weight="600" fill="#0B0812">${NBIS.price}</text>`;
+  s+=`<circle cx="${x(CANDLES.length-1).toFixed(1)}" cy="${yn.toFixed(1)}" r="4" fill="#EDE9F6"/>`;
+  const months=[['Apr ’24',0],['Sep',10],['Jan ’25',20],['Jun',28],['Nov',36],['Apr ’26',44],['Jul',51]];
+  s+=`<line x1="${C.xPad}" y1="${C.yBot+2}" x2="${C.xEnd}" y2="${C.yBot+2}" stroke="#2C2246"/>`;
+  months.forEach(([m,i])=>{s+=`<text x="${x(i).toFixed(1)}" y="${C.yBot+20}" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#CFC9DE">${m}</text>`;});
+  document.getElementById('nvdaChart').innerHTML=s;
+  document.querySelectorAll('#nvdaChart .clvl').forEach(g=>g.addEventListener('click',()=>selectLevel(g.dataset.id)));
+}
+
+function renderLadder(){
+  const kmap={sup:'sup',dem:'dem',neu:'neu',now:'now'};
+  let s='';
+  NBIS.levels.forEach(L=>{
+    const zt=(L.disp.length>6)?' zt':'';
+    s+=`<button class="lvl ${kmap[L.kind]}" data-id="${L.id}">`+
+       `<span class="px${zt}">${L.disp}</span> ${L.name}`+
+       (L.conf?'':'<span class="unc">low-TF</span>')+
+       `</button>`;
+  });
+  document.getElementById('ladderList').innerHTML=s;
+  document.querySelectorAll('#ladderList .lvl').forEach(b=>b.addEventListener('click',()=>selectLevel(b.dataset.id)));
+}
+
+function selectLevel(id){
+  activeLevel=id;
+  const L=NBIS.levels.find(l=>l.id===id);
+  document.querySelectorAll('#ladderList .lvl').forEach(b=>b.classList.toggle('active',b.dataset.id===id));
+  const col=KIND_COLOR[L.kind];
+  document.getElementById('lvlDetail').innerHTML=
+    `<div class="dhead"><span class="dpx" style="background:${col}">${L.disp}</span><b>${L.name}</b>${L.conf?'':' <span class="unc">lower-timeframe — not on the weekly/daily markup</span>'}</div>${L.detail}`;
+  renderChart();
+}
+
+/* ══════════════════════════ NAV / PROGRESS / REVEAL ══════════════════════════ */
+const prog=document.getElementById('progress');
+const navLinks=[...document.querySelectorAll('nav a')];
+const secs=navLinks.map(a=>{const h=a.getAttribute('href');return h&&h.charAt(0)==='#'?document.querySelector(h):null;});
+function onScroll(){
+  const h=document.documentElement;
+  const max=h.scrollHeight-h.clientHeight;
+  prog.style.width=(max>0?(h.scrollTop/max*100):0)+'%';
+  let cur=0;
+  secs.forEach((sec,i)=>{if(sec&&sec.getBoundingClientRect().top<=120)cur=i;});
+  navLinks.forEach((a,i)=>{if((a.getAttribute('href')||'').charAt(0)==='#')a.classList.toggle('active',i===cur);});
+}
+window.addEventListener('scroll',onScroll,{passive:true});
+
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+},{threshold:.06});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* init */
+document.getElementById('tglZones').addEventListener('change',e=>{show.zones=e.target.checked;renderChart();});
+document.getElementById('tglBB').addEventListener('change',e=>{show.bb=e.target.checked;renderChart();});
+document.getElementById('tglLevels').addEventListener('change',e=>{show.levels=e.target.checked;renderChart();});
+renderLadder();
+renderChart();
+selectLevel('l166');
+onScroll();
+</script>
+</body>
+</html>
