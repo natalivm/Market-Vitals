@@ -404,7 +404,7 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
 <section id="trade" class="reveal">
   <div class="eyebrow">Today&rsquo;s trade &middot; the plan</div>
   <h2>Building the trade for today&rsquo;s price action</h2>
-  <p class="lead">Price is 188.71, bouncing into resistance. The framework answer is <strong>not</strong> &ldquo;buy the bounce.&rdquo; It&rsquo;s: define the two spots that actually pay &mdash; a reaction at demand, or a confirmed reclaim of supply &mdash; and do nothing in between. Here are the three ways this resolves.</p>
+  <p class="lead">Price is 188.71, bouncing into resistance. The framework answer is <strong>not</strong> &ldquo;buy the bounce&rdquo; &mdash; it&rsquo;s two levels and two tickets. The <strong class="g">long</strong> waits for a reaction at demand (166&ndash;178) or a confirmed reclaim of 199.90. The <strong class="r">short</strong> is actually the trend-aligned trade right now: sell the rejection where this bounce runs into the 199.90&ndash;211 supply it broke. Scenarios first, then both tickets.</p>
 
   <div class="scen">
     <div class="card demand">
@@ -420,10 +420,10 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
       <p style="font-size:15px;color:var(--muted)">Targets 178 &rarr; 199.90 &rarr; 222. Stop below 149.</p>
     </div>
     <div class="card supply">
-      <h4>C &middot; Or wait for the reclaim</h4>
-      <p>The trend-change tell is a <strong>decisive reclaim and hold above 199.90 &rarr; 211.20</strong> (50-day EMA). That flips near-term structure up and opens 222.43 &rarr; 281.61. Chasing before that confirmation is fighting overhead supply.</p>
-      <div class="trigger" style="background:var(--supply-dim);color:var(--supply)">Until then: 188&ndash;199 is no-man&rsquo;s-land &mdash; no edge</div>
-      <p style="font-size:15px;color:var(--muted)">Entry on the retest of 199.90 as support. Stop back below 188.</p>
+      <h4>C &middot; Short the wall <span class="tag warn" style="font-size:11px">trend-aligned</span></h4>
+      <p>The daily is broken &mdash; below the 50-EMA, below 199.90. Selling this bounce as it stalls into the <strong>199.90&ndash;211</strong> supply (broken support + 50-day EMA 211.20 + 200-hour EMA 206.73) trades <em>with</em> the daily downtrend. Short the <em>rejection</em>, not a guess.</p>
+      <div class="trigger" style="background:var(--supply-dim);color:var(--supply)">Trigger: bearish rejection / failed reclaim at 199.90&ndash;211 on volume</div>
+      <p style="font-size:15px;color:var(--muted)">Targets 178.49 &rarr; 166.61 &rarr; 158.32. Stop above 213.</p>
     </div>
     <div class="card">
       <h4 style="color:var(--supply)">Invalidation &middot; when &ldquo;correction&rdquo; becomes &ldquo;trend change&rdquo;</h4>
@@ -432,11 +432,14 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
     </div>
   </div>
 
+  <h3 style="margin-top:44px">The two tickets &mdash; long and short</h3>
+  <p style="margin-top:8px">Same map, both directions. The <strong class="g">long</strong> is the higher-timeframe trade (buy re-accumulation at demand); the <strong class="r">short</strong> is the near-term trade (sell the bounce into supply while the daily is broken). Each is a <em>reaction</em> at a level with a defined stop &mdash; not a bet placed at 188.71 in the middle.</p>
+
   <div class="trade-ticket good">
-    <div class="tt">Trade ticket &middot; preferred plan (pullback long)</div>
+    <div class="tt">Long ticket &middot; buy the demand reaction</div>
     <div class="row"><span>Instrument</span><span>NBIS &middot; long / swing</span></div>
-    <div class="row"><span>Bias</span><span>Counter-trend bounce &mdash; buy the reaction at demand, not the chase into supply</span></div>
-    <div class="row"><span>Entry zone</span><span class="g">166 &ndash; 178</span> &nbsp;<span style="color:var(--muted)">(reclaimed shelf / hourly BB-lower 166.61)</span></div>
+    <div class="row"><span>Bias</span><span>Buy re-accumulation at demand, not the chase into supply</span></div>
+    <div class="row"><span>Entry zone</span><span class="g">166 &ndash; 178</span> &nbsp;<span style="color:var(--muted)">(reclaimed shelf / hourly BB-lower 166.61) &mdash; or on a confirmed reclaim + hold of 199.90)</span></div>
     <div class="row"><span>Trigger</span><span>Bullish impulse candle holding &gt; 166 on volume</span></div>
     <div class="row"><span>Stop</span><span class="r">163</span> &nbsp;<span style="color:var(--muted)">(below the 166 shelf)</span></div>
     <div class="row"><span>Target 1</span><span class="a">199.90</span> &nbsp;<span style="color:var(--muted)">broken support / drawn line</span></div>
@@ -445,6 +448,26 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
     <div class="row"><span>Stretch</span><span style="color:var(--muted)">281.61 if structure flips fully up</span></div>
     <div class="row"><span>R : R</span><span>at fill 174 / stop 163 (risk 11): T1 <b class="g">&asymp;2.4R</b> &middot; T2 <b class="g">&asymp;3.4R</b> &middot; T3 <b class="g">&asymp;4.4R</b></span></div>
     <div class="row"><span>Invalidation</span><span class="r">Daily close &lt; 149.12 (200-day EMA)</span></div>
+  </div>
+
+  <div class="trade-ticket" style="border-color:rgba(255,92,106,.45);background:linear-gradient(180deg,var(--supply-dim),var(--surface-2) 55%);margin-top:22px">
+    <div class="tt" style="color:var(--supply)">Short ticket &middot; sell the supply rejection</div>
+    <div class="row"><span>Instrument</span><span>NBIS &middot; short / swing</span></div>
+    <div class="row"><span>Bias</span><span>Trend-aligned &mdash; sell the counter-trend bounce into overhead supply while the daily is broken</span></div>
+    <div class="row"><span>Entry zone</span><span class="r">199.90 &ndash; 211.20</span> &nbsp;<span style="color:var(--muted)">(broken support 199.90 &middot; 200-hr EMA 206.73 &middot; 50-day EMA 211.20)</span></div>
+    <div class="row"><span>Trigger</span><span>Bearish rejection / failed reclaim (upper wick or bearish engulf) at 199.90&ndash;211 on volume</span></div>
+    <div class="row"><span>Stop</span><span class="g">213</span> &nbsp;<span style="color:var(--muted)">(above the 50-EMA / 200-hr cluster, under the 222 supply)</span></div>
+    <div class="row"><span>Target 1</span><span class="a">178.49</span> &nbsp;<span style="color:var(--muted)">hourly structure / top of demand</span></div>
+    <div class="row"><span>Target 2</span><span class="a">166.61</span> &nbsp;<span style="color:var(--muted)">reclaim shelf / hourly BB-lower</span></div>
+    <div class="row"><span>Target 3</span><span class="a">158.32</span> &nbsp;<span style="color:var(--muted)">daily BB-lower / retest of the flush</span></div>
+    <div class="row"><span>Stretch</span><span style="color:var(--muted)">149.12 (200-day) &mdash; cover into it, that&rsquo;s demand</span></div>
+    <div class="row"><span>R : R</span><span>at fill 204 / stop 213 (risk 9): T1 <b class="r">&asymp;2.8R</b> &middot; T2 <b class="r">&asymp;4.2R</b> &middot; T3 <b class="r">&asymp;5.1R</b></span></div>
+    <div class="row"><span>Invalidation</span><span class="g">Reclaim &amp; hold above 211.20 &mdash; structure flips up, stand aside / flip long</span></div>
+  </div>
+
+  <div class="callout" style="margin-top:22px">
+    <div class="t" style="color:var(--violet)">The two are mirror images</div>
+    <p>The short&rsquo;s <strong>invalidation is the long&rsquo;s confirmation</strong>: a reclaim-and-hold above 211 kills the short and flips the daily up. And the long&rsquo;s deep target (158&ndash;166) is exactly where the short covers. Don&rsquo;t run both at once &mdash; let price pick the level. Into 199&ndash;211 = the short is live; down at 166&ndash;178 or 155&ndash;158 = the long is live; at 188.71 in the middle = neither.</p>
   </div>
 
   <h3 style="margin-top:44px">Should you be long at 188.71 right now? Run the checklist.</h3>
@@ -511,7 +534,7 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
 
   <div class="callout good" style="margin-top:30px">
     <div class="t">The disciplined move</div>
-    <p>Set two alerts, not a market order. <strong class="g">Alert 1 at 178</strong> &mdash; watch for the reaction long into 166&ndash;178. <strong class="v">Alert 2 at 200</strong> &mdash; watch for the reclaim-and-hold that flips structure. If neither fires, there is no trade, and that&rsquo;s a full answer. The flush already happened; you don&rsquo;t have to catch the exact bounce &mdash; you have to catch a <em>confirmed</em> one.</p>
+    <p>Set two alerts, not a market order. <strong class="g">Alert 1 at 178</strong> &mdash; the <span class="g">long</span> zone: watch for the reaction into 166&ndash;178. <strong class="r">Alert 2 at 200</strong> &mdash; the <span class="r">short</span> zone: watch for a rejection at 199.90&ndash;211 (or, if it reclaims and <em>holds</em> instead, the long flips on). If neither fires, there is no trade, and that&rsquo;s a full answer. The flush already happened; you don&rsquo;t have to catch the exact turn &mdash; you have to catch a <em>confirmed</em> one, in whichever direction price offers it.</p>
   </div>
 
   <p style="margin-top:24px"><a class="backcta" href="cases.html">&#8592; Back to all case studies</a></p>
