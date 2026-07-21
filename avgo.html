@@ -302,6 +302,26 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
 .herocta{display:inline-block;font-family:var(--mono);font-size:15px;background:var(--demand);color:#0B0812;font-weight:600;padding:14px 28px;border-radius:100px;text-decoration:none;margin-top:6px}
 .herocta:hover{filter:brightness(1.08)}
 .backcta{display:inline-block;font-family:var(--mono);font-size:14px;color:var(--demand);text-decoration:none;margin-top:8px}
+
+/* ---------- institutional diagnosis panel ---------- */
+.diag{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:8px 30px 18px;margin-top:34px}
+.diag-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;border-bottom:1px solid var(--line);padding:20px 0 16px;margin-bottom:4px}
+.diag-head .dt{font-family:var(--display);font-weight:800;font-size:20px;letter-spacing:-.01em}
+.diag-head .do{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.diag-row{display:grid;grid-template-columns:30px 1fr auto;gap:18px;align-items:start;padding:15px 0;border-bottom:1px solid rgba(44,34,70,.55)}
+.diag-row:last-child{border-bottom:none}
+.diag-row .n{font-family:var(--mono);font-size:13px;color:var(--muted);opacity:.55;padding-top:2px}
+.diag-row .k{font-weight:600;color:var(--ink);display:flex;align-items:center;gap:9px}
+.diag-row .k .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.diag-row .k small{display:block;font-family:var(--mono);font-weight:400;font-size:12px;color:var(--muted);margin-top:4px;letter-spacing:.01em}
+.dot.have{background:var(--demand)}.dot.free{background:var(--amber)}.dot.paid{background:var(--supply)}
+.diag-row .val{text-align:right;font-family:var(--mono);font-size:14.5px;font-weight:600;color:var(--ink);max-width:360px}
+.diag-row.ext .val{color:var(--muted);font-weight:400}
+.diag-row .val .src{display:block;font-weight:400;font-size:11.5px;color:var(--muted);margin-top:5px;letter-spacing:.01em;line-height:1.5}
+.diag-legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:20px;font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.diag-legend span{display:flex;align-items:center;gap:7px}
+.diag-legend .dot{width:8px;height:8px;border-radius:50%}
+@media(max-width:640px){.diag{padding:8px 18px 16px}.diag-row{grid-template-columns:24px 1fr;gap:10px}.diag-row .val{grid-column:1 / -1;text-align:left;max-width:none;margin-top:6px}}
 </style>
 </head>
 <body>
@@ -317,6 +337,7 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
     <div class="links">
       <a href="cases.html">&#8592; Case Studies</a>
       <a href="#avgo">Level Map</a>
+      <a href="#diag">Diagnosis</a>
     </div>
   </div>
 </nav>
@@ -357,6 +378,88 @@ footer .brand{font-family:var(--mono);font-size:13.5px;color:var(--violet);margi
       </div>
     </div>
   </div>
+</section>
+
+<section id="diag" class="reveal">
+  <div class="eyebrow">Institutional diagnosis</div>
+  <h2>The 12-factor read &mdash; and where each number comes from</h2>
+  <p class="lead">A top-down summary, macro down to execution, with each row&rsquo;s <strong>data source</strong> attached. AVGO is a lean case &mdash; no options snapshot &mdash; so the price-structure rows are filled from the chart and the market-context and dealer-gamma rows are flagged with where to pull them. Only one row (dealer gamma) needs paid data; the rest are free or already on the chart.</p>
+
+  <div class="diag">
+    <div class="diag-head">
+      <div class="dt">Institutional Diagnosis &middot; AVGO</div>
+      <div class="do">Framework output &middot; 17 Jul</div>
+    </div>
+
+    <div class="diag-row ext">
+      <div class="n">01</div>
+      <div class="k"><span class="dot free"></span><span>Macro Regime<small>SPX/QQQ trend + VIX + HY credit + DXY</small></span></div>
+      <div class="val">External pull<span class="src">Yahoo / TradingView / FRED &middot; free</span></div>
+    </div>
+    <div class="diag-row ext">
+      <div class="n">02</div>
+      <div class="k"><span class="dot free"></span><span>Behavior / Sentiment<small>put/call, short interest, Fear &amp; Greed</small></span></div>
+      <div class="val">External pull<span class="src">CBOE &middot; FINRA &middot; CNN F&amp;G &middot; free</span></div>
+    </div>
+    <div class="diag-row ext">
+      <div class="n">03</div>
+      <div class="k"><span class="dot free"></span><span>Intermarket<small>AVGO vs SMH / SOX / QQQ</small></span></div>
+      <div class="val">External pull<span class="src">relative strength &amp; correlation &middot; Yahoo / TradingView &middot; free</span></div>
+    </div>
+    <div class="diag-row">
+      <div class="n">04</div>
+      <div class="k"><span class="dot have"></span><span>Volatility Regime<small>daily bands + IV / skew</small></span></div>
+      <div class="val">Daily BB 356&ndash;412<span class="src">band width from chart. IV/skew needs options: CBOE / ORATS / Market Chameleon</span></div>
+    </div>
+    <div class="diag-row ext">
+      <div class="n">05</div>
+      <div class="k"><span class="dot free"></span><span>Market Liquidity<small>risk-FX, bid-ask spread, $-volume</small></span></div>
+      <div class="val">External pull<span class="src">FX feeds / L1 quotes &middot; free</span></div>
+    </div>
+    <div class="diag-row ext">
+      <div class="n">06</div>
+      <div class="k"><span class="dot paid"></span><span>Dealer Mechanics / GEX<small>gamma exposure by strike</small></span></div>
+      <div class="val">Negative-gamma (per read)<span class="src">strike walls need options OI: DIY chain proxy or SpotGamma / Menthor Q &middot; paid</span></div>
+    </div>
+    <div class="diag-row">
+      <div class="n">07</div>
+      <div class="k"><span class="dot have"></span><span>Auction State / AMT<small>initiative vs responsive, value area</small></span></div>
+      <div class="val">Balanced / two-sided<span class="src">mid-range chop; rigor via volume profile (TradingView / Sierra)</span></div>
+    </div>
+    <div class="diag-row">
+      <div class="n">08</div>
+      <div class="k"><span class="dot have"></span><span>Value Location<small>price vs value / range</small></span></div>
+      <div class="val">Mid-range / at value<span class="src">370.83 between 350&ndash;356 support &amp; 391&ndash;409 supply; below BB-mid 383.82 (chart)</span></div>
+    </div>
+    <div class="diag-row">
+      <div class="n">09</div>
+      <div class="k"><span class="dot have"></span><span>Wyckoff Phase<small>price/volume schematic</small></span></div>
+      <div class="val">Range &middot; possible re-accumulation<span class="src">watching the 350&ndash;356 shelf &middot; discretionary read</span></div>
+    </div>
+    <div class="diag-row">
+      <div class="n">10</div>
+      <div class="k"><span class="dot have"></span><span>Market Structure<small>swing highs/lows, moving averages</small></span></div>
+      <div class="val">Mid-range balance<span class="src">below 50-day 391.60, above 200-day 350.72 (chart)</span></div>
+    </div>
+    <div class="diag-row ext">
+      <div class="n">11</div>
+      <div class="k"><span class="dot free"></span><span>Order Flow<small>aggression / delta / CVD</small></span></div>
+      <div class="val">Proxy needed<span class="src">MACD / OBV free proxy; true tape: CVD / Bookmap &middot; paid</span></div>
+    </div>
+    <div class="diag-row">
+      <div class="n">12</div>
+      <div class="k"><span class="dot have"></span><span>Execution / Risk<small>synthesis of 01&ndash;11</small></span></div>
+      <div class="val">Selective &mdash; react 350&ndash;356 or reclaim 391<span class="src">framework output &mdash; no edge mid-range</span></div>
+    </div>
+
+    <div class="diag-legend">
+      <span><span class="dot have"></span> Have it / read off the chart</span>
+      <span><span class="dot free"></span> Free external pull</span>
+      <span><span class="dot paid"></span> Paid / institutional</span>
+    </div>
+  </div>
+
+  <div class="takeaway"><b>Note</b> <span>Hand-populated from the sources shown &mdash; the static site doesn&rsquo;t live-fetch. With no options snapshot for AVGO, the dealer-gamma and order-flow rows are flagged rather than filled; every price-structure row comes straight off the chart.</span></div>
 </section>
 
 </main>
