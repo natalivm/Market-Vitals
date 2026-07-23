@@ -64,11 +64,20 @@ touching for a data update.
 
 ## Design system (keep consistent)
 
-Dark theme. CSS variables at `:root` — do not hardcode colors:
+Dark theme by default, with a **light-theme toggle** (the `☀ Light` / `☾ Dark`
+button in the nav). Light is applied by setting `data-theme="light"` on `<html>`;
+a `:root[data-theme="light"]{…}` block overrides the neutral variables (bg /
+surface / line / ink / muted) — the semantic accents keep the same hue in both
+themes. The choice persists in `localStorage.theme` and is applied pre-paint by a
+tiny inline `<head>` script to avoid a flash. This toggle, its CSS block, and the
+inline/JS wiring are **duplicated across all pages** — change them together.
+
+CSS variables at `:root` — do not hardcode colors:
 `--demand` green (#3DDC97) = buyers/support, `--supply` red (#FF5C6A) =
 sellers/resistance, `--amber` (#F2B441) = balance/neutral/wait, `--violet`
-(#8B5CF6) = accent/UI. Fonts: Unbounded (display), Inter (body),
-JetBrains Mono (numbers/labels). Respect `prefers-reduced-motion`.
+(#8B5CF6) = accent/UI. Fonts: a classic sans (`Arial, Helvetica, …`) for both
+display and body text for easy reading; JetBrains Mono is kept for
+numbers/labels so price columns stay aligned. Respect `prefers-reduced-motion`.
 
 ## Verifying changes
 
